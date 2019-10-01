@@ -1,0 +1,7 @@
+Juego Prototipo:
+Lanzas granadas y te puedes teleportar a ellas. las granadas rebotan mas en ciertos bloques.
+Si no te teleportas a ella en cierto tiempo explota dejando un vacio(brecha en el espacio tiempo) en la que te mueres si tocas.
+Puntuación en base al tiempo.
+Granada extra para puzles donde necesitas 2 tps. Confinada a sitios especificos.
+WarpPoints.
+Enemigos.

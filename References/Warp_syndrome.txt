@@ -1,7 +1,17 @@
 Juego Prototipo:
 Lanzas granadas y te puedes teleportar a ellas. las granadas rebotan mas en ciertos bloques.
-Si no te teleportas a ella en cierto tiempo explota dejando un vacio(brecha en el espacio tiempo) en la que te mueres si tocas.
-Puntuación en base al tiempo.
-Granada extra para puzles donde necesitas 2 tps. Confinada a sitios especificos.
-WarpPoints.
 Enemigos.
+Granada toca al enemigo --> lo envía donde estabas cuando la tiraste
+
+Inovation points:
+
+-WarpPoints
+-Granada extra para puzles donde necesitas 2 tps. Confinada a sitios especificos
+-Si no te teleportas a ella en cierto tiempo explota dejando un vacío (brecha en el espacio tiempo) en la que si entras,
+tienes que hacer un nivel más hardcore (versión hardcore del nivel?) donde el portal de salida está en donde apareció
+el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemento de presión añadido)
+-Puntuación en base al tiempo
+-Elementos de recompensa (estilo moneda)
+-Daño por caída
+-Fade in - fade out al estilo Kingdom: New Lands
+

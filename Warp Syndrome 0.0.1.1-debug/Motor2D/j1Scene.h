@@ -42,7 +42,7 @@ public:
 
 private:
 	bool reload = false;
-	MapLoaded currentlevel=LEVEL1;
+	MapLoaded currentlevel=LEVEL1; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout
 };
 
 #endif // __j1SCENE_H__

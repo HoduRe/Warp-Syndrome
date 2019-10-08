@@ -33,9 +33,7 @@ void j1Map::Draw()
 
 	uint numTileColumns = (data.tilesets.start->data->tex_width - 1) / (data.tile_width + 1);
 	uint numTileRows = (data.tilesets.start->data->tex_height - 1) / (data.tile_height + 1);
-	// TODO 5: Prepare the loop to iterate all the tiles in a layer
 
-	//new code
 	p2List_item<MapLayer*>* item_layer = data.layers.start;
 	while (item_layer != NULL)
 	{
@@ -48,16 +46,14 @@ void j1Map::Draw()
 				int id = item_layer->data->gid[Get(j, i,*item_layer)];
 				if (id > 0)
 				{
-					App->render->Blit(data.tilesets.start->data->texture, MapToWorldCoordinates(j,data), MapToWorldCoordinates(i,data), &RectFromTileId(id,*data.tilesets.start));//TODO 10 put the real tilesets here
+					App->render->Blit(data.tilesets.start->data->texture, MapToWorldCoordinates(j,data), MapToWorldCoordinates(i,data), &RectFromTileId(id,*data.tilesets.start));
 				}
 			}
 		}
 
 		item_layer = item_layer->next;
 	}
-	//end of new code
 
-	// TODO 9: Complete the draw function
 
 }
 
@@ -78,7 +74,6 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	// TODO 2: clean up all layer data
 	// Remove all layers
 	p2List_item<MapLayer*>* iteml;
 	iteml = data.layers.start;
@@ -135,7 +130,6 @@ bool j1Map::Load(const char* file_name)
 		data.tilesets.add(set);
 	}
 
-	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
 	pugi::xml_node currentlayer;
 	for (currentlayer = map_file.child("map").child("layer"); currentlayer && ret; currentlayer = currentlayer.next_sibling("layer"))
@@ -169,7 +163,6 @@ bool j1Map::Load(const char* file_name)
 			item = item->next;
 		}
 
-		// TODO 4: Add info here about your loaded layers
 		// Adapt this code with your own variables
 
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
@@ -325,7 +318,7 @@ bool j1Map::UnloadTilesetImage(SDL_Texture* texture)
 	bool ret=App->tex->UnLoad(texture);
 	return ret;
 }
-// TODO 3: Create the definition for a function that loads a single layer
+//Loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 {
 	bool ret = true;

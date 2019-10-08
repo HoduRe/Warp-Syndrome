@@ -6,7 +6,6 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-// TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
 struct MapLayer
 {
@@ -16,14 +15,12 @@ struct MapLayer
 	uint* gid = nullptr;
 	~MapLayer();
 };
-// TODO 6: Short function to get the value of x,y
 
 
 
 // ----------------------------------------------------
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rect
 
 	p2SString			name;
 	int					firstgid;
@@ -59,7 +56,6 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
-	// TODO 2: Add a list/array of layers to the map!
 	p2List<MapLayer*> layers;
 	~MapData();
 };
@@ -87,7 +83,6 @@ public:
 	bool Load(const char* path);
 	bool ReloadMap(p2SString newmap);
 	inline uint Get(int x, int y,p2List_item<MapLayer*>currentlayer) const;
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
 	int MapToWorldCoordinates(int pos,MapData &dat);
 private:
 
@@ -96,7 +91,6 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool j1Map::UnloadTilesetImage(SDL_Texture* texture);
-	// TODO 3: Create a method that loads a single layer
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	SDL_Rect RectFromTileId(uint tile_id, p2List_item<TileSet*>currenttileset);
 

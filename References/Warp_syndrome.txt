@@ -14,4 +14,5 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 -Elementos de recompensa (estilo moneda)
 -Daño por caída
 -Fade in - fade out al estilo Kingdom: New Lands
+-Cuando se abra un portal, cambiar la música a algo más acelerado (y distinta a la de cuando entras en el portal)
 

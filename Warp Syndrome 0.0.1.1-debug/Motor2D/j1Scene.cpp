@@ -70,7 +70,7 @@ bool j1Scene::PreUpdate()
 			break;
 		case LEVEL4:
 			currentlevel = LEVEL1;
-			if (ret != App->map->ReloadMap("sewers.tmx"))
+			if (ret != App->map->ReloadMap("first_level.tmx"))
 				currentlevel = NOLEVEL;
 
 			reload = false;

@@ -1,6 +1,5 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "j1App.h"
 #include "j1Module.h"
 #include "j1Input.h"
 #include "j1Window.h"
@@ -44,7 +43,7 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	playerAnimations.clear();
+	//playerAnimations->clear();
 	return true;
 }
 

@@ -3,6 +3,9 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "Animations.h"
+
+
+
 //enums all the stats in which the player can be at any given moment
 //it is used in the Finite Stat Machine
 enum PlayerStates
@@ -71,7 +74,7 @@ private:
 	fPoint playerpos;
 	fPoint playervel;
 	PlayerStates playerState;
-	p2List<Animation*> playerAnimations;
+	//p2List<Animation*>* playerAnimations;
 	SDL_Event events;
 
 };

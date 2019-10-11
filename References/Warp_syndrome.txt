@@ -19,7 +19,6 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 Mejoras:
 Cambiar el sliding por el sliding horizontal girado 90º
 Better rewards to other dimension
-Bloque de rebote
 Puerta
 Añadir lanzar la granada durante el segundo salto
 Añadir partículas

@@ -43,7 +43,7 @@ bool j1Player::PostUpdate()
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	//playerAnimations->clear();
+	playerAnimations->clear();
 	return true;
 }
 

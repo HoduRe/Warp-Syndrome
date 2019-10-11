@@ -74,7 +74,7 @@ private:
 	fPoint playerpos;
 	fPoint playervel;
 	PlayerStates playerState;
-	//p2List<Animation*>* playerAnimations;
+	p2List<Animations*>* playerAnimations;
 	SDL_Event events;
 
 };

@@ -6,4 +6,10 @@
     <camera x="100" y="0"/>
   </renderer>
 
+  <player>
+    <position x="" y="" />
+    <velocity x="" y="" />
+    <state value=0/>
+  </player>
+
 </game_state>

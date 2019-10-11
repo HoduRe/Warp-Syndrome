@@ -5,7 +5,6 @@
 #include "j1Render.h"
 
 #define VSYNC true
-
 j1Render::j1Render() : j1Module()
 {
 	name.create("renderer");

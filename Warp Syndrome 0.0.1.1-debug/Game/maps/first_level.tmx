@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="Earth_tileset" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="432" columns="24">
-  <image source="Earth_tileset.png" width="800" height="600"/>
+  <image source="Earth_tileset.png" trans="ffffff" width="800" height="600"/>
  </tileset>
  <layer id="1" name="Capa de Patrones 1" width="300" height="100">
   <data>

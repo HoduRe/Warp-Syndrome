@@ -16,3 +16,8 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 -Fade in - fade out al estilo Kingdom: New Lands
 -Cuando se abra un portal, cambiar la música a algo más acelerado (y distinta a la de cuando entras en el portal)
 
+Mejoras:
+Cambiar el sliding por el sliding horizontal girado 90º
+Better rewards to other dimension
+Bloque de rebote
+Puerta

@@ -1,0 +1,98 @@
+<animacion nom="idle" numeroframes=5>
+	<frame rectangle={1, 1, 19, 30} />
+	<frame rectangle={21, 1, 17, 30} />
+	<frame rectangle={39, 1, 19, 30} />
+	<frame rectangle={59, 2, 20, 30} />
+</animacion>
+<animacion nom="crouch" numeroframes=4>
+	<frame rectangle={80, 9, 19, 22} />
+	<frame rectangle={100, 9, 20, 22} />
+	<frame rectangle={121, 9, 19, 22} />
+	<frame rectangle={141, 9, 17, 22} />
+</animacion>
+<animacion nom="running" numeroframes=8>
+	<frame rectangle={159, 3, 20, 28} />
+	<frame rectangle={180, 3, 20, 28} />
+	<frame rectangle={201, 3, 20, 28} />
+	<frame rectangle={222, 3, 23, 28} />
+	<frame rectangle={246, 3, 20, 28} />
+	<frame rectangle={267, 3, 20, 28} />
+	<frame rectangle={288, 3, 20, 28} />
+	<frame rectangle={309, 9, 20, 22} />
+</animacion>
+<animacion nom="crouching" numeroframes=1>
+	<frame rectangle={309, 9, 20, 22} />
+</animacion>
+<animacion nom="throw_granade" numeroframes=5>
+	<frame rectangle={331, 6, 18, 25} />
+	<frame rectangle={350, 6, 21, 25} />
+	<frame rectangle={372, 6, 41, 25} />
+	<frame rectangle={414, 6, 20, 25} />
+	<frame rectangle={435, 6, 18, 25} />
+</animacion>
+<animacion nom="forward_jump" numeroframes=6>
+	<frame rectangle={1, 35, 19, 27} />
+	<frame rectangle={21, 35, 21, 27} />
+	<frame rectangle={43, 35, 15, 27} />
+	<frame rectangle={59, 35, 23, 27} />
+	<frame rectangle={84, 35, 18, 27} />
+	<frame rectangle={106, 35, 23, 27} />
+</animacion>
+<animacion nom="falling" numeroframes=2>
+	<frame rectangle={130, 32, 16, 30} />
+	<frame rectangle={146, 32, 17, 30} />
+</animacion>
+<animacion nom="sliding" numeroframes=5>
+	<frame rectangle={164, 45, 34, 17} />
+	<frame rectangle={199, 45, 34, 17} />
+	<frame rectangle={234, 45, 34, 17} />
+	<frame rectangle={269, 45, 30, 17} />
+	<frame rectangle={300, 45, 22, 17} />
+</animacion>
+<animacion nom="hurt" numeroframes=7>
+	<frame rectangle={323, 38, 18, 24} />
+	<frame rectangle={342, 38, 20, 24} />
+	<frame rectangle={363, 38, 29, 24} />
+	<frame rectangle={393, 38, 24, 24} />
+	<frame rectangle={418, 38, 27, 24} />
+	<frame rectangle={446, 38, 26, 24} />
+	<frame rectangle={473, 38, 29, 24} />
+</animacion>
+<animacion nom="wallsliding" numeroframes=4>
+	<frame rectangle={2, 63, 13, 34} />
+	<frame rectangle={19, 63, 13, 34} />
+	<frame rectangle={34, 63, 15, 34} />
+	<frame rectangle={50, 63, 14, 34} />
+</animacion>
+<animacion nom="wallsliding_to_idle" numeroframes=5>
+	<frame {65, 68, 16, 29} />
+	<frame {82, 68, 15, 29} />
+	<frame {98, 68, 15, 29} />
+	<frame {114, 68, 14, 29} />
+	<frame {129, 68, 15, 29} />
+</animacion>
+<animacion nom="walljump" numeroframes=6>
+	<frame {228, 69, 21, 28} />
+	<frame {250, 69, 19, 28} />
+	<frame {270, 69, 20, 28} />
+	<frame {291, 69, 22, 28} />
+	<frame {313, 69, 22, 28} />
+	<frame {336, 69, 21, 28} />
+</animacion>
+<animacion nom="wakeup" numeroframes=6>
+	<frame {358, 70, 23, 26} />
+	<frame {382, 70, 21, 26} />
+	<frame {404, 70, 26, 26} />
+	<frame {431, 70, 21, 26} />
+	<frame {452, 70, 24, 26} />
+	<frame {477, 70, 22, 26} />
+</animacion>
+<animacion nom="walking" numerofilas=6>
+	<frame {1, 99, 17, 29} />
+	<frame {19, 99, 14, 29} />
+	<frame {34, 99, 15, 29} />
+	<frame {50, 99, 18, 29} />
+	<frame {69, 99, 16, 29} />
+	<frame {86, 99, 16, 29} />
+</animacion>
+

@@ -2,10 +2,12 @@
 
 Animations::Animations()
 {
+	
 	currentanimframe = animationframes.start;
 	animationfinished = 0;
 	numberofFrames = 0;
 	animationloop = false;
+	animationname = "";
 	//texture = nullptr;
 	//texture = nullptr;
 }
@@ -63,7 +65,7 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 	animationname = animationnode.attribute("name").as_string();
 	for (framenode = animationnode.child("frame"); framenode; framenode = framenode.next_sibling("frame"))
 	{
-		int duration = framenode.attribute("duration").as_int();
+		int duration = framenode.child("duration").attribute("value").as_int();
 
 		SDL_Rect rect;
 		rect.x = framenode.child("rectangle").attribute("x").as_int();

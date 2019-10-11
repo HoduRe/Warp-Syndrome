@@ -70,13 +70,18 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	void SetPosition(fPoint pos);
+	void Setposition(float x, float y);
+
 private:
 	fPoint playerpos;
 	fPoint playervel;
 	PlayerStates playerState;
-	p2List<Animations*>* playerAnimations;
+	p2List<Animations*> playerAnimations;
 	SDL_Event events;
-
+	pugi::xml_document playerdoc;
+	pugi::xml_node playernode;
+	p2SString filename;
 };
 
 

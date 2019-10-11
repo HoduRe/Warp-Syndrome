@@ -83,7 +83,8 @@ public:
 	bool Load(const char* path);
 	bool ReloadMap(p2SString newmap);
 	inline uint Get(int x, int y,p2List_item<MapLayer*>currentlayer) const;
-	int MapToWorldCoordinates(int pos,MapData &dat);
+	int MapToWorldCoordinates(int pos,MapData &dat);//TODO change the function to output an iPoint
+	iPoint WorldToMap(int x, int y,MapData &dat) const;
 private:
 
 	bool LoadMap();

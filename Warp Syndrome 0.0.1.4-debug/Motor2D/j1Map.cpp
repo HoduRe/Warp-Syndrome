@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -31,31 +32,49 @@ void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
+	p2List_item<TileSet*>* item = data.tilesets.start;
 
-	uint numTileColumns = (data.tilesets.start->data->tex_width - 1) / (data.tile_width + 1);
-	uint numTileRows = (data.tilesets.start->data->tex_height - 1) / (data.tile_height + 1);
+	uint window_w;
+	uint window_h;
+	App->win->GetWindowSize(window_w, window_h);
 
-	p2List_item<MapLayer*>* item_layer = data.layers.start;
-	while (item_layer != NULL)
+	while (item != NULL)
 	{
-		MapLayer* layer = item_layer->data;
 
-		for (int i = 0; i < item_layer->data->height; i++)//number of rows
+		p2List_item<MapLayer*>* item_layer = data.layers.start;
+		while (item_layer != NULL)
 		{
-			for (int j = 0; j < item_layer->data->width; j++)//number of columns
+
+			iPoint up_left_cam_corner = WorldToMap(App->render->camera.x * -1, App->render->camera.y * -1, data);
+			iPoint down_right_cam_corner = WorldToMap((App->render->camera.x * -1) + window_w, (App->render->camera.y * -1) + window_h, data);
+
+
+			for (int i = 0; i < item_layer->data->height; i++)//number of rows
 			{
-				int id = item_layer->data->gid[Get(j, i,*item_layer)];
-				if (id > 0)
+				for (int j = 0; j < item_layer->data->width; j++)//number of columns
 				{
-					App->render->Blit(data.tilesets.start->data->texture, MapToWorldCoordinates(j,data), MapToWorldCoordinates(i,data), &RectFromTileId(id,*data.tilesets.start));
+					if (i<down_right_cam_corner.y+1 && i>up_left_cam_corner.y-1)//TODO Optimize those 2 if, These are a camera culling implementation the game just draws what's seen in the camera
+					{
+						if (j<down_right_cam_corner.x+1 && j>up_left_cam_corner.x-1)
+						{
+
+
+							int id = item_layer->data->gid[Get(j, i, *item_layer)];
+							if (id > 0)
+							{
+								App->render->Blit(item->data->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, *data.tilesets.start));
+							}
+						}
+					}
 				}
 			}
+
+			//LOG("%i %i,%i %i", up_left_cam_corner.x, up_left_cam_corner.y, down_right_cam_corner.x, down_right_cam_corner.y);
+
+			item_layer = item_layer->next;
 		}
-
-		item_layer = item_layer->next;
+		item = item->next;
 	}
-
-
 }
 
 
@@ -144,9 +163,9 @@ bool j1Map::Load(const char* file_name)
 
 		data.layers.add(set);
 	}
-	
 
-	 //Loaded Info ---------------------------------------------------
+
+	//Loaded Info ---------------------------------------------------
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -316,7 +335,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 
 bool j1Map::UnloadTilesetImage(SDL_Texture* texture)
 {
-	bool ret=App->tex->UnLoad(texture);
+	bool ret = App->tex->UnLoad(texture);
 	return ret;
 }
 //Loads a single layer
@@ -347,13 +366,13 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 
 //gets the position in a 1 row vector
 //X horizontal, Y vertical, data.layers.(currentlayer)
-inline uint j1Map::Get(int x, int y,p2List_item<MapLayer*>currentlayer) const 
+inline uint j1Map::Get(int x, int y, p2List_item<MapLayer*>currentlayer) const
 {
 	return (y * currentlayer.data->width) + x;
 }
 
 //converts an id from a 1 row vector(Tileset position) into a Rectangle
-SDL_Rect j1Map::RectFromTileId(uint tile_id,p2List_item<TileSet*>currenttileset)
+SDL_Rect j1Map::RectFromTileId(uint tile_id, p2List_item<TileSet*>currenttileset)
 {
 	int firstgid = currenttileset.data->firstgid;
 	int margin = currenttileset.data->margin;
@@ -376,14 +395,20 @@ SDL_Rect j1Map::RectFromTileId(uint tile_id,p2List_item<TileSet*>currenttileset)
 
 //assuming the tile dimensions are equal on both axis
 //position (as 1 vector id not as coordinates),data
-int j1Map::MapToWorldCoordinates(int pos,MapData &dat)
+int j1Map::MapToWorldCoordinates(int pos, MapData& dat)
 {
-	pos = dat.tile_width*pos;
+	pos = dat.tile_width * pos;
 	return pos;
 }
+iPoint j1Map::WorldToMap(int x, int y, MapData& dat) const
+{
+	iPoint ret(0, 0);
+	ret.x = x / (dat.tile_width * (int)App->win->GetScale());
+	ret.y = y / (dat.tile_height * (int)App->win->GetScale());
+	return ret;
+}
 
-
-bool j1Map::ReloadMap(p2SString newmap) 
+bool j1Map::ReloadMap(p2SString newmap)
 {
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	while (item != NULL)
@@ -391,12 +416,12 @@ bool j1Map::ReloadMap(p2SString newmap)
 		UnloadTilesetImage(item->data->texture);
 		item = item->next;
 	}
-	
+
 	CleanUp();//clears the map
-	
+
 	LOG("Loading Map Parser");
 	bool ret = true;
-	
+
 	Load(newmap.GetString());
 
 	return ret;
@@ -404,13 +429,13 @@ bool j1Map::ReloadMap(p2SString newmap)
 
 TileSet::~TileSet()
 {
-	if (this->texture!=NULL)
-	App->tex->UnLoad(this->texture);
+	if (this->texture != NULL)
+		App->tex->UnLoad(this->texture);
 	this->name.Clear();
 }
 MapLayer::~MapLayer()
 {
-	if (this->gid != nullptr)		
+	if (this->gid != nullptr)
 		delete this->gid;
 }
 

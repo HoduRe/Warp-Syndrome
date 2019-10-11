@@ -26,5 +26,8 @@
     <folder>maps/</folder>
     <load mapname="hello2.tmx"/>
   </map>
+<player>
+  <load docname="player.xml"/>
+</player>
 
 </config>

@@ -13,7 +13,8 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 
 // Destructor
 j1Map::~j1Map()
-{}
+{
+}
 
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
@@ -145,7 +146,7 @@ bool j1Map::Load(const char* file_name)
 	}
 	
 
-	// Loaded Info ---------------------------------------------------
+	 //Loaded Info ---------------------------------------------------
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -387,7 +388,6 @@ bool j1Map::ReloadMap(p2SString newmap)
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	while (item != NULL)
 	{
-		TileSet* s = item->data;
 		UnloadTilesetImage(item->data->texture);
 		item = item->next;
 	}
@@ -404,14 +404,14 @@ bool j1Map::ReloadMap(p2SString newmap)
 
 TileSet::~TileSet()
 {
-	if (texture!=NULL)
-	App->tex->UnLoad(texture);
-	name.Clear();
+	if (this->texture!=NULL)
+	App->tex->UnLoad(this->texture);
+	this->name.Clear();
 }
 MapLayer::~MapLayer()
 {
-	if(gid!=nullptr)
-	delete gid;
+	if (this->gid != nullptr)		
+		delete this->gid;
 }
 
 MapData::~MapData()

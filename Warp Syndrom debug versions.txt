@@ -1,2 +1,4 @@
+Current version: 0.0.1.7-debug
 
-Warp Syndrome 0.0.1.7-debug: Collider module added
+Update 0.0.1.7-debug
+-Collider module added

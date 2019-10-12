@@ -1,4 +1,4 @@
-Current version: 0.0.1.7-debug
+Current version: 0.0.1.8-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -32,5 +32,9 @@ Update 0.0.1.7-debug
 
 Update 0.0.1.8-debug
 -Collider map charge fixed
+
+Update 0.0.1.9-debug
+-Added Basic camera (needs to be refined)
+-Enabled Vsync in the game and adjusted the duration of the frames in the"mockup animation".
 
 

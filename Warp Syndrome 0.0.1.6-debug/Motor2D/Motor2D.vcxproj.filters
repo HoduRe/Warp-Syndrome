@@ -40,6 +40,9 @@
     <ClCompile Include="Animations.cpp">
       <Filter>Programming %28p2%29=========</Filter>
     </ClCompile>
+    <ClCompile Include="j1Collision.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Programming %28p2%29=========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collision.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

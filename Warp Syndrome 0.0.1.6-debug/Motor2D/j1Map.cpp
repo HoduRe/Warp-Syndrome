@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Window.h"
+#include "j1Collision.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -410,6 +411,7 @@ iPoint j1Map::WorldToMap(int x, int y, MapData& dat) const
 
 bool j1Map::ReloadMap(p2SString newmap)
 {
+	App->collision->current_map_name = newmap;
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	while (item != NULL)
 	{

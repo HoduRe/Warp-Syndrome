@@ -17,6 +17,7 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 -Cuando se abra un portal, cambiar la música a algo más acelerado (y distinta a la de cuando entras en el portal)
 
 Mejoras:
+Eliminar assets sobrantes
 Cambiar el sliding por el sliding horizontal girado 90º
 Better rewards to other dimension
 Puerta

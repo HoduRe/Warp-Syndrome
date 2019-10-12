@@ -3,7 +3,7 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "Animations.h"
-
+#include "SDL/include/SDL.h"
 
 
 //enums all the stats in which the player can be at any given moment
@@ -85,8 +85,9 @@ public:
 
 	bool LoadAnimations(pugi::xml_node&);
 
-private:
 	fPoint playerpos;
+
+private:
 	fPoint playervel;
 	PlayerStates playerState;
 	p2List<Animations*> playerAnimations;
@@ -97,15 +98,6 @@ private:
 	SDL_Texture* playertexture;
 	bool rotated = false;
 };
-
-
-
-
-
-
-
-
-
 
 
 #endif // !__j1PLAYER_H__

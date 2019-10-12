@@ -9,22 +9,22 @@
     <frame>
       <rectangle x="1" y="2" w="19" h="29" />
       <pivot x="7" y="0" />
-      <duration value="600" />
+      <duration value="30" />
     </frame>
     <frame>
       <rectangle x="21" y="1" w="17" h="30" />
       <pivot x="5" y="0" />
-      <duration value="600" />
+      <duration value="30" />
     </frame>
     <frame>
       <rectangle x="39" y="1" w="19" h="30" />
       <pivot x="6" y="0" />
-      <duration value="600" />
+      <duration value="30" />
     </frame>
     <frame>
       <rectangle x="59" y="2" w="20" h="29" />
       <pivot x="8" y="0" />
-      <duration value="600" />
+      <duration value="30" />
     </frame>
   </animation>
   <animation name="crouch" number_of_frames="4" canloop="0">

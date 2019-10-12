@@ -1,27 +1,33 @@
 <player>
-  <animation name="idle" number_of_frames="4">
+  
+  <texture>
+    <folder>textures/</folder>
+    <load texturename="Main_Character.png"/>
+  </texture>
+
+  <animation name="idle" number_of_frames="4" canloop="1">
     <frame>
-      <rectangle x="1" y="1" w="19" h="30" />
+      <rectangle x="1" y="2" w="19" h="29" />
       <pivot x="7" y="0" />
-      <duration value="6" />
+      <duration value="600" />
     </frame>
     <frame>
       <rectangle x="21" y="1" w="17" h="30" />
       <pivot x="5" y="0" />
-      <duration value="6" />
+      <duration value="600" />
     </frame>
     <frame>
       <rectangle x="39" y="1" w="19" h="30" />
       <pivot x="6" y="0" />
-      <duration value="6" />
+      <duration value="600" />
     </frame>
     <frame>
-      <rectangle x="59" y="2" w="20" h="30" />
+      <rectangle x="59" y="2" w="20" h="29" />
       <pivot x="8" y="0" />
-      <duration value="6" />
+      <duration value="600" />
     </frame>
   </animation>
-  <animation name="crouch" number_of_frames="4">
+  <animation name="crouch" number_of_frames="4" canloop="0">
     <frame>
       <rectangle x="80" y="9" w="19" h="22" />
       <pivot x="5" y="0" />
@@ -43,7 +49,7 @@
       <duration value="6" />
     </frame>
   </animation>
-  <animation name="running" number_of_frames="8">
+  <animation name="running" number_of_frames="8" canloop="1">
     <frame>
       <rectangle x="159" y="3" w="20" h="28" />
       <pivot x="4" y="0" />
@@ -85,14 +91,14 @@
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="crouching" number_of_frames="1">
+  <animation name="crouching" number_of_frames="1" canloop="1">
     <frame>
       <rectangle x="309" y="9" w="20" h="22" />
       <pivot x="0" y="0" />
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="throw_granade" number_of_frames="5">
+  <animation name="throw_granade" number_of_frames="5" canloop="0">
     <frame>
       <rectangle x="331" y="6" w="18" h="25" />
       <pivot x="0" y="0" />
@@ -119,7 +125,7 @@
       <duration value="2" />
     </frame>
   </animation>
-  <animation name="forward_jump" number_of_frames="6">
+  <animation name="forward_jump" number_of_frames="6" canloop="0">
     <frame>
       <rectangle x="1" y="35" w="19" h="27" />
       <pivot x="4" y="0" />
@@ -151,7 +157,7 @@
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="falling" number_of_frames="2">
+  <animation name="falling" number_of_frames="2" canloop="0">
     <frame>
       <rectangle x="130" y="32" w="16" h="30" />
       <pivot x="6" y="0" />
@@ -163,7 +169,7 @@
       <duration value="2000" />
     </frame>
   </animation>
-  <animation name="sliding" number_of_frames="5">
+  <animation name="sliding" number_of_frames="5" canloop="1">
     <frame>
       <rectangle x="164" y="45" w="34" h="17" />
       <pivot x="11" y="0" />
@@ -190,7 +196,7 @@
       <duration value="5" />
     </frame>
   </animation>
-  <animation name="hurt" number_of_frames="7">
+  <animation name="hurt" number_of_frames="7" canloop="0">
     <frame>
       <rectangle x="323" y="38" w="18" h="24" />
       <pivot x="3" y="0" />
@@ -227,7 +233,7 @@
       <duration value="2000" />
     </frame>
   </animation>
-  <animation name="wallsliding" number_of_frames="4">
+  <animation name="wallsliding" number_of_frames="4" canloop="1">
     <frame>
       <rectangle x="2" y="63" w="13" h="34" />
       <pivot x="4" y="0" />
@@ -249,7 +255,7 @@
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="wallsliding_to_idle" number_of_frames="5">
+  <animation name="wallsliding_to_idle" number_of_frames="5" canloop="0">
     <frame>
       <rectangle x="65" y="68" w="16" h="29" />
       <pivot x="7" y="0" />
@@ -276,7 +282,7 @@
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="walljump" number_of_frames="6">
+  <animation name="walljump" number_of_frames="6" canloop="0">
     <frame>
       <rectangle x="228" y="69" w="21" h="28" />
       <pivot x="6" y="0" />
@@ -308,7 +314,7 @@
       <duration value="3" />
     </frame>
   </animation>
-  <animation name="wakeup" number_of_frames="6">
+  <animation name="wakeup" number_of_frames="6" canloop="0">
     <frame>
       <rectangle x="358" y="70" w="23" h="26" />
       <pivot x="23" y="0" />
@@ -340,7 +346,7 @@
       <duration value="5" />
     </frame>
   </animation>
-  <animation name="walking" numerofilas="6">
+  <animation name="walking" numerofilas="6" canloop="1">
     <frame>
       <rectangle x="1" y="99" w="17" h="29" />
       <pivot x="2" y="0" />

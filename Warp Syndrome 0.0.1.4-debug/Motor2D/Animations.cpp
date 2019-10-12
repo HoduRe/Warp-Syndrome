@@ -2,7 +2,7 @@
 
 Animations::Animations()
 {
-	
+
 	currentanimframe = animationframes.start;
 	animationfinished = 0;
 	numberofFrames = 0;
@@ -26,20 +26,29 @@ void Animations::AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffs
 	newframe->frameduration = duration;
 	newframe->textureoffset = textureoffset;
 	newframe->animationRect = texturerect;
-
+	newframe->actualduration = 0;
 	animationframes.add(newframe);
 	numberofFrames++;
+	currentanimframe = animationframes.start;
 }
 
 FrameInfo* Animations::StepAnimation()
 {
 	FrameInfo* ret = currentanimframe->data;
+	if (ret->actualduration++ >= ret->frameduration)//only executes the code once the duration of the frame is max
+	{
+		ret->actualduration = 0;//restarts the duration
 
-	if (currentanimframe->next != nullptr)//if the next element exists go to the next element
-		currentanimframe = currentanimframe->next;
-	else if (animationloop)//if the animation can loop return to the start
-		currentanimframe = animationframes.start;
-	else animationfinished = true;
+		if (currentanimframe->next != nullptr)//if the next element exists go to the next element
+			currentanimframe = currentanimframe->next;
+		else if (animationloop)//if the animation can loop return to the start
+			currentanimframe = animationframes.start;
+		else animationfinished = true;
+		
+		
+	}
+
+
 
 	return ret;
 }
@@ -63,6 +72,7 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 {
 	pugi::xml_node framenode;
 	animationname = animationnode.attribute("name").as_string();
+	animationloop = animationnode.attribute("canloop").as_bool();
 	for (framenode = animationnode.child("frame"); framenode; framenode = framenode.next_sibling("frame"))
 	{
 		int duration = framenode.child("duration").attribute("value").as_int();

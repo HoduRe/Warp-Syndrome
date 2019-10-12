@@ -73,6 +73,8 @@ public:
 	void SetPosition(fPoint pos);
 	void Setposition(float x, float y);
 
+	bool LoadAnimations(pugi::xml_node&);
+
 private:
 	fPoint playerpos;
 	fPoint playervel;
@@ -82,6 +84,7 @@ private:
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;
 	p2SString filename;
+	SDL_Texture* playertexture;
 };
 
 

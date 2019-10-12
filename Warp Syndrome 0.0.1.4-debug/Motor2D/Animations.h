@@ -11,7 +11,10 @@
 //stores Info about the current frame of the animation
 struct FrameInfo
 {
+	//TODO frameduration and actualduration have to be modified to work with the game actual framerate instead of loops
+
 	int frameduration;//duration of the current frame in loops
+	int actualduration; //how many units of duration have passed since the first frame
 	SDL_Rect animationRect; //rectangle with the location of the frame in the spritesheet
 	iPoint textureoffset;//texture offset from the source position
 	//TODO finish working on the data stored in here

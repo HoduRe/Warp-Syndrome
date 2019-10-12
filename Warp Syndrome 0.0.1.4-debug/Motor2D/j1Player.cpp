@@ -1,6 +1,8 @@
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "p2SString.h"
 #include "j1Module.h"
+#include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Render.h"
@@ -11,15 +13,19 @@
 
 j1Player::j1Player()
 {
+	//creates the name of the class for usage to target the right node of coniguration in the awake function
 	name.create("player");
 }
+
 j1Player::~j1Player()
-{}
+{
+}
 
 
 
 bool j1Player::Awake(pugi::xml_node& config)
 {
+	//gets the file name of the player document from the config document
 	filename.create(config.child("load").attribute("docname").as_string());
 	return true;
 };
@@ -28,6 +34,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	bool ret = true;
+	//loads the player document
 	pugi::xml_parse_result result = playerdoc.load_file(filename.GetString());
 
 	if (result == NULL)
@@ -36,17 +43,23 @@ bool j1Player::Start()
 		ret = false;
 	}
 
+	//initializes playernode to be the root node of the doc
 	playernode = playerdoc.child("player");
-	for (pugi::xml_node animationnode = playernode.child("animation"); animationnode; animationnode = animationnode.next_sibling("animation"))
-	{
-		Animations *anim=new Animations;
-		anim->LoadAnim(animationnode);
-		//p2List_item<Animations*>* anim_item= anim;
-		
-		playerAnimations.add(anim);
-	}
+
+	LoadAnimations(playernode);
+
+	pugi::xml_node texturenode = playernode.child("texture");
+
+
+	//Load image
+
+	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
+
+
+
 	return ret;
 }
+
 bool j1Player::PreUpdate()
 {
 	return true;
@@ -58,14 +71,16 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
+	FrameInfo* frame = playerAnimations.start->data->StepAnimation();
+		App->render->Blit(playertexture, playerpos.x-frame->textureoffset.x, playerpos.y-frame->animationRect.h -frame->textureoffset.y, &frame->animationRect);
 	return true;
 }
 
 // Called before quitting
 bool j1Player::CleanUp()
 {
-	//TODO Un-comment this and see if it works once playerAnimations is inicialized
-	//playerAnimations->clear();
+	App->tex->UnLoad(playertexture);
+	playerAnimations.clear();
 	return true;
 }
 
@@ -84,8 +99,24 @@ void j1Player::SetPosition(fPoint pos)
 {
 	playerpos = pos;
 }
+
 void j1Player::Setposition(float x, float y)
 {
 	playerpos.x = x;
 	playerpos.y = y;
+}
+
+//Loads all the animations needed for the player
+//returns false if no animation has been loaded, otherwise returns true
+bool j1Player::LoadAnimations(pugi::xml_node& rootnode)
+{
+	bool ret = false;
+	for (pugi::xml_node animationnode = rootnode.child("animation"); animationnode; animationnode = animationnode.next_sibling("animation"))
+	{
+		Animations* anim = new Animations;
+		ret= anim->LoadAnim(animationnode);
+
+		playerAnimations.add(anim);
+	}
+	return ret;
 }

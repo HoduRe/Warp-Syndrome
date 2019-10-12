@@ -40,6 +40,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void RepositionCamera();
+
 private:
 	bool reload = false;
 	MapLoaded currentlevel=LEVEL1; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout

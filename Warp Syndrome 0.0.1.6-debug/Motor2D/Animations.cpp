@@ -96,3 +96,36 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 	return true;
 
 }
+
+p2SString Animations::GetName()
+{
+	return animationname;
+}
+p2List_item<Animations*>* Animations::GetAnimFromName(p2SString name, p2List<Animations*> animlist)
+{
+	p2List_item<Animations*>* animitem = animlist.start;
+	while (animitem != NULL)
+	{
+		if (animitem->data->GetName() == name)
+		{
+			break;
+		}
+		animitem = animitem->next;
+	}
+	return animitem;
+}
+
+void Animations::ResetAnimation()
+{
+	p2List_item<FrameInfo*>* item = animationframes.start;
+	while (item->data != nullptr)
+	{
+		item->data->actualduration = 0;//resets the duration of each frame.
+		item = item->next;
+	}
+
+
+
+	currentanimframe = animationframes.start;
+	animationfinished = false;
+}

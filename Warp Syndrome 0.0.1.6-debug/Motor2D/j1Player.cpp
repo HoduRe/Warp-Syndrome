@@ -66,6 +66,7 @@ bool j1Player::PreUpdate()
 }
 bool j1Player::Update(float dt)
 {
+
 	return true;
 }
 
@@ -100,7 +101,7 @@ void j1Player::SetPosition(fPoint pos)
 	playerpos = pos;
 }
 
-void j1Player::Setposition(float x, float y)
+void j1Player::SetPosition(float x, float y)
 {
 	playerpos.x = x;
 	playerpos.y = y;
@@ -119,4 +120,31 @@ bool j1Player::LoadAnimations(pugi::xml_node& rootnode)
 		playerAnimations.add(anim);
 	}
 	return ret;
+}
+
+void j1Player::AddPosition(fPoint pos)
+{
+	playerpos += pos;
+}
+
+void j1Player::AddPosition(float x, float y)
+{
+	playerpos.x += x;
+	playerpos.y += y;
+}
+
+fPoint j1Player::GetPosition()
+{
+	return  playerpos;
+}
+
+//returns true if player is flipped
+bool j1Player::GetFliped()
+{
+	return rotated;
+}
+
+void j1Player::SetFliped(bool flip)
+{
+	rotated = flip;
 }

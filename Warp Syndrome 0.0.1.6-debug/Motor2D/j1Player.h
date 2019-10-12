@@ -71,7 +71,17 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	void SetPosition(fPoint pos);
-	void Setposition(float x, float y);
+	void SetPosition(float x, float y);
+
+	void AddPosition(fPoint pos);
+	void AddPosition(float x, float y);
+
+	fPoint GetPosition();
+
+	bool GetFliped();
+
+	void j1Player::SetFliped(bool flip);
+
 
 	bool LoadAnimations(pugi::xml_node&);
 
@@ -85,6 +95,7 @@ private:
 	pugi::xml_node playernode;
 	p2SString filename;
 	SDL_Texture* playertexture;
+	bool rotated = false;
 };
 
 

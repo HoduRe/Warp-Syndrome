@@ -38,9 +38,17 @@ public:
 	//returns the frame with the given id in the frame list
 	FrameInfo* GetFrame(int id);
 
+	p2SString GetName();
+
+
 	//loads an animation from an animation node
 	//returns true if loaded correctly, false, if the number of frames loaded don't correspond to the one specified in the .xml 
 	bool LoadAnim(pugi::xml_node& animationnode);
+
+	p2List_item<Animations*>* GetAnimFromName(p2SString name, p2List<Animations*> animlist);
+
+
+	void ResetAnimation();
 
 private:
 	p2SString animationname; //name of the current animation

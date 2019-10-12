@@ -1,5 +1,32 @@
 Current version: 0.0.1.7-debug
 
+Update 0.0.1.1-debug
+-Replaced the old framework file for a cleaner one
+
+Update 0.0.1.2-debug
+-Started working on a new module: Animation.h. It will hold the animation data
+-Started working on a new module: Movement.h. It will hold the movement of the granade and some player movements
+(NOTE: those two modules are still work in progress and might get deleted later on)
+-Started working on 2 new modules: Player.h and Player.cpp. They will hold all the player information and his FiniteStateMachine
+
+Update 0.0.1.3-debug
+-Animation.cpp added to avoid linker error
+
+Update 0.0.1.4-debug
+-Significant preformance urpgade when displaying a large map. The game has now camera culling
+-Added a new player.xml with information about the player including the animation data
+-Added functions to both the player module and the animation module to suppport the correct load of the player info
+
+Update 0.0.1.5-debug
+-Added a new file: "player.xml". it loads the player info at the start of the game. Added its path to config.xml to load the first file from there
+-Added the main character spritesheet to the textures folder
+-Added code to the player module to load all the animations to memory when inicialized
+-Now the game blits a mockup of the player with the idle animation to screen
+
+Update 0.0.1.6-debug
+-Added code for the camera (not finished and thus not called) in the Scene Module
+-Added more functions to both the player and the animation modules
+
 Update 0.0.1.7-debug
 -Collider module added
 

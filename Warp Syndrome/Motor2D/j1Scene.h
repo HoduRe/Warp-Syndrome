@@ -54,6 +54,7 @@ private:
 	MapLoaded currentlevel=LEVEL1; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout
 	fPoint camvelocity;
 	CamState camstate;
+	CamState lastcamdirection;
 };
 
 #endif // __j1SCENE_H__

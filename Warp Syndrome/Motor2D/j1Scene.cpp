@@ -32,10 +32,11 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load(App->map->map_name.GetString());
-	App->render->camera.x = App->player->playerpos.x;
-	App->render->camera.y = App->player->playerpos.y;
+	App->render->camera.x = App->player->GetPosition().x;
+	App->render->camera.y = App->player->GetPosition().y;
 	camvelocity = { 0.0f,0.0f };
 	camstate = CS_STILL;
+	lastcamdirection = CS_STILL;
 	return true;
 }
 
@@ -98,28 +99,28 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		App->player->AddPosition(0.0f, -4.0f);
+		App->player->AddPosition(0.0f, -App->player->GetVelocity().x);
 
 		//App->render->camera.y -= 1;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
-		App->player->AddPosition(0.0f, 4.0f);
+		App->player->AddPosition(0.0f, App->player->GetVelocity().x);
 
 		//App->render->camera.y += 1;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		App->player->AddPosition(-4.0f, 0.0f);
+		App->player->AddPosition(-App->player->GetVelocity().x, 0.0f);
 		App->player->SetFliped(true);
 		//App->render->camera.x -= 1;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		App->player->AddPosition(4.0f, 0.0f);
+		App->player->AddPosition(App->player->GetVelocity().x, 0.0f);
 		App->player->SetFliped(false);
 		//App->render->camera.x += 1;
 	}
@@ -183,10 +184,12 @@ void j1Scene::RepositionCamera()
 	if (((currentcam.x * -1) + (camW / 3) > target.x))//move camera to the left
 	{
 		camstate = CS_MOVING_LEFT;
+		lastcamdirection = CS_MOVING_LEFT;
 	}
 	else if ((currentcam.x * -1) + (camW * 2 / 3) < target.x)//move camera to the right
 	{
 		camstate = CS_MOVING_RIGHT;
+		lastcamdirection = CS_MOVING_RIGHT;
 	}
 	else camstate = CS_STILL;
 
@@ -213,15 +216,19 @@ void j1Scene::RepositionCamera()
 			camvelocity.x = 0;
 			break;
 		case CS_MOVING_LEFT:
-			camvelocity.x += 0.05f;
-			if (camvelocity.x > 2.0f)camvelocity.x = 1.0f;
+			if (lastcamdirection != CS_MOVING_LEFT)
+			{
+				camvelocity.x += 0.02f;
+				if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
+			}
+			else camvelocity.x = 0;
 			break;
 		case CS_MOVING_RIGHT:
 			camvelocity.x = 0;
 			break;
 		}
 
-		currentcam.x += 8.0f * camvelocity.x;
+		currentcam.x += App->player->GetVelocity().x+(8.0f * camvelocity.x);
 
 		break;
 	case CS_MOVING_RIGHT:
@@ -234,12 +241,16 @@ void j1Scene::RepositionCamera()
 			camvelocity.x = 0;
 			break;
 		case CS_MOVING_RIGHT:
-			camvelocity.x += 0.05f;
-			if (camvelocity.x > 2.0f)camvelocity.x = 1.0f;
+			if (lastcamdirection != CS_MOVING_RIGHT)
+			{
+				camvelocity.x += 0.02f;
+				if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
+			}
+			else camvelocity.x = 0;
 			break;
 		}
 
-		currentcam.x -= 8.0f * camvelocity.x;
+		currentcam.x -= App->player->GetVelocity().x+(8.0f * camvelocity.x);
 
 		break;
 	}

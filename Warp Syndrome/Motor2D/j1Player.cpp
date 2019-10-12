@@ -55,7 +55,9 @@ bool j1Player::Start()
 
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
-
+	//TODO load those values from the xml instead of harcoding them
+	playervel.x = 4.0f;
+	playervel.y = 0.0f;
 
 	return ret;
 }
@@ -147,4 +149,9 @@ bool j1Player::GetFliped()
 void j1Player::SetFliped(bool flip)
 {
 	rotated = flip;
+}
+
+fPoint j1Player::GetVelocity()
+{
+	return playervel;
 }

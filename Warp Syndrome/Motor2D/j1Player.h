@@ -77,6 +77,7 @@ public:
 	void AddPosition(float x, float y);
 
 	fPoint GetPosition();
+	fPoint GetVelocity();
 
 	bool GetFliped();
 
@@ -85,9 +86,10 @@ public:
 
 	bool LoadAnimations(pugi::xml_node&);
 
-	fPoint playerpos;
+	
 
 private:
+	fPoint playerpos;
 	fPoint playervel;
 	PlayerStates playerState;
 	p2List<Animations*> playerAnimations;

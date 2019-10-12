@@ -50,8 +50,8 @@ bool j1Collision::CleanUp() {
 collision_type j1Collision::CheckCollider(pugi::xml_node& collider_node) {
 
 	//player variables
-	float x = App->player->playerpos.x;
-	float y = App->player->playerpos.y;
+	float x = App->player->GetPosition().x;
+	float y = App->player->GetPosition().y;
 	float player_w = 0;	// TODO use character height to differenciate x axis from x_y axis
 	float player_h = 0;	// TODO use character height to differenciate x axis from x_y axis
 

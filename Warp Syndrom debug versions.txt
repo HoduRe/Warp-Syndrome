@@ -1,4 +1,4 @@
-Current version: 0.0.1.8-debug
+Current version: 0.0.1.10-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -38,3 +38,6 @@ Update 0.0.1.9-debug
 -Enabled Vsync in the game and adjusted the duration of the frames in the"mockup animation".
 
 
+Update 0.0.1.10-debug
+-Improved camera, still needs work
+-Added new function to Player and fixed it in the collision module

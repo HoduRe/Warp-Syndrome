@@ -42,9 +42,11 @@ public:
 
 	collision_type CheckCollider(pugi::xml_node& collider_node);
 	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
+	bool ChargeMapName();
 
-	p2SString current_map_name;
 	collision_type current_collision = NONE_COLLISION;
+	bool changemap = true;
+	p2SString tmp;
 
 private:
 	pugi::xml_document map_file;

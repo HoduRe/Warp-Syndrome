@@ -2,3 +2,8 @@ Current version: 0.0.1.7-debug
 
 Update 0.0.1.7-debug
 -Collider module added
+
+Update 0.0.1.8-debug
+-Collider map charge fixed
+
+

@@ -26,15 +26,11 @@ bool j1Collision::Start()
 bool j1Collision::Update(float dt) {
 	
 	bool ret = true;
-	pugi::xml_parse_result result = map_file.load_file(current_map_name.GetString());
+	if (changemap == true) { ret = ChargeMapName(); }
+	
 	collision_type collision_array[LAST_COLLISION] = {NONE_COLLISION, NONE_COLLISION, NONE_COLLISION, NONE_COLLISION,
 	LEFT_UPPER_COLLISION, RIGHT_UPPER_COLLISION, NONE_COLLISION, LEFT_GROUND_COLLISION, RIGHT_GROUND_COLLISION, GROUND_UPPER_COLLISION, };
 	// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
-
-	if (result == NULL){
-		LOG("Could not load map xml file %s. pugi error: %s", current_map_name, result.description());
-		ret = false;
-	}
 	
 	for (collider_node = map_file.child("objectgroup").child("obect"); collider_node && ret; collider_node = collider_node.next_sibling()){
 		current_collision = CheckCollider(collider_node);
@@ -92,4 +88,14 @@ collision_type j1Collision::GetCollisionType(collision_type collision_array[], c
 	}
 
 	return current_collision = collision_array[collision_count];
+}
+
+bool j1Collision::ChargeMapName() {
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	if (result == NULL) {
+		LOG("Could not load map xml file. pugi error: %s", result.description());
+		return false;
+	}
+	changemap = false;
+	return true;
 }

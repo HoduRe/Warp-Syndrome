@@ -117,6 +117,8 @@ bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
+	App->collision->tmp = tmp;
+	App->collision->changemap = true;
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
@@ -411,7 +413,6 @@ iPoint j1Map::WorldToMap(int x, int y, MapData& dat) const
 
 bool j1Map::ReloadMap(p2SString newmap)
 {
-	App->collision->current_map_name = newmap;
 	p2List_item<TileSet*>* item = data.tilesets.start;
 	while (item != NULL)
 	{

@@ -43,6 +43,9 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1State.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -106,6 +109,9 @@
       <Filter>Programming %28p2%29=========</Filter>
     </ClInclude>
     <ClInclude Include="j1Collision.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1State.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>

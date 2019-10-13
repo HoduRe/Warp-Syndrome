@@ -54,4 +54,4 @@ private:
 	p2SString filename;
 };
 
-#endif // __j1AUDIO_H__
+#endif // __j1COLLISION_H__

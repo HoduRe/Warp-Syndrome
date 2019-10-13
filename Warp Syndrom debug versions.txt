@@ -37,7 +37,9 @@ Update 0.0.1.9-debug
 -Added Basic camera (needs to be refined)
 -Enabled Vsync in the game and adjusted the duration of the frames in the"mockup animation".
 
-
 Update 0.0.1.10-debug
 -Improved camera, still needs work
 -Added new function to Player and fixed it in the collision module
+
+Update 0.0.1.11-debug
+-State machine implemented

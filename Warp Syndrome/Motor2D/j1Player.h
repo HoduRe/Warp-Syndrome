@@ -5,39 +5,6 @@
 #include "Animations.h"
 #include "SDL/include/SDL.h"
 
-
-//enums all the stats in which the player can be at any given moment
-//it is used in the Finite Stat Machine
-enum PlayerStates
-{
-	ST_UNKNOWN,
-	ST_IDLE,
-	ST_WALKING,
-	ST_RUNNING,
-	ST_GOINGTOCROUCH,
-	ST_CROUCHING,
-	ST_JUMPING,
-	ST_SLIDINGONWALL,
-	ST_DEAD,
-	ST_GODMODE,
-	ST_TROWINGGRENADE
-};
-
-//enums all the imputs needed for the Finite Stat Machine
-enum PlayerInputs
-{
-	IN_UNKNOWN,
-	IN_BUTTON_UP,
-	IN_BUTTON_DOWN,
-	IN_BUTTON_LEFT,
-	IN_BUTTON_RIGTH,
-	IN_BUTTON_THROW,
-	IN_FLOOR_COLLISION,
-	IN_WALL_COLLISION,
-	IN_GOD_MODE,
-	IN_DEAD
-};
-
 //this class holds all the data for the player
 class j1Player :public j1Module
 {
@@ -86,12 +53,10 @@ public:
 
 	bool LoadAnimations(pugi::xml_node&);
 
-	
+	fPoint playerpos;	// TODO Hacer una función que altere la posición para la máquina de estados
 
 private:
-	fPoint playerpos;
 	fPoint playervel;
-	PlayerStates playerState;
 	p2List<Animations*> playerAnimations;
 	SDL_Event events;
 	pugi::xml_document playerdoc;

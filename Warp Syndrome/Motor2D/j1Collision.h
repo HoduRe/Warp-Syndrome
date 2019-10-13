@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "j1Map.h"
 #include "PugiXml/src/pugixml.hpp"
 
 enum collision_type {
@@ -40,18 +41,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	collision_type CheckCollider(pugi::xml_node& collider_node);
-	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
-	bool ChargeMapName();
+	void SetPointerToObjGroup(p2List<ObjectGroup*> &pointerObjList);
 
-	collision_type current_collision = NONE_COLLISION;
-	bool changemap = true;
-	p2SString tmp;
+	collision_type CheckCollider(p2List_item<Object*>* currentobj);
+	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
+
+	collision_type current_collision;
 
 private:
-	pugi::xml_document map_file;
-	pugi::xml_node collider_node;
-	p2SString filename;
+	p2List<ObjectGroup*> pObjGroupList;
 };
 
 #endif // __j1COLLISION_H__

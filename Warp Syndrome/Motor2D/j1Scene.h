@@ -12,12 +12,6 @@ enum MapLoaded
 	LEVEL4
 };
 
-enum CamState
-{
-	CS_STILL,
-	CS_MOVING_LEFT,
-	CS_MOVING_RIGHT
-};
 struct SDL_Texture;
 
 class j1Scene : public j1Module
@@ -49,12 +43,18 @@ public:
 
 	void RepositionCamera();
 
+	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
+
 private:
 	bool reload = false;
 	MapLoaded currentlevel=LEVEL1; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout
+	
+	
+	//Reposition Camera Variables========================================================================
 	fPoint camvelocity;
-	CamState camstate;
-	CamState lastcamdirection;
+	bool targetRight;//true if Right, false if Left
+	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
+	bool snapping;//true if its currently snapping false if else
 };
 
 #endif // __j1SCENE_H__

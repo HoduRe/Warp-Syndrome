@@ -35,8 +35,8 @@ bool j1Scene::Start()
 	App->render->camera.x = App->player->GetPosition().x;
 	App->render->camera.y = App->player->GetPosition().y;
 	camvelocity = { 0.0f,0.0f };
-	camstate = CS_STILL;
-	lastcamdirection = CS_STILL;
+	arrivedtoline = false;
+	snapping = false;
 	return true;
 }
 
@@ -128,7 +128,14 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		reload = true;
 	//TODO position camera relative to the player
-	RepositionCamera();
+	
+	
+	
+	//RepositionCamera currently deactivated
+	//RepositionCamera();
+	App->render->camera.x = -((App->player->playerpos.x*App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
+	App->render->camera.y = -((App->player->playerpos.y*App->win->GetScale()) - (App->render->camera.w*2 / 3));
+
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
@@ -163,15 +170,16 @@ bool j1Scene::CleanUp()
 
 void j1Scene::RepositionCamera()
 {
-	//variables-------------------------------------------------------------------
+	////variables-------------------------------------------------------------------
 	fPoint playerpos = App->player->GetPosition();
 	bool playerfliped = App->player->GetFliped();
-	int scale = App->win->GetScale();
+	bool lasttargetRight = targetRight;//targetRight for the last frame
+	//int scale = App->win->GetScale();
 	int camW = App->render->camera.w;
 	int camH = App->render->camera.h;
 	fPoint target;
 	fPoint currentcam;
-	CamState lastcamstate = camstate;
+	//CamState lastcamstate = camstate;
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
 	if (!playerfliped)
@@ -181,89 +189,162 @@ void j1Scene::RepositionCamera()
 	target.y = playerpos.y;
 
 
-	if (((currentcam.x * -1) + (camW / 3) > target.x))//move camera to the left
-	{
-		camstate = CS_MOVING_LEFT;
-		lastcamdirection = CS_MOVING_LEFT;
-	}
-	else if ((currentcam.x * -1) + (camW * 2 / 3) < target.x)//move camera to the right
-	{
-		camstate = CS_MOVING_RIGHT;
-		lastcamdirection = CS_MOVING_RIGHT;
-	}
-	else camstate = CS_STILL;
+	//if (((currentcam.x * -1) + (camW / 3) > target.x))//move camera to the left
+	//{
+	//	camstate = CS_MOVING_LEFT;
+	//	lastcamdirection = CS_MOVING_LEFT;
+	//}
+	//else if ((currentcam.x * -1) + (camW * 2 / 3) < target.x)//move camera to the right
+	//{
+	//	camstate = CS_MOVING_RIGHT;
+	//	lastcamdirection = CS_MOVING_RIGHT;
+	//}
+	//else camstate = CS_STILL;
 
-	switch (camstate)
+	//switch (camstate)
+	//{
+	//case CS_STILL:
+	//	switch (lastcamstate)
+	//	{
+	//	case CS_STILL:			
+	//		camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_LEFT:
+	//		camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_RIGHT:
+	//		camvelocity.x = 0;
+	//		break;
+	//	}
+	//	break;
+	//case CS_MOVING_LEFT:
+	//	switch (lastcamstate)
+	//	{
+	//	case CS_STILL:
+	//		camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_LEFT:
+	//		if (lastcamdirection != CS_MOVING_LEFT)
+	//		{
+	//			camvelocity.x += 0.02f;
+	//			if (camvelocity.x > 2.0f)camvelocity.x = 2.0f;
+	//		}
+	//		else camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_RIGHT:
+	//		camvelocity.x = 0;
+	//		break;
+	//	}
+
+	//	currentcam.x += App->player->GetVelocity().x+(8.0f * camvelocity.x);
+
+	//	break;
+	//case CS_MOVING_RIGHT:
+	//	switch (lastcamstate)
+	//	{
+	//	case CS_STILL:
+	//		camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_LEFT:
+	//		camvelocity.x = 0;
+	//		break;
+	//	case CS_MOVING_RIGHT:
+	//		if (lastcamdirection != CS_MOVING_RIGHT)
+	//		{
+	//			camvelocity.x += 0.02f;
+	//			if (camvelocity.x > 2.0f)camvelocity.x = 2.0f;
+	//		}
+	//		else camvelocity.x = 0;
+	//		break;
+	//	}
+
+	//	currentcam.x -= App->player->GetVelocity().x+(8.0f * camvelocity.x);
+
+	//	break;
+	//}
+	//currentcam.y = -1 * (target.y - (camH * 2 / 3));
+
+	//App->render->camera.x = currentcam.x;
+	//App->render->camera.y = currentcam.y;
+	//LOG("-");
+
+	if (target.x > -currentcam.x + (camW * 2 / 3))targetRight = true;
+	else if (target.x < +currentcam.x + (camW / 3))targetRight = false;
+
+
+	if (targetRight == lasttargetRight)//target is in the same side of the screen as last frame
 	{
-	case CS_STILL:
-		switch (lastcamstate)
+		//Has arrived to the line?
+		if (arrivedtoline)//yes//activate snapping
 		{
-		case CS_STILL:			
-			camvelocity.x = 0;
-			break;
-		case CS_MOVING_LEFT:
-			camvelocity.x = 0;
-			break;
-		case CS_MOVING_RIGHT:
-			camvelocity.x = 0;
-			break;
-		}
-		break;
-	case CS_MOVING_LEFT:
-		switch (lastcamstate)
-		{
-		case CS_STILL:
-			camvelocity.x = 0;
-			break;
-		case CS_MOVING_LEFT:
-			if (lastcamdirection != CS_MOVING_LEFT)
+			snapping = true;
+
+			if (targetRight)//right side
 			{
-				camvelocity.x += 0.02f;
-				if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
+
+				if (target.x > -currentcam.x + (camW * 2 / 3) - 20 && target.x < -currentcam.x + (camW * 2 / 3) + 20)//where 20 is the distance from the line to be snapped
+				{
+					currentcam.x = -target.x + (camW * 2 / 3);
+				}
+				else currentcam.x = CameraGoToTarget(App->render->camera, target);
 			}
-			else camvelocity.x = 0;
-			break;
-		case CS_MOVING_RIGHT:
-			camvelocity.x = 0;
-			break;
-		}
-
-		currentcam.x += App->player->GetVelocity().x+(8.0f * camvelocity.x);
-
-		break;
-	case CS_MOVING_RIGHT:
-		switch (lastcamstate)
-		{
-		case CS_STILL:
-			camvelocity.x = 0;
-			break;
-		case CS_MOVING_LEFT:
-			camvelocity.x = 0;
-			break;
-		case CS_MOVING_RIGHT:
-			if (lastcamdirection != CS_MOVING_RIGHT)
+			else//left side
 			{
-				camvelocity.x += 0.02f;
-				if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
+				if (target.x < -currentcam.x + (camW*2/ 6) + 12 && target.x > -currentcam.x + (camW / 3) - 12)
+				{
+					currentcam.x = -target.x + (camW*2/ 6);
+				}
+				else currentcam.x = CameraGoToTarget(App->render->camera, target);
+
 			}
-			else camvelocity.x = 0;
-			break;
 		}
-
-		currentcam.x -= App->player->GetVelocity().x+(8.0f * camvelocity.x);
-
-		break;
+		else currentcam.x = CameraGoToTarget(App->render->camera, target);//no//execute code to go to the line
+		
 	}
-	currentcam.y = -1 * (target.y - (camH * 2 / 3));
+	else//target is NOT in the same side of the screen as last frame
+	{
+		camvelocity.x = 0;
+		arrivedtoline = false;
+
+		if (snapping)//Was snapping active?
+			snapping = false;//yes//deactivate snapping
+		else currentcam.x = CameraGoToTarget(App->render->camera, target);//no//execute code to go to the line
+		
+	}
+
+	currentcam.y =-target.y + (camH * 2 / 3);
+
 
 	App->render->camera.x = currentcam.x;
 	App->render->camera.y = currentcam.y;
-	LOG("-");
 
 
-	//copy cam position to actual camera (not done before because camera position is an int, so there's low precision if we work with 0.x values)
-	/*App->render->camera.x = fCamPos.x;
-	App->render->camera.y = fCamPos.y;*/
 
 }
+
+//returns a float corresponding to the new Camera X position Note it doesn't reset camvel
+float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
+{
+	float newcamX = camera.x;
+	float playervel = App->player->GetVelocity().x;
+
+	if (target.x > -camera.x + (camera.w * 4/ 6))
+	{
+		newcamX -= playervel + (playervel * camvelocity.x);
+	}
+	else if (target.x < -camera.x + (camera.w* 2/ 6))
+	{
+		newcamX += playervel + (playervel * camvelocity.x);
+	}
+	else arrivedtoline = true;
+
+	if (camvelocity.x > 3.0f)camvelocity.x = 3.0f;
+	else camvelocity.x += 0.05f;
+
+	return newcamX;
+}
+
+
+
+
 

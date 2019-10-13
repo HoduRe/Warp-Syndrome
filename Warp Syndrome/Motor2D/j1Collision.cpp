@@ -6,7 +6,8 @@
 #include "p2List.h"
 #include "j1App.h"
 
-j1Collision::j1Collision() : j1Module() {
+j1Collision::j1Collision() : j1Module() 
+{
 	name.create("collision");
 }
 
@@ -19,24 +20,31 @@ bool j1Collision::Awake(pugi::xml_node& config) {
 
 bool j1Collision::Start()
 {
-
+	current_collision = NONE_COLLISION;
 	return true;
 }
 
 bool j1Collision::Update(float dt) {
-	
 	bool ret = true;
-	if (changemap == true) { ret = ChargeMapName(); }
-	
-	collision_type collision_array[LAST_COLLISION] = {NONE_COLLISION, NONE_COLLISION, NONE_COLLISION, NONE_COLLISION,
+	collision_type collision_array[LAST_COLLISION] = { NONE_COLLISION, NONE_COLLISION, NONE_COLLISION, NONE_COLLISION,
 	LEFT_UPPER_COLLISION, RIGHT_UPPER_COLLISION, NONE_COLLISION, LEFT_GROUND_COLLISION, RIGHT_GROUND_COLLISION, GROUND_UPPER_COLLISION, };
 	// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
-	
-	for (collider_node = map_file.child("map").child("objectgroup").child("obect"); collider_node && ret; collider_node = collider_node.next_sibling()){
-		current_collision = CheckCollider(collider_node);
-		collision_array[current_collision] = current_collision;
+	//iterates all the object layers, and then iterates between all the object each layer contains
+	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	while (itemOG!=NULL)
+	{
+		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
+		while (itemO!=NULL)
+		{
+			current_collision = CheckCollider(itemO);
+			collision_array[current_collision] = current_collision;
+
+			itemO = itemO->next;
+		}
+
+
+		itemOG=itemOG->next;
 	}
-	
 	current_collision = GetCollisionType(collision_array, current_collision);
 
 	return ret;
@@ -44,12 +52,10 @@ bool j1Collision::Update(float dt) {
 
 bool j1Collision::CleanUp() {
 
-	map_file.reset();
-
 	return true;
 }
 
-collision_type j1Collision::CheckCollider(pugi::xml_node& collider_node) {
+collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 
 	//player variables
 	float x = App->player->GetPosition().x;
@@ -58,12 +64,12 @@ collision_type j1Collision::CheckCollider(pugi::xml_node& collider_node) {
 	float player_h = 0;	// TODO use character height to differenciate x axis from x_y axis
 
 	//collider variables
-	float collider_x = collider_node.attribute("x").as_float() / App->map->data.tile_width;
-	float collider_y = collider_node.attribute("y").as_float() / App->map->data.tile_height;
-	float collider_w = collider_node.attribute("width").as_float() / App->map->data.tile_width;
-	float collider_h = collider_node.attribute("height").as_float() / App->map->data.tile_height;
-	
-	if (collider_y == y + player_h && collider_x < x &&	collider_x + collider_w > x) {
+	float collider_x = (float)currentobj->data->boundingbox.x / App->map->data.tile_width;
+	float collider_y = (float)currentobj->data->boundingbox.y / App->map->data.tile_height;
+	float collider_w = (float)currentobj->data->boundingbox.w / App->map->data.tile_width;
+	float collider_h = (float)currentobj->data->boundingbox.h / App->map->data.tile_height;
+
+	if (collider_y == y + player_h && collider_x < x && collider_x + collider_w > x) {
 		return GROUND_COLLISION;
 	}
 	else if (collider_x == x + player_w && collider_y < y + player_h && collider_y + collider_h > y + player_h) {
@@ -92,12 +98,9 @@ collision_type j1Collision::GetCollisionType(collision_type collision_array[], c
 	return current_collision = collision_array[collision_count];
 }
 
-bool j1Collision::ChargeMapName() {
-	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
-	if (result == NULL) {
-		LOG("Could not load map xml file. pugi error: %s", result.description());
-		return false;
-	}
-	changemap = false;
-	return true;
+
+//Called from the Map module every time a map is loaded
+void j1Collision::SetPointerToObjGroup(p2List<ObjectGroup*> &pointerObjGroupList)
+{
+	pObjGroupList = pointerObjGroupList;
 }

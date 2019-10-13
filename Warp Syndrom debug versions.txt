@@ -1,4 +1,4 @@
-Current version: 0.0.1.10-debug
+Current version: 0.0.1.13-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -46,3 +46,9 @@ Update 0.0.1.11-debug
 
 Update 0.0.1.12-debug
 -State machine remade, added functionality and made it easier to read
+
+Update 0.0.1.13-debug
+-Implemented the load of object layers and properties in the map module
+-Added code to let the collision module read collisions from the map object layers.
+-Updated the camera movement function to a more refined version but it is still buggy so we disabled it for the time being.
+-Now the camera centers on the player.

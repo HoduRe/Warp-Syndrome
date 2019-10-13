@@ -106,6 +106,38 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	//Remove all the objectlayers
+	p2List_item<ObjectGroup*>* itemOG;
+	itemOG = data.objgroups.start;
+	while (itemOG != NULL)
+	{
+		//remove all the objects
+		p2List_item<Object*>* itemO;
+		itemO = itemOG->data->objlist.start;
+		while (itemO != NULL)
+		{
+
+			RELEASE(itemO->data);
+			itemO = itemO->next;
+		}
+		itemOG->data->objlist.clear();
+		
+		//remove all the properties
+		p2List_item<Properties*>* itemP;
+		itemP = itemOG->data->proplist.start;
+		while (itemP != NULL)
+		{
+
+			RELEASE(itemP->data);
+			itemP = itemP->next;
+		}
+		itemOG->data->proplist.clear();
+
+		RELEASE(itemOG->data);
+		itemOG = itemOG->next;
+	}
+	data.objgroups.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -117,8 +149,6 @@ bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
-	App->collision->tmp = tmp;
-	App->collision->changemap = true;
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
@@ -166,7 +196,19 @@ bool j1Map::Load(const char* file_name)
 
 		data.layers.add(set);
 	}
+	//Load object info-----------------------------------------------
+	for (pugi::xml_node currentobjgroup = map_file.child("map").child("objectgroup"); currentobjgroup && ret; currentobjgroup = currentobjgroup.next_sibling("objectgroup"))
+	{
+		ObjectGroup* set = new ObjectGroup();
 
+		if (ret == true)
+		{
+			ret = LoadObjGroup(currentobjgroup,set);
+		}
+
+		data.objgroups.add(set);
+	}
+	App->collision->SetPointerToObjGroup(data.objgroups);//adds a pointer to the objectgroup list in the colision module
 
 	//Loaded Info ---------------------------------------------------
 	if (ret == true)
@@ -203,8 +245,8 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	
 	map_loaded = ret;
-
 	return ret;
 }
 
@@ -367,6 +409,38 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	return ret;
 }
 
+bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
+{
+	bool ret = true;
+	group->name.create(objgroupnode.attribute("name").as_string());
+	group->id=objgroupnode.attribute("id").as_uint();
+
+	//Load properties--------------------------------------------
+	for (pugi::xml_node currentprop= objgroupnode.child("properties").child("property");currentprop;currentprop=currentprop.next_sibling("property"))
+	{
+		Properties* set = new Properties;
+		set->name = currentprop.attribute("name").as_string();
+		set->value = currentprop.attribute("value").as_bool();
+		group->proplist.add(set);
+	}
+
+	//Load objects-----------------------------------------------
+	for (pugi::xml_node currentobj = objgroupnode.child("object"); currentobj; currentobj = currentobj.next_sibling("object"))
+	{
+		Object* set = new Object;
+		set->id = currentobj.attribute("id").as_uint();
+		set->boundingbox.x = currentobj.attribute("x").as_int();
+		set->boundingbox.y = currentobj.attribute("y").as_int();
+		set->boundingbox.h = currentobj.attribute("height").as_int();
+		set->boundingbox.w = currentobj.attribute("width").as_int();
+
+		group->objlist.add(set);
+	}
+
+	return ret;
+}
+
+
 //gets the position in a 1 row vector
 //X horizontal, Y vertical, data.layers.(currentlayer)
 inline uint j1Map::Get(int x, int y, p2List_item<MapLayer*>currentlayer) const
@@ -460,3 +534,4 @@ MapData::~MapData()
 	}*/
 
 }
+

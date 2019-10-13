@@ -133,8 +133,8 @@ bool j1Scene::Update(float dt)
 	
 	//RepositionCamera currently deactivated
 	//RepositionCamera();
-	App->render->camera.x = -((App->player->playerpos.x*App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
-	App->render->camera.y = -((App->player->playerpos.y*App->win->GetScale()) - (App->render->camera.w*2 / 3));
+	App->render->camera.x = -((App->player->GetPosition().x*App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
+	App->render->camera.y = -((App->player->GetPosition().y*App->win->GetScale()) - (App->render->camera.w*2 / 3));
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

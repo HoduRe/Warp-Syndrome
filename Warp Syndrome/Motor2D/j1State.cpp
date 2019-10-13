@@ -29,8 +29,9 @@ bool j1State::Update(float dt) {
 
 	bool ret = true;
 
-	MoveState();	// transitions automatic states, like jumping->falling->idle
+	ChangeState();	// transitions automatic states, like jumping->falling->idle
 	CheckInputs();	// Checks active states (based on inputs)
+	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
 	ChangeAnimation();	// Puts the proper animation
 
@@ -44,154 +45,189 @@ bool j1State::CleanUp() {
 	return true;
 }
 
-void j1State::MoveState() {
-	if (current_state == THROWING_GRENADE_ON_AIR && internal_counter - animation_counter == 0) {	// TODO Switch 0 for the duration of the throw granade animation
-		current_state == FALLING_DOWN;
+void j1State::ChangeState() {
+	if (animation_end == true) { // TODO maybe change this condition to "when reaching point A instead of when animation ends"
+		switch (current_state) {
+		case FREE_JUMP:
+		case WALL_JUMP:
+			current_state = FREE_FALLING;
+			break;
+		case SLIDING_TO_IDLE:
+		case THROWING_GRENADE:
+		case TELEPORT:
+			current_state == IDLE;
+			break;
+		case THROWING_GRENADE_ON_AIR:
+			current_state == FREE_FALLING;
+			break;
+		case DEAD:
+			current_state == WAKE_UP;
+			break;
+		}
 	}
-	else if (current_state == THROWING_GRENADE && internal_counter - animation_counter == 0) {	// TODO Switch 0 for the duration of the throw granade animation
-		current_state == IDLE;
-	}
-	else if (current_state == DEAD && internal_counter - animation_counter == 0) {
-		current_state == WAKE_UP;
-	}
-	else if ((current_state == JUMP_BACKWARD || current_state == WALL_JUMP_BACKWARD) &&
-		internal_counter - animation_counter == 0 && (App->collision->current_collision != LEFT_COLLISION && App->collision->current_collision != LEFT_UPPER_COLLISION)) {
-		current_state = FALLING_BACKWARD;
-	}
-	else if ((current_state == JUMP_BACKWARD || current_state == WALL_JUMP_BACKWARD) &&
-		(App->collision->current_collision == LEFT_COLLISION || App->collision->current_collision == LEFT_UPPER_COLLISION)) {
-		current_state = SLIDING_ON_LEFT_WALL;
-	}
-	else if ((current_state == JUMP_FORWARD || current_state == WALL_JUMP_FORWARD) &&
-		internal_counter - animation_counter == 0 && (App->collision->current_collision != RIGHT_COLLISION && App->collision->current_collision != RIGHT_UPPER_COLLISION)) {
-		current_state = FALLING_FORWARD;
-	}
-	else if ((current_state == JUMP_FORWARD || current_state == WALL_JUMP_FORWARD) &&
-		(App->collision->current_collision == RIGHT_COLLISION || App->collision->current_collision == RIGHT_UPPER_COLLISION)) {
-		current_state = SLIDING_ON_RIGHT_WALL;
-	}
-	else if (current_state == JUMP_UP && (App->collision->current_collision == UPPER_COLLISION || internal_counter - animation_counter == 0)) {
-		current_state = FALLING_DOWN;
-	}
-	else if ((current_state == FALLING_BACKWARD || current_state == FALLING_FORWARD || current_state == FALLING_DOWN) &&
-		(App->collision->current_collision == GROUND_COLLISION || App->collision->current_collision == LEFT_GROUND_COLLISION ||
-			App->collision->current_collision == GROUND_COLLISION)) {
-		current_state = IDLE;
-	}
-	else if ((current_state == SLIDING_ON_LEFT_WALL || current_state == SLIDING_ON_RIGHT_WALL) && (App->collision->current_collision == GROUND_COLLISION ||
-		App->collision->current_collision == LEFT_GROUND_COLLISION || App->collision->current_collision == GROUND_COLLISION)) {
-		current_state = SLIDING_TO_IDLE;
-		animation_counter = internal_counter;
-	}
-	else if (current_state == SLIDING_TO_IDLE && internal_counter - animation_counter == 0) {
-		current_state = IDLE;
-	}
-	// TODO Define an else if for state TELEPORT, when grenade is implemented
-	// TODO Define an else if for state DEAD, when death is implemented
 }
 
 void j1State::CheckInputs() {
-	// TODO delete the inputs that influates player move on j1Scene
-	if (current_state == IDLE || current_state == WALK_FORWARD || current_state == WALK_BACKWARD
-		|| current_state == RUN_FORWARD || current_state == RUN_BACKWARD) {
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-			current_state = JUMP_FORWARD;
-			animation_counter = internal_counter;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-			current_state = JUMP_BACKWARD;
-			animation_counter = internal_counter;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
-			current_state = JUMP_UP;
-			animation_counter = internal_counter;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && current_state == RUN_FORWARD) {
-			current_state = RUN_FORWARD;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && current_state == RUN_BACKWARD) {
-			current_state = RUN_BACKWARD;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+
+	switch (current_state) {
+	case IDLE:
+	case WALK_FORWARD:
+	case WALK_BACKWARD:
+	case RUN_FORWARD:
+	case RUN_BACKWARD:
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { current_state = FREE_JUMP; }
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_FORWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_BACKWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT == KEY_DOWN)) {
+			current_state = WALK_FORWARD;
 			run_counter++;
-			if (run_counter == 6) { current_state = RUN_FORWARD; run_counter = 0; }
-			else { current_state = WALK_FORWARD; }	// TODO move the run_counter to player xml
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT == KEY_DOWN)){
+			current_state = WALK_BACKWARD;
 			run_counter++;
-			if (run_counter == 6) { current_state = RUN_BACKWARD; run_counter = 0; }
-			else { current_state = WALK_BACKWARD; }
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
-			current_state = THROWING_GRENADE;
-			animation_counter = internal_counter;
-			granade = true;
+		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE; grenade = true; }
+		else { current_state = IDLE; run_counter = 0; }
+		break;
+	case FREE_JUMP:
+	case FREE_FALLING:
+	case WALL_JUMP:
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
+		break;
+	case SLIDING_ON_RIGHT_WALL:
+		if (current_state == SLIDING_ON_RIGHT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			current_state = WALL_JUMP;
+			App->player->ChangePosition(-1, 1);
 		}
-		else { current_state = IDLE; }
-	}
-	else if ((current_state == JUMP_BACKWARD || current_state == JUMP_FORWARD || current_state == JUMP_UP ||
-		current_state == WALL_JUMP_FORWARD || current_state == WALL_JUMP_BACKWARD) && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
-		current_state = THROWING_GRENADE_ON_AIR;
-		animation_counter = internal_counter;
-		granade = true;
-	}
-	else if (current_state == SLIDING_ON_RIGHT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		current_state = WALL_JUMP_BACKWARD;
-		animation_counter = internal_counter;
-	}
-	else if (current_state == SLIDING_ON_LEFT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		current_state = WALL_JUMP_FORWARD;
-		animation_counter = internal_counter;
+		break;
+	case SLIDING_ON_LEFT_WALL:
+		if (current_state == SLIDING_ON_LEFT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			current_state = WALL_JUMP;
+			App->player->ChangePosition(1, 1);
+		}
+		break;
+
 	}
 
-	return;
+	// TODO delete the inputs that influates player move on j1Scene
+	// TODO move the run_counter to player xml
+	// TODO read free jump, fall and wall jump inputs
+}
+
+void j1State::CheckColliders() {
+
+	switch (App->collision->current_collision) {
+	case NONE:	// Falling from a cliff collisions
+		switch (current_state) {
+		case IDLE:
+		case THROWING_GRENADE:
+		case WALK_FORWARD:
+		case RUN_FORWARD:
+		case WALK_BACKWARD:
+		case RUN_BACKWARD:
+			current_state = FREE_FALLING;
+			break;
+		}
+	case UPPER_COLLISION:	// Touching the roof collisions
+	case GROUND_UPPER_COLLISION:
+		switch (current_state) {
+		case FREE_JUMP:
+		case THROWING_GRENADE_ON_AIR:
+		case WALL_JUMP:
+			current_state = FREE_FALLING;
+			break;
+		case IDLE:
+		case WALK_BACKWARD:
+		case WALK_FORWARD:
+		case RUN_BACKWARD:
+		case RUN_FORWARD:
+		case THROWING_GRENADE:
+		case SLIDING_TO_IDLE:
+			current_state = DEAD;
+			break;
+		}
+		break;
+	case RIGHT_COLLISION:	// Touching a right wall collisions
+	case RIGHT_UPPER_COLLISION:
+		switch (current_state) {
+		case FREE_JUMP:
+		case FREE_FALLING:
+		case WALL_JUMP:
+		case THROWING_GRENADE_ON_AIR:
+			current_state = SLIDING_ON_RIGHT_WALL;
+			break;
+		}
+		break;
+	case LEFT_COLLISION:	// Touching a left wall collisions
+	case LEFT_UPPER_COLLISION:
+		switch (current_state) {
+		case FREE_JUMP:
+		case FREE_FALLING:
+		case WALL_JUMP:
+		case THROWING_GRENADE_ON_AIR:
+			current_state = SLIDING_ON_LEFT_WALL;
+			break;
+		}
+		break;
+	case GROUND_COLLISION:	// Touching the ground collisions
+		switch (current_state) {
+		case FREE_FALLING:
+			current_state = IDLE;
+			break;
+		}
+		break;
+	case LEFT_GROUND_COLLISION:	// Touching the ground collisions
+	case RIGHT_GROUND_COLLISION:
+		switch (current_state) {
+		case FREE_FALLING:
+		case WALK_BACKWARD:
+		case WALK_FORWARD:
+		case RUN_BACKWARD:
+		case RUN_FORWARD:
+			current_state = IDLE;
+			break;
+		case SLIDING_ON_LEFT_WALL:
+		case SLIDING_ON_RIGHT_WALL:
+			current_state = SLIDING_TO_IDLE;
+			break;
+		}
+		break;
+	}
 }
 
 void j1State::MovePlayer() {
 	// X AXIS MOVEMENT
-	if (App->collision->current_collision != RIGHT_GROUND_COLLISION && (current_state == WALK_FORWARD || current_state == RUN_FORWARD)) {
-		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) {
-			App->player->playerpos.x++;
-		}
-		else { App->player->playerpos.x++; }
+	switch (current_state) {
+	case WALK_FORWARD:
+	case RUN_FORWARD:
+		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->ChangePosition(1, 0); }
+		else { App->player->ChangePosition(1, 0); }	// Position iterates by 1 because of collider detection
+		break;
+	case WALK_BACKWARD:
+	case RUN_BACKWARD:
+		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->ChangePosition(-1, 0); }
+		else { App->player->ChangePosition(-1, 0); }	// Position iterates by 1 because of collider detection
+		break;
+	case FREE_JUMP:
+	case FREE_FALLING:
+	case WALL_JUMP:
+		App->player->ChangePosition(1, 0);
+		break;
 	}
-	else if (App->collision->current_collision != LEFT_GROUND_COLLISION && (current_state == WALK_BACKWARD || current_state == RUN_BACKWARD)) {
-		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) {
-			App->player->playerpos.x--;
-		}
-		else { App->player->playerpos.x--; }
-	}
-	if ((App->collision->current_collision != RIGHT_COLLISION && App->collision->current_collision != RIGHT_UPPER_COLLISION) &&
-		(current_state == JUMP_FORWARD || current_state == FALLING_FORWARD	|| current_state == WALL_JUMP_FORWARD)) {
-		App->player->playerpos.x++;
-	}
-	else if ((App->collision->current_collision != LEFT_COLLISION && App->collision->current_collision != LEFT_UPPER_COLLISION) &&
-		(current_state == JUMP_BACKWARD || current_state == FALLING_BACKWARD || current_state == WALL_JUMP_BACKWARD)) {
-		App->player->playerpos.x--;
-	}
-	
+
 	// Y AXIS MOVEMENT
-	if ((App->collision->current_collision != RIGHT_UPPER_COLLISION && App->collision->current_collision != LEFT_UPPER_COLLISION && App->collision->current_collision != UPPER_COLLISION)
-		&& (current_state == JUMP_FORWARD || current_state == WALL_JUMP_FORWARD) || current_state == JUMP_BACKWARD || current_state == WALL_JUMP_BACKWARD || current_state == JUMP_UP) {
-		App->player->playerpos.y--;
-	}
-	else if (App->collision->current_collision != GROUND_COLLISION && (current_state == FALLING_BACKWARD
-		|| current_state == FALLING_FORWARD || current_state == FALLING_DOWN)) {
-		App->player->playerpos.y++;
-	}
-
-	// COLLISION MAKES A STATE SWITCH
-	if ((App->collision->current_collision == RIGHT_COLLISION || App->collision->current_collision == RIGHT_UPPER_COLLISION) &&
-		(current_state == JUMP_FORWARD || current_state == WALL_JUMP_FORWARD || current_state == FALLING_FORWARD)) {
-		current_state = SLIDING_ON_RIGHT_WALL;
-	}
-	else if ((App->collision->current_collision == LEFT_COLLISION || App->collision->current_collision == LEFT_UPPER_COLLISION) &&
-		(current_state == JUMP_BACKWARD || current_state == WALL_JUMP_BACKWARD || current_state == FALLING_BACKWARD)) {
-		current_state = SLIDING_ON_LEFT_WALL;
-	}
-
-	if (current_state == SLIDING_ON_RIGHT_WALL || current_state == SLIDING_ON_LEFT_WALL) {
-		App->player->playerpos.y++;
+	switch (current_state) {
+	case FREE_JUMP:
+	case WALL_JUMP:
+		App->player->ChangePosition(0, -1);
+		break;
+	case FREE_FALLING:
+		App->player->ChangePosition(0, 1);
+		break;
+	case SLIDING_ON_LEFT_WALL:
+	case SLIDING_ON_RIGHT_WALL:
+		App->player->ChangePosition(0, 1);
+		break;
 	}
 }
 

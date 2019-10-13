@@ -7,6 +7,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1State.h"
 #include "SDL/include/SDL.h"
 #include "j1Player.h"
 
@@ -75,7 +76,8 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	FrameInfo* frame = playerAnimations.start->data->StepAnimation();
-		App->render->Blit(playertexture, playerpos.x-frame->textureoffset.x, playerpos.y-frame->animationRect.h -frame->textureoffset.y, &frame->animationRect);
+	App->render->Blit(playertexture, playerpos.x-frame->textureoffset.x, playerpos.y-frame->animationRect.h -frame->textureoffset.y, &frame->animationRect);
+	App->state->animation_end = playerAnimations.start->data->GetAnimationFinish();
 	return true;
 }
 
@@ -154,4 +156,9 @@ void j1Player::SetFliped(bool flip)
 fPoint j1Player::GetVelocity()
 {
 	return playervel;
+}
+
+void j1Player::ChangePosition(int x, int y) {
+	playerpos.x += x;
+	playerpos.y += y;
 }

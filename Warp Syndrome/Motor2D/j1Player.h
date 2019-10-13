@@ -48,14 +48,15 @@ public:
 
 	bool GetFliped();
 
-	void j1Player::SetFliped(bool flip);
+	void SetFliped(bool flip);
 
 
 	bool LoadAnimations(pugi::xml_node&);
 
-	fPoint playerpos;	// TODO Hacer una función que altere la posición para la máquina de estados
+	void ChangePosition(int x, int y);
 
 private:
+	fPoint playerpos;;
 	fPoint playervel;
 	p2List<Animations*> playerAnimations;
 	SDL_Event events;

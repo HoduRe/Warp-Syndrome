@@ -43,3 +43,6 @@ Update 0.0.1.10-debug
 
 Update 0.0.1.11-debug
 -State machine implemented
+
+Update 0.0.1.12-debug
+-State machine remade, added functionality and made it easier to read

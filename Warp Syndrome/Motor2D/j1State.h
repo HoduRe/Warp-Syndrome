@@ -11,19 +11,14 @@ enum state_list {
 	WALK_BACKWARD,
 	RUN_FORWARD,
 	RUN_BACKWARD,
-	JUMP_UP,
-	JUMP_FORWARD,
-	JUMP_BACKWARD,
-	FALLING_DOWN,
-	FALLING_FORWARD,
-	FALLING_BACKWARD,
+	FREE_JUMP,
+	FREE_FALLING,
 	THROWING_GRENADE,
 	THROWING_GRENADE_ON_AIR,
 	TELEPORT,
 	SLIDING_ON_RIGHT_WALL,
 	SLIDING_ON_LEFT_WALL,
-	WALL_JUMP_FORWARD,
-	WALL_JUMP_BACKWARD,
+	WALL_JUMP,
 	SLIDING_TO_IDLE,
 	WAKE_UP,
 	DEAD,
@@ -52,22 +47,24 @@ public:
 	bool CleanUp();
 
 	// transitions automatic states, like jumping->falling->idle
-	void MoveState();
+	void ChangeState();
 	// Gives a state based on inputs
 	void CheckInputs();
+	// Checks Colliders
+	void CheckColliders();
 	// Moves player position
 	void MovePlayer();
 	// Puts the proper animation
 	void ChangeAnimation();
 
 	state_list current_state;
+	bool animation_end = false;
 
 private:
 	bool double_jump = true;
-	bool granade = false;
+	bool grenade = false;
 	int run_counter = 0;
 	int internal_counter = 0;
-	int animation_counter = 0;
 };
 
 #endif // __j1STATE_H__

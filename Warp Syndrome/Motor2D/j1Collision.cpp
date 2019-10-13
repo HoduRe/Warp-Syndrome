@@ -32,7 +32,7 @@ bool j1Collision::Update(float dt) {
 	LEFT_UPPER_COLLISION, RIGHT_UPPER_COLLISION, NONE_COLLISION, LEFT_GROUND_COLLISION, RIGHT_GROUND_COLLISION, GROUND_UPPER_COLLISION, };
 	// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
 	
-	for (collider_node = map_file.child("objectgroup").child("obect"); collider_node && ret; collider_node = collider_node.next_sibling()){
+	for (collider_node = map_file.child("map").child("objectgroup").child("obect"); collider_node && ret; collider_node = collider_node.next_sibling()){
 		current_collision = CheckCollider(collider_node);
 		collision_array[current_collision] = current_collision;
 	}
@@ -43,6 +43,8 @@ bool j1Collision::Update(float dt) {
 }
 
 bool j1Collision::CleanUp() {
+
+	map_file.reset();
 
 	return true;
 }

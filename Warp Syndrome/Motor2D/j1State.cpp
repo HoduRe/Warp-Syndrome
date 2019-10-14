@@ -97,13 +97,13 @@ void j1State::CheckInputs() {
 	case SLIDING_ON_RIGHT_WALL:
 		if (current_state == SLIDING_ON_RIGHT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->ChangePosition(-1, 1);
+			App->player->AddPosition(-1.0f, 1.0f);
 		}
 		break;
 	case SLIDING_ON_LEFT_WALL:
 		if (current_state == SLIDING_ON_LEFT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->ChangePosition(1, 1);
+			App->player->AddPosition(1.0f, 1.0f);
 		}
 		break;
 
@@ -200,13 +200,13 @@ void j1State::MovePlayer() {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->ChangePosition(1, 0); }
-		else { App->player->ChangePosition(1, 0); }	// Position iterates by 1 because of collider detection
+		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->AddPosition(1.0f, 0.0f); }
+		else { App->player->AddPosition(1.0f, 0.0f); }	// Position iterates by 1 because of collider detection
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->ChangePosition(-1, 0); }
-		else { App->player->ChangePosition(-1, 0); }	// Position iterates by 1 because of collider detection
+		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->AddPosition(-1.0f, 0.0f); }
+		else { App->player->AddPosition(-1.0f, 0.0f); }	// Position iterates by 1 because of collider detection
 		break;
 	case FREE_JUMP:
 	case FREE_FALLING:
@@ -219,14 +219,14 @@ void j1State::MovePlayer() {
 	case FREE_JUMP:		// TODO move this to a function
 		JumpMove();
 	case WALL_JUMP:
-		App->player->ChangePosition(0, -1);
+		App->player->AddPosition(0.0f, -1.0f);
 		break;
 	case FREE_FALLING:
-		App->player->ChangePosition(0, 1);
+		App->player->AddPosition(0.0f, 1.0f);
 		break;
 	case SLIDING_ON_LEFT_WALL:
 	case SLIDING_ON_RIGHT_WALL:
-		App->player->ChangePosition(0, 1);
+		App->player->AddPosition(0.0f, 1.0f);
 		break;
 	}		// TODO JUMPS
 }
@@ -245,7 +245,7 @@ void j1State::JumpMove() {
 	switch (current_state)
 	{
 	case FREE_JUMP:
-		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+		App->player->AddPosition(0.0f, -App->player->GetVelocity().y + jump_timer);
 		break;
 	
 	default:

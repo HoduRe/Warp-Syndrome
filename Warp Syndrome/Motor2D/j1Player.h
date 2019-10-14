@@ -53,8 +53,6 @@ public:
 
 	bool LoadAnimations(pugi::xml_node&);
 
-	void ChangePosition(int x, int y);
-
 private:
 	fPoint playerpos;;
 	fPoint playervel;

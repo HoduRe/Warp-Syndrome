@@ -52,3 +52,7 @@ Update 0.0.1.13-debug
 -Added code to let the collision module read collisions from the map object layers.
 -Updated the camera movement function to a more refined version but it is still buggy so we disabled it for the time being.
 -Now the camera centers on the player.
+
+Update 0.0.1.14-debug
+-Collision module refine
+-Jumping calculation redesigned

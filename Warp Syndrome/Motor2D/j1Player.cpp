@@ -159,8 +159,3 @@ fPoint j1Player::GetVelocity()
 {
 	return playervel;
 }
-
-void j1Player::ChangePosition(int x, int y) {
-	playerpos.x += x;
-	playerpos.y += y;
-}

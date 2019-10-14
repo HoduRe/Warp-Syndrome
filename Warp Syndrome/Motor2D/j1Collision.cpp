@@ -60,8 +60,8 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	//player variables
 	float x = App->player->GetPosition().x;
 	float y = App->player->GetPosition().y;
-	float player_w = 0;	// TODO use character height to differenciate x axis from x_y axis
-	float player_h = 0;	// TODO use character height to differenciate x axis from x_y axis
+	float w = 3;	// TODO use character height to differenciate x axis from x_y axis
+	float h = 3;	// TODO use character height to differenciate x axis from x_y axis
 
 	//collider variables
 	float collider_x = (float)currentobj->data->boundingbox.x;
@@ -69,16 +69,16 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
 
-	if (collider_y == y + player_h && collider_x < x && collider_x + collider_w > x) {
+	if (collider_y <= y + h && collider_y > y && collider_x < x && collider_x + collider_w > x) {
 		return GROUND_COLLISION;
 	}
-	else if (collider_x == x + player_w && collider_y < y + player_h && collider_y + collider_h > y + player_h) {
+	else if (collider_x >= x + w && collider_y < y + h && collider_y + collider_h > y + h) {
 		return RIGHT_COLLISION;
 	}
-	else if (collider_x + collider_w == x && collider_y < y + player_h && collider_y + collider_h > y + player_h) {
+	else if (collider_x + collider_w <= x && collider_y < y + h && collider_y + collider_h > y + h) {
 		return LEFT_COLLISION;
 	}
-	else if (collider_y + collider_h == y && collider_x < x && collider_x + collider_w > x) {
+	else if (collider_y + collider_h >= y && collider_y + collider_h <= y + h && collider_x < x && collider_x + collider_w > x) {
 		return UPPER_COLLISION;
 	}
 	else { return NONE_COLLISION; }

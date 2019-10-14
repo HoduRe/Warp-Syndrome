@@ -60,7 +60,7 @@ bool j1Player::Start()
 	playerpos.x = 100.0f;
 	playerpos.y = 52.0f;
 	playervel.x = 4.0f;
-	playervel.y = 15.0f;
+	playervel.y = 5.0f;
 
 	return ret;
 }
@@ -79,7 +79,6 @@ bool j1Player::PostUpdate()
 {
 	FrameInfo* frame = playerAnimations.start->data->StepAnimation();
 	App->render->Blit(playertexture, playerpos.x-frame->textureoffset.x, playerpos.y-frame->animationRect.h -frame->textureoffset.y, &frame->animationRect);
-	App->state->animation_end = playerAnimations.start->data->GetAnimationFinish();
 	return true;
 }
 

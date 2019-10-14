@@ -64,10 +64,10 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	float player_h = 0;	// TODO use character height to differenciate x axis from x_y axis
 
 	//collider variables
-	float collider_x = (float)currentobj->data->boundingbox.x / App->map->data.tile_width;
-	float collider_y = (float)currentobj->data->boundingbox.y / App->map->data.tile_height;
-	float collider_w = (float)currentobj->data->boundingbox.w / App->map->data.tile_width;
-	float collider_h = (float)currentobj->data->boundingbox.h / App->map->data.tile_height;
+	float collider_x = (float)currentobj->data->boundingbox.x;
+	float collider_y = (float)currentobj->data->boundingbox.y;
+	float collider_w = (float)currentobj->data->boundingbox.w;
+	float collider_h = (float)currentobj->data->boundingbox.h;
 
 	if (collider_y == y + player_h && collider_x < x && collider_x + collider_w > x) {
 		return GROUND_COLLISION;
@@ -88,10 +88,14 @@ collision_type j1Collision::GetCollisionType(collision_type collision_array[], c
 	int collision_count = 0;
 
 	for (int i = 0; i < LAST_COLLISION; i++) {
-		if (collision_array[i] != NONE_COLLISION && collision_array[i] != LEFT_UPPER_COLLISION &&
-			collision_array[i] != RIGHT_UPPER_COLLISION && collision_array[i] != LEFT_GROUND_COLLISION &&
-			collision_array[i] != RIGHT_GROUND_COLLISION && GROUND_UPPER_COLLISION) {
+		switch (collision_array[i]) {
+		case NONE_COLLISION:
+		case LEFT_COLLISION:
+		case RIGHT_COLLISION:
+		case UPPER_COLLISION:
+		case GROUND_COLLISION:
 			collision_count = collision_array[i];
+			break;
 		}
 	}
 

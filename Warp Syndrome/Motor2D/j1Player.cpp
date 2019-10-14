@@ -57,8 +57,10 @@ bool j1Player::Start()
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
 	//TODO load those values from the xml instead of harcoding them
+	playerpos.x = 100.0f;
+	playerpos.y = 52.0f;
 	playervel.x = 4.0f;
-	playervel.y = 0.0f;
+	playervel.y = 30.0f;
 
 	return ret;
 }

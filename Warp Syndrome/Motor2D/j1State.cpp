@@ -46,7 +46,7 @@ bool j1State::CleanUp() {
 }
 
 void j1State::ChangeState() {
-	if (animation_end == true) { // TODO maybe change this condition to "when reaching point A instead of when animation ends"
+	/*if (animation_end == true) { // TODO maybe change this condition to "when reaching point A instead of when animation ends"
 		switch (current_state) {
 		case FREE_JUMP:
 		case WALL_JUMP:
@@ -64,7 +64,7 @@ void j1State::ChangeState() {
 			current_state == WAKE_UP;
 			break;
 		}
-	}
+	}*/
 }
 
 void j1State::CheckInputs() {
@@ -82,7 +82,7 @@ void j1State::CheckInputs() {
 			current_state = WALK_FORWARD;
 			run_counter++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT == KEY_DOWN)){
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT == KEY_DOWN)) {
 			current_state = WALK_BACKWARD;
 			run_counter++;
 		}
@@ -211,13 +211,13 @@ void j1State::MovePlayer() {
 	case FREE_JUMP:
 	case FREE_FALLING:
 	case WALL_JUMP:
-		App->player->ChangePosition(1, 0);
 		break;
 	}
 
 	// Y AXIS MOVEMENT
 	switch (current_state) {
-	case FREE_JUMP:
+	case FREE_JUMP:		// TODO move this to a function
+		JumpMove();
 	case WALL_JUMP:
 		App->player->ChangePosition(0, -1);
 		break;
@@ -228,9 +228,27 @@ void j1State::MovePlayer() {
 	case SLIDING_ON_RIGHT_WALL:
 		App->player->ChangePosition(0, 1);
 		break;
-	}
+	}		// TODO JUMPS
 }
 
 void j1State::ChangeAnimation() {
 
+}
+
+void j1State::JumpMove() {
+
+	if (jump_timer == 0.0f)
+		jump_timer += 0.1f;
+	else if (jump_timer > 0) { jump_timer+=0.1f; }
+
+	if (jump_timer > 10) { jump_timer = 10; }	// Para que no baje demasiado rápido
+	switch (current_state)
+	{
+	case FREE_JUMP:
+		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+		break;
+	
+	default:
+		break;
+	}
 }

@@ -97,34 +97,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		App->player->AddPosition(0.0f, -App->player->GetVelocity().x);
-
-		//App->render->camera.y -= 1;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		App->player->AddPosition(0.0f, App->player->GetVelocity().x);
-
-		//App->render->camera.y += 1;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		App->player->AddPosition(-App->player->GetVelocity().x, 0.0f);
-		App->player->SetFliped(true);
-		//App->render->camera.x -= 1;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		App->player->AddPosition(App->player->GetVelocity().x, 0.0f);
-		App->player->SetFliped(false);
-		//App->render->camera.x += 1;
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		reload = true;
 	//TODO position camera relative to the player

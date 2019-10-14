@@ -57,6 +57,8 @@ public:
 	// Puts the proper animation
 	void ChangeAnimation();
 
+	void JumpMove();
+
 	state_list current_state;
 	bool animation_end = false;
 
@@ -65,6 +67,7 @@ private:
 	bool grenade = false;
 	int run_counter = 0;
 	int internal_counter = 0;
+	float jump_timer;
 };
 
 #endif // __j1STATE_H__

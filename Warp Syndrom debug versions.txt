@@ -1,4 +1,4 @@
-Current version: 0.0.1.13-debug
+Current version: 0.0.1.15-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -56,3 +56,7 @@ Update 0.0.1.13-debug
 Update 0.0.1.14-debug
 -Collision module refine
 -Jumping calculation redesigned
+
+Update 0.0.1.15-debug
+-Added provisional background and parallax layers to prepare the project to try implementing parallax in code.
+-Added a new png in the maps floder that will be used for the background tileset

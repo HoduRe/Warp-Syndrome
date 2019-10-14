@@ -3,7 +3,13 @@
 
 #include "j1Module.h"
 #include "p2List.h"
-
+enum JumpingStates
+{
+	JST_GOING_UP,
+	JST_TRANSITION,
+	JST_GOING_DOWN,
+	JST_UNKNOWN
+};
 enum state_list {
 	NONE,
 	IDLE,
@@ -57,7 +63,8 @@ public:
 	// Puts the proper animation
 	void ChangeAnimation();
 
-	void JumpMove();
+
+	JumpingStates JumpMove();
 
 	state_list current_state;
 	bool animation_end = false;

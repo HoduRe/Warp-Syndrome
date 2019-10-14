@@ -222,7 +222,7 @@ void j1State::MovePlayer() {
 		App->player->AddPosition(0.0f, -1.0f);
 		break;
 	case FREE_FALLING:
-		App->player->AddPosition(0.0f, 1.0f);
+		JumpMove();
 		break;
 	case SLIDING_ON_LEFT_WALL:
 	case SLIDING_ON_RIGHT_WALL:
@@ -235,20 +235,33 @@ void j1State::ChangeAnimation() {
 
 }
 
-void j1State::JumpMove() {
+JumpingStates j1State::JumpMove() {
+
+	JumpingStates ret = JST_UNKNOWN;
 
 	if (jump_timer == 0.0f)
 		jump_timer += 0.1f;
-	else if (jump_timer > 0) { jump_timer+=0.1f; }
+	else if (jump_timer > 0) { jump_timer += 0.1f; }
 
-	if (jump_timer > 10) { jump_timer = 10; }	// Para que no baje demasiado rápido
+	if (jump_timer > abs(App->player->GetVelocity().y * 2.5f)) { jump_timer = abs(App->player->GetVelocity().y * 2.5f); }	// Para que no baje demasiado rápido
+
+	if (jump_timer == abs(App->player->GetVelocity().y * 2.5f)) ret = JST_TRANSITION;
+	else if (jump_timer < abs(App->player->GetVelocity().y * 2.5f)) ret = JST_GOING_UP;
+	else if (jump_timer > abs(App->player->GetVelocity().y * 2.5f)) ret = JST_GOING_DOWN;
+
+
 	switch (current_state)
 	{
 	case FREE_JUMP:
-		App->player->AddPosition(0.0f, -App->player->GetVelocity().y + jump_timer);
+		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
 		break;
-	
+	case FREE_FALLING:
+		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+
+		break;
 	default:
 		break;
 	}
+
+	return ret;
 }

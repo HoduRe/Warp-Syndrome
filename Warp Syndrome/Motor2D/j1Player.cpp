@@ -60,7 +60,7 @@ bool j1Player::Start()
 	playerpos.x = 100.0f;
 	playerpos.y = 52.0f;
 	playervel.x = 4.0f;
-	playervel.y = 30.0f;
+	playervel.y = 15.0f;
 
 	return ret;
 }

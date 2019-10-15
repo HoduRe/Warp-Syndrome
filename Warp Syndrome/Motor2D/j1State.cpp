@@ -134,8 +134,10 @@ void j1State::CheckColliders() {
 		case TELEPORT:
 		case WAKE_UP:
 			current_state = FREE_FALLING;
+			y_jumping_state = JST_GOING_DOWN;
 			break;
 		}
+		break;
 	case UPPER_COLLISION:	// Touching the roof collisions
 	case GROUND_UPPER_COLLISION:
 		switch (current_state) {
@@ -143,6 +145,7 @@ void j1State::CheckColliders() {
 		case THROWING_GRENADE_ON_AIR:
 		case WALL_JUMP:
 			current_state = FREE_FALLING;
+			y_jumping_state = JST_GOING_DOWN;
 			break;
 		case IDLE:
 		case WALK_BACKWARD:
@@ -204,6 +207,8 @@ void j1State::CheckColliders() {
 			current_state = SLIDING_TO_IDLE;
 			break;
 		}
+		break;
+	default:
 		break;
 	}
 }
@@ -275,7 +280,10 @@ void j1State::JumpMoveY() {
 		if (current_state != THROWING_GRENADE_ON_AIR) { y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_GOING_DOWN:
-		if (current_state != FREE_FALLING && current_state != FREE_JUMP) { y_jumping_state = JST_UNKNOWN; }
+		if (current_state != FREE_FALLING && current_state != FREE_JUMP) {
+			y_jumping_state = JST_UNKNOWN;
+			jump_timer = 0;
+		}
 		else if (jump_timer <= App->player->GetVelocity().y) {
 			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
 			App->player->AddPosition(0.0f, App->player->GetVelocity().y - jump_timer);

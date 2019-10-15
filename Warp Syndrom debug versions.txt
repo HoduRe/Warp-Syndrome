@@ -66,6 +66,6 @@ Update 0.0.1.16-debug
 -Player can move up, down, right, left, and can properly fall to platforms
 
 Update 0.0.1.17-debug
--Jumps calibrated
+-Jumps calibrated, and right collisions added
 -Basic Parallax background added
 

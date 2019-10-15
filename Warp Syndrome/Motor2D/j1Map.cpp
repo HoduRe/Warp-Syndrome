@@ -41,36 +41,62 @@ void j1Map::Draw()
 
 
 
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while (item_layer != NULL)
+	p2List_item<MapLayer*>* item_layer = data.layers.start;
+	while (item_layer != NULL)
+	{
+		p2List_item<Properties*>* item_prop = item_layer->data->lproplist.start;//iterates between all the properties and ckecks if the "Parallax property is in that layer"
+		bool hasparallax = false;
+		float parallaxvalue = 1.0f;
+		while (item_prop != NULL && hasparallax != true)
 		{
-
-			iPoint up_left_cam_corner = WorldToMap(App->render->camera.x * -1, App->render->camera.y * -1, data);
-			iPoint down_right_cam_corner = WorldToMap((App->render->camera.x * -1) + window_w, (App->render->camera.y * -1) + window_h, data);
-
-
-			for (int i = 0; i < item_layer->data->height; i++)//number of rows
+			if (item_prop->data->name == "Parallax")//if the layer has parallax set the parallax value
 			{
-				for (int j = 0; j < item_layer->data->width; j++)//number of columns
+				parallaxvalue = item_prop->data->value;
+				hasparallax = true;
+			}
+			else item_prop = item_prop->next;
+
+		}
+
+
+		iPoint up_left_cam_corner = WorldToMap(App->render->camera.x * -1, App->render->camera.y * -1, data);
+		iPoint down_right_cam_corner = WorldToMap((App->render->camera.x * -1) + window_w, (App->render->camera.y * -1) + window_h, data);
+
+
+		for (int i = 0; i < item_layer->data->height; i++)//number of rows
+		{
+			for (int j = 0; j < item_layer->data->width; j++)//number of columns
+			{
+				if (hasparallax&&false)//TODO code for the tiles with parallax take out the false once we want the paralaxx to print out
 				{
+					int id = item_layer->data->gid[Get(j, i, *item_layer)];//TODO this is a provisional code for the parallax, and does print all the tiles including the ones not in-screen
+					if (id > 0)
+					{
+						App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)),parallaxvalue);
+					}
+				}
+				else//code for the tiles WITHOUT parallax
+				{
+
 					if (i<down_right_cam_corner.y + 1 && i>up_left_cam_corner.y - 1)//TODO Optimize those 2 if, These are a camera culling implementation the game just draws what's seen in the camera
 					{
 						if (j<down_right_cam_corner.x + 1 && j>up_left_cam_corner.x - 1)
 						{
 							int id = item_layer->data->gid[Get(j, i, *item_layer)];
 
-								if (id > 0)
-								{
-									App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)));
-								}
+							if (id > 0)
+							{
+								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)));
+							}
 						}
 					}
 				}
 			}
+		}
 
-			//LOG("%i %i,%i %i", up_left_cam_corner.x, up_left_cam_corner.y, down_right_cam_corner.x, down_right_cam_corner.y);
+		//LOG("%i %i,%i %i", up_left_cam_corner.x, up_left_cam_corner.y, down_right_cam_corner.x, down_right_cam_corner.y);
 
-			item_layer = item_layer->next;
+		item_layer = item_layer->next;
 	}
 }
 
@@ -114,6 +140,17 @@ bool j1Map::CleanUp()
 
 	while (iteml != NULL)
 	{
+
+
+		p2List_item<Properties*>* itemP;
+		itemP = iteml->data->lproplist.start;
+		while (itemP != NULL)
+		{
+
+			RELEASE(itemP->data);
+			itemP = itemP->next;
+		}
+		iteml->data->lproplist.clear();
 		RELEASE(iteml->data);
 		iteml = iteml->next;
 	}
@@ -405,6 +442,15 @@ bool j1Map::LoadLayer(pugi::xml_node& layer_node, MapLayer* layer)
 	layer->height = layer_node.attribute("height").as_uint();
 	layer->gid = new uint[layer->width * layer->height];
 	memset(layer->gid, 0, layer->width * layer->height * sizeof(uint));
+
+	//Load properties--------------------------------------------
+	for (pugi::xml_node currentprop = layer_node.child("properties").child("property"); currentprop; currentprop = currentprop.next_sibling("property"))
+	{
+		Properties* set = new Properties;
+		set->name = currentprop.attribute("name").as_string();
+		set->value = currentprop.attribute("value").as_float();
+		layer->lproplist.add(set);
+	}
 
 	pugi::xml_node* gid_iterator = &layer_node.child("data").child("tile");
 	for (int i = 0; i < layer->width * layer->height; i++)

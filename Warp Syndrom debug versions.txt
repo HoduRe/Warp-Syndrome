@@ -1,4 +1,4 @@
-Current version: 0.0.1.16-debug
+Current version: 0.0.1.18-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -69,3 +69,8 @@ Update 0.0.1.17-debug
 -Jumps calibrated, and right collisions added
 -Basic Parallax background added
 
+Update 0.0.1.18-debug
+-Now the map can load layer properties
+-The Draw function of the map has now code to support parallax motion of the background.
+(NOTE: this feature is disabled at the moment with a boolean due to a lack of performance when it's on)
+-Slightly modified the Blit() function. It now has 2 parameters (X,Y) controlling the speed instead of a general one.

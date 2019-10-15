@@ -8,12 +8,19 @@
 #include "SDL/include/SDL.h"
 
 // ----------------------------------------------------
+struct Properties
+{
+	p2SString name;
+	float value;
+
+};
 struct MapLayer
 {
 	p2SString name = "";
 	uint width = 0u;
 	uint height = 0u;
 	uint* gid = nullptr;
+	p2List<Properties*> lproplist;
 	~MapLayer();
 };
 
@@ -23,12 +30,6 @@ struct Object
 	uint id;
 };
 
-struct Properties
-{
-	p2SString name;
-	int value;
-
-};
 
 
 struct ObjectGroup

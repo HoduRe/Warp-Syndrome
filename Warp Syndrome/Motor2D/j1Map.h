@@ -119,6 +119,8 @@ private:
 
 	SDL_Rect RectFromTileId(uint tile_id, p2List_item<TileSet*>currenttileset);
 
+	TileSet* j1Map::GetTilesetFromTileId(int id) const;
+
 public:
 
 	MapData data;

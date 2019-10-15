@@ -1,4 +1,4 @@
-Current version: 0.0.1.15-debug
+Current version: 0.0.1.16-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -60,3 +60,6 @@ Update 0.0.1.14-debug
 Update 0.0.1.15-debug
 -Added provisional background and parallax layers to prepare the project to try implementing parallax in code.
 -Added a new png in the maps floder that will be used for the background tileset
+
+Update 0.0.1.16-debug
+-Fixed problem that caused the diferent tilesets of the map to not work properly

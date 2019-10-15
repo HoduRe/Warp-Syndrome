@@ -33,14 +33,13 @@ void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
-	p2List_item<TileSet*>* item = data.tilesets.start;
+
 
 	uint window_w;
 	uint window_h;
 	App->win->GetWindowSize(window_w, window_h);
 
-	while (item != NULL)
-	{
+
 
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
 		while (item_layer != NULL)
@@ -54,17 +53,16 @@ void j1Map::Draw()
 			{
 				for (int j = 0; j < item_layer->data->width; j++)//number of columns
 				{
-					if (i<down_right_cam_corner.y+1 && i>up_left_cam_corner.y-1)//TODO Optimize those 2 if, These are a camera culling implementation the game just draws what's seen in the camera
+					if (i<down_right_cam_corner.y + 1 && i>up_left_cam_corner.y - 1)//TODO Optimize those 2 if, These are a camera culling implementation the game just draws what's seen in the camera
 					{
-						if (j<down_right_cam_corner.x+1 && j>up_left_cam_corner.x-1)
+						if (j<down_right_cam_corner.x + 1 && j>up_left_cam_corner.x - 1)
 						{
-
-
 							int id = item_layer->data->gid[Get(j, i, *item_layer)];
-							if (id > 0)
-							{
-								App->render->Blit(item->data->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, *data.tilesets.start));
-							}
+
+								if (id > 0)
+								{
+									App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)));
+								}
 						}
 					}
 				}
@@ -73,11 +71,26 @@ void j1Map::Draw()
 			//LOG("%i %i,%i %i", up_left_cam_corner.x, up_left_cam_corner.y, down_right_cam_corner.x, down_right_cam_corner.y);
 
 			item_layer = item_layer->next;
-		}
-		item = item->next;
 	}
 }
 
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while (item)
+	{
+		if (id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+	return set;
+}
 
 // Called before quitting
 bool j1Map::CleanUp()
@@ -121,7 +134,7 @@ bool j1Map::CleanUp()
 			itemO = itemO->next;
 		}
 		itemOG->data->objlist.clear();
-		
+
 		//remove all the properties
 		p2List_item<Properties*>* itemP;
 		itemP = itemOG->data->proplist.start;
@@ -203,7 +216,7 @@ bool j1Map::Load(const char* file_name)
 
 		if (ret == true)
 		{
-			ret = LoadObjGroup(currentobjgroup,set);
+			ret = LoadObjGroup(currentobjgroup, set);
 		}
 
 		data.objgroups.add(set);
@@ -245,7 +258,7 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
-	
+
 	map_loaded = ret;
 	return ret;
 }
@@ -413,10 +426,10 @@ bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
 {
 	bool ret = true;
 	group->name.create(objgroupnode.attribute("name").as_string());
-	group->id=objgroupnode.attribute("id").as_uint();
+	group->id = objgroupnode.attribute("id").as_uint();
 
 	//Load properties--------------------------------------------
-	for (pugi::xml_node currentprop= objgroupnode.child("properties").child("property");currentprop;currentprop=currentprop.next_sibling("property"))
+	for (pugi::xml_node currentprop = objgroupnode.child("properties").child("property"); currentprop; currentprop = currentprop.next_sibling("property"))
 	{
 		Properties* set = new Properties;
 		set->name = currentprop.attribute("name").as_string();

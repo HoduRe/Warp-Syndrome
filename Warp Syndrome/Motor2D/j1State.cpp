@@ -69,7 +69,7 @@ void j1State::CheckInputs() {
 	case FREE_JUMP:
 	case WALL_JUMP:
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
-		else if (jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
+		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
@@ -93,6 +93,22 @@ void j1State::CheckInputs() {
 		break;
 	case THROWING_GRENADE_ON_AIR:
 		if (grenade == false) { current_state = FREE_FALLING; }	// TODO a function that changes this bool based on the player throwing a grenade
+		break;
+	}
+
+	switch (current_state) {	// Just here for legibility's sake, it determines how to move on the X axis for jumps
+	case FREE_JUMP:
+	case WALL_JUMP:
+	case FREE_FALLING:
+		if (current_state != THROWING_GRENADE_ON_AIR) {	// While throwing grenade, you shouldn't move
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+				x_jumping_state = JST_GOING_LEFT;
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+				x_jumping_state = JST_GOING_RIGHT;
+			}
+			else { x_jumping_state = JST_IDLE; }
+		}
 		break;
 	}
 
@@ -197,26 +213,27 @@ void j1State::MovePlayer() {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->AddPosition(1.0f, 0.0f); }
-		else { App->player->AddPosition(1.0f, 0.0f); }	// Position iterates by 1 because of collider detection
+		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->AddPosition(5.0f, 0.0f); }
+		else { App->player->AddPosition(5.0f, 0.0f); }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->AddPosition(-1.0f, 0.0f); }
-		else { App->player->AddPosition(-1.0f, 0.0f); }	// Position iterates by 1 because of collider detection
+		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
+		else { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
 		break;
 	case FREE_JUMP:
 	case FREE_FALLING:
 	case WALL_JUMP:
+		JumpMoveX();
 		break;
 	}
 
 	// Y AXIS MOVEMENT
-	JumpMove();
+	JumpMoveY();
 	switch (current_state) {
 	case SLIDING_ON_LEFT_WALL:
 	case SLIDING_ON_RIGHT_WALL:
-		App->player->AddPosition(0.0f, 5.0f);
+		App->player->AddPosition(0.0f, App->player->GetVelocity().y / 2.0f);
 		break;
 	}		// TODO JUMPS
 }
@@ -225,37 +242,43 @@ void j1State::ChangeAnimation() {
 
 }
 
-void j1State::JumpMove() {
-	
-	if (current_state == THROWING_GRENADE_ON_AIR) { jumping_state = JST_TRANSITION; }
+void j1State::JumpMoveX() {
+	if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
+	else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
+	else if (x_jumping_state == JST_IDLE) {}
+}
 
-	switch (jumping_state) {
+void j1State::JumpMoveY() {
+	
+	if (current_state == THROWING_GRENADE_ON_AIR) { y_jumping_state = JST_TRANSITION; }
+
+	switch (y_jumping_state) {
 	case JST_UNKNOWN:
 		if (current_state == FREE_JUMP || current_state == WALL_JUMP) {
-			jumping_state = JST_GOING_UP;
+			y_jumping_state = JST_GOING_UP;
 			jump_timer = 0;
 		}
 		else if (current_state == FREE_FALLING) {
-			jumping_state = JST_GOING_DOWN;
+			y_jumping_state = JST_GOING_DOWN;
 			jump_timer = App->player->GetVelocity().y;
 		}
 		break;
 	case JST_GOING_UP:
 		if (jump_timer >= 0 && jump_timer < App->player->GetVelocity().y) {
 			jump_timer += (1.0f / 10.0f);
-			App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+			App->player->AddPosition(0.0f, -App->player->GetVelocity().y + jump_timer);
 		}
-		else { jump_timer = App->player->GetVelocity().y; jumping_state = JST_GOING_DOWN; }
+		else { jump_timer = App->player->GetVelocity().y; y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_TRANSITION:
 		jump_timer = App->player->GetVelocity().y;
-		if (current_state != THROWING_GRENADE_ON_AIR) { jumping_state = JST_GOING_DOWN; }
+		if (current_state != THROWING_GRENADE_ON_AIR) { y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_GOING_DOWN:
-		if (current_state != FREE_FALLING && current_state != FREE_JUMP) { jumping_state = JST_UNKNOWN; }
+		if (current_state != FREE_FALLING && current_state != FREE_JUMP) { y_jumping_state = JST_UNKNOWN; }
 		else if (jump_timer <= App->player->GetVelocity().y) {
 			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
-			App->player->AddPosition(0, App->player->GetVelocity().y - jump_timer);
+			App->player->AddPosition(0.0f, App->player->GetVelocity().y - jump_timer);
 		}
 		break;
 	}

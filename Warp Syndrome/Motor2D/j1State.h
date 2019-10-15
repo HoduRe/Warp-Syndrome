@@ -3,13 +3,21 @@
 
 #include "j1Module.h"
 #include "p2List.h"
-enum JumpingStates
+
+enum JumpingStatesX {
+	JST_GOING_LEFT,
+	JST_GOING_RIGHT,
+	JST_IDLE
+};
+
+enum JumpingStatesY
 {
 	JST_GOING_UP,
 	JST_TRANSITION,
 	JST_GOING_DOWN,
 	JST_UNKNOWN
 };
+
 enum state_list {
 	NONE,
 	IDLE,
@@ -62,7 +70,8 @@ public:
 	void ChangeAnimation();
 
 	// Calculates jump shinanigans
-	void JumpMove();
+	void JumpMoveX();
+	void JumpMoveY();
 
 	state_list current_state;
 
@@ -72,7 +81,8 @@ private:
 	int run_counter = 0;
 	int internal_counter = 0;
 	float jump_timer = 0;
-	JumpingStates jumping_state = JST_UNKNOWN;
+	JumpingStatesX x_jumping_state = JST_IDLE;
+	JumpingStatesY y_jumping_state = JST_UNKNOWN;
 };
 
 #endif // __j1STATE_H__

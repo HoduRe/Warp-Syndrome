@@ -52,8 +52,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// transitions automatic states, like jumping->falling->idle
-	void ChangeState();
 	// Gives a state based on inputs
 	void CheckInputs();
 	// Checks Colliders
@@ -63,18 +61,18 @@ public:
 	// Puts the proper animation
 	void ChangeAnimation();
 
-
-	JumpingStates JumpMove();
+	// Calculates jump shinanigans
+	void JumpMove();
 
 	state_list current_state;
-	bool animation_end = false;
 
 private:
 	bool double_jump = true;
 	bool grenade = false;
 	int run_counter = 0;
 	int internal_counter = 0;
-	float jump_timer;
+	float jump_timer = 0;
+	JumpingStates jumping_state = JST_UNKNOWN;
 };
 
 #endif // __j1STATE_H__

@@ -63,3 +63,6 @@ Update 0.0.1.15-debug
 
 Update 0.0.1.16-debug
 -Fixed problem that caused the diferent tilesets of the map to not work properly
+-Player can move up, down, right, left, and can properly fall to platforms
+
+

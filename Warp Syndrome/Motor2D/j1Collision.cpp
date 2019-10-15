@@ -60,8 +60,8 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	//player variables
 	float x = App->player->GetPosition().x;
 	float y = App->player->GetPosition().y;
-	float w = 3;	// TODO use character height to differenciate x axis from x_y axis
-	float h = 3;	// TODO use character height to differenciate x axis from x_y axis
+	float w = 30;	// TODO use character height to differenciate x axis from x_y axis
+	float h = 20;	// TODO use character height to differenciate x axis from x_y axis
 
 	//collider variables
 	float collider_x = (float)currentobj->data->boundingbox.x;

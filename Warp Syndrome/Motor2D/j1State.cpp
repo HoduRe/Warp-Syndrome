@@ -29,7 +29,6 @@ bool j1State::Update(float dt) {
 
 	bool ret = true;
 
-	ChangeState();	// transitions automatic states, like jumping->falling->idle
 	CheckInputs();	// Checks active states (based on inputs)
 	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
@@ -43,28 +42,6 @@ bool j1State::Update(float dt) {
 bool j1State::CleanUp() {
 
 	return true;
-}
-
-void j1State::ChangeState() {
-	/*if (animation_end == true) { // TODO maybe change this condition to "when reaching point A instead of when animation ends"
-		switch (current_state) {
-		case FREE_JUMP:
-		case WALL_JUMP:
-			current_state = FREE_FALLING;
-			break;
-		case SLIDING_TO_IDLE:
-		case THROWING_GRENADE:
-		case TELEPORT:
-			current_state == IDLE;
-			break;
-		case THROWING_GRENADE_ON_AIR:
-			current_state == FREE_FALLING;
-			break;
-		case DEAD:
-			current_state == WAKE_UP;
-			break;
-		}
-	}*/
 }
 
 void j1State::CheckInputs() {
@@ -90,28 +67,39 @@ void j1State::CheckInputs() {
 		else { current_state = IDLE; run_counter = 0; }
 		break;
 	case FREE_JUMP:
-	case FREE_FALLING:
 	case WALL_JUMP:
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
+		else if (jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
+		break;
+	case FREE_FALLING:
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
 		break;
 	case SLIDING_ON_RIGHT_WALL:
-		if (current_state == SLIDING_ON_RIGHT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->AddPosition(-1.0f, 1.0f);
+			App->player->AddPosition(-1.0f, -1.0f);
 		}
+		else if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN){ App->player->AddPosition(-1.0f, 0.0f); }
 		break;
 	case SLIDING_ON_LEFT_WALL:
-		if (current_state == SLIDING_ON_LEFT_WALL && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->AddPosition(1.0f, 1.0f);
+			App->player->AddPosition(1.0f, -1.0f);
 		}
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { App->player->AddPosition(1.0f, 0.0f); }
 		break;
-
+	case THROWING_GRENADE:
+		if (grenade == false) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
+		break;
+	case THROWING_GRENADE_ON_AIR:
+		if (grenade == false) { current_state = FREE_FALLING; }	// TODO a function that changes this bool based on the player throwing a grenade
+		break;
 	}
 
 	// TODO delete the inputs that influates player move on j1Scene
 	// TODO move the run_counter to player xml
 	// TODO read free jump, fall and wall jump inputs
+	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen
 }
 
 void j1State::CheckColliders() {
@@ -125,6 +113,10 @@ void j1State::CheckColliders() {
 		case RUN_FORWARD:
 		case WALK_BACKWARD:
 		case RUN_BACKWARD:
+		case SLIDING_ON_LEFT_WALL:
+		case SLIDING_ON_RIGHT_WALL:
+		case TELEPORT:
+		case WAKE_UP:
 			current_state = FREE_FALLING;
 			break;
 		}
@@ -153,6 +145,7 @@ void j1State::CheckColliders() {
 		case FREE_JUMP:
 		case FREE_FALLING:
 		case WALL_JUMP:
+		case SLIDING_ON_LEFT_WALL:
 		case THROWING_GRENADE_ON_AIR:
 			current_state = SLIDING_ON_RIGHT_WALL;
 			break;
@@ -164,6 +157,7 @@ void j1State::CheckColliders() {
 		case FREE_JUMP:
 		case FREE_FALLING:
 		case WALL_JUMP:
+		case SLIDING_ON_RIGHT_WALL:
 		case THROWING_GRENADE_ON_AIR:
 			current_state = SLIDING_ON_LEFT_WALL;
 			break;
@@ -172,6 +166,9 @@ void j1State::CheckColliders() {
 	case GROUND_COLLISION:	// Touching the ground collisions
 		switch (current_state) {
 		case FREE_FALLING:
+		case WALL_JUMP:
+		case THROWING_GRENADE_ON_AIR:
+		case TELEPORT:
 			current_state = IDLE;
 			break;
 		}
@@ -215,18 +212,11 @@ void j1State::MovePlayer() {
 	}
 
 	// Y AXIS MOVEMENT
+	JumpMove();
 	switch (current_state) {
-	case FREE_JUMP:		// TODO move this to a function
-		JumpMove();
-	case WALL_JUMP:
-		App->player->AddPosition(0.0f, -1.0f);
-		break;
-	case FREE_FALLING:
-		JumpMove();
-		break;
 	case SLIDING_ON_LEFT_WALL:
 	case SLIDING_ON_RIGHT_WALL:
-		App->player->AddPosition(0.0f, 1.0f);
+		App->player->AddPosition(0.0f, 5.0f);
 		break;
 	}		// TODO JUMPS
 }
@@ -235,33 +225,49 @@ void j1State::ChangeAnimation() {
 
 }
 
-JumpingStates j1State::JumpMove() {
+void j1State::JumpMove() {
+	
+	if (current_state == THROWING_GRENADE_ON_AIR) { jumping_state = JST_TRANSITION; }
 
-	JumpingStates ret = JST_UNKNOWN;
-
-	if (jump_timer == 0.0f)
-		jump_timer += 0.1f;
-	else if (jump_timer > 0) { jump_timer += 0.1f; }
-
-	if (jump_timer > abs(App->player->GetVelocity().y * 2.5f)) { jump_timer = abs(App->player->GetVelocity().y * 2.5f); }	// Para que no baje demasiado rápido
-
-	if (jump_timer == abs(App->player->GetVelocity().y * 2.5f)) ret = JST_TRANSITION;
-	else if (jump_timer < abs(App->player->GetVelocity().y * 2.5f)) ret = JST_GOING_UP;
-	else if (jump_timer > abs(App->player->GetVelocity().y * 2.5f)) ret = JST_GOING_DOWN;
-
-
-	switch (current_state)
-	{
-	case FREE_JUMP:
-		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+	switch (jumping_state) {
+	case JST_UNKNOWN:
+		if (current_state == FREE_JUMP || current_state == WALL_JUMP) {
+			jumping_state = JST_GOING_UP;
+			jump_timer = 0;
+		}
+		else if (current_state == FREE_FALLING) {
+			jumping_state = JST_GOING_DOWN;
+			jump_timer = App->player->GetVelocity().y;
+		}
 		break;
-	case FREE_FALLING:
-		App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
-
+	case JST_GOING_UP:
+		if (jump_timer >= 0 && jump_timer < App->player->GetVelocity().y) {
+			jump_timer += (1.0f / 10.0f);
+			App->player->AddPosition(0, -App->player->GetVelocity().y + jump_timer);
+		}
+		else { jump_timer = App->player->GetVelocity().y; jumping_state = JST_GOING_DOWN; }
 		break;
-	default:
+	case JST_TRANSITION:
+		jump_timer = App->player->GetVelocity().y;
+		if (current_state != THROWING_GRENADE_ON_AIR) { jumping_state = JST_GOING_DOWN; }
+		break;
+	case JST_GOING_DOWN:
+		if (current_state != FREE_FALLING && current_state != FREE_JUMP) { jumping_state = JST_UNKNOWN; }
+		else if (jump_timer <= App->player->GetVelocity().y) {
+			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
+			App->player->AddPosition(0, App->player->GetVelocity().y - jump_timer);
+		}
 		break;
 	}
-
-	return ret;
 }
+
+/*if (animation_end == true) {
+	case SLIDING_TO_IDLE:
+	case TELEPORT:
+		current_state == IDLE;
+		break;
+	case DEAD:
+		current_state == WAKE_UP;
+		break;
+	}
+}*/

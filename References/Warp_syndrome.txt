@@ -17,6 +17,7 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 -Cuando se abra un portal, cambiar la música a algo más acelerado (y distinta a la de cuando entras en el portal)
 
 Mejoras:
+Impedir el movimiento del jugador en lugares donde se tira la granada
 Movimiento en el eje X durante el salto y la caída
 Poner paredes al tileset de la torre
 Eliminar assets sobrantes

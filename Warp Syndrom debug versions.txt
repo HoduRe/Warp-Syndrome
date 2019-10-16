@@ -1,4 +1,4 @@
-Current version: 0.0.1.18-debug
+Current version: 0.0.1.19-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -74,3 +74,8 @@ Update 0.0.1.18-debug
 -The Draw function of the map has now code to support parallax motion of the background.
 (NOTE: this feature is disabled at the moment with a boolean due to a lack of performance when it's on)
 -Slightly modified the Blit() function. It now has 2 parameters (X,Y) controlling the speed instead of a general one.
+
+Update 0.0.1.19-debug (The Parallax update)
+-The parallax effect now functions correctly and is fully optimized when drawing.
+-Also optimized the layers in tiled to load as little as possible and thus increase game speed.
+-Tweaked the values of the parallax layers to mach their percieved distances to the camera better.

@@ -79,3 +79,7 @@ Update 0.0.1.19-debug (The Parallax update)
 -The parallax effect now functions correctly and is fully optimized when drawing.
 -Also optimized the layers in tiled to load as little as possible and thus increase game speed.
 -Tweaked the values of the parallax layers to mach their percieved distances to the camera better.
+
+Update 0.0.1.20-debug
+-Machine state completely functional
+

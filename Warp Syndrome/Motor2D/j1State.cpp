@@ -28,6 +28,7 @@ bool j1State::Start() {
 bool j1State::Update(float dt) {
 
 	bool ret = true;
+	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
 	CheckInputs();	// Checks active states (based on inputs)
 	CheckColliders(); // Checks colliders
@@ -77,16 +78,16 @@ void j1State::CheckInputs() {
 	case SLIDING_ON_RIGHT_WALL:
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->AddPosition(-1.0f, -1.0f);
+			wall_jump = SST_JUMPING_LEFT;
 		}
-		else if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN){ App->player->AddPosition(-1.0f, 0.0f); }
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
 		break;
 	case SLIDING_ON_LEFT_WALL:
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
-			App->player->AddPosition(1.0f, -1.0f);
+			wall_jump = SST_JUMPING_RIGHT;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { App->player->AddPosition(1.0f, 0.0f); }
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
 		break;
 	case THROWING_GRENADE:
 		if (grenade == false) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
@@ -204,7 +205,8 @@ void j1State::CheckColliders() {
 			break;
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
-			current_state = SLIDING_TO_IDLE;
+//			current_state = SLIDING_TO_IDLE;
+			current_state = IDLE;
 			break;
 		}
 		break;
@@ -254,7 +256,7 @@ void j1State::JumpMoveX() {
 }
 
 void j1State::JumpMoveY() {
-	
+
 	if (current_state == THROWING_GRENADE_ON_AIR) { y_jumping_state = JST_TRANSITION; }
 
 	switch (y_jumping_state) {
@@ -288,6 +290,77 @@ void j1State::JumpMoveY() {
 			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
 			App->player->AddPosition(0.0f, App->player->GetVelocity().y - jump_timer);
 		}
+		break;
+	}
+
+	switch (App->collision->current_collision) {
+	case GROUND_COLLISION:
+		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		if (current_state == FREE_JUMP) { App->player->AddPosition(0, -1); }
+		break;
+	case UPPER_COLLISION:
+		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		if (current_state == FREE_FALLING) { App->player->AddPosition(0, 1); }
+		break;
+	case LEFT_COLLISION:
+	case RIGHT_COLLISION:
+		App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->player->GetPosition().y);
+		switch (wall_jump) {
+		case SST_JUMPING_RIGHT:
+			App->player->AddPosition(1.0f, -1.0f);
+			break;
+		case SST_JUMPING_LEFT:
+			App->player->AddPosition(-1.0f, -1.0f);
+			break;
+		case SST_FALLING_RIGHT:
+			App->player->AddPosition(1.0f, 1.0f);
+			break;
+		case SST_FALLING_LEFT:
+			App->player->AddPosition(-1.0f, 1.0f);
+			break;
+		default:
+			break;
+		}
+		break;
+	case LEFT_GROUND_COLLISION:
+	case RIGHT_GROUND_COLLISION:
+		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
+			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
+		}
+		else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
+			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->collision->current_collision_buffer.collider2.y);
+		}
+		if (App->collision->current_collision == LEFT_GROUND_COLLISION) { App->player->AddPosition(1, 0); }
+		else { App->player->AddPosition(-1, 0); }
+		break;
+	case LEFT_UPPER_COLLISION:
+	case RIGHT_UPPER_COLLISION:
+		if(App->collision->current_collision_buffer.is_first_collider_horizontal == true){
+			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
+			}
+		else if(App->collision->current_collision_buffer.is_first_collider_horizontal == false){
+			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->collision->current_collision_buffer.collider2.y);
+			}
+		switch (wall_jump) {
+		case SST_JUMPING_RIGHT:
+			App->player->AddPosition(1.0f, -1.0f);
+			break;
+		case SST_JUMPING_LEFT:
+			App->player->AddPosition(-1.0f, -1.0f);
+			break;
+		case SST_FALLING_RIGHT:
+			App->player->AddPosition(1.0f, 1.0f);
+			break;
+		case SST_FALLING_LEFT:
+			App->player->AddPosition(-1.0f, 1.0f);
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
 		break;
 	}
 }

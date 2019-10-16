@@ -6,6 +6,12 @@
 #include "j1Map.h"
 #include "PugiXml/src/pugixml.hpp"
 
+struct collider_buffer {
+	iPoint collider1;
+	iPoint collider2;
+	bool is_first_collider_horizontal = false;
+};
+
 enum collision_type {
 	NONE_COLLISION,
 	LEFT_COLLISION,
@@ -36,6 +42,9 @@ public:
 	bool Start();
 
 	// Called each loop iteration
+	bool PreUpdate();
+
+	// Called each loop iteration
 	bool Update(float dt);
 
 	// Called before quitting
@@ -45,11 +54,15 @@ public:
 
 	collision_type CheckCollider(p2List_item<Object*>* currentobj);
 	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
+	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
 
 	collision_type current_collision;
+	collider_buffer current_collision_buffer;
 
 private:
 	p2List<ObjectGroup*> pObjGroupList;
+	bool has_already_collided = false;
+	collision_type collision_array[LAST_COLLISION];
 };
 
 #endif // __j1COLLISION_H__

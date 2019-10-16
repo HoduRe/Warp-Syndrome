@@ -24,12 +24,32 @@ bool j1Collision::Start()
 	return true;
 }
 
+bool j1Collision::PreUpdate() {
+
+// Reset bools	
+	has_already_collided = false;
+	current_collision_buffer.is_first_collider_horizontal = false;
+
+// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
+//iterates all the object layers, and then iterates between all the object each layer contains
+	collision_array[0] = NONE_COLLISION;
+	collision_array[1] = NONE_COLLISION;
+	collision_array[2] = NONE_COLLISION;
+	collision_array[3] = NONE_COLLISION;
+	collision_array[4] = LEFT_UPPER_COLLISION;
+	collision_array[5] = RIGHT_UPPER_COLLISION;
+	collision_array[6] = NONE_COLLISION;
+	collision_array[7] = LEFT_GROUND_COLLISION;
+	collision_array[8] = RIGHT_GROUND_COLLISION;
+	collision_array[9] = GROUND_UPPER_COLLISION;
+
+	return true;
+}
+
 bool j1Collision::Update(float dt) {
+
 	bool ret = true;
-	collision_type collision_array[LAST_COLLISION] = { NONE_COLLISION, NONE_COLLISION, NONE_COLLISION, NONE_COLLISION,
-	LEFT_UPPER_COLLISION, RIGHT_UPPER_COLLISION, NONE_COLLISION, LEFT_GROUND_COLLISION, RIGHT_GROUND_COLLISION, GROUND_UPPER_COLLISION, };
-	// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
-	//iterates all the object layers, and then iterates between all the object each layer contains
+
 	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
 	while (itemOG!=NULL)
 	{
@@ -70,15 +90,19 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	float collider_h = (float)currentobj->data->boundingbox.h;
 
 	if (collider_y <= y && collider_y > y - h && collider_x < x && collider_x + collider_w > x) {
+		GetBufferCollision(collider_x, collider_y, true);
 		return GROUND_COLLISION;
 	}
-	else if (collider_x > x && collider_x <= x + w && collider_y <= y && collider_y + collider_h > y - h) {
+	else if (collider_x > x && collider_x <= x + w && collider_y < y && collider_y + collider_h > y - h) {
+		GetBufferCollision(collider_x - w, collider_y, false);
 		return RIGHT_COLLISION;
 	}
-	else if (collider_x + collider_w < x + w && collider_x + collider_w >= x && collider_y <= y && collider_y + collider_h > y - h) {
+	else if (collider_x + collider_w < x + w && collider_x + collider_w >= x && collider_y < y && collider_y + collider_h > y - h) {
+		GetBufferCollision(collider_x + collider_w, collider_y, false);
 		return LEFT_COLLISION;
 	}
 	else if (collider_y + collider_h >= y - h && collider_y + collider_h <= y && collider_x < x && collider_x + collider_w > x) {
+		GetBufferCollision(collider_x, collider_y + collider_h + h, true);
 		return UPPER_COLLISION;
 	}
 	else { return NONE_COLLISION; }
@@ -102,6 +126,22 @@ collision_type j1Collision::GetCollisionType(collision_type collision_array[], c
 	return current_collision = collision_array[collision_count];
 }
 
+// Gets the buffer collider to avoid the player going into a solid mass
+void j1Collision::GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider) {
+
+	switch (has_already_collided) {
+	case false:
+		current_collision_buffer.collider1.x = (int)collider_x;
+		current_collision_buffer.collider1.y = (int)collider_y;
+		has_already_collided = true;
+		if (horizontal_collider == true) { current_collision_buffer.is_first_collider_horizontal = true; }
+		break;
+	case true:
+		current_collision_buffer.collider2.x = (int)collider_x;
+		current_collision_buffer.collider2.y = (int)collider_y;
+		break;
+	}
+}
 
 //Called from the Map module every time a map is loaded
 void j1Collision::SetPointerToObjGroup(p2List<ObjectGroup*> &pointerObjGroupList)

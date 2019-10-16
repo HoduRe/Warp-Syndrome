@@ -4,6 +4,13 @@
 #include "j1Module.h"
 #include "p2List.h"
 
+enum SlidingStates {
+	SST_JUMPING_LEFT,
+	SST_JUMPING_RIGHT,
+	SST_FALLING_LEFT,
+	SST_FALLING_RIGHT,
+	SST_IDLE
+};
 enum JumpingStatesX {
 	JST_GOING_LEFT,
 	JST_GOING_RIGHT,
@@ -81,6 +88,9 @@ private:
 	int run_counter = 0;
 	int internal_counter = 0;
 	float jump_timer = 0;
+	bool x_move = true;
+	bool y_move = true;
+	SlidingStates wall_jump = SST_IDLE;
 	JumpingStatesX x_jumping_state = JST_IDLE;
 	JumpingStatesY y_jumping_state = JST_UNKNOWN;
 };

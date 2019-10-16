@@ -83,3 +83,6 @@ Update 0.0.1.19-debug (The Parallax update)
 Update 0.0.1.20-debug
 -Machine state completely functional
 
+Update 0.0.1.21-debug
+-Wall jump implemented
+

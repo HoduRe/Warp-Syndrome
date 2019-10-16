@@ -76,15 +76,17 @@ void j1State::CheckInputs() {
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
 		break;
 	case SLIDING_ON_RIGHT_WALL:
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 			current_state = WALL_JUMP;
+			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_LEFT;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
 		break;
 	case SLIDING_ON_LEFT_WALL:
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 			current_state = WALL_JUMP;
+			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_RIGHT;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
@@ -156,6 +158,7 @@ void j1State::CheckColliders() {
 		case THROWING_GRENADE:
 		case SLIDING_TO_IDLE:
 			current_state = DEAD;
+			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
 		break;
@@ -168,6 +171,7 @@ void j1State::CheckColliders() {
 		case SLIDING_ON_LEFT_WALL:
 		case THROWING_GRENADE_ON_AIR:
 			current_state = SLIDING_ON_RIGHT_WALL;
+			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
 		break;
@@ -180,6 +184,7 @@ void j1State::CheckColliders() {
 		case SLIDING_ON_RIGHT_WALL:
 		case THROWING_GRENADE_ON_AIR:
 			current_state = SLIDING_ON_LEFT_WALL;
+			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
 		break;
@@ -190,6 +195,7 @@ void j1State::CheckColliders() {
 		case THROWING_GRENADE_ON_AIR:
 		case TELEPORT:
 			current_state = IDLE;
+			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
 		break;
@@ -207,6 +213,7 @@ void j1State::CheckColliders() {
 		case SLIDING_ON_RIGHT_WALL:
 //			current_state = SLIDING_TO_IDLE;
 			current_state = IDLE;
+			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
 		break;
@@ -220,7 +227,7 @@ void j1State::MovePlayer() {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD && internal_counter % 3 == 0) { App->player->AddPosition(5.0f, 0.0f); }
+		if (current_state == WALK_FORWARD && internal_counter % 80 == 0) { App->player->AddPosition(5.0f, 0.0f); }
 		else { App->player->AddPosition(5.0f, 0.0f); }
 		break;
 	case WALK_BACKWARD:
@@ -243,6 +250,8 @@ void j1State::MovePlayer() {
 		App->player->AddPosition(0.0f, App->player->GetVelocity().y / 2.0f);
 		break;
 	}		// TODO JUMPS
+
+	AvoidShaking();
 }
 
 void j1State::ChangeAnimation() {
@@ -292,7 +301,11 @@ void j1State::JumpMoveY() {
 		}
 		break;
 	}
+}
 
+void j1State::AvoidShaking() {
+
+	// This switch prevents shaking when colliding happens
 	switch (App->collision->current_collision) {
 	case GROUND_COLLISION:
 		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
@@ -310,9 +323,11 @@ void j1State::JumpMoveY() {
 		switch (wall_jump) {
 		case SST_JUMPING_RIGHT:
 			App->player->AddPosition(1.0f, -1.0f);
+			current_state = WALL_JUMP;
 			break;
 		case SST_JUMPING_LEFT:
 			App->player->AddPosition(-1.0f, -1.0f);
+			current_state = WALL_JUMP;
 			break;
 		case SST_FALLING_RIGHT:
 			App->player->AddPosition(1.0f, 1.0f);
@@ -337,18 +352,20 @@ void j1State::JumpMoveY() {
 		break;
 	case LEFT_UPPER_COLLISION:
 	case RIGHT_UPPER_COLLISION:
-		if(App->collision->current_collision_buffer.is_first_collider_horizontal == true){
+		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
 			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
-			}
-		else if(App->collision->current_collision_buffer.is_first_collider_horizontal == false){
+		}
+		else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
 			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->collision->current_collision_buffer.collider2.y);
-			}
+		}
 		switch (wall_jump) {
 		case SST_JUMPING_RIGHT:
 			App->player->AddPosition(1.0f, -1.0f);
+			current_state = WALL_JUMP;
 			break;
 		case SST_JUMPING_LEFT:
 			App->player->AddPosition(-1.0f, -1.0f);
+			current_state = WALL_JUMP;
 			break;
 		case SST_FALLING_RIGHT:
 			App->player->AddPosition(1.0f, 1.0f);

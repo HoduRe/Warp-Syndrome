@@ -79,6 +79,7 @@ public:
 	// Calculates jump shinanigans
 	void JumpMoveX();
 	void JumpMoveY();
+	void AvoidShaking();
 
 	state_list current_state;
 

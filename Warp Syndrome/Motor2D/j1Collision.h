@@ -52,7 +52,9 @@ public:
 
 	void SetPointerToObjGroup(p2List<ObjectGroup*> &pointerObjList);
 
-	collision_type CheckCollider(p2List_item<Object*>* currentobj);
+	void CheckLoop(fPoint* position, fPoint* measures);	// Exists because it's also used in the grenade
+
+	collision_type CheckCollider(p2List_item<Object*>* currentobj, float *x, float *y, float *w, float *h);
 	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
 	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
 

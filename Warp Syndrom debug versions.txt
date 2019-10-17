@@ -86,3 +86,6 @@ Update 0.0.1.20-debug
 Update 0.0.1.21-debug
 -Wall jump implemented
 
+Update 0.0.1.22-debug
+-Shaking corrected
+-Grenade module created

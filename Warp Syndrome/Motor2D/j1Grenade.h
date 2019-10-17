@@ -4,6 +4,17 @@
 #include "j1Module.h"
 #include "p2List.h"
 
+enum grenade_states {
+	GST_UNKNOWN,
+	GST_MOVING_UP,
+	GST_MOVING_DOWN,
+	GST_MOVING_RIGHT_UP,
+	GST_MOVING_RIGHT_DOWN,
+	GST_MOVING_LEFT_UP,
+	GST_MOVING_LEFT_DOWN,
+	GST_EXPLODING
+};
+
 class j1Grenade : public j1Module
 {
 public:
@@ -11,7 +22,7 @@ public:
 	j1Grenade();
 
 	// Destructor
-	virtual ~j1Grenade();
+	~j1Grenade();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -25,9 +36,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Chechk c
+	void GrenadeCollisions();
+
+	// Simple machine state for the grenade
+	void GrenadeState();
+
+	void AddPosition(float x, float y);
 
 private:
-
+	fPoint grenade_position, grenade_timer;
+	fpoint grenade_measures;
+	grenade_states grenade_state = GST_UNKNOWN;
 };
 
 #endif // __j1GRENADE_H__

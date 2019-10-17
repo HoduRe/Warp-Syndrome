@@ -50,22 +50,14 @@ bool j1Collision::Update(float dt) {
 
 	bool ret = true;
 
-	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
-	while (itemOG!=NULL)
-	{
-		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
-		while (itemO!=NULL)
-		{
-			current_collision = CheckCollider(itemO);
-			collision_array[current_collision] = current_collision;
-
-			itemO = itemO->next;
-		}
-
-
-		itemOG=itemOG->next;
-	}
-	current_collision = GetCollisionType(collision_array, current_collision);
+	//player variables
+	fPoint position;
+	fPoint measures;
+	position.x = App->player->GetPosition().x;
+	position.y = App->player->GetPosition().y;
+	measures.x = 20;	// TODO use character height to differenciate x axis from x_y axis
+	measures.y = 30;	// TODO use character height to differenciate x axis from x_y axis
+	CheckLoop(&position, &measures);
 
 	return ret;
 }
@@ -75,13 +67,26 @@ bool j1Collision::CleanUp() {
 	return true;
 }
 
-collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
+void j1Collision::CheckLoop(fPoint *position, fPoint *measures) {
+	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	while (itemOG != NULL)
+	{
+		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
+		while (itemO != NULL)
+		{
+			current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+			collision_array[current_collision] = current_collision;
 
-	//player variables
-	float x = App->player->GetPosition().x;
-	float y = App->player->GetPosition().y;
-	float w = 20;	// TODO use character height to differenciate x axis from x_y axis
-	float h = 30;	// TODO use character height to differenciate x axis from x_y axis
+			itemO = itemO->next;
+		}
+
+
+		itemOG = itemOG->next;
+	}
+	current_collision = GetCollisionType(collision_array, current_collision);
+}
+
+collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj, float *x, float *y, float *w,  float *h) {
 
 	//collider variables
 	float collider_x = (float)currentobj->data->boundingbox.x;
@@ -89,20 +94,20 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj) {
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
 
-	if (collider_y <= y && collider_y > y - h && collider_x < x && collider_x + collider_w > x) {
+	if (collider_y <= *y && collider_y > *y - *h && collider_x < *x && collider_x + collider_w > *x) {
 		GetBufferCollision(collider_x, collider_y, true);
 		return GROUND_COLLISION;
 	}
-	else if (collider_x > x && collider_x <= x + w && collider_y < y && collider_y + collider_h > y - h) {
-		GetBufferCollision(collider_x - w, collider_y, false);
+	else if (collider_x > *x && collider_x <= *x + *w && collider_y < *y && collider_y + collider_h > *y - *h) {
+		GetBufferCollision(collider_x - *w, collider_y, false);
 		return RIGHT_COLLISION;
 	}
-	else if (collider_x + collider_w < x + w && collider_x + collider_w >= x && collider_y < y && collider_y + collider_h > y - h) {
+	else if (collider_x + collider_w < *x + *w && collider_x + collider_w >= *x && collider_y < *y && collider_y + collider_h > *y - *h) {
 		GetBufferCollision(collider_x + collider_w, collider_y, false);
 		return LEFT_COLLISION;
 	}
-	else if (collider_y + collider_h >= y - h && collider_y + collider_h <= y && collider_x < x && collider_x + collider_w > x) {
-		GetBufferCollision(collider_x, collider_y + collider_h + h, true);
+	else if (collider_y + collider_h >= *y - *h && collider_y + collider_h <= *y && collider_x < *x && collider_x + collider_w > *x) {
+		GetBufferCollision(collider_x, collider_y + collider_h + *h, true);
 		return UPPER_COLLISION;
 	}
 	else { return NONE_COLLISION; }

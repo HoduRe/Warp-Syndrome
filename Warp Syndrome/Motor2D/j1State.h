@@ -47,6 +47,31 @@ enum state_list {
 	GOD_MODE
 };
 
+enum Animation_list
+{
+	AL_IDLE,
+	AL_CROUCH,
+	AL_RUNNING,
+	AL_CROUCHING,
+	AL_THROW_GRANADE,
+	AL_FORWARD_JUMP,
+	AL_FALLING,
+	AL_SLIDING,
+	AL_HURT,
+	AL_WALLSLIDING,
+	AL_WALLSLIDING_TO_IDLE,
+	AL_WALLJUMPING,
+	AL_WAKEUP,
+	AL_WALKING,
+	AL_UNKNOWN
+};
+
+enum Animation_state
+{
+	AS_UNFINISHED,
+	AS_FINISHED,
+	AS_UNKNOWN
+};
 class j1State : public j1Module
 {
 public:
@@ -75,9 +100,11 @@ public:
 	// Moves player position
 	void MovePlayer();
 	// Puts the proper animation
-	void ChangeAnimation();
+	void ChangeAnimation(Animation_list animations);
 	//flips the player
 	bool FlipPlayer(fPoint currentpos,fPoint lastpos);
+
+	Animation_state StepCurrentAnimation();
 
 
 	// Calculates jump shinanigans

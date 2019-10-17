@@ -158,3 +158,20 @@ fPoint j1Player::GetVelocity()
 {
 	return playervel;
 }
+
+p2List<Animations*>* j1Player::GetAnimationList()
+{
+	return &playerAnimations;
+}
+
+void j1Player::SetCurrentAnim(p2List_item<Animations*>* animationpointer)
+{
+	currentAnim = animationpointer;
+}
+
+p2List_item<Animations*>* j1Player::GetCurrentAnim()
+{
+	return currentAnim;
+}
+
+

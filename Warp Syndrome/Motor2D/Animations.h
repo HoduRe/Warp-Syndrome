@@ -45,7 +45,7 @@ public:
 	//returns true if loaded correctly, false, if the number of frames loaded don't correspond to the one specified in the .xml 
 	bool LoadAnim(pugi::xml_node& animationnode);
 
-	p2List_item<Animations*>* GetAnimFromName(p2SString name, p2List<Animations*> animlist);
+	p2List_item<Animations*>* GetAnimFromName(p2SString name, p2List<Animations*>* animlist);
 
 
 	void ResetAnimation();

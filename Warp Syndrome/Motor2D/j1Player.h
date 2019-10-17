@@ -50,6 +50,12 @@ public:
 
 	void SetFliped(bool flip);
 
+	p2List<Animations*>* GetAnimationList();
+	
+	p2List_item<Animations*>* GetCurrentAnim();
+
+	void SetCurrentAnim(p2List_item<Animations*>* animationpointer);
+
 
 	bool LoadAnimations(pugi::xml_node&);
 
@@ -57,6 +63,7 @@ private:
 	fPoint playerpos;;
 	fPoint playervel;
 	p2List<Animations*> playerAnimations;
+	p2List_item<Animations*>* currentAnim;
 	SDL_Event events;
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;

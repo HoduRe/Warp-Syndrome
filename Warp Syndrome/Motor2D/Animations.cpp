@@ -101,9 +101,9 @@ p2SString Animations::GetName()
 {
 	return animationname;
 }
-p2List_item<Animations*>* Animations::GetAnimFromName(p2SString name, p2List<Animations*> animlist)
+p2List_item<Animations*>* Animations::GetAnimFromName(p2SString name, p2List<Animations*>* animlist)
 {
-	p2List_item<Animations*>* animitem = animlist.start;
+	p2List_item<Animations*>* animitem = animlist->start;
 	while (animitem != NULL)
 	{
 		if (animitem->data->GetName() == name)

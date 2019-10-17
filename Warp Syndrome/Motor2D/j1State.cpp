@@ -36,8 +36,8 @@ bool j1State::Update(float dt) {
 	CheckInputs();	// Checks active states (based on inputs)
 	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
-	App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));
-	ChangeAnimation();	// Puts the proper animation
+	App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
+		// steps the current animation
 
 	return ret;
 }
@@ -264,10 +264,6 @@ void j1State::MovePlayer() {
 	AvoidShaking();
 }
 
-void j1State::ChangeAnimation() {
-
-}
-
 void j1State::JumpMoveX() {
 	if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
 	else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
@@ -410,4 +406,81 @@ bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
 	else if (currentpos.x > lastpos.x)fliped = false;
 
 	return fliped;
+}
+
+void j1State::ChangeAnimation(Animation_list animations)
+{
+	p2List<Animations*>* pAnimList= App->player->GetAnimationList();//pointer to the player's animation list
+	p2List_item<Animations*>*currentanim= App->player->GetCurrentAnim();//pointer to the current animation
+	
+	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
+	p2List_item<Animations*>* newanim=nullptr; 
+	switch (animations)
+	{
+	case AL_IDLE:
+		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);
+		break;
+	case AL_CROUCH:
+		newanim = currentanim->data->GetAnimFromName("crouch", pAnimList);
+		break;
+	case AL_RUNNING:
+		newanim = currentanim->data->GetAnimFromName("running", pAnimList);
+		break;
+	case AL_CROUCHING:
+		newanim = currentanim->data->GetAnimFromName("crouching", pAnimList);
+		break;
+	case AL_THROW_GRANADE:
+		newanim = currentanim->data->GetAnimFromName("throw_granade", pAnimList);
+		break;
+	case AL_FORWARD_JUMP:
+		newanim = currentanim->data->GetAnimFromName("forward_jump", pAnimList);
+		break;
+	case AL_FALLING:
+		newanim = currentanim->data->GetAnimFromName("falling", pAnimList);
+		break;
+	case AL_SLIDING:
+		newanim = currentanim->data->GetAnimFromName("sliding", pAnimList);
+		break;
+	case AL_HURT:
+		newanim = currentanim->data->GetAnimFromName("hurt", pAnimList);
+		break;
+	case AL_WALLSLIDING:
+		newanim = currentanim->data->GetAnimFromName("wallsliding", pAnimList);
+		break;
+	case AL_WALLSLIDING_TO_IDLE:
+		newanim = currentanim->data->GetAnimFromName("wallsliding_to_idle", pAnimList);
+		break;
+	case AL_WALLJUMPING:
+		newanim = currentanim->data->GetAnimFromName("walljump", pAnimList);
+		break;
+	case AL_WAKEUP:
+		newanim = currentanim->data->GetAnimFromName("wakeup", pAnimList);
+		break;
+	case AL_WALKING:
+		newanim = currentanim->data->GetAnimFromName("walking", pAnimList);
+		break;
+	case AL_UNKNOWN:
+		newanim = currentanim->data->GetAnimFromName("", pAnimList);
+		break;
+	default:
+		break;
+	}
+
+	App->player->SetCurrentAnim(newanim);//sets the current animation of the player
+
+}
+
+Animation_state j1State::StepCurrentAnimation()
+{
+	Animation_state state = AS_UNKNOWN;
+
+	p2List_item<Animations*>* currentanim = App->player->GetCurrentAnim();
+	currentanim->data->StepAnimation();
+
+	if (currentanim->data->GetAnimationFinish())
+		state = AS_FINISHED;
+	else state = AS_UNFINISHED;
+
+
+	return state;
 }

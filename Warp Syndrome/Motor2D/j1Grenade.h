@@ -11,7 +11,7 @@ public:
 	j1Grenade();
 
 	// Destructor
-	virtual ~j1Grenade();
+	~j1Grenade();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

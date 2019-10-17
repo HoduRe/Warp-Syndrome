@@ -9,7 +9,7 @@ j1Grenade::j1Grenade() {
 }
 
 // Destructor
-j1Grenade::j1Grenade() {}
+j1Grenade::~j1Grenade() {}
 
 // Called before render is available
 bool j1Grenade::Awake(pugi::xml_node&) {

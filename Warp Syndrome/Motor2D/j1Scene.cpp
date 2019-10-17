@@ -100,16 +100,30 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		reload = true;
 	//TODO position camera relative to the player
-	
-	
-	
+
+
+
 	//RepositionCamera currently deactivated
 	//RepositionCamera();
-	App->render->camera.x = -((App->player->GetPosition().x*App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
-	App->render->camera.y = -((App->player->GetPosition().y*App->win->GetScale()) - (App->render->camera.w*2 / 3));
+	App->render->camera.x = -((App->player->GetPosition().x * App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
+	App->render->camera.y = -((App->player->GetPosition().y * App->win->GetScale()) - (App->render->camera.w * 2 / 3));
 
-	//App->render->Blit(img, 0, 0);
-	App->map->Draw();
+	//camera boundaries
+	//x coordinate
+	if (-App->render->camera.x < 0)App->render->camera.x = 0;
+	else if (-App->render->camera.x + App->render->camera.w > App->map->data.width * App->map->data.tile_width) 
+		App->render->camera.x = -(App->map->data.width * App->map->data.tile_width - App->render->camera.w);
+	
+	//y coordinate
+	if (-App->render->camera.y < 0)App->render->camera.y = 0;
+	else if (-App->render->camera.y + App->render->camera.h > App->map->data.height * App->map->data.tile_height) 
+		App->render->camera.y = -(App->map->data.height * App->map->data.tile_height - App->render->camera.h);
+
+
+
+
+		//App->render->Blit(img, 0, 0);
+		App->map->Draw();
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		App->map->data.width, App->map->data.height,
@@ -262,16 +276,16 @@ void j1Scene::RepositionCamera()
 			}
 			else//left side
 			{
-				if (target.x < -currentcam.x + (camW*2/ 6) + 12 && target.x > -currentcam.x + (camW / 3) - 12)
+				if (target.x < -currentcam.x + (camW * 2 / 6) + 12 && target.x > -currentcam.x + (camW / 3) - 12)
 				{
-					currentcam.x = -target.x + (camW*2/ 6);
+					currentcam.x = -target.x + (camW * 2 / 6);
 				}
 				else currentcam.x = CameraGoToTarget(App->render->camera, target);
 
 			}
 		}
 		else currentcam.x = CameraGoToTarget(App->render->camera, target);//no//execute code to go to the line
-		
+
 	}
 	else//target is NOT in the same side of the screen as last frame
 	{
@@ -281,10 +295,10 @@ void j1Scene::RepositionCamera()
 		if (snapping)//Was snapping active?
 			snapping = false;//yes//deactivate snapping
 		else currentcam.x = CameraGoToTarget(App->render->camera, target);//no//execute code to go to the line
-		
+
 	}
 
-	currentcam.y =-target.y + (camH * 2 / 3);
+	currentcam.y = -target.y + (camH * 2 / 3);
 
 
 	App->render->camera.x = currentcam.x;
@@ -300,11 +314,11 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 	float newcamX = camera.x;
 	float playervel = App->player->GetVelocity().x;
 
-	if (target.x > -camera.x + (camera.w * 4/ 6))
+	if (target.x > -camera.x + (camera.w * 4 / 6))
 	{
 		newcamX -= playervel + (playervel * camvelocity.x);
 	}
-	else if (target.x < -camera.x + (camera.w* 2/ 6))
+	else if (target.x < -camera.x + (camera.w * 2 / 6))
 	{
 		newcamX += playervel + (playervel * camvelocity.x);
 	}

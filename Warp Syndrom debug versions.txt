@@ -1,4 +1,4 @@
-Current version: 0.0.1.19-debug
+Current version: 0.0.1.23-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -85,4 +85,12 @@ Update 0.0.1.20-debug
 
 Update 0.0.1.21-debug
 -Wall jump implemented
+
+Update 0.0.1.22-debug
+-Shaking fixed
+
+Update 0.0.1.23-debug
+-Now the camera has limits, so cannot move outside the map
+
+
 

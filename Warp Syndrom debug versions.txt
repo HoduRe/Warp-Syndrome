@@ -1,4 +1,4 @@
-Current version: 0.0.1.23-debug
+Current version: 0.0.1.24-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -92,5 +92,7 @@ Update 0.0.1.22-debug
 Update 0.0.1.23-debug
 -Now the camera has limits, so cannot move outside the map
 
-
+Update 0.0.1.24-debug
+-Redone camera, still a bit wonky has to be smoothed.
+-Added a function that determines whereas the player is flipped or not.
 

@@ -3,6 +3,7 @@
 #include "j1State.h"
 #include "j1Collision.h"
 #include "j1Player.h"
+#include "j1Grenade.h"
 #include "j1Input.h"
 #include "p2List.h"
 #include "j1App.h"
@@ -34,8 +35,6 @@ bool j1State::Update(float dt) {
 	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
 	ChangeAnimation();	// Puts the proper animation
-
-	internal_counter++;
 
 	return ret;
 }
@@ -220,6 +219,14 @@ void j1State::CheckColliders() {
 	default:
 		break;
 	}
+	switch (App->collision->current_collision) {	// Avoids horizontal vibration
+	case LEFT_GROUND_COLLISION:
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {current_state = WALK_FORWARD; }
+		break;
+	case RIGHT_GROUND_COLLISION:
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { current_state = WALK_BACKWARD; }
+		break;
+	}
 }
 
 void j1State::MovePlayer() {
@@ -227,12 +234,12 @@ void j1State::MovePlayer() {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD && internal_counter % 80 == 0) { App->player->AddPosition(5.0f, 0.0f); }
-		else { App->player->AddPosition(5.0f, 0.0f); }
+		if (current_state == WALK_FORWARD) { App->player->AddPosition(App->player->GetVelocity().x / 2, 0.0f); }
+		else { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD && internal_counter % 3 == 0) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
+		if (current_state == WALK_BACKWARD) { App->player->AddPosition(-App->player->GetVelocity().x / 2, 0.0f); }
 		else { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
 		break;
 	case FREE_JUMP:
@@ -341,14 +348,14 @@ void j1State::AvoidShaking() {
 		break;
 	case LEFT_GROUND_COLLISION:
 	case RIGHT_GROUND_COLLISION:
-		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
-			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
+		if (current_state != WALK_BACKWARD && current_state != WALK_FORWARD) {
+			if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
+				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
+			}
+			else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
+				App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->collision->current_collision_buffer.collider2.y);
+			}
 		}
-		else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
-			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x, App->collision->current_collision_buffer.collider2.y);
-		}
-		if (App->collision->current_collision == LEFT_GROUND_COLLISION) { App->player->AddPosition(1, 0); }
-		else { App->player->AddPosition(-1, 0); }
 		break;
 	case LEFT_UPPER_COLLISION:
 	case RIGHT_UPPER_COLLISION:

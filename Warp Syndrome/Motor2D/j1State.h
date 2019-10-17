@@ -87,7 +87,6 @@ private:
 	bool double_jump = true;
 	bool grenade = false;
 	int run_counter = 0;
-	int internal_counter = 0;
 	float jump_timer = 0;
 	bool x_move = true;
 	bool y_move = true;

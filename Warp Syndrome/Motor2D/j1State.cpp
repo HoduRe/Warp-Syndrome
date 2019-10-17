@@ -95,9 +95,21 @@ void j1State::CheckInputs() {
 		break;
 	case THROWING_GRENADE:
 		if (grenade == false) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			grenade_direction = JST_GOING_RIGHT;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			grenade_direction = JST_GOING_LEFT;
+		}
 		break;
 	case THROWING_GRENADE_ON_AIR:
 		if (grenade == false) { current_state = FREE_FALLING; }	// TODO a function that changes this bool based on the player throwing a grenade
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			grenade_direction = JST_GOING_RIGHT;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			grenade_direction = JST_GOING_LEFT;
+		}
 		break;
 	}
 

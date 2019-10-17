@@ -98,3 +98,8 @@ Update 0.0.1.24-debug
 
 Update: 0.0.1.25-debug
 -Urpgaded camera, the code is now much more simple and the camera movement is also easily customizable. Camera works now as intended.
+
+Update 0.0.1.26-debug
+-Grenade module created
+-Grenade logic incorporated
+

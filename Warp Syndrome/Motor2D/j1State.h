@@ -114,9 +114,11 @@ public:
 
 	state_list current_state;
 
+	bool grenade = false;
+	JumpingStatesX grenade_direction = JST_IDLE;
+
 private:
 	bool double_jump = true;
-	bool grenade = false;
 	int run_counter = 0;
 	float jump_timer = 0;
 	bool x_move = true;

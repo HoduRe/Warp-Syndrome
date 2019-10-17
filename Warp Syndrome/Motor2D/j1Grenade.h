@@ -46,7 +46,7 @@ public:
 
 private:
 	fPoint grenade_position, grenade_timer;
-	fpoint grenade_measures;
+	fPoint grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
 };
 

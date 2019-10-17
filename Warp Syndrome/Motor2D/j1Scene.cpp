@@ -154,7 +154,7 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-
+//this function moves the camera around
 void j1Scene::RepositionCamera()
 {
 	////variables-------------------------------------------------------------------
@@ -170,8 +170,8 @@ void j1Scene::RepositionCamera()
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
 	if (!playerfliped)
-		target.x = playerpos.x + (camW / 3);
-	else target.x = playerpos.x - (camW / 3);
+		target.x = playerpos.x + (camW*0.1f); //change the number multiplying by the camW to set the distance of the taget from the player when is looking right
+	else target.x = playerpos.x - (camW*0.1f);//change the number multiplying by the camW to set the distance of the taget from the player when is looking left
 
 	target.y = playerpos.y;
 
@@ -191,38 +191,29 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 {
 	float newcamX = camera.x;
 	float playervel = App->player->GetVelocity().x;
+	float camdisplacementvel = playervel * 3;
 
-	//if (target.x > -camera.x + (camera.w * 4 / 6))
-	//{
-	//	newcamX -= playervel + (playervel * camvelocity.x);
-	//}
-	//else if (target.x < -camera.x + (camera.w * 2 / 6))
-	//{
-	//	newcamX += playervel + (playervel * camvelocity.x);
-	//}
-	//else arrivedtoline = true;
-
-	/*if (camvelocity.x > 3.0f)camvelocity.x = 3.0f;
-	else camvelocity.x += 0.05f;*/
-	
+	if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
 
 	if (target.x > -camera.x + (camera.w/2))
 	{
-		newcamX -= playervel*2;
+		newcamX -= camdisplacementvel*camvelocity.x;
 		LOG("Cam --, positon: %f", newcamX);
 	}
 	else if (target.x < -camera.x + (camera.w/2))
 	{
-		newcamX += playervel*2;
+		newcamX += camdisplacementvel*camvelocity.x;
 		LOG("Cam ++, positon: %f", newcamX);
 
 	}
+	camvelocity.x += 0.05f;//change this value to change camera accel
+	//TODO take the increment of cam vel (cam accel) and put it in the configuration xml
 	
-	if (-camera.x+(camera.w/2)<=target.x+(playervel/2)|| -camera.x + (camera.w / 2) >= target.x - (playervel / 2))
+	if (-camera.x+(camera.w/2) <=target.x+(camdisplacementvel/2)+1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel/2)-1)
 	{
 		newcamX = -(target.x - (camera.w / 2));
 		LOG("Cam pinned, positon: %f", newcamX);
-
+		camvelocity = { 0.0f,0.0f };
 	}
 
 

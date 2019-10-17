@@ -1,4 +1,4 @@
-Current version: 0.0.1.24-debug
+Current version: 0.0.1.25-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -96,3 +96,5 @@ Update 0.0.1.24-debug
 -Redone camera, still a bit wonky has to be smoothed.
 -Added a function that determines whereas the player is flipped or not.
 
+Update: 0.0.1.25-debug
+-Urpgaded camera, the code is now much more simple and the camera movement is also easily customizable. Camera works now as intended.

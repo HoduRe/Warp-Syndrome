@@ -1,4 +1,5 @@
 #include "p2Defs.h"
+#include "p2Point.h"
 #include "p2Log.h"
 #include "j1State.h"
 #include "j1Collision.h"
@@ -29,11 +30,13 @@ bool j1State::Start() {
 bool j1State::Update(float dt) {
 
 	bool ret = true;
+	fPoint playerposbuffer = App->player->GetPosition();
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
 	CheckInputs();	// Checks active states (based on inputs)
 	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
+	App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));
 	ChangeAnimation();	// Puts the proper animation
 
 	return ret;
@@ -411,3 +414,12 @@ void j1State::AvoidShaking() {
 		break;
 	}
 }*/
+
+bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
+{
+	bool fliped = App->player->GetFliped();
+	if (currentpos.x < lastpos.x)fliped = true;
+	else if (currentpos.x > lastpos.x)fliped = false;
+
+	return fliped;
+}

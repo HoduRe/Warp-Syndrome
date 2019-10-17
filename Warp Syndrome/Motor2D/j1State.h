@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2List.h"
+#include "p2Point.h"
 
 enum SlidingStates {
 	SST_JUMPING_LEFT,
@@ -75,6 +76,9 @@ public:
 	void MovePlayer();
 	// Puts the proper animation
 	void ChangeAnimation();
+	//flips the player
+	bool FlipPlayer(fPoint currentpos,fPoint lastpos);
+
 
 	// Calculates jump shinanigans
 	void JumpMoveX();

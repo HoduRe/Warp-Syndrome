@@ -1,4 +1,4 @@
-Current version: 0.0.2.0-debug
+Current version: 0.0.2.3-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -122,6 +122,8 @@ Update 0.0.2.2-debug
 -Grenade flip corrected
 -Player doesn't stop while the grenade exists
 
-
-
+Update 0.0.2.3-debug
+-Added new textures for the Loading screen
+-Added new load function: fades to black, starts the loading animation loop, loads the new map and finally fides to the map again.
+-Still work to do in this new load function, it is functional though.
 

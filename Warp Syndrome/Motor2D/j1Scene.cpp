@@ -37,54 +37,19 @@ bool j1Scene::Start()
 	camvelocity = { 0.0f,0.0f };
 	arrivedtoline = false;
 	snapping = false;
+
+	//load loadingscreen textures
+	loading.hexagonLogo = App->tex->Load("textures/hexagonsmall.png");
+	loading.externalLogo = App->tex->Load("textures/externalsmall.png");
+	loading.internalLogo = App->tex->Load("textures/internalsmall.png");
+	loading.loadingText = App->tex->Load("textures/loading.png");
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	if (reload == true)
-	{
-		bool ret = true;
-		switch (currentlevel)
-		{
-		case NOLEVEL:
-			LOG("could not load a level, switching to default one.");
-			if (ret != App->map->ReloadMap("hello2.tmx"))
-				LOG("Could not load default level. Error.");
-			break;
-		case LEVEL1:
-			currentlevel = LEVEL2;
-			if (ret != App->map->ReloadMap("first_level.tmx"))
-				currentlevel = NOLEVEL;
-
-			reload = false;
-			break;
-		case LEVEL2:
-			currentlevel = LEVEL3;
-			if (ret != App->map->ReloadMap("sewers.tmx"))
-				currentlevel = NOLEVEL;
-
-			reload = false;
-			break;
-		case LEVEL3:
-			currentlevel = LEVEL4;
-			if (ret != App->map->ReloadMap("orthogonal-outside.tmx"))
-				currentlevel = NOLEVEL;
-
-			reload = false;
-			break;
-		case LEVEL4:
-			currentlevel = LEVEL1;
-			if (ret != App->map->ReloadMap("first_level.tmx"))
-				currentlevel = NOLEVEL;
-
-			reload = false;
-			break;
-		}
-
-
-	}
+	
 	return true;
 }
 
@@ -98,8 +63,8 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-		reload = true;
-	//TODO position camera relative to the player
+		reload = true;//When reload=true, reloads a map
+
 
 
 
@@ -139,7 +104,7 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-
+	LoadNewLevel();
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -150,6 +115,10 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+	App->tex->UnLoad(loading.externalLogo);
+	App->tex->UnLoad(loading.internalLogo);
+	App->tex->UnLoad(loading.hexagonLogo);
+	App->tex->UnLoad(loading.loadingText);
 
 	return true;
 }
@@ -170,8 +139,8 @@ void j1Scene::RepositionCamera()
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
 	if (!playerfliped)
-		target.x = playerpos.x + (camW*0.1f); //change the number multiplying by the camW to set the distance of the taget from the player when is looking right
-	else target.x = playerpos.x - (camW*0.1f);//change the number multiplying by the camW to set the distance of the taget from the player when is looking left
+		target.x = playerpos.x + (camW * 0.1f); //change the number multiplying by the camW to set the distance of the taget from the player when is looking right
+	else target.x = playerpos.x - (camW * 0.1f);//change the number multiplying by the camW to set the distance of the taget from the player when is looking left
 
 	target.y = playerpos.y;
 
@@ -195,21 +164,21 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 
 	if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
 
-	if (target.x > -camera.x + (camera.w/2))
+	if (target.x > -camera.x + (camera.w / 2))
 	{
-		newcamX -= camdisplacementvel*camvelocity.x;
+		newcamX -= camdisplacementvel * camvelocity.x;
 		LOG("Cam --, positon: %f", newcamX);
 	}
-	else if (target.x < -camera.x + (camera.w/2))
+	else if (target.x < -camera.x + (camera.w / 2))
 	{
-		newcamX += camdisplacementvel*camvelocity.x;
+		newcamX += camdisplacementvel * camvelocity.x;
 		LOG("Cam ++, positon: %f", newcamX);
 
 	}
 	camvelocity.x += 0.05f;//change this value to change camera accel
 	//TODO take the increment of cam vel (cam accel) and put it in the configuration xml
-	
-	if (-camera.x+(camera.w/2) <=target.x+(camdisplacementvel/2)+1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel/2)-1)
+
+	if (-camera.x + (camera.w / 2) <= target.x + (camdisplacementvel / 2) + 1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel / 2) - 1)
 	{
 		newcamX = -(target.x - (camera.w / 2));
 		LOG("Cam pinned, positon: %f", newcamX);
@@ -221,6 +190,121 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 }
 
 
+void j1Scene::LoadNewLevel()
+{
+	bool ret = true;
+	if (reload)
+	{
 
+
+		if (loading.currenttime >= 60)//fade time 1 sec or 60 frames
+			loading.fadeended = true;
+
+		int alpha = (255 / 60) * loading.currenttime; //every sec alpha goes from 0 to 255
+		SDL_Rect screen = App->render->viewport;
+		switch (loading.fade)
+		{
+		case FADE_UNKNOWN:
+			loading.fade = FADE_IN;
+			break;
+		case FADE_IN:
+
+			App->render->DrawQuad(screen, 0, 0, 0, alpha, true, false);
+
+			if (loading.fadeended)//finished fading in
+			{
+				App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
+				loading.currenttime = 0;
+				loading.fade = FADE_CHANGINGLVL;
+				loading.fadeended = false;
+			}
+			else
+				loading.currenttime++;
+
+			break;
+		case FADE_CHANGINGLVL:
+			App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
+
+			//blit the loading textures
+			App->render->Blit(loading.loadingText, 100, 550, NULL, NULL, NULL, NULL, 0,0);
+			App->render->Blit(loading.externalLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, loading.degrees * 1.5, 256 / 8, 256 / 8);
+			App->render->Blit(loading.internalLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, -loading.degrees, 256 / 8, 256 / 8);
+			App->render->Blit(loading.hexagonLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, loading.degrees, 256 / 8, 256 / 8);
+			loading.degrees++;
+
+
+			if (loading.transition == 120)//loads the next map
+			{
+
+				switch (currentlevel)
+				{
+				case NOLEVEL:
+					LOG("could not load a level, switching to default one.");
+					if (App->map->ReloadMap("hello2.tmx"))
+						LOG("Could not load default level. Error.");
+					break;
+				case LEVEL1:
+					currentlevel = LEVEL2;
+					App->map->ReloadMap("first_level.tmx");
+
+					
+					break;
+				case LEVEL2:
+					currentlevel = LEVEL3;
+					App->map->ReloadMap("sewers.tmx");
+
+					
+					break;
+				case LEVEL3:
+					currentlevel = LEVEL4;
+					App->map->ReloadMap("orthogonal-outside.tmx");
+
+					
+					break;
+				case LEVEL4:
+					currentlevel = LEVEL1;
+					App->map->ReloadMap("first_level.tmx");
+
+					
+					break;
+				}
+
+
+
+			}
+
+			if (loading.transition >= 360)
+			{
+				loading.transition = 0;
+				loading.fade = FADE_OUT;
+			}
+			loading.transition++;
+			break;
+
+		case FADE_OUT:
+			App->render->DrawQuad(screen, 0, 0, 0, 255 - alpha, true, false);
+
+			if (loading.fadeended)//finished fading in
+			{
+				loading.currenttime = 0;
+				loading.fade = FADE_ENDED;
+			}
+			else
+				loading.currenttime++;
+			break;
+		case FADE_ENDED:
+			loading.fade = FADE_UNKNOWN;
+			loading.degrees = 0;
+			loading.transition = 0;
+			loading.fadeended = false;
+			reload = false;
+			break;
+		default:
+			break;
+		}
+
+	}
+
+}
 
 

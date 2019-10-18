@@ -59,6 +59,7 @@ public:
 
 	void SetCurrentAnim(p2List_item<Animations*>* animationpointer);
 
+	SDL_Texture* GetTexture();
 
 	bool LoadAnimations(pugi::xml_node&);
 

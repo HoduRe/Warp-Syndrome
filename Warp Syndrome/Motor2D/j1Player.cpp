@@ -186,3 +186,6 @@ void j1Player::SetCurrentFrame(FrameInfo* frame)
 	currentframe = frame;
 }
 
+SDL_Texture* j1Player::GetTexture() {
+	return playertexture;
+}

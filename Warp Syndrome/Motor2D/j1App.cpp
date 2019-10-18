@@ -42,9 +42,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(collision);
 	AddModule(state);
-	AddModule(grenade);
 	AddModule(scene);
 	AddModule(player);
+	AddModule(grenade);
 
 	// render last to swap buffer
 	AddModule(render);

@@ -3,6 +3,7 @@
 #include "j1State.h"
 #include "j1Collision.h"
 #include "j1Player.h"
+#include "j1Input.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
 #include "j1App.h"
@@ -17,7 +18,8 @@ j1Grenade::~j1Grenade() {}
 // Called before render is available
 bool j1Grenade::Awake(pugi::xml_node&) {
 	grenade_measures.x = 6;
-	grenade_measures.y = 6;
+	grenade_measures.y = 6;	// TODO put this on an xml
+	grenade_texture = App->player->GetTexture();
 	return true;
 }
 
@@ -33,7 +35,7 @@ bool j1Grenade::Update(float dt) {
 	if (App->state->grenade == true) {
 		GrenadeCollisions();
 		GrenadeState();
-//		App->render->Blit(); DO A FUNCTION? or just put it in an if
+//		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, );
 	}
 
 	return true;
@@ -110,13 +112,19 @@ void j1Grenade::GrenadeCollisions() {
 }
 
 void j1Grenade::GrenadeState() {
+	
+	if ((App->state->grenade == true && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 100) {
+		grenade_state = GST_EXPLODING;
+	}
+	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
+		grenade_time_to_explode += 0.1;
+	}
+
 	switch (grenade_state) {
 	case GST_UNKNOWN:
 		grenade_position = App->player->GetPosition();
 		grenade_timer.x = App->player->GetVelocity().x;
-		switch (App->state->current_state) {
-		case THROWING_GRENADE:
-		case THROWING_GRENADE_ON_AIR:
+		if (App->state->current_state == THROWING_GRENADE || App->state->current_state == THROWING_GRENADE_ON_AIR) {
 			switch (App->state->grenade_direction) {
 			case JST_GOING_LEFT:
 				grenade_state = GST_MOVING_LEFT_UP;
@@ -127,7 +135,6 @@ void j1Grenade::GrenadeState() {
 				grenade_timer.y = App->player->GetVelocity().y;
 				break;
 			}
-			break;
 		}
 		break;
 	case GST_MOVING_UP:
@@ -159,10 +166,9 @@ void j1Grenade::GrenadeState() {
 		break;
 	case GST_EXPLODING:
 		grenade_state = GST_UNKNOWN;
-		grenade_position.x = 0.0f;
-		grenade_position.y = 0.0f;
 		grenade_timer.x = 0.0f;
 		grenade_timer.y = 0.0f;
+		grenade_time_to_explode = 0;
 		App->state->grenade = false;
 		break;
 	}

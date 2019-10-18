@@ -84,7 +84,7 @@ void j1Map::Draw()
 							int id = item_layer->data->gid[Get(j, i, *item_layer)];//TODO this is a provisional code for the parallax, and does print all the tiles including the ones not in-screen
 							if (id > 0)
 							{
-								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)), parallaxvalue);
+								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)),NULL,NULL,NULL, parallaxvalue);
 							}
 						}
 					}

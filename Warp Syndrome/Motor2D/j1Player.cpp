@@ -80,7 +80,7 @@ bool j1Player::Update(float dt)
 bool j1Player::PostUpdate()
 {
 	if (currentframe!=NULL)	
-	App->render->Blit(playertexture, playerpos.x-currentframe->textureoffset.x, playerpos.y-currentframe->animationRect.h -currentframe->textureoffset.y, &currentframe->animationRect);
+	App->render->Blit(playertexture, playerpos.x, playerpos.y-currentframe->animationRect.h -currentframe->textureoffset.y, &currentframe->animationRect,fliped, currentframe->textureoffset.x);
 
 	return true;
 }
@@ -149,12 +149,12 @@ fPoint j1Player::GetPosition()
 //returns true if player is flipped
 bool j1Player::GetFliped()
 {
-	return rotated;
+	return fliped;
 }
 
 void j1Player::SetFliped(bool flip)
 {
-	rotated = flip;
+	fliped = flip;
 }
 
 fPoint j1Player::GetVelocity()
@@ -181,6 +181,7 @@ FrameInfo* j1Player::GetCurrentFrame()
 {
 	return currentframe;
 }
+
 void j1Player::SetCurrentFrame(FrameInfo* frame)
 {
 	currentframe = frame;

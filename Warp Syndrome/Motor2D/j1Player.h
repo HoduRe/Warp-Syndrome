@@ -64,7 +64,7 @@ public:
 	bool LoadAnimations(pugi::xml_node&);
 
 private:
-	fPoint playerpos;;
+	fPoint playerpos;
 	fPoint playervel;
 	p2List<Animations*> playerAnimations;
 	p2List_item<Animations*>* currentAnim;
@@ -74,7 +74,7 @@ private:
 	pugi::xml_node playernode;
 	p2SString filename;
 	SDL_Texture* playertexture;
-	bool rotated = false;
+	bool fliped = false;
 };
 
 

@@ -1,4 +1,4 @@
-Current version: 0.0.1.27-debug
+Current version: 0.0.2.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -106,4 +106,17 @@ Update 0.0.1.26-debug
 Update 0.0.1.27-debug
 -Completed the functions that will be used by the animation system, still work to do and errors to solve. 
 -Deleted the "placeholder" animation that the player used, now fully works with the animation system.
+
+
+
+Update 0.0.2.0-debug
+-The animations are now fully functional. Added a new function CheckAnimation() in the States module that controls when to change animation.
+-Modified the Blit function, it now allows player flip, and we can also input the pivot as a separate number from the player position, the function des all the calculations for us including the flip ones.
+-Changed name of "rotated" variable from the player module to "fliped". This name is now much more intuitive regarding what the variable does.
+-Modified the old blits to function with the new parameters.
+
+
+
+
+
 

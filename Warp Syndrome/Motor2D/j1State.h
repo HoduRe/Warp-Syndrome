@@ -111,6 +111,7 @@ public:
 	void JumpMoveX();
 	void JumpMoveY();
 	void AvoidShaking();
+	void CheckAnimation(state_list currentstate, state_list laststate);
 
 	state_list current_state;
 

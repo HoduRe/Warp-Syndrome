@@ -54,6 +54,9 @@ public:
 	
 	p2List_item<Animations*>* GetCurrentAnim();
 
+	FrameInfo* GetCurrentFrame();
+	void SetCurrentFrame(FrameInfo* frame);
+
 	void SetCurrentAnim(p2List_item<Animations*>* animationpointer);
 
 
@@ -64,6 +67,7 @@ private:
 	fPoint playervel;
 	p2List<Animations*> playerAnimations;
 	p2List_item<Animations*>* currentAnim;
+	FrameInfo* currentframe;
 	SDL_Event events;
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;

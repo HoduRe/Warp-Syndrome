@@ -1,4 +1,4 @@
-Current version: 0.0.1.25-debug
+Current version: 0.0.1.27-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -102,4 +102,8 @@ Update: 0.0.1.25-debug
 Update 0.0.1.26-debug
 -Grenade module created
 -Grenade logic incorporated
+
+Update 0.0.1.27-debug
+-Completed the functions that will be used by the animation system, still work to do and errors to solve. 
+-Deleted the "placeholder" animation that the player used, now fully works with the animation system.
 

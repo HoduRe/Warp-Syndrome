@@ -23,7 +23,6 @@ bool j1State::Awake(pugi::xml_node& config) {
 bool j1State::Start() {
 
 	current_state = IDLE;
-
 	return true;
 }
 
@@ -37,7 +36,7 @@ bool j1State::Update(float dt) {
 	CheckColliders(); // Checks colliders
 	MovePlayer();	// Moves player position
 	App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
-		// steps the current animation
+	StepCurrentAnimation();	// steps the current animation
 
 	return ret;
 }
@@ -55,19 +54,19 @@ void j1State::CheckInputs() {
 	case WALK_BACKWARD:
 	case RUN_FORWARD:
 	case RUN_BACKWARD:
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { current_state = FREE_JUMP; }
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_FORWARD; }
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_BACKWARD; }
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { current_state = FREE_JUMP; ChangeAnimation(AL_FORWARD_JUMP); }
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_FORWARD; ChangeAnimation(AL_RUNNING); }
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 6) { current_state = RUN_BACKWARD; ChangeAnimation(AL_RUNNING); }
 		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT == KEY_DOWN)) {
-			current_state = WALK_FORWARD;
+			current_state = WALK_FORWARD; ChangeAnimation(AL_WALKING);
 			run_counter++;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT == KEY_DOWN)) {
-			current_state = WALK_BACKWARD;
+			current_state = WALK_BACKWARD; ChangeAnimation(AL_WALKING);
 			run_counter++;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE; grenade = true; }
-		else { current_state = IDLE; run_counter = 0; }
+		else { current_state = IDLE; run_counter = 0; ChangeAnimation(AL_IDLE); }
 		break;
 	case FREE_JUMP:
 	case WALL_JUMP:
@@ -75,7 +74,7 @@ void j1State::CheckInputs() {
 		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; ChangeAnimation(AL_FALLING); }
 		break;
 	case SLIDING_ON_RIGHT_WALL:
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
@@ -426,6 +425,7 @@ void j1State::ChangeAnimation(Animation_list animations)
 	p2List_item<Animations*>*currentanim= App->player->GetCurrentAnim();//pointer to the current animation
 	
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
+
 	p2List_item<Animations*>* newanim=nullptr; 
 	switch (animations)
 	{
@@ -487,7 +487,10 @@ Animation_state j1State::StepCurrentAnimation()
 	Animation_state state = AS_UNKNOWN;
 
 	p2List_item<Animations*>* currentanim = App->player->GetCurrentAnim();
-	currentanim->data->StepAnimation();
+	FrameInfo* frame;
+	frame= currentanim->data->StepAnimation();
+
+	App->player->SetCurrentFrame(frame);
 
 	if (currentanim->data->GetAnimationFinish())
 		state = AS_FINISHED;

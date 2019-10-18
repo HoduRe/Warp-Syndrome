@@ -61,7 +61,9 @@ bool j1Player::Start()
 	playerpos.y = 52.0f;
 	playervel.x = 4.0f;
 	playervel.y = 5.0f;
-
+	
+	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
+	SetCurrentAnim(defaultanim);
 	return ret;
 }
 
@@ -77,8 +79,9 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-	FrameInfo* frame = playerAnimations.start->data->StepAnimation();
-	App->render->Blit(playertexture, playerpos.x-frame->textureoffset.x, playerpos.y-frame->animationRect.h -frame->textureoffset.y, &frame->animationRect);
+	if (currentframe!=NULL)	
+	App->render->Blit(playertexture, playerpos.x-currentframe->textureoffset.x, playerpos.y-currentframe->animationRect.h -currentframe->textureoffset.y, &currentframe->animationRect);
+
 	return true;
 }
 
@@ -174,4 +177,12 @@ p2List_item<Animations*>* j1Player::GetCurrentAnim()
 	return currentAnim;
 }
 
+FrameInfo* j1Player::GetCurrentFrame()
+{
+	return currentframe;
+}
+void j1Player::SetCurrentFrame(FrameInfo* frame)
+{
+	currentframe = frame;
+}
 

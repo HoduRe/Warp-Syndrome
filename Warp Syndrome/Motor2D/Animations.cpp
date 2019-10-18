@@ -118,7 +118,7 @@ p2List_item<Animations*>* Animations::GetAnimFromName(p2SString name, p2List<Ani
 void Animations::ResetAnimation()
 {
 	p2List_item<FrameInfo*>* item = animationframes.start;
-	while (item->data != nullptr)
+	while (item!=NULL)
 	{
 		item->data->actualduration = 0;//resets the duration of each frame.
 		item = item->next;

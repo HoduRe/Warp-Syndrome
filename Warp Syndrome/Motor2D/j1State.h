@@ -116,7 +116,7 @@ public:
 	state_list current_state;
 
 	bool grenade = false;
-	JumpingStatesX grenade_direction = JST_IDLE;
+	JumpingStatesX grenade_direction = JST_GOING_RIGHT;
 
 private:
 	bool double_jump = true;

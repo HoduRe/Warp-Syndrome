@@ -19,12 +19,15 @@ j1Grenade::~j1Grenade() {}
 bool j1Grenade::Awake(pugi::xml_node&) {
 	grenade_measures.x = 6;
 	grenade_measures.y = 6;	// TODO put this on an xml
-	grenade_texture = App->player->GetTexture();
 	return true;
 }
 
 // Called before the first frame
 bool j1Grenade::Start() {
+
+	p2List<Animations*>* anim_list = App->player->GetAnimationList();
+	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
+	grenade_texture = App->player->GetTexture();
 
 	return true;
 }
@@ -35,7 +38,7 @@ bool j1Grenade::Update(float dt) {
 	if (App->state->grenade == true) {
 		GrenadeCollisions();
 		GrenadeState();
-//		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, );
+		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, &grenade_animation->data->StepAnimation()->animationRect);
 	}
 
 	return true;
@@ -113,7 +116,7 @@ void j1Grenade::GrenadeCollisions() {
 
 void j1Grenade::GrenadeState() {
 	
-	if ((App->state->grenade == true && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 100) {
+	if ((grenade_state != GST_UNKNOWN && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 100) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
@@ -122,7 +125,8 @@ void j1Grenade::GrenadeState() {
 
 	switch (grenade_state) {
 	case GST_UNKNOWN:
-		grenade_position = App->player->GetPosition();
+		grenade_position.x = App->player->GetPosition().x;
+		grenade_position.y = App->player->GetPosition().y-31; 	// TODO get the proper width and heigh
 		grenade_timer.x = App->player->GetVelocity().x;
 		if (App->state->current_state == THROWING_GRENADE || App->state->current_state == THROWING_GRENADE_ON_AIR) {
 			switch (App->state->grenade_direction) {
@@ -137,12 +141,12 @@ void j1Grenade::GrenadeState() {
 			}
 		}
 		break;
-	case GST_MOVING_UP:
+	case GST_MOVING_UP:	// NOT BEING USED
 		grenade_timer.y += (1.0f / 10.0f);
 		AddPosition(0.0f, -App->player->GetVelocity().y + grenade_timer.y);
 		if (grenade_timer.y >= App->player->GetVelocity().y) { grenade_state = GST_MOVING_DOWN; }
 		break;
-	case GST_MOVING_DOWN:
+	case GST_MOVING_DOWN: // NOT BEING USED
 		if(grenade_timer.y >= 0) { grenade_timer.y -= (1.0f / 10.0f); }
 		AddPosition(0.0f, App->player->GetVelocity().y - grenade_timer.y);
 		break;

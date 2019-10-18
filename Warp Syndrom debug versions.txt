@@ -115,7 +115,8 @@ Update 0.0.2.0-debug
 -Changed name of "rotated" variable from the player module to "fliped". This name is now much more intuitive regarding what the variable does.
 -Modified the old blits to function with the new parameters.
 
-
+Update 0.0.2.1-debug
+-Grenade physiscs implemented
 
 
 

@@ -49,7 +49,7 @@ private:
 	fPoint grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
 	SDL_Texture* grenade_texture;
-	Animations grenade_animation;
+	p2List_item<Animations*>* grenade_animation;
 	float grenade_time_to_explode;
 };
 

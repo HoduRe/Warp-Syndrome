@@ -24,28 +24,6 @@ bool j1Collision::Start()
 	return true;
 }
 
-bool j1Collision::PreUpdate() {
-
-// Reset bools	
-	has_already_collided = false;
-	current_collision_buffer.is_first_collider_horizontal = false;
-
-// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
-//iterates all the object layers, and then iterates between all the object each layer contains
-	collision_array[0] = NONE_COLLISION;
-	collision_array[1] = NONE_COLLISION;
-	collision_array[2] = NONE_COLLISION;
-	collision_array[3] = NONE_COLLISION;
-	collision_array[4] = LEFT_UPPER_COLLISION;
-	collision_array[5] = RIGHT_UPPER_COLLISION;
-	collision_array[6] = NONE_COLLISION;
-	collision_array[7] = LEFT_GROUND_COLLISION;
-	collision_array[8] = RIGHT_GROUND_COLLISION;
-	collision_array[9] = GROUND_UPPER_COLLISION;
-
-	return true;
-}
-
 bool j1Collision::Update(float dt) {
 
 	bool ret = true;
@@ -68,7 +46,25 @@ bool j1Collision::CleanUp() {
 }
 
 void j1Collision::CheckLoop(fPoint *position, fPoint *measures) {
+	
 	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	//Reset bools
+	has_already_collided = false;
+	current_collision_buffer.is_first_collider_horizontal = false;
+
+	// This array will check which collisions are happening, and change the value from NONE_COLLISION to the actual one
+	//iterates all the object layers, and then iterates between all the object each layer contains
+	collision_array[0] = NONE_COLLISION;
+	collision_array[1] = NONE_COLLISION;
+	collision_array[2] = NONE_COLLISION;
+	collision_array[3] = NONE_COLLISION;
+	collision_array[4] = LEFT_UPPER_COLLISION;
+	collision_array[5] = RIGHT_UPPER_COLLISION;
+	collision_array[6] = NONE_COLLISION;
+	collision_array[7] = LEFT_GROUND_COLLISION;
+	collision_array[8] = RIGHT_GROUND_COLLISION;
+	collision_array[9] = GROUND_UPPER_COLLISION;
+
 	while (itemOG != NULL)
 	{
 		p2List_item<Object*>* itemO = itemOG->data->objlist.start;

@@ -36,11 +36,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Chechk c
+	// Chechk collisions
 	void GrenadeCollisions();
 
 	// Simple machine state for the grenade
 	void GrenadeState();
+
+	bool DoesGrenadeExist();
 
 	void AddPosition(float x, float y);
 
@@ -49,6 +51,7 @@ private:
 	fPoint grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
 	SDL_Texture* grenade_texture;
+	p2List<Animations*>* anim_list;
 	p2List_item<Animations*>* grenade_animation;
 	float grenade_time_to_explode;
 };

@@ -67,16 +67,25 @@ void j1State::CheckInputs() {
 			current_state = WALK_BACKWARD;
 			run_counter++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE; grenade = true; }
+		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+			current_state = THROWING_GRENADE;
+			grenade = true;
+		}
 		else { current_state = IDLE; run_counter = 0; }
 		break;
 	case FREE_JUMP:
 	case WALL_JUMP:
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true; }
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		current_state = THROWING_GRENADE_ON_AIR;
+		grenade = true;
+		}
 		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) { current_state = THROWING_GRENADE_ON_AIR; grenade = true;  }
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+			current_state = THROWING_GRENADE_ON_AIR;
+			grenade = true;
+		}
 		break;
 	case SLIDING_ON_RIGHT_WALL:
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
@@ -95,22 +104,12 @@ void j1State::CheckInputs() {
 		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
 		break;
 	case THROWING_GRENADE:
-		if (grenade == false) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
+		if (App->grenade->DoesGrenadeExist() == true) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
 		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			grenade_direction = JST_GOING_RIGHT;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			grenade_direction = JST_GOING_LEFT;
 		}
 		break;
 	case THROWING_GRENADE_ON_AIR:
-		if (grenade == false) { current_state = FREE_FALLING; }	// TODO a function that changes this bool based on the player throwing a grenade
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			grenade_direction = JST_GOING_RIGHT;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			grenade_direction = JST_GOING_LEFT;
-		}
+		if (App->grenade->DoesGrenadeExist() == true) { current_state = FREE_FALLING; }	// TODO a function that changes this bool based on the player throwing a grenade
 		break;
 	}
 

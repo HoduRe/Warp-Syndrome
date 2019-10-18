@@ -118,6 +118,10 @@ Update 0.0.2.0-debug
 Update 0.0.2.1-debug
 -Grenade physiscs implemented
 
+Update 0.0.2.2-debug
+-Grenade flip corrected
+-Player doesn't stop while the grenade exists
+
 
 
 

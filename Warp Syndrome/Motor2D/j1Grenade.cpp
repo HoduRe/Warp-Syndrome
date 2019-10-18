@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
+#include "j1Textures.h"
 #include "j1App.h"
 
 j1Grenade::j1Grenade() {
@@ -25,7 +26,7 @@ bool j1Grenade::Awake(pugi::xml_node&) {
 // Called before the first frame
 bool j1Grenade::Start() {
 
-	p2List<Animations*>* anim_list = App->player->GetAnimationList();
+	anim_list = App->player->GetAnimationList();
 	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
 	grenade_texture = App->player->GetTexture();
 
@@ -46,7 +47,8 @@ bool j1Grenade::Update(float dt) {
 
 // Called before quitting
 bool j1Grenade::CleanUp() {
-
+	App->tex->UnLoad(grenade_texture);
+	anim_list->clear();
 	return true;
 }
 
@@ -129,12 +131,12 @@ void j1Grenade::GrenadeState() {
 		grenade_position.y = App->player->GetPosition().y-31; 	// TODO get the proper width and heigh
 		grenade_timer.x = App->player->GetVelocity().x;
 		if (App->state->current_state == THROWING_GRENADE || App->state->current_state == THROWING_GRENADE_ON_AIR) {
-			switch (App->state->grenade_direction) {
-			case JST_GOING_LEFT:
+			switch (App->player->GetFliped()) {
+			case true:
 				grenade_state = GST_MOVING_LEFT_UP;
 				grenade_timer.y = App->player->GetVelocity().y;
 				break;
-			case JST_GOING_RIGHT:
+			case false:
 				grenade_state = GST_MOVING_RIGHT_UP;
 				grenade_timer.y = App->player->GetVelocity().y;
 				break;
@@ -181,4 +183,9 @@ void j1Grenade::GrenadeState() {
 void j1Grenade::AddPosition(float x, float y) {
 	grenade_position.x += x;
 	grenade_position.y += y;
+}
+
+bool j1Grenade::DoesGrenadeExist() {
+	if (grenade_state == GST_UNKNOWN) { return false; }
+	else { return true; }
 }

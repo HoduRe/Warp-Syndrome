@@ -57,8 +57,8 @@ void j1State::CheckInputs() {
 	case RUN_FORWARD:
 	case RUN_BACKWARD:
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { current_state = FREE_JUMP; }
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 40) { current_state = RUN_FORWARD;  }
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 40) { current_state = RUN_BACKWARD;  }
+		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
+		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD;  }
 		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT == KEY_DOWN)) {
 			current_state = WALK_FORWARD; 
 			run_counter++;

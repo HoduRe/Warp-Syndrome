@@ -1,4 +1,4 @@
-Current version: 0.0.2.3-debug
+Current version: 0.0.2.4-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -127,3 +127,7 @@ Update 0.0.2.3-debug
 -Added new load function: fades to black, starts the loading animation loop, loads the new map and finally fides to the map again.
 -Still work to do in this new load function, it is functional though.
 
+Update 0.0.2.4-debug
+-Changed the textures for the loading screen to a bigger version.
+-Optimized the function loadingscreen(), it now recieves 2 parameters correspondiong to the center of the loading text and symbol for more customization.
+-Prepared the function to have its values loaded instead of having them hardcoded.

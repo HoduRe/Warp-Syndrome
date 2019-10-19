@@ -38,18 +38,29 @@ bool j1Scene::Start()
 	arrivedtoline = false;
 	snapping = false;
 
+	//TODO load this from xml
+
 	//load loadingscreen textures
-	loading.hexagonLogo = App->tex->Load("textures/hexagonsmall.png");
-	loading.externalLogo = App->tex->Load("textures/externalsmall.png");
-	loading.internalLogo = App->tex->Load("textures/internalsmall.png");
+	loading.hexagonLogo = App->tex->Load("textures/hexagon.png");
+	loading.externalLogo = App->tex->Load("textures/external.png");
+	loading.internalLogo = App->tex->Load("textures/internal.png");
 	loading.loadingText = App->tex->Load("textures/loading.png");
+
+	//load loadingscreen
+	uint windSizeW;
+	uint windSizeH;
+	App->win->GetWindowSize(windSizeW, windSizeH);
+	textcenter.x = windSizeW / 2;
+	textcenter.y = (windSizeH / 2) - 100;
+	symbolcenter.x =  windSizeW / 2;
+	symbolcenter.y = (windSizeH / 2) + 100;
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	
+
 	return true;
 }
 
@@ -104,7 +115,7 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-	LoadNewLevel();
+	LoadNewLevel(textcenter, symbolcenter);
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -190,17 +201,31 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 }
 
 
-void j1Scene::LoadNewLevel()
+void j1Scene::LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos)
 {
 	bool ret = true;
 	if (reload)
 	{
+		uint textwidth = 0;
+		uint textheight = 0;
+		uint symbolwidth = 0;
+		uint symbolheigth = 0;
+
+		App->tex->GetSize(loading.loadingText, textwidth, textheight);//gets the width and height of the texture
+		App->tex->GetSize(loading.externalLogo, symbolwidth, symbolheigth);//gets the width and height of the texture
+
+		iPoint textpos;//converts the center position to the upper left corner pos of the texture
+		textpos.x = textcenterpos.x - (textwidth / 2);
+		textpos.y = textcenterpos.y - (textheight / 2);
+		iPoint symbolpos;//converts the center position to the upper left corner pos of the texture
+		symbolpos.x = symbolcenter.x - (symbolwidth / 2);
+		symbolpos.y = symbolcenter.y - (symbolheigth / 2);
 
 
-		if (loading.currenttime >= 60)//fade time 1 sec or 60 frames
+		if (loading.currenttime >= loading.fadetime)//fade time 1 sec or 60 frames
 			loading.fadeended = true;
 
-		int alpha = (255 / 60) * loading.currenttime; //every sec alpha goes from 0 to 255
+		int alpha = (255 / loading.fadetime) * loading.currenttime; //every sec alpha goes from 0 to 255
 		SDL_Rect screen = App->render->viewport;
 		switch (loading.fade)
 		{
@@ -226,10 +251,10 @@ void j1Scene::LoadNewLevel()
 			App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
 
 			//blit the loading textures
-			App->render->Blit(loading.loadingText, 100, 550, NULL, NULL, NULL, NULL, 0,0);
-			App->render->Blit(loading.externalLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, loading.degrees * 1.5, 256 / 8, 256 / 8);
-			App->render->Blit(loading.internalLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, -loading.degrees, 256 / 8, 256 / 8);
-			App->render->Blit(loading.hexagonLogo, 338, 550, NULL, NULL, NULL, NULL, 0, 0, loading.degrees, 256 / 8, 256 / 8);
+			App->render->Blit(loading.loadingText, textpos.x, textpos.y, NULL, NULL, NULL, NULL, 0, 0);
+			App->render->Blit(loading.externalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees * 1.5, symbolwidth / 2, symbolheigth / 2);
+			App->render->Blit(loading.internalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, -loading.degrees, symbolwidth / 2, symbolheigth / 2);
+			App->render->Blit(loading.hexagonLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees, symbolwidth / 2, symbolheigth / 2);
 			loading.degrees++;
 
 
@@ -247,25 +272,25 @@ void j1Scene::LoadNewLevel()
 					currentlevel = LEVEL2;
 					App->map->ReloadMap("first_level.tmx");
 
-					
+
 					break;
 				case LEVEL2:
 					currentlevel = LEVEL3;
 					App->map->ReloadMap("sewers.tmx");
 
-					
+
 					break;
 				case LEVEL3:
 					currentlevel = LEVEL4;
 					App->map->ReloadMap("orthogonal-outside.tmx");
 
-					
+
 					break;
 				case LEVEL4:
 					currentlevel = LEVEL1;
 					App->map->ReloadMap("first_level.tmx");
 
-					
+
 					break;
 				}
 

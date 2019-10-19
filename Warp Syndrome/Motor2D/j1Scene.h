@@ -28,7 +28,7 @@ struct Loading
 	SDL_Texture* internalLogo = nullptr;
 	SDL_Texture* hexagonLogo = nullptr;
 	float degreesperframe = 1; //TODO Load this from scene.xml
-	float degrees=0;
+	float degrees = 0;
 	int fadetime = 60;
 	int transition = 0;
 	int currenttime = 0;
@@ -68,7 +68,7 @@ public:
 
 	void RepositionCamera();
 
-	void LoadNewLevel();
+	void LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos);
 
 	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
 
@@ -82,6 +82,10 @@ private:
 	bool targetRight;//true if Right, false if Left
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
+
+	//LoadingScreen======================================================================================
+	iPoint textcenter;
+	iPoint symbolcenter;
 };
 
 #endif // __j1SCENE_H__

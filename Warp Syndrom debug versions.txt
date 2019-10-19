@@ -1,4 +1,4 @@
-Current version: 0.0.2.4-debug
+Current version: 0.0.2.5-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -131,3 +131,7 @@ Update 0.0.2.4-debug
 -Changed the textures for the loading screen to a bigger version.
 -Optimized the function loadingscreen(), it now recieves 2 parameters correspondiong to the center of the loading text and symbol for more customization.
 -Prepared the function to have its values loaded instead of having them hardcoded.
+
+Update 0.0.2.5-debug
+-Updated some of the animations, they now look more fluid.
+-Now the map loads the collider type information.

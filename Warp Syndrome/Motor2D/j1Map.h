@@ -27,6 +27,7 @@ struct MapLayer
 struct Object
 {
 	SDL_Rect boundingbox;
+	p2SString type = "";
 	uint id;
 };
 

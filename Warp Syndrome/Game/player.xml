@@ -49,47 +49,38 @@
       <duration value="6" />
     </frame>
   </animation>
-  <animation name="running" number_of_frames="8" canloop="1">
+  <animation name="running" number_of_frames="6" canloop="1">
     <frame>
-      <rectangle x="159" y="3" w="20" h="28" />
-      <pivot x="4" y="0" />
+      <rectangle x="159" y="4" w="20" h="28" />
+      <pivot x="11" y="0" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="180" y="3" w="20" h="28" />
-      <pivot x="6" y="0" />
+      <rectangle x="180" y="4" w="20" h="27" />
+      <pivot x="12" y="0" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="201" y="3" w="20" h="28" />
-      <pivot x="9" y0="" />
+      <rectangle x="201" y="6" w="20" h="25" />
+      <pivot x="12" y0="" />
       <duration value="3" />
     </frame>
     <frame>
       <rectangle x="222" y="3" w="23" h="28" />
-      <pivot x="4" y="0" />
+      <pivot x="10" y="0" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="246" y="3" w="20" h="28" />
-      <pivot x="6" y="0" />
+      <rectangle x="246" y="4" w="20" h="27" />
+      <pivot x="11" y="0" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="267" y="3" w="20" h="28" />
-      <pivot x="9" y="0" />
+      <rectangle x="267" y="6" w="20" h="25" />
+      <pivot x="12" y="0" />
       <duration value="3" />
     </frame>
-    <frame>
-      <rectangle x="288" y="3" w="20" h="28" />
-      <pivot x="6" y="0" />
-      <duration value="3" />
-    </frame>
-    <frame>
-      <rectangle x="309" y="9" w="20" h="22" />
-      <pivot x="6" y="0" />
-      <duration value="3" />
-    </frame>
+
   </animation>
   <animation name="crouching" number_of_frames="1" canloop="1">
     <frame>
@@ -125,7 +116,7 @@
       <duration value="2" />
     </frame>
   </animation>
-  <animation name="forward_jump" number_of_frames="6" canloop="0">
+  <animation name="forward_jump" number_of_frames="7" canloop="0">
     <frame>
       <rectangle x="1" y="35" w="19" h="27" />
       <pivot x="4" y="0" />
@@ -139,34 +130,39 @@
     <frame>
       <rectangle x="43" y="35" w="15" h="27" />
       <pivot x="4" y="0" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="59" y="35" w="23" h="27" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="84" y="35" w="18" h="27" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="106" y="35" w="23" h="27" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
-  </animation>
-  <animation name="falling" number_of_frames="2" canloop="0">
     <frame>
       <rectangle x="130" y="32" w="16" h="30" />
       <pivot x="6" y="0" />
       <duration value="6" />
     </frame>
+  </animation>
+  <animation name="falling" number_of_frames="2" canloop="1">
+    <frame>
+      <rectangle x="130" y="32" w="16" h="30" />
+      <pivot x="6" y="0" />
+      <duration value="15" />
+    </frame>
     <frame>
       <rectangle x="146" y="32" w="17" h="30" />
       <pivot x="7" y="0" />
-      <duration value="2000" />
+      <duration value="15" />
     </frame>
   </animation>
   <animation name="sliding" number_of_frames="5" canloop="1">
@@ -233,27 +229,18 @@
       <duration value="2000" />
     </frame>
   </animation>
-  <animation name="wallsliding" number_of_frames="4" canloop="1">
+  <animation name="wallsliding" number_of_frames="2" canloop="1">
     <frame>
-      <rectangle x="2" y="63" w="13" h="34" />
-      <pivot x="4" y="0" />
+      <rectangle x="192" y="66" w="17" h="31" />
+      <pivot x="11" y="0" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="19" y="63" w="13" h="34" />
-      <pivot x="5" y="0" />
+      <rectangle x="210" y="65" w="17" h="32" />
+      <pivot x="11" y="0" />
       <duration value="3" />
     </frame>
-    <frame>
-      <rectangle x="34" y="63" w="15" h="34" />
-      <pivot x="6" y="0" />
-      <duration value="3" />
-    </frame>
-    <frame>
-      <rectangle x="50" y="63" w="14" h="34" />
-      <pivot x="4" y="0" />
-      <duration value="3" />
-    </frame>
+
   </animation>
   <animation name="wallsliding_to_idle" number_of_frames="5" canloop="0">
     <frame>

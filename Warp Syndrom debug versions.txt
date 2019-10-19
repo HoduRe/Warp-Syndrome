@@ -135,3 +135,6 @@ Update 0.0.2.4-debug
 Update 0.0.2.5-debug
 -Updated some of the animations, they now look more fluid.
 -Now the map loads the collider type information.
+
+Update 0.0.2.6-debug
+-Second map created, colliders incorporated

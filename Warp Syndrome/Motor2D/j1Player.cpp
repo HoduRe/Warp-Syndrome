@@ -10,6 +10,7 @@
 #include "j1State.h"
 #include "SDL/include/SDL.h"
 #include "j1Player.h"
+#include "j1Map.h"
 
 
 j1Player::j1Player()
@@ -51,17 +52,16 @@ bool j1Player::Start()
 
 	pugi::xml_node texturenode = playernode.child("texture");
 
-
+	ResetPlayerToStart();
+	playervel.x = playernode.child("velocity").attribute("x").as_float();
+	playervel.y = playernode.child("velocity").attribute("y").as_float();
 	//Load image
 
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
 	//TODO load those values from the xml instead of harcoding them
-	playerpos.x = 100.0f;
-	playerpos.y = 52.0f;
-	playervel.x = 4.0f;
-	playervel.y = 5.0f;
-	
+
+
 	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
 	SetCurrentAnim(defaultanim);
 	return ret;
@@ -78,8 +78,8 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate()
 {
-	if (currentframe!=NULL)	
-	App->render->Blit(playertexture, playerpos.x, playerpos.y-currentframe->animationRect.h -currentframe->textureoffset.y, &currentframe->animationRect,fliped, currentframe->textureoffset.x);
+	if (currentframe != NULL)
+		App->render->Blit(playertexture, playerpos.x, playerpos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
 
 	return true;
 }
@@ -122,7 +122,7 @@ bool j1Player::LoadAnimations(pugi::xml_node& rootnode)
 	for (pugi::xml_node animationnode = rootnode.child("animation"); animationnode; animationnode = animationnode.next_sibling("animation"))
 	{
 		Animations* anim = new Animations;
-		ret= anim->LoadAnim(animationnode);
+		ret = anim->LoadAnim(animationnode);
 
 		playerAnimations.add(anim);
 	}
@@ -188,4 +188,43 @@ void j1Player::SetCurrentFrame(FrameInfo* frame)
 
 SDL_Texture* j1Player::GetTexture() {
 	return playertexture;
+}
+
+bool j1Player::ResetPlayerToStart()
+{
+	p2List_item<Object*>* startingpoint = nullptr;
+	//search for the player spawn point
+	bool found = false;
+	//for every group
+	p2List_item<ObjectGroup*>* group = App->map->data.objgroups.start;
+	while (group != NULL && !found)
+	{
+		//for every item in this group
+		p2List_item<Object*>* object = group->data->objlist.start;
+		while (object != NULL && !found)
+		{
+			if (object->data->type == "starting_point")
+			{
+				startingpoint = object;
+				found = true;
+
+			}
+			object = object->next;
+		}
+		group = group->next;
+	}
+
+	if (startingpoint != NULL)
+	{
+		playerpos.x = startingpoint->data->boundingbox.x;
+		playerpos.y = startingpoint->data->boundingbox.y;
+	}
+	else //default in case nothing loads
+	{
+		playerpos.x = 0.0f;
+		playerpos.y = 0.0f;
+	}
+
+
+	return true;
 }

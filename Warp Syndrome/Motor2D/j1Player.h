@@ -63,6 +63,9 @@ public:
 
 	bool LoadAnimations(pugi::xml_node&);
 
+	bool ResetPlayerToStart();
+
+
 private:
 	fPoint playerpos;
 	fPoint playervel;

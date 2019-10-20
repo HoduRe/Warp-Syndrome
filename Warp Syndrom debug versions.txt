@@ -1,4 +1,4 @@
-Current version: 0.0.2.5-debug
+Current version: 0.0.2.8-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -143,3 +143,10 @@ Update 0.0.2.7-debug
 -Teleport mechanic incorporated
 -Wall slide going up added
 -Loading screen with wallpaper image added
+
+Update 0.0.2.8-debug
+-Added spawnpoint for the plaoyer in the 2nd level
+-The player now loads all its starting information from xml.
+-Added new function to the player: ResetPlayerToStart(). It resets the player to its starting position in the current level.
+-Also implemented ResetPlayerToStart() to the loading function, it now resets the player position when loading a new level
+

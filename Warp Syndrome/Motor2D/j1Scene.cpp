@@ -301,6 +301,8 @@ void j1Scene::LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos)
 
 			}
 
+			App->player->ResetPlayerToStart();
+
 			if (loading.transition >= 360)
 			{
 				loading.transition = 0;

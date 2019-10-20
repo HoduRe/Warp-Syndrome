@@ -121,8 +121,6 @@ private:
 	bool double_jump = true;
 	int run_counter = 0;
 	float jump_timer = 0;
-	bool x_move = true;
-	bool y_move = true;
 	SlidingStates wall_jump = SST_IDLE;
 	JumpingStatesX x_jumping_state = JST_IDLE;
 	JumpingStatesY y_jumping_state = JST_UNKNOWN;

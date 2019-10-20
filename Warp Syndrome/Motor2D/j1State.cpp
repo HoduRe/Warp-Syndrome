@@ -161,6 +161,7 @@ void j1State::CheckColliders() {
 		case FREE_JUMP:
 		case THROWING_GRENADE_ON_AIR:
 		case WALL_JUMP:
+		case TELEPORT:
 			current_state = FREE_FALLING;
 			y_jumping_state = JST_GOING_DOWN;
 			break;
@@ -179,11 +180,11 @@ void j1State::CheckColliders() {
 	case RIGHT_COLLISION:	// Touching a right wall collisions
 	case RIGHT_UPPER_COLLISION:
 		switch (current_state) {
-		case FREE_JUMP:
 		case FREE_FALLING:
 		case WALL_JUMP:
 		case SLIDING_ON_LEFT_WALL:
 		case THROWING_GRENADE_ON_AIR:
+		case TELEPORT:
 			current_state = SLIDING_ON_RIGHT_WALL;
 			y_jumping_state = JST_UNKNOWN;
 			break;
@@ -192,11 +193,11 @@ void j1State::CheckColliders() {
 	case LEFT_COLLISION:	// Touching a left wall collisions
 	case LEFT_UPPER_COLLISION:
 		switch (current_state) {
-		case FREE_JUMP:
 		case FREE_FALLING:
 		case WALL_JUMP:
 		case SLIDING_ON_RIGHT_WALL:
 		case THROWING_GRENADE_ON_AIR:
+		case TELEPORT:
 			current_state = SLIDING_ON_LEFT_WALL;
 			y_jumping_state = JST_UNKNOWN;
 			break;
@@ -221,11 +222,9 @@ void j1State::CheckColliders() {
 		case WALK_FORWARD:
 		case RUN_BACKWARD:
 		case RUN_FORWARD:
-			current_state = IDLE;
-			break;
+		case TELEPORT:
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
-			//			current_state = SLIDING_TO_IDLE;
 			current_state = IDLE;
 			y_jumping_state = JST_UNKNOWN;
 			break;
@@ -277,9 +276,20 @@ void j1State::MovePlayer() {
 }
 
 void j1State::JumpMoveX() {
-	if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
-	else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
-	else if (x_jumping_state == JST_IDLE) {}
+	switch (App->collision->current_collision) {
+	case LEFT_COLLISION:
+	case LEFT_GROUND_COLLISION:
+	case LEFT_UPPER_COLLISION:
+	case RIGHT_COLLISION:
+	case RIGHT_GROUND_COLLISION:
+	case RIGHT_UPPER_COLLISION:
+		break;
+	default:
+		if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
+		else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
+		else if (x_jumping_state == JST_IDLE) {}
+		break;
+	}
 }
 
 void j1State::JumpMoveY() {
@@ -359,7 +369,7 @@ void j1State::AvoidShaking() {
 		break;
 	case LEFT_GROUND_COLLISION:
 	case RIGHT_GROUND_COLLISION:
-		if (current_state != WALK_BACKWARD && current_state != WALK_FORWARD) {
+		if (current_state != WALK_BACKWARD && current_state != WALK_FORWARD && current_state != FREE_JUMP) {
 			if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
 				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x, App->collision->current_collision_buffer.collider1.y);
 			}
@@ -402,9 +412,6 @@ void j1State::AvoidShaking() {
 
 /*if (animation_end == true) {
 	case SLIDING_TO_IDLE:
-	case TELEPORT:
-		current_state == IDLE;
-		break;
 	case DEAD:
 		current_state == WAKE_UP;
 		break;

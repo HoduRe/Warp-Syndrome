@@ -44,12 +44,19 @@ public:
 
 	bool DoesGrenadeExist();
 
+	bool IsGrenadeExploding();
+
 	void AddPosition(float x, float y);
+
+	fPoint GetPosition();
+
+	collision_type ColliderBuffer();
 
 private:
 	fPoint grenade_position, grenade_timer;
 	fPoint grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
+	collision_type grenade_collider_buffer;
 	SDL_Texture* grenade_texture;
 	p2List<Animations*>* anim_list;
 	p2List_item<Animations*>* grenade_animation;

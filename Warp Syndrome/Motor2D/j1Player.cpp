@@ -73,7 +73,6 @@ bool j1Player::PreUpdate()
 }
 bool j1Player::Update(float dt)
 {
-	// TODO hide the player when going behind the tower (or print the tower in the front, like in a parallax effect
 	return true;
 }
 

@@ -114,6 +114,7 @@ void j1Grenade::GrenadeCollisions() {
 		grenade_state = GST_MOVING_RIGHT_UP;
 		break;
 	}
+	grenade_collider_buffer = App->collision->current_collision;
 }
 
 void j1Grenade::GrenadeState() {
@@ -176,8 +177,19 @@ void j1Grenade::GrenadeState() {
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;
 		App->state->grenade = false;
+		fPoint position;
+		fPoint measures;
+		App->state->current_state = TELEPORT;
+		if (App->state->current_state == TELEPORT) { App->player->SetPosition(App->grenade->GetPosition()); }
+		position.x = App->player->GetPosition().x;
+		position.y = App->player->GetPosition().y;
+		measures.x = 20;	// TODO use character height to differenciate x axis from x_y axis
+		measures.y = 30;	// TODO use character height to differenciate x axis from x_y axis
+		App->collision->CheckLoop(&position, &measures);
+		App->state->MovePlayer();
 		break;
 	}
+
 }
 
 void j1Grenade::AddPosition(float x, float y) {
@@ -188,4 +200,17 @@ void j1Grenade::AddPosition(float x, float y) {
 bool j1Grenade::DoesGrenadeExist() {
 	if (grenade_state == GST_UNKNOWN) { return false; }
 	else { return true; }
+}
+
+bool j1Grenade::IsGrenadeExploding() {
+	if (grenade_state == GST_EXPLODING) { return true; }
+	else { return false; }
+}
+
+fPoint j1Grenade::GetPosition() {
+	return grenade_position;
+}
+
+collision_type j1Grenade::ColliderBuffer() {
+	return grenade_collider_buffer;
 }

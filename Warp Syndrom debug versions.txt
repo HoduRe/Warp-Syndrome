@@ -138,3 +138,8 @@ Update 0.0.2.5-debug
 
 Update 0.0.2.6-debug
 -Second map created, colliders incorporated
+
+Update 0.0.2.7-debug
+-Teleport mechanic incorporated
+-Wall slide going up added
+-Loading screen with wallpaper image added

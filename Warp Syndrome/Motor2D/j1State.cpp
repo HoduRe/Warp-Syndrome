@@ -349,7 +349,7 @@ void j1State::AvoidShaking() {
 		break;
 	case LEFT_COLLISION:
 	case RIGHT_COLLISION:
-		App->player->SetPosition(App->collision->current_collision_buffer.collider1.x+10, App->player->GetPosition().y);
+		App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x) / 2, App->player->GetPosition().y);
 		switch (wall_jump) {	// TODO read the width +10 from the xml
 		case SST_JUMPING_RIGHT:
 			App->player->AddPosition(1.0f, -1.0f);
@@ -373,20 +373,20 @@ void j1State::AvoidShaking() {
 	case RIGHT_GROUND_COLLISION:
 		if (current_state != WALK_BACKWARD && current_state != WALK_FORWARD && current_state != FREE_JUMP) {
 			if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + 10, App->collision->current_collision_buffer.collider1.y);
+				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
 			}
 			else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + 10, App->collision->current_collision_buffer.collider2.y);
+				App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
 			}
 		}
 		break;
 	case LEFT_UPPER_COLLISION:
 	case RIGHT_UPPER_COLLISION:
 		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
-			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + 10, App->collision->current_collision_buffer.collider1.y);
+			App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
 		}
 		else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
-			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + 10, App->collision->current_collision_buffer.collider2.y);
+			App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
 		}
 		switch (wall_jump) {
 		case SST_JUMPING_RIGHT:

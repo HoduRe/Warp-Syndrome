@@ -195,6 +195,10 @@ SDL_Texture* j1Player::GetTexture() {
 	return playertexture;
 }
 
+iPoint j1Player::GetWidthHeight() {
+	return hitbox_w_h;
+}
+
 bool j1Player::ResetPlayerToStart()
 {
 	p2List_item<Object*>* startingpoint = nullptr;

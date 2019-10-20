@@ -32,10 +32,10 @@ bool j1Collision::Update(float dt) {
 	//player variables
 	fPoint position;
 	fPoint measures;
-	position.x = App->player->GetPosition().x-10;
+	position.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
 	position.y = App->player->GetPosition().y;
-	measures.x = 20;	// TODO use character height to differenciate x axis from x_y axis
-	measures.y = 30;	// TODO use character height to differenciate x axis from x_y axis
+	measures.x = App->player->GetWidthHeight().x;
+	measures.y = App->player->GetWidthHeight().y;
 	CheckLoop(&position, &measures);
 
 	return ret;

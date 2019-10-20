@@ -61,6 +61,8 @@ public:
 
 	SDL_Texture* GetTexture();
 
+	iPoint GetWidthHeight();
+
 	bool LoadAnimations(pugi::xml_node&);
 
 	bool ResetPlayerToStart();
@@ -69,6 +71,7 @@ public:
 private:
 	fPoint playerpos;
 	fPoint playervel;
+	iPoint hitbox_w_h;
 	p2List<Animations*> playerAnimations;
 	p2List_item<Animations*>* currentAnim;
 	FrameInfo* currentframe;
@@ -78,7 +81,6 @@ private:
 	p2SString filename;
 	SDL_Texture* playertexture;
 	bool fliped;
-	iPoint hitbox_w_h;
 };
 
 

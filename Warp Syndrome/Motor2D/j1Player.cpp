@@ -36,6 +36,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 bool j1Player::Start()
 {
 	bool ret = true;
+	fliped = false;
 	//loads the player document
 	pugi::xml_parse_result result = playerdoc.load_file(filename.GetString());
 

@@ -23,6 +23,12 @@ bool j1State::Awake(pugi::xml_node& config) {
 bool j1State::Start() {
 
 	current_state = IDLE;
+	SetGrenadeState(false);
+	run_counter = 0;
+	jump_timer = 0;
+	wall_jump = SST_IDLE;
+	x_jumping_state = JST_IDLE;
+	y_jumping_state = JST_UNKNOWN;
 	return true;
 }
 
@@ -69,7 +75,7 @@ void j1State::CheckInputs() {
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 			current_state = THROWING_GRENADE;
-			grenade = true;
+			SetGrenadeState(true);
 		}
 		else { current_state = IDLE; run_counter = 0; }
 		break;
@@ -77,14 +83,14 @@ void j1State::CheckInputs() {
 	case WALL_JUMP:
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 		current_state = THROWING_GRENADE_ON_AIR;
-		grenade = true;
+		SetGrenadeState(true);
 		}
 		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
 		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 			current_state = THROWING_GRENADE_ON_AIR;
-			grenade = true;
+			SetGrenadeState(true);
 		}
 		break;
 	case SLIDING_ON_RIGHT_WALL:
@@ -568,4 +574,13 @@ void j1State::CheckAnimation(state_list currentstate, state_list laststate)
 
 
 
+}
+
+bool j1State::GetGrenadeState()
+{
+	return grenade;
+}
+void j1State::SetGrenadeState(bool state)
+{
+	grenade = state;
 }

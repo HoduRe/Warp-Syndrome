@@ -60,7 +60,7 @@ public:
 
 private:
 	p2List<ObjectGroup*> pObjGroupList;
-	bool has_already_collided = false;
+	bool has_already_collided;
 	collision_type collision_array[LAST_COLLISION];
 };
 

@@ -37,6 +37,8 @@ bool j1Scene::Start()
 	camvelocity = { 0.0f,0.0f };
 	arrivedtoline = false;
 	snapping = false;
+	reload = false;
+	currentlevel = LEVEL1;
 
 	//TODO load this from xml
 

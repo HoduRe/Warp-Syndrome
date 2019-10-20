@@ -115,15 +115,18 @@ public:
 
 	state_list current_state;
 
-	bool grenade = false;
+	bool GetGrenadeState();
+	void SetGrenadeState(bool state);
+
+	
 
 private:
-	bool double_jump = true;
-	int run_counter = 0;
-	float jump_timer = 0;
-	SlidingStates wall_jump = SST_IDLE;
-	JumpingStatesX x_jumping_state = JST_IDLE;
-	JumpingStatesY y_jumping_state = JST_UNKNOWN;
+	bool grenade;
+	int run_counter;;
+	float jump_timer;
+	SlidingStates wall_jump;
+	JumpingStatesX x_jumping_state;
+	JumpingStatesY y_jumping_state;
 };
 
 #endif // __j1STATE_H__

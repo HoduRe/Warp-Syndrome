@@ -77,7 +77,7 @@ private:
 	pugi::xml_node playernode;
 	p2SString filename;
 	SDL_Texture* playertexture;
-	bool fliped = false;
+	bool fliped;
 };
 
 

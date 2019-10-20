@@ -21,6 +21,7 @@ bool j1Collision::Awake(pugi::xml_node& config) {
 bool j1Collision::Start()
 {
 	current_collision = NONE_COLLISION;
+	has_already_collided = false;
 	return true;
 }
 

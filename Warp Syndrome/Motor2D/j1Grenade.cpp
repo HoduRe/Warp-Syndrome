@@ -36,7 +36,7 @@ bool j1Grenade::Start() {
 // Called each loop iteration
 bool j1Grenade::Update(float dt) {
 
-	if (App->state->grenade == true) {
+	if (App->state->GetGrenadeState() == true) {
 		GrenadeCollisions();
 		GrenadeState();
 		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, &grenade_animation->data->StepAnimation()->animationRect);
@@ -176,7 +176,7 @@ void j1Grenade::GrenadeState() {
 		grenade_timer.x = 0.0f;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;
-		App->state->grenade = false;
+		App->state->SetGrenadeState(false);
 		fPoint position;
 		fPoint measures;
 		App->state->current_state = TELEPORT;

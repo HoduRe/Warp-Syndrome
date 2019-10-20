@@ -96,11 +96,18 @@ bool j1Player::CleanUp()
 // Load / Save
 bool j1Player::Load(pugi::xml_node& data)
 {
+	playerpos.x = data.child(name.GetString()).attribute("x").as_int();
+	playerpos.y = data.child(name.GetString()).attribute("y").as_int();
 
 	return true;
 }
 bool j1Player::Save(pugi::xml_node& data) const
 {
+
+	pugi::xml_node player = data.append_child(name.GetString());
+
+	player.append_attribute("x") = playerpos.x;
+	player.append_attribute("y") = playerpos.y;
 	return true;
 }
 

@@ -4,6 +4,7 @@
   <app>
     <title>Warp Syndrome</title>
     <organization>UPC</organization>
+    <saves>save_game.xml</saves>
   </app>
 	
   <renderer>

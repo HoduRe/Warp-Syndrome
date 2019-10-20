@@ -1,15 +1,18 @@
-<!-- Save game for the game -->
-
+<?xml version="1.0"?>
 <game_state>
-
-  <renderer>
-    <camera x="100" y="0"/>
-  </renderer>
-
-  <player>
-    <position x="" y="" />
-    <velocity x="" y="" />
-    <state value=0/>
-  </player>
-
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<collision />
+	<state />
+	<scene />
+	<player>
+		<player x="3400" y="2560" />
+	</player>
+	<grenade />
+	<renderer>
+		<camera x="-2983" y="-2048" />
+	</renderer>
 </game_state>

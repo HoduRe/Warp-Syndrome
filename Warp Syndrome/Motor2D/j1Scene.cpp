@@ -70,14 +70,17 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+	
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		reload = true;//When reload=true, reloads a map
+
+	
 
 
 
@@ -182,12 +185,12 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 	if (target.x > -camera.x + (camera.w / 2))
 	{
 		newcamX -= camdisplacementvel * camvelocity.x;
-		LOG("Cam --, positon: %f", newcamX);
+		//LOG("Cam --, positon: %f", newcamX);
 	}
 	else if (target.x < -camera.x + (camera.w / 2))
 	{
 		newcamX += camdisplacementvel * camvelocity.x;
-		LOG("Cam ++, positon: %f", newcamX);
+		//LOG("Cam ++, positon: %f", newcamX);
 
 	}
 	camvelocity.x += 0.05f;//change this value to change camera accel
@@ -196,7 +199,7 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 	if (-camera.x + (camera.w / 2) <= target.x + (camdisplacementvel / 2) + 1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel / 2) - 1)
 	{
 		newcamX = -(target.x - (camera.w / 2));
-		LOG("Cam pinned, positon: %f", newcamX);
+		//LOG("Cam pinned, positon: %f", newcamX);
 		camvelocity = { 0.0f,0.0f };
 	}
 

@@ -89,6 +89,10 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+
+		save_game.create(app_config.child("saves").child_value());//TODO those 2 lines of code should go on an specific module
+		load_game.create(save_game.GetString());
+
 	}
 
 	if(ret == true)
@@ -295,7 +299,8 @@ void j1App::SaveGame() const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
-
+	
+	
 	want_to_save = true;
 }
 

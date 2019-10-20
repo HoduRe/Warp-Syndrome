@@ -119,7 +119,7 @@ void j1Grenade::GrenadeCollisions() {
 
 void j1Grenade::GrenadeState() {
 	
-	if ((grenade_state != GST_UNKNOWN && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 100) {
+	if ((grenade_state != GST_UNKNOWN && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 40) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {

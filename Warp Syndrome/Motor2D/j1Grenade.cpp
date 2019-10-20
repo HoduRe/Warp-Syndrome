@@ -131,17 +131,15 @@ void j1Grenade::GrenadeState() {
 		grenade_position.x = App->player->GetPosition().x;
 		grenade_position.y = App->player->GetPosition().y-31; 	// TODO get the proper width and heigh
 		grenade_timer.x = App->player->GetVelocity().x;
-		if (App->state->current_state == THROWING_GRENADE || App->state->current_state == THROWING_GRENADE_ON_AIR) {
-			switch (App->player->GetFliped()) {
-			case true:
-				grenade_state = GST_MOVING_LEFT_UP;
-				grenade_timer.y = App->player->GetVelocity().y;
-				break;
-			case false:
-				grenade_state = GST_MOVING_RIGHT_UP;
-				grenade_timer.y = App->player->GetVelocity().y;
-				break;
-			}
+		switch (App->player->GetFliped()) {
+		case true:
+			grenade_state = GST_MOVING_LEFT_UP;
+			grenade_timer.y = App->player->GetVelocity().y;
+			break;
+		case false:
+			grenade_state = GST_MOVING_RIGHT_UP;
+			grenade_timer.y = App->player->GetVelocity().y;
+			break;
 		}
 		break;
 	case GST_MOVING_UP:	// NOT BEING USED

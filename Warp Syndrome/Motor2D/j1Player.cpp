@@ -60,9 +60,6 @@ bool j1Player::Start()
 
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
-	//TODO load those values from the xml instead of harcoding them
-
-
 	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
 	SetCurrentAnim(defaultanim);
 	return ret;

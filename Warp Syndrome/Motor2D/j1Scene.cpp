@@ -45,6 +45,7 @@ bool j1Scene::Start()
 	loading.externalLogo = App->tex->Load("textures/external.png");
 	loading.internalLogo = App->tex->Load("textures/internal.png");
 	loading.loadingText = App->tex->Load("textures/loading.png");
+	loading.imageLogo = App->tex->Load("textures/loadingimage.png");
 
 	//load loadingscreen
 	uint windSizeW;
@@ -130,6 +131,7 @@ bool j1Scene::CleanUp()
 	App->tex->UnLoad(loading.internalLogo);
 	App->tex->UnLoad(loading.hexagonLogo);
 	App->tex->UnLoad(loading.loadingText);
+	App->tex->UnLoad(loading.imageLogo);
 
 	return true;
 }
@@ -252,6 +254,7 @@ void j1Scene::LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos)
 
 			//blit the loading textures
 			App->render->Blit(loading.loadingText, textpos.x, textpos.y, NULL, NULL, NULL, NULL, 0, 0);
+			SDL_RenderCopy(App->render->renderer, loading.imageLogo, NULL, NULL);
 			App->render->Blit(loading.externalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees * 1.5, symbolwidth / 2, symbolheigth / 2);
 			App->render->Blit(loading.internalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, -loading.degrees, symbolwidth / 2, symbolheigth / 2);
 			App->render->Blit(loading.hexagonLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees, symbolwidth / 2, symbolheigth / 2);
@@ -276,7 +279,7 @@ void j1Scene::LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos)
 					break;
 				case LEVEL2:
 					currentlevel = LEVEL3;
-					App->map->ReloadMap("sewers.tmx");
+					App->map->ReloadMap("second_level.tmx");
 
 
 					break;

@@ -27,6 +27,7 @@ struct Loading
 	SDL_Texture* externalLogo = nullptr;
 	SDL_Texture* internalLogo = nullptr;
 	SDL_Texture* hexagonLogo = nullptr;
+	SDL_Texture* imageLogo = nullptr;
 	float degreesperframe = 1; //TODO Load this from scene.xml
 	float degrees = 0;
 	int fadetime = 60;

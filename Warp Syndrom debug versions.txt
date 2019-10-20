@@ -150,3 +150,8 @@ Update 0.0.2.8-debug
 -Added new function to the player: ResetPlayerToStart(). It resets the player to its starting position in the current level.
 -Also implemented ResetPlayerToStart() to the loading function, it now resets the player position when loading a new level
 
+Update 0.0.2.9-debug
+-Fixed minor granade inconveniences
+-Re-written how collisions are calculated
+-Unnecessary code cleaned
+

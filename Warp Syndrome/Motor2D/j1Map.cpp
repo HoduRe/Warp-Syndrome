@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Collision.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -209,7 +210,7 @@ bool j1Map::CleanUp()
 }
 
 // Load new map
-bool j1Map::Load(const char* file_name)
+bool j1Map::LoadNew(const char* file_name)
 {
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
@@ -225,7 +226,7 @@ bool j1Map::Load(const char* file_name)
 	// Load general info ----------------------------------------------
 	if (ret == true)
 	{
-		ret = LoadMap();
+		ret = LoadMap(tmp.GetString(),file_name);
 	}
 
 	// Load all tilesets info ----------------------------------------------
@@ -315,7 +316,7 @@ bool j1Map::Load(const char* file_name)
 }
 
 // Load map general properties
-bool j1Map::LoadMap()
+bool j1Map::LoadMap(p2SString path,p2SString name)
 {
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
@@ -327,6 +328,8 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
+		data.name = name;
+		data.path = path;
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
@@ -573,7 +576,7 @@ bool j1Map::ReloadMap(p2SString newmap)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	Load(newmap.GetString());
+	LoadNew(newmap.GetString());
 
 	return ret;
 }
@@ -609,3 +612,19 @@ MapData::~MapData()
 
 }
 
+
+bool j1Map::Load(pugi::xml_node& ldata)
+{
+	p2SString newmapname = ldata.attribute("name").as_string("first_level.tmx");//loads the map name from the saves doc, if gets errror, replaces it with "first_level.tmx"
+	if (newmapname!=data.name)//if the map that you request to load isn't the same as the one you are currently in, load it, else do nothing 
+	{
+		ReloadMap(newmapname);
+	}
+	return true;
+
+}
+bool j1Map::Save(pugi::xml_node& ldata) const
+{
+	ldata.append_attribute("name") = data.name.GetString();
+	return true;
+}

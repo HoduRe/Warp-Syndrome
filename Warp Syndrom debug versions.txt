@@ -1,4 +1,4 @@
-Current version: 0.0.2.8-debug
+Current version: 0.0.3.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -155,3 +155,8 @@ Update 0.0.2.9-debug
 -Re-written how collisions are calculated
 -Unnecessary code cleaned
 
+
+Update 0.0.3.0-debug
+-Implemented Save/Load capacity to the game, it currently saves&loads: camera pos, player pos and map.
+-Changed name of the old Load() function in the map module due to conflicts with the load from document functions. It is now called LoadNew(). We use the Load() function to load the map from file.
+-Added new attributes to the player.xml: "hitbox w" and "hitbox h", the game loads them but they are not implemented in the collision module for now.

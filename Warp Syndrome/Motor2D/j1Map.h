@@ -81,6 +81,8 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>   layers;
 	p2List<ObjectGroup*> objgroups;
+	p2SString           name;
+	p2SString           path;
 	~MapData();
 };
 
@@ -102,16 +104,20 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	
+	//Save/Load
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	// Load new map
-	bool Load(const char* path);
+	bool LoadNew(const char* path);
 	bool ReloadMap(p2SString newmap);
 	inline uint Get(int x, int y, p2List_item<MapLayer*>currentlayer) const;
 	int MapToWorldCoordinates(int pos, MapData& dat);//TODO change the function to output an iPoint
 	iPoint WorldToMap(int x, int y, MapData& dat) const;
 private:
 
-	bool LoadMap();
+	bool LoadMap(p2SString path, p2SString name);
 
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);

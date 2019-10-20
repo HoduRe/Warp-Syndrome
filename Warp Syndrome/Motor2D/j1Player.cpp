@@ -56,6 +56,8 @@ bool j1Player::Start()
 	ResetPlayerToStart();
 	playervel.x = playernode.child("velocity").attribute("x").as_float();
 	playervel.y = playernode.child("velocity").attribute("y").as_float();
+	hitbox_w_h.x = playernode.child("hitbox").attribute("w").as_int();
+	hitbox_w_h.y = playernode.child("hitbox").attribute("h").as_int();
 	//Load image
 
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
@@ -93,18 +95,16 @@ bool j1Player::CleanUp()
 // Load / Save
 bool j1Player::Load(pugi::xml_node& data)
 {
-	playerpos.x = data.child(name.GetString()).attribute("x").as_int();
-	playerpos.y = data.child(name.GetString()).attribute("y").as_int();
+	playerpos.x = data.attribute("x").as_int();
+	playerpos.y = data.attribute("y").as_int();
 
 	return true;
 }
 bool j1Player::Save(pugi::xml_node& data) const
 {
 
-	pugi::xml_node player = data.append_child(name.GetString());
-
-	player.append_attribute("x") = playerpos.x;
-	player.append_attribute("y") = playerpos.y;
+	data.append_attribute("x") = playerpos.x;
+	data.append_attribute("y") = playerpos.y;
 	return true;
 }
 

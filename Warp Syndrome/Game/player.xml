@@ -5,6 +5,7 @@
     <load texturename="Main_Character.png"/>
   </texture>
   <velocity x="4.0" y="5.0"/>
+  <hitbox w="20" h="30"/>
 
 
   <animation name="idle" number_of_frames="4" canloop="1">

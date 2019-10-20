@@ -4,15 +4,13 @@
 	<window />
 	<textures />
 	<audio />
-	<map />
+	<map name="orthogonal-outside.tmx" />
 	<collision />
 	<state />
 	<scene />
-	<player>
-		<player x="3400" y="2560" />
-	</player>
+	<player x="-13" y="1397.5" />
 	<grenade />
 	<renderer>
-		<camera x="-2983" y="-2048" />
+		<camera x="0" y="272" />
 	</renderer>
 </game_state>

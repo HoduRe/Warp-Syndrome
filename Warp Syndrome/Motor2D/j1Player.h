@@ -78,6 +78,7 @@ private:
 	p2SString filename;
 	SDL_Texture* playertexture;
 	bool fliped;
+	iPoint hitbox_w_h;
 };
 
 

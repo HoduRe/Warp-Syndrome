@@ -31,7 +31,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load(App->map->map_name.GetString());
+	App->map->LoadNew(App->map->map_name.GetString());
 	App->render->camera.x = App->player->GetPosition().x;
 	App->render->camera.y = App->player->GetPosition().y;
 	camvelocity = { 0.0f,0.0f };

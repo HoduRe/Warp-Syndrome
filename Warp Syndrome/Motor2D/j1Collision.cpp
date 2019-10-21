@@ -91,7 +91,7 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj, floa
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
 
-	if (collider_y <= *y && collider_y > *y - *h && collider_x < *x && collider_x + collider_w > *x) {
+	if (collider_y <= *y && collider_y > *y - *h && collider_x < *x + *w && collider_x + collider_w > *x) {
 		GetBufferCollision(collider_x, collider_y, true);
 		return GROUND_COLLISION;
 	}
@@ -103,7 +103,7 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj, floa
 		GetBufferCollision(collider_x + collider_w, collider_y, false);
 		return LEFT_COLLISION;
 	}
-	else if (collider_y + collider_h >= *y - *h && collider_y + collider_h <= *y && collider_x < *x && collider_x + collider_w > *x) {
+	else if (collider_y + collider_h >= *y - *h && collider_y + collider_h <= *y && collider_x < *x + *w && collider_x + collider_w > *x) {
 		GetBufferCollision(collider_x, collider_y + collider_h + *h, true);
 		return UPPER_COLLISION;
 	}

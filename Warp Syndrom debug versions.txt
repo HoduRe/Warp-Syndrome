@@ -160,3 +160,10 @@ Update 0.0.3.0-debug
 -Implemented Save/Load capacity to the game, it currently saves&loads: camera pos, player pos and map.
 -Changed name of the old Load() function in the map module due to conflicts with the load from document functions. It is now called LoadNew(). We use the Load() function to load the map from file.
 -Added new attributes to the player.xml: "hitbox w" and "hitbox h", the game loads them but they are not implemented in the collision module for now.
+
+Update 0.0.3.1-debug
+-Implemented different types of colliders
+-Grenade doesn't explode when inside grenade blocks
+-Diagonal jumping collisions fixed
+-Upper collisions fixed
+

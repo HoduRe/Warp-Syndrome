@@ -111,8 +111,6 @@ void j1State::CheckInputs() {
 		break;
 	case THROWING_GRENADE:
 		if (App->grenade->DoesGrenadeExist() == true) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		}
 		break;
 	case THROWING_GRENADE_ON_AIR:
 		if (App->grenade->DoesGrenadeExist() == true) { current_state = FREE_FALLING; y_jumping_state = JST_GOING_DOWN; }	// TODO a function that changes this bool based on the player throwing a grenade
@@ -269,6 +267,7 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
+	if (App->collision->DeathColliderTouched() == true) { current_state = DEAD; }
 }
 
 void j1State::MovePlayer() {
@@ -292,15 +291,17 @@ void j1State::MovePlayer() {
 	}
 
 	// Y AXIS MOVEMENT
-	JumpMoveY();
-	switch (current_state) {
-	case SLIDING_ON_LEFT_WALL:
-	case SLIDING_ON_RIGHT_WALL:
-		App->player->AddPosition(0.0f, App->player->GetVelocity().y / 2.0f);
-		break;
-	}		// TODO JUMPS
+	if (current_state != DEAD) {
+		JumpMoveY();
+		switch (current_state) {
+		case SLIDING_ON_LEFT_WALL:
+		case SLIDING_ON_RIGHT_WALL:
+			App->player->AddPosition(0.0f, App->player->GetVelocity().y / 2.0f);
+			break;
+		}		// TODO JUMPS
 
-	AvoidShaking();
+		AvoidShaking();
+	}
 }
 
 void j1State::JumpMoveX() {
@@ -374,7 +375,7 @@ void j1State::AvoidShaking() {
 	case LEFT_COLLISION:
 	case RIGHT_COLLISION:
 		App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x) / 2, App->player->GetPosition().y);
-		switch (wall_jump) {	// TODO read the width +10 from the xml
+		switch (wall_jump) {
 		case SST_JUMPING_RIGHT:
 			App->player->AddPosition(1.0f, -1.0f);
 			current_state = WALL_JUMP;

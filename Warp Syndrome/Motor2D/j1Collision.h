@@ -12,6 +12,20 @@ struct collider_buffer {
 	bool is_first_collider_horizontal = false;
 };
 
+enum object_colliding {
+	OBJECT_UNKNOWN,
+	OBJECT_PLAYER,
+	OBJECT_GRENADE
+};
+
+enum collider_type {
+	regular_collider,
+	grenade_collider,
+	door_collider,
+	starting_point,
+	death_collider
+};
+
 enum collision_type {
 	NONE_COLLISION,
 	LEFT_COLLISION,
@@ -49,18 +63,30 @@ public:
 
 	void SetPointerToObjGroup(p2List<ObjectGroup*> &pointerObjList);
 
-	void CheckLoop(fPoint* position, fPoint* measures);	// Exists because it's also used in the grenade
+	void CheckLoop(fPoint* position, fPoint* measures, object_colliding object_name);	// Exists because it's also used in the grenade
 
 	collision_type CheckCollider(p2List_item<Object*>* currentobj, float *x, float *y, float *w, float *h);
 	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
+	bool InsideCollider(p2List_item<Object*>* currentobj, float* x, float* y, float* w, float* h);
+	bool DeathColliderTouched();
+	bool DoorColliderTouched();
+	bool GrenadeColliderTouched();
+	bool GroundCollision();
 	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
+	void GetCurrentCollider(p2SString name);
 
 	collision_type current_collision;
 	collider_buffer current_collision_buffer;
 
 private:
+	fPoint position;
+	fPoint measures;
+	collider_type current_collider_type;
 	p2List<ObjectGroup*> pObjGroupList;
 	bool has_already_collided;
+	bool death_collider_touched;
+	bool door_collider_touched;
+	bool grenade_collider_touched;
 	collision_type collision_array[LAST_COLLISION];
 };
 

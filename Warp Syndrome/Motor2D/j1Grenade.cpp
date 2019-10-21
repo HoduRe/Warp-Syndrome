@@ -53,7 +53,7 @@ bool j1Grenade::CleanUp() {
 }
 
 void j1Grenade::GrenadeCollisions() {
-	App->collision->CheckLoop(&grenade_position, &grenade_measures);
+	App->collision->CheckLoop(&grenade_position, &grenade_measures, OBJECT_GRENADE);
 	switch (App->collision->current_collision) {
 	case GROUND_COLLISION:
 		switch(grenade_state){
@@ -119,7 +119,8 @@ void j1Grenade::GrenadeCollisions() {
 
 void j1Grenade::GrenadeState() {
 	
-	if ((grenade_state != GST_UNKNOWN && App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) || grenade_time_to_explode >= 40) {
+	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
+		(App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN || grenade_time_to_explode >= 40))) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
@@ -183,7 +184,7 @@ void j1Grenade::GrenadeState() {
 		position.y = App->player->GetPosition().y;
 		measures.x = 20;	// TODO use character height to differenciate x axis from x_y axis
 		measures.y = 30;	// TODO use character height to differenciate x axis from x_y axis
-		App->collision->CheckLoop(&position, &measures);
+		App->collision->CheckLoop(&position, &measures, OBJECT_PLAYER);
 		App->state->MovePlayer();
 		break;
 	}

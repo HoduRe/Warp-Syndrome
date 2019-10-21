@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="230" height="90" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="131">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="230" height="90" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="133">
  <tileset firstgid="1" name="Earth_tileset" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="432" columns="24">
   <image source="Earth_tileset.png" width="800" height="600"/>
   <tile id="127" probability="0.01"/>
@@ -178743,7 +178743,7 @@
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="223"/>
-   <tile gid="391"/>
+   <tile gid="125"/>
    <tile/>
    <tile/>
    <tile/>
@@ -178973,7 +178973,7 @@
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="223"/>
-   <tile gid="391"/>
+   <tile gid="125"/>
    <tile/>
    <tile/>
    <tile/>
@@ -179203,7 +179203,7 @@
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="223"/>
-   <tile gid="391"/>
+   <tile gid="125"/>
    <tile/>
    <tile/>
    <tile/>
@@ -179430,10 +179430,10 @@
    <tile gid="246"/>
    <tile gid="246"/>
    <tile gid="246"/>
-   <tile gid="246"/>
-   <tile gid="246"/>
-   <tile gid="247"/>
-   <tile gid="391"/>
+   <tile gid="226"/>
+   <tile gid="222"/>
+   <tile gid="223"/>
+   <tile gid="125"/>
    <tile/>
    <tile gid="349"/>
    <tile gid="346"/>
@@ -179660,11 +179660,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="391"/>
-   <tile gid="391"/>
+   <tile gid="221"/>
+   <tile gid="222"/>
+   <tile gid="223"/>
+   <tile gid="125"/>
+   <tile gid="125"/>
    <tile gid="374"/>
    <tile gid="149"/>
    <tile gid="149"/>
@@ -179890,11 +179890,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="391"/>
+   <tile gid="245"/>
+   <tile gid="246"/>
+   <tile gid="247"/>
+   <tile gid="125"/>
+   <tile gid="125"/>
    <tile gid="374"/>
    <tile gid="149"/>
    <tile gid="149"/>
@@ -180123,7 +180123,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="391"/>
    <tile gid="391"/>
    <tile gid="374"/>
    <tile gid="149"/>
@@ -180353,7 +180353,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="391"/>
    <tile gid="391"/>
    <tile gid="374"/>
    <tile gid="149"/>
@@ -186410,8 +186410,9 @@
   <object id="125" type="regular_collider" x="3296" y="1984" width="125" height="32"/>
   <object id="126" type="starting_point" x="224" y="1696" width="32" height="32"/>
   <object id="127" type="grenade_collider" x="3872" y="2400" width="96" height="96"/>
-  <object id="128" type="grenade_collider" x="6400" y="1792" width="32" height="160"/>
-  <object id="129" type="grenade_collider" x="6432" y="1920" width="32" height="128"/>
+  <object id="128" type="grenade_collider" x="6400" y="1984" width="64" height="63.9565"/>
   <object id="130" type="regular_collider" x="3296" y="1760" width="128" height="96"/>
+  <object id="131" type="door_collider" x="6752" y="1856" width="32" height="32"/>
+  <object id="132" type="regular_collider" x="6304" y="1856" width="96" height="128"/>
  </objectgroup>
 </map>

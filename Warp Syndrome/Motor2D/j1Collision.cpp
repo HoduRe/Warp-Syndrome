@@ -194,7 +194,7 @@ bool j1Collision::InsideCollider(p2List_item<Object*>* currentobj, float* x, flo
 	float collider_y = (float)currentobj->data->boundingbox.y;
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
-	if (*x >= collider_x && *x + *w <= collider_x + collider_w && *y >= collider_y && *y + *h <= collider_y + collider_h) {
+	if (*x >= collider_x - 1 && *x + *w <= collider_x + collider_w + 1 && *y >= collider_y - 1 && *y + *h <= collider_y + collider_h + 1) {
 		return true;
 	}
 	else { return false; }

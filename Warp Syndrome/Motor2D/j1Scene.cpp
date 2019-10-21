@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Collision.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -32,12 +33,14 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->LoadNew(App->map->map_name.GetString());
-	App->render->camera.x = App->player->GetPosition().x;
-	App->render->camera.y = App->player->GetPosition().y;
+	App->render->camera.x = -(App->player->GetPosition().x-(App->render->camera.w/2));
+	App->render->camera.y = -(App->player->GetPosition().y-(App->render->camera.h / 2));
 	camvelocity = { 0.0f,0.0f };
 	arrivedtoline = false;
+	distancetoplayer = { 0,0 };
 	snapping = false;
 	reload = false;
+	start = true;
 	currentlevel = LEVEL1;
 
 	//TODO load this from xml
@@ -55,7 +58,7 @@ bool j1Scene::Start()
 	App->win->GetWindowSize(windSizeW, windSizeH);
 	textcenter.x = windSizeW / 2;
 	textcenter.y = (windSizeH / 2) - 100;
-	symbolcenter.x =  windSizeW / 2;
+	symbolcenter.x = windSizeW / 2;
 	symbolcenter.y = (windSizeH / 2) + 100;
 	return true;
 }
@@ -72,15 +75,15 @@ bool j1Scene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		reload = true;//When reload=true, reloads a map
 
-	
+
 
 
 
@@ -152,24 +155,38 @@ void j1Scene::RepositionCamera()
 	int camW = App->render->camera.w;
 	int camH = App->render->camera.h;
 	fPoint target;
+
 	fPoint currentcam;
 	//CamState lastcamstate = camstate;
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
-	if (!playerfliped)
-		target.x = playerpos.x + (camW * 0.1f); //change the number multiplying by the camW to set the distance of the taget from the player when is looking right
-	else target.x = playerpos.x - (camW * 0.1f);//change the number multiplying by the camW to set the distance of the taget from the player when is looking left
 
-	target.y = playerpos.y;
+	if (App->collision->GroundCollision()||start) //if its colliding with the ground execute camera movement
+	{
 
 
-	currentcam.y = -target.y + (camH * 2 / 3);
-	currentcam.x = CameraGoToTarget(App->render->camera, target);
+		if (!playerfliped)
+			target.x = playerpos.x + (camW * 0.1f); //change the number multiplying by the camW to set the distance of the taget from the player when is looking right
+		else target.x = playerpos.x - (camW * 0.1f);//change the number multiplying by the camW to set the distance of the taget from the player when is looking left
+
+		target.y = playerpos.y;
+		currentcam.y = -target.y + (camH * 2 / 3);
+		currentcam.x = CameraGoToTarget(App->render->camera, target);
+
+
+		distancetoplayer.x = playerpos.x - (-currentcam.x);
+
+		distancetoplayer.y = playerpos.y - (-currentcam.y);
+		start = false;
+	}
+	else
+	{
+		currentcam.x = -(playerpos.x - distancetoplayer.x);
+		currentcam.y = -(playerpos.y - distancetoplayer.y);
+	}
 
 	App->render->camera.x = currentcam.x;
 	App->render->camera.y = currentcam.y;
-
-
 
 }
 

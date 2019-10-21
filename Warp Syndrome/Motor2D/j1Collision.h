@@ -71,6 +71,7 @@ public:
 	bool DeathColliderTouched();
 	bool DoorColliderTouched();
 	bool GrenadeColliderTouched();
+	//returns true if a ground collision is happening
 	bool GroundCollision();
 	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
 	void GetCurrentCollider(p2SString name);

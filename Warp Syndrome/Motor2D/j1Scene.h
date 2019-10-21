@@ -75,6 +75,7 @@ public:
 
 private:
 	bool reload;
+	bool start;
 	MapLoaded currentlevel; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout
 
 	Loading loading;
@@ -83,7 +84,7 @@ private:
 	bool targetRight;//true if Right, false if Left
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
-
+	fPoint distancetoplayer;//camera distance to player
 	//LoadingScreen======================================================================================
 	iPoint textcenter;
 	iPoint symbolcenter;

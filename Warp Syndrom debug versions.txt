@@ -1,4 +1,4 @@
-Current version: 0.0.5.0-debug
+Current version: 0.0.6.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -177,3 +177,8 @@ Update 0.0.5.0-debug
 -Added new module "transitions". it will make the fade-in's, fade-out's, etc.
 -Modified the "j1App" module to introduce those 2 new modules.
 -Changed the location of an include in the "player.h" module.
+
+Update 0.0.6.0-debug
+-God mode added
+-Minor grenade bug fixed
+

@@ -42,13 +42,20 @@ public:
 	// Simple machine state for the grenade
 	void GrenadeState();
 
+	// return true if the grenade exists
 	bool DoesGrenadeExist();
 
+	// returns true if the grenade is in GST_EXPLODING
 	bool IsGrenadeExploding();
 
+	// adds the numbers given to the current grenade position
 	void AddPosition(float x, float y);
 
+	// returns the position
 	fPoint GetPosition();
+
+	// returns the width and height of the grenade
+	fPoint GetMeasures();
 
 	collision_type ColliderBuffer();
 

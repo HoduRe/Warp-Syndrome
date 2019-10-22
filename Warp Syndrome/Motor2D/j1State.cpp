@@ -39,12 +39,15 @@ bool j1State::Update(float dt) {
 	state_list bufferlaststate = current_state;
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
-	CheckInputs();	// Checks active states (based on inputs)
-	CheckColliders(); // Checks colliders
-	MovePlayer();	// Moves player position
-	App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
-	CheckAnimation(current_state,bufferlaststate);
-	StepCurrentAnimation();	// steps the current animation
+	if (god_mode == false) {
+		CheckInputs();	// Checks active states (based on inputs)
+		CheckColliders(); // Checks colliders
+		MovePlayer();	// Moves player position
+		App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
+		CheckAnimation(current_state, bufferlaststate);
+		StepCurrentAnimation();	// steps the current animation
+	}
+	else { GodMode(); }	// moves the player in God Mode
 
 	return ret;
 }
@@ -131,6 +134,13 @@ void j1State::CheckInputs() {
 		break;
 	default:
 		break;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (god_mode == false) {
+			current_state = GOD_MODE;
+			god_mode = true;
+		}
 	}
 
 	// TODO move the run_counter to player xml
@@ -576,18 +586,43 @@ void j1State::CheckAnimation(state_list currentstate, state_list laststate)
 			break;
 		}
 	}
-
-
-
-
-
 }
 
 bool j1State::GetGrenadeState()
 {
 	return grenade;
 }
+
 void j1State::SetGrenadeState(bool state)
 {
 	grenade = state;
+}
+
+bool j1State::GetGodmode() {
+	if (god_mode == true) { return true; }
+	else { return false; }
+}
+
+void j1State::GodMode() {
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (god_mode == true) {
+			current_state = IDLE;
+			god_mode = false;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		App->player->AddPosition(-App->player->GetVelocity().x * 4, 0);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		App->player->AddPosition(App->player->GetVelocity().x * 4, 0);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+		App->player->AddPosition(0, -App->player->GetVelocity().x * 4);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+		App->player->AddPosition(0, App->player->GetVelocity().x * 4);
+	}
+
 }

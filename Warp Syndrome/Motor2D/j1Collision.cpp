@@ -3,6 +3,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include "j1Player.h"
+#include "j1Grenade.h"
 #include "p2List.h"
 #include "p2SString.h"
 #include "j1App.h"
@@ -194,7 +195,7 @@ bool j1Collision::InsideCollider(p2List_item<Object*>* currentobj, float* x, flo
 	float collider_y = (float)currentobj->data->boundingbox.y;
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
-	if (*x >= collider_x - 1 && *x + *w <= collider_x + collider_w + 1 && *y >= collider_y - 1 && *y + *h <= collider_y + collider_h + 1) {
+	if (*x >= collider_x - App->grenade->GetMeasures().x && *x + *w <= collider_x + collider_w + App->grenade->GetMeasures().x && *y >= collider_y - App->grenade->GetMeasures().y && *y + *h <= collider_y + collider_h + App->grenade->GetMeasures().y) {
 		return true;
 	}
 	else { return false; }

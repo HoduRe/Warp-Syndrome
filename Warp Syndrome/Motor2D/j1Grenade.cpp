@@ -130,7 +130,7 @@ void j1Grenade::GrenadeState() {
 	switch (grenade_state) {
 	case GST_UNKNOWN:
 		grenade_position.x = App->player->GetPosition().x;
-		grenade_position.y = App->player->GetPosition().y-31; 	// TODO get the proper width and heigh
+		grenade_position.y = App->player->GetPosition().y - App->player->GetWidthHeight().x;
 		grenade_timer.x = App->player->GetVelocity().x;
 		switch (App->player->GetFliped()) {
 		case true:
@@ -182,8 +182,8 @@ void j1Grenade::GrenadeState() {
 		if (App->state->current_state == TELEPORT) { App->player->SetPosition(App->grenade->GetPosition()); }
 		position.x = App->player->GetPosition().x;
 		position.y = App->player->GetPosition().y;
-		measures.x = 20;	// TODO use character height to differenciate x axis from x_y axis
-		measures.y = 30;	// TODO use character height to differenciate x axis from x_y axis
+		measures.x = App->player->GetWidthHeight().x;
+		measures.y = App->player->GetWidthHeight().y;
 		App->collision->CheckLoop(&position, &measures, OBJECT_PLAYER);
 		App->state->MovePlayer();
 		break;
@@ -208,6 +208,10 @@ bool j1Grenade::IsGrenadeExploding() {
 
 fPoint j1Grenade::GetPosition() {
 	return grenade_position;
+}
+
+fPoint j1Grenade::GetMeasures() {
+	return grenade_measures;
 }
 
 collision_type j1Grenade::ColliderBuffer() {

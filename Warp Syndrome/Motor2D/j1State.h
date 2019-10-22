@@ -110,18 +110,31 @@ public:
 	// Calculates jump shinanigans
 	void JumpMoveX();
 	void JumpMoveY();
+
+	// Avoids shaking when going inside a collider
 	void AvoidShaking();
+
+	// Checks if the animation has to be changed
 	void CheckAnimation(state_list currentstate, state_list laststate);
 
 	state_list current_state;
 
+	// returns true if the grenade exists
 	bool GetGrenadeState();
+
+	// changes the stata of the grenade
 	void SetGrenadeState(bool state);
 
+	// returns true if the player is in godmode
+	bool GetGodmode();
+
+	// Moves player if it is in God Mode
+	void GodMode();
 	
 
 private:
 	bool grenade;
+	bool god_mode;
 	int run_counter;;
 	float jump_timer;
 	SlidingStates wall_jump;

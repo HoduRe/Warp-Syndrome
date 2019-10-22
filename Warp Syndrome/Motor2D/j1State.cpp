@@ -7,6 +7,7 @@
 #include "j1Grenade.h"
 #include "j1Input.h"
 #include "p2List.h"
+#include "Animations.h"
 #include "j1App.h"
 
 j1State::j1State() : j1Module() {
@@ -136,17 +137,6 @@ void j1State::CheckInputs() {
 		break;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		if (god_mode == false) {
-			current_state = GOD_MODE;
-			god_mode = true;
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		if (blit_colliders == false) { blit_colliders = true; }
-		else if (blit_colliders == true) { blit_colliders = false; }
-	}
-
 	// TODO move the run_counter to player xml
 	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen
 }
@@ -188,7 +178,7 @@ void j1State::CheckColliders() {
 		case RUN_FORWARD:
 		case THROWING_GRENADE:
 		case SLIDING_TO_IDLE:
-			current_state = DEAD;
+			current_state = DYING;
 			y_jumping_state = JST_UNKNOWN;
 			break;
 		}
@@ -281,7 +271,9 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (App->collision->DeathColliderTouched() == true) { current_state = DEAD; }
+	if (App->collision->DeathColliderTouched() == true) { current_state = DYING; }
+//	if (current_state == DYING && GetAnimationFinish() == true) { current_state = DEAD; } APPARENTLY, GetAnimationFinish doesn't fucking exist
+	// and I'm way to tired to take care of this shit
 }
 
 void j1State::MovePlayer() {
@@ -305,7 +297,7 @@ void j1State::MovePlayer() {
 	}
 
 	// Y AXIS MOVEMENT
-	if (current_state != DEAD) {
+	if (current_state != DYING && current_state != DEAD) {
 		JumpMoveY();
 		switch (current_state) {
 		case SLIDING_ON_LEFT_WALL:
@@ -510,6 +502,12 @@ void j1State::ChangeAnimation(Animation_list animations)
 	case AL_WALKING:
 		newanim = currentanim->data->GetAnimFromName("walking", pAnimList);
 		break;
+	case AL_DYING:
+		newanim = currentanim->data->GetAnimFromName("hurt", pAnimList);
+		break;
+	case AL_DEAD:
+		newanim = currentanim->data->GetAnimFromName("dead", pAnimList);
+		break;
 	case AL_UNKNOWN:
 		newanim = currentanim->data->GetAnimFromName("", pAnimList);
 		break;
@@ -584,9 +582,11 @@ void j1State::CheckAnimation(state_list currentstate, state_list laststate)
 		case WAKE_UP:
 			ChangeAnimation(AL_WAKEUP);
 			break;
-		case DEAD:
-			ChangeAnimation(AL_IDLE);//NEEEDS ANIMATION
+		case DYING:
+			ChangeAnimation(AL_DYING);
 			break;
+		case DEAD:
+			ChangeAnimation(AL_DEAD);
 		case GOD_MODE:
 			ChangeAnimation(AL_IDLE);
 			break;
@@ -606,24 +606,30 @@ void j1State::SetGrenadeState(bool state)
 	grenade = state;
 }
 
-bool j1State::GetGodmode() {
-	if (god_mode == true) { return true; }
-	else { return false; }
-}
-
 bool j1State::BlitColliders() {
 	if (blit_colliders == true) { return true; }
 	else { return false; }
 }
 
-void j1State::GodMode() {
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		if (god_mode == true) {
-			current_state = IDLE;
-			god_mode = false;
-		}
-	}
+void j1State::SetBlitColliders() {
+	blit_colliders = !blit_colliders;
+}
 
+bool j1State::GetGodmode() {
+	if (god_mode == true) { return true; }
+	else { return false; }
+}
+
+void j1State::SetGodmode() {
+	god_mode = !god_mode;
+}
+
+void j1State::SetGodmode(bool state) {
+	if (state == true) { god_mode = true; }
+	else if (state == false) { god_mode = false; }
+}
+
+void j1State::GodMode() {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		App->player->AddPosition(-App->player->GetVelocity().x * 4, 0);
 	}

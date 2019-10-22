@@ -43,6 +43,7 @@ enum state_list {
 	WALL_JUMP,
 	SLIDING_TO_IDLE,
 	WAKE_UP,
+	DYING,
 	DEAD,
 	GOD_MODE
 };
@@ -63,6 +64,8 @@ enum Animation_list
 	AL_WALLJUMPING,
 	AL_WAKEUP,
 	AL_WALKING,
+	AL_DYING,
+	AL_DEAD,
 	AL_UNKNOWN
 };
 
@@ -128,12 +131,21 @@ public:
 	// changes the stata of the grenade
 	void SetGrenadeState(bool state);
 
-	// returns true if the player is in godmode
-	bool GetGodmode();
-	
 	// returns true if the player presses F9
 	bool BlitColliders();
 
+	// activates or deactivates the blit colliders F9
+	void SetBlitColliders();
+
+	// returns true if the player is in godmode
+	bool GetGodmode();
+
+	// sets god mode
+	void SetGodmode();
+
+	// changes godmode based on what is being requested
+	void SetGodmode(bool state);
+	
 private:
 	bool grenade;
 	bool god_mode;

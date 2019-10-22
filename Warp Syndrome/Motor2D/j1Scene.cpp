@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Render.h"
+#include "j1State.h"
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
@@ -43,7 +44,7 @@ bool j1Scene::Start()
 	start = true;
 	currentlevel = LEVEL1;
 
-	//TODO load this from xml
+	App->audio->PlayMusic(App->map->data.music_path.GetString());
 
 	//load loadingscreen textures
 	loading.hexagonLogo = App->tex->Load("textures/hexagon.png");
@@ -84,9 +85,13 @@ bool j1Scene::Update(float dt)
 		reload = true;//When reload=true, reloads a map
 
 
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+		App->state->SetBlitColliders();
+	}
 
-
-
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		App->state->SetGodmode();
+	}
 
 	//RepositionCamera currently deactivated
 

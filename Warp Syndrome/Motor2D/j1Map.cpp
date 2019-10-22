@@ -229,6 +229,12 @@ bool j1Map::LoadNew(const char* file_name)
 		ret = LoadMap(tmp.GetString(),file_name);
 	}
 
+	// Load music ----------------------------------------------------------
+
+	if (ret == true) {
+		data.music_path = map_file.child("map").child("properties").child("property").attribute("value").as_string();
+	}
+
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
 	for (tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))

@@ -83,6 +83,7 @@ struct MapData
 	p2List<ObjectGroup*> objgroups;
 	p2SString           name;
 	p2SString           path;
+	p2SString			music_path;
 	~MapData();
 };
 

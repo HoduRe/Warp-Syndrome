@@ -4,13 +4,15 @@
 	<window />
 	<textures />
 	<audio />
+	<level_m />
 	<map name="first_level.tmx" />
 	<collision />
 	<state />
 	<scene />
-	<player x="1498" y="1636.5" />
+	<player x="1536" y="1760" />
 	<grenade />
+	<:anonymous />
 	<renderer>
-		<camera x="-1088" y="-1124" />
+		<camera x="-1126" y="-1248" />
 	</renderer>
 </game_state>

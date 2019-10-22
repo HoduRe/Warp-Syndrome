@@ -1,5 +1,5 @@
 <level_list>
-<properties path="" total_lvl_num="2" default="first_level.tmx" />
+<properties path="textures/" total_lvl_num="2" default="first_level.tmx" />
 
 	<level has_nether="0">
 		<overworld>first_level.tmx</overworld>

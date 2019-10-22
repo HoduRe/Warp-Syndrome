@@ -1,5 +1,5 @@
 #ifndef __TRANSITIONS_H__
-#define __TRAMSITIONS_H__
+#define __TRANSITIONS_H__
 
 #include "j1Module.h"
 #include "p2List.h"
@@ -7,6 +7,17 @@
 
 #include "SDL/include/SDL.h"
 #include "PugiXml/src/pugixml.hpp"
+
+enum Transition_States
+{
+	TS_FADE_IN,
+	TS_LOADING_START,
+	TS_LOADING_PROCESS,
+	TS_LOADING_FINISH,
+	TS_FADE_OUT,
+	TS_UNKNOWN
+};
+
 
 class j1Transitions : public j1Module
 {
@@ -35,8 +46,44 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-private:
+	//Fades into black in a gradient for the amount of frames you input
+	bool Fade_In(uint frames_length);
 
+	//Fades out of black in a gradient for the amount of frames you input
+	bool Fade_Out(uint frames_length);
+
+	//Runs the animation for the loading screen
+	bool LoadingScreen(uint frames_length);
+
+	bool BlackScreen(uint frames_length);
+	
+	void ChangeState(Transition_States state, uint frames_length);
+
+	//returns true if the no transition is happening right now
+	bool AllStatesFinished();
+
+	Transition_States actual_state;
+private:
+	
+	uint timer;
+	iPoint textcenter;
+	iPoint symbolcenter;
+
+	uint function_frames_length;
+
+	SDL_Texture* loadingText = nullptr;
+	SDL_Texture* externalLogo = nullptr;
+	SDL_Texture* internalLogo = nullptr;
+	SDL_Texture* hexagonLogo = nullptr;
+	SDL_Texture* imageLogo = nullptr;
+	float degreesperframe = 1; //TODO Load this from scene.xml
+	float degrees = 0;
+	int transition = 0;
+	int currenttime = 0;
+	bool fadeended = false;
+
+	iPoint textcenterpos;
+	iPoint symbolcenterpos;
 };
 
 

@@ -1,4 +1,4 @@
-Current version: 0.0.6.0-debug
+Current version: 0.0.9.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -188,3 +188,10 @@ Update 0.0.7.0-debug
 Update 0.0.8.0-debug
 -Audio added
 -Minor godmode functionality added
+
+Update 0.0.9.0-debug
+-Added new functions to the "transitions" module that allow fade-in, fade-out and loading.
+-The "level_manager" module now can load information from an xml.
+-Changed the first world loading from the scene module to be happening from the "level" module isntead.
+-Changed the variable name of "camvelocity" in the "scene" module to be "camaccel".
+

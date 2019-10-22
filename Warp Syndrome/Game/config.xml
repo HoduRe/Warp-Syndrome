@@ -22,7 +22,9 @@
   <file_system>
     <path>data.zip</path>
   </file_system>
-
+  <level_m>
+    <load docname="levels.xml"/>
+  </level_m>
   <map>
     <folder>maps/</folder>
     <load mapname="first_level.tmx"/>

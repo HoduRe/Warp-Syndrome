@@ -80,7 +80,7 @@ private:
 
 	Loading loading;
 	//Reposition Camera Variables========================================================================
-	fPoint camvelocity;
+	fPoint camaccel;
 	bool targetRight;//true if Right, false if Left
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 

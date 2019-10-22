@@ -11,6 +11,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "level_manager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -33,10 +34,10 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->LoadNew(App->map->map_name.GetString());
+	App->map->LoadNew(App->level_m->default_level->data->overworld.GetString());
 	App->render->camera.x = -(App->player->GetPosition().x-(App->render->camera.w/2));
 	App->render->camera.y = -(App->player->GetPosition().y-(App->render->camera.h / 2));
-	camvelocity = { 0.0f,0.0f };
+	camaccel = { 0.0f,0.0f };
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };
 	snapping = false;
@@ -202,27 +203,27 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 	float playervel = App->player->GetVelocity().x;
 	float camdisplacementvel = playervel * 3;
 
-	if (camvelocity.x > 1.0f)camvelocity.x = 1.0f;
+	if (camaccel.x > 1.0f)camaccel.x = 1.0f;
 
 	if (target.x > -camera.x + (camera.w / 2))
 	{
-		newcamX -= camdisplacementvel * camvelocity.x;
+		newcamX -= camdisplacementvel * camaccel.x;
 		//LOG("Cam --, positon: %f", newcamX);
 	}
 	else if (target.x < -camera.x + (camera.w / 2))
 	{
-		newcamX += camdisplacementvel * camvelocity.x;
+		newcamX += camdisplacementvel * camaccel.x;
 		//LOG("Cam ++, positon: %f", newcamX);
 
 	}
-	camvelocity.x += 0.05f;//change this value to change camera accel
+	camaccel.x += 0.05f;//change this value to change camera accel
 	//TODO take the increment of cam vel (cam accel) and put it in the configuration xml
 
 	if (-camera.x + (camera.w / 2) <= target.x + (camdisplacementvel / 2) + 1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel / 2) - 1)
 	{
 		newcamX = -(target.x - (camera.w / 2));
 		//LOG("Cam pinned, positon: %f", newcamX);
-		camvelocity = { 0.0f,0.0f };
+		camaccel = { 0.0f,0.0f };
 	}
 
 

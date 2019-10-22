@@ -221,3 +221,17 @@ bool j1Collision::GroundCollision() {
 	}
 	else { return false; }
 }
+
+bool j1Collision::LeftCollision() {
+	if (current_collision == LEFT_COLLISION || current_collision == LEFT_GROUND_COLLISION || current_collision == LEFT_UPPER_COLLISION) {
+		return true;
+	}
+	else { return false; }
+}
+
+bool j1Collision::RightCollision() {
+	if (current_collision == RIGHT_COLLISION || current_collision == RIGHT_UPPER_COLLISION || current_collision == RIGHT_GROUND_COLLISION) {
+		return true;
+	}
+	else { return false; }
+}

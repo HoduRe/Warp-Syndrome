@@ -49,6 +49,12 @@
     <ClCompile Include="j1Grenade.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="level_manager.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="transitions.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -118,6 +124,12 @@
       <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Grenade.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="level_manager.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="transitions.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>

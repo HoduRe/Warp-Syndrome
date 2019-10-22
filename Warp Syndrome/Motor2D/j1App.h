@@ -17,6 +17,8 @@ class j1Player;
 class j1Collision;
 class j1State;
 class j1Grenade;
+class j1LevelManager;
+class j1Transitions;
 
 class j1App
 {
@@ -91,6 +93,8 @@ public:
 	j1Collision*		collision;
 	j1State*			state;
 	j1Grenade*			grenade;
+	j1LevelManager*		level_m;
+	j1Transitions*		transitions;
 
 private:
 

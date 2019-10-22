@@ -1,4 +1,4 @@
-Current version: 0.0.4.0-debug
+Current version: 0.0.5.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -171,3 +171,9 @@ Update 0.0.4.0-debug
 -Added new "level.xml". It will contain the diferent maps of the game in a list and their properties. It contains only the main frame of the document for now.
 -Urpgaded camera. It now only moves around when the player is on the ground, thus improving visibility during the game.
 -Deteled an unused .exe in the game folder.
+
+Update 0.0.5.0-debug
+-Added new module "level_manager". It will manage all the level changes, etc.
+-Added new module "transitions". it will make the fade-in's, fade-out's, etc.
+-Modified the "j1App" module to introduce those 2 new modules.
+-Changed the location of an include in the "player.h" module.

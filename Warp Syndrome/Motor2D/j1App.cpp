@@ -7,6 +7,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
+#include "level_manager.h"
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
@@ -14,6 +15,8 @@
 #include "j1Collision.h"
 #include "j1State.h"
 #include "j1Grenade.h"
+#include "transitions.h"
+
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -32,6 +35,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1Collision();
 	state = new j1State();
 	grenade = new j1Grenade();
+	level_m = new j1LevelManager();
+	transitions = new j1Transitions();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -39,13 +44,14 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(level_m);
 	AddModule(map);
 	AddModule(collision);
 	AddModule(state);
 	AddModule(scene);
 	AddModule(player);
 	AddModule(grenade);
-
+	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
 	AddModule(render);
 }

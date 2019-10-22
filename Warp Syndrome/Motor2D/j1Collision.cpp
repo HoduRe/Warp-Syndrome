@@ -3,6 +3,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include "j1Player.h"
+#include "j1State.h"
 #include "j1Grenade.h"
 #include "p2List.h"
 #include "p2SString.h"
@@ -39,7 +40,7 @@ bool j1Collision::Update(float dt) {
 	position.y = App->player->GetPosition().y;
 	measures.x = App->player->GetWidthHeight().x;
 	measures.y = App->player->GetWidthHeight().y;
-	if(App->player->GodMode() == false){
+	if(App->state->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
 	}
 

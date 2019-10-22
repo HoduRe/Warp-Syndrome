@@ -39,7 +39,9 @@ bool j1Collision::Update(float dt) {
 	position.y = App->player->GetPosition().y;
 	measures.x = App->player->GetWidthHeight().x;
 	measures.y = App->player->GetWidthHeight().y;
-	CheckLoop(&position, &measures, OBJECT_PLAYER);
+	if(App->player->GodMode() == false){
+		CheckLoop(&position, &measures, OBJECT_PLAYER);
+	}
 
 	return ret;
 }

@@ -114,6 +114,9 @@ public:
 	// Avoids shaking when going inside a collider
 	void AvoidShaking();
 
+	// Moves player if it is in God Mode
+	void GodMode();
+
 	// Checks if the animation has to be changed
 	void CheckAnimation(state_list currentstate, state_list laststate);
 
@@ -127,14 +130,14 @@ public:
 
 	// returns true if the player is in godmode
 	bool GetGodmode();
-
-	// Moves player if it is in God Mode
-	void GodMode();
 	
+	// returns true if the player presses F9
+	bool BlitColliders();
 
 private:
 	bool grenade;
 	bool god_mode;
+	bool blit_colliders;
 	int run_counter;;
 	float jump_timer;
 	SlidingStates wall_jump;

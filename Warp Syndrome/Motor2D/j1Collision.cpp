@@ -5,6 +5,7 @@
 #include "j1Player.h"
 #include "j1State.h"
 #include "j1Grenade.h"
+#include "j1Render.h"
 #include "p2List.h"
 #include "p2SString.h"
 #include "j1App.h"
@@ -77,7 +78,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
 		while (itemO != NULL)
 		{
-			GetCurrentCollider(itemO->data->type.GetString());
+			current_collider_type = GetCurrentCollider(itemO->data->type.GetString());
 			switch (current_collider_type) {
 			case death_collider:
 			case regular_collider:
@@ -108,6 +109,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 			case starting_point:
 				break;
 			}
+
 			itemO = itemO->next;
 		}
 
@@ -179,12 +181,12 @@ void j1Collision::GetBufferCollision(float collider_x, float collider_y, bool ho
 	}
 }
 
-void j1Collision::GetCurrentCollider(p2SString name) {
-	if (name == "regular_collider") { current_collider_type = regular_collider;	}
-	else if (name == "grenade_collider") { current_collider_type = grenade_collider;	}
-	else if (name == "door_collider") { current_collider_type = door_collider;	}
-	else if (name == "starting_point") { current_collider_type = starting_point;	}
-	else if (name == "death_collider") { current_collider_type = death_collider;	}
+collider_type j1Collision::GetCurrentCollider(p2SString name) {
+	if (name == "regular_collider") { return regular_collider;	}
+	else if (name == "grenade_collider") { return grenade_collider;	}
+	else if (name == "door_collider") { return door_collider;	}
+	else if (name == "starting_point") { return starting_point;	}
+	else if (name == "death_collider") { return death_collider;	}
 }
 
 //Called from the Map module every time a map is loaded
@@ -238,4 +240,44 @@ bool j1Collision::RightCollision() {
 		return true;
 	}
 	else { return false; }
+}
+
+void j1Collision::PrintColliders() {
+	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	collider_type aux_collider_type;
+	SDL_Rect rect;
+	uint alpha = 80;
+
+	while (itemOG != NULL)
+	{
+		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
+		while (itemO != NULL)
+		{
+			aux_collider_type = App->collision->GetCurrentCollider(itemO->data->type.GetString());
+			rect.x = itemO->data->boundingbox.x;
+			rect.y = itemO->data->boundingbox.y;
+			rect.w = itemO->data->boundingbox.w;
+			rect.h = itemO->data->boundingbox.h;
+			switch (aux_collider_type) {
+			case death_collider:
+				App->render->DrawQuad(rect, 0, 0, 0, alpha);
+				break;
+			case regular_collider:
+				App->render->DrawQuad(rect, 0, 255, 0, alpha);
+				break;
+			case grenade_collider:
+				App->render->DrawQuad(rect, 255, 0, 0, alpha);
+				break;
+			case door_collider:
+				App->render->DrawQuad(rect, 0, 0, 255, alpha);
+				break;
+			case starting_point:
+				App->render->DrawQuad(rect, 50, 50, 50, alpha);
+				break;
+			}
+
+			itemO = itemO->next;
+		}
+		itemOG = itemOG->next;
+	}
 }

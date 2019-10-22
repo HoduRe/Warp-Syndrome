@@ -96,9 +96,12 @@ public:
 
 	// checks what collision goes first for the AvoidShaking function (moving the player out of the collision)
 	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
+
+	// If player has pressed F9, prints colliders
+	void PrintColliders();
 	
 	// gets the type of the current collider
-	void GetCurrentCollider(p2SString name);
+	collider_type GetCurrentCollider(p2SString name);
 
 	collision_type current_collision;
 	collider_buffer current_collision_buffer;

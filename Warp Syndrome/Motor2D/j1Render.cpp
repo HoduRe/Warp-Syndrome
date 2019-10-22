@@ -1,8 +1,12 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "j1State.h"
+#include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Player.h"
+#include "j1Grenade.h"
 
 j1Render::j1Render() : j1Module()
 {
@@ -72,6 +76,10 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
+	if (App->state->BlitColliders() == true) {
+		App->collision->PrintColliders();
+		PrintPlayerObjects();
+	}
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -254,4 +262,23 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	}
 
 	return ret;
+}
+
+void j1Render::PrintPlayerObjects() {
+	SDL_Rect rect;
+	uint alpha = 80;
+// Blits player
+	rect.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
+	rect.y = App->player->GetPosition().y - App->player->GetWidthHeight().y;
+	rect.w = App->player->GetWidthHeight().x;
+	rect.h = App->player->GetWidthHeight().y;
+	DrawQuad(rect, 255, 255, 0, alpha);
+// Blits grenade
+	if (App->grenade->DoesGrenadeExist() == true) {
+		rect.x = App->grenade->GetPosition().x;
+		rect.y = App->grenade->GetPosition().y;
+		rect.w = App->grenade->GetMeasures().x;
+		rect.h = App->grenade->GetMeasures().y;
+		DrawQuad(rect, 255, 255, 255, alpha);
+	}
 }

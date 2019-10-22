@@ -43,6 +43,9 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	// Prints both the player and the grenade
+	void PrintPlayerObjects();
+
 public:
 
 	SDL_Renderer*	renderer;

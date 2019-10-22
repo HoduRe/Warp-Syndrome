@@ -142,6 +142,10 @@ void j1State::CheckInputs() {
 			god_mode = true;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+		if (blit_colliders == false) { blit_colliders = true; }
+		else if (blit_colliders == true) { blit_colliders = false; }
+	}
 
 	// TODO move the run_counter to player xml
 	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen
@@ -604,6 +608,11 @@ void j1State::SetGrenadeState(bool state)
 
 bool j1State::GetGodmode() {
 	if (god_mode == true) { return true; }
+	else { return false; }
+}
+
+bool j1State::BlitColliders() {
+	if (blit_colliders == true) { return true; }
 	else { return false; }
 }
 

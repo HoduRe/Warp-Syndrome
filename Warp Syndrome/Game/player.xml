@@ -235,12 +235,12 @@
   <animation name="wallsliding" number_of_frames="2" canloop="1">
     <frame>
       <rectangle x="192" y="66" w="17" h="31" />
-      <pivot x="11" y="0" />
+      <pivot x="5" y="0" />
       <duration value="3" />
     </frame>
     <frame>
       <rectangle x="210" y="65" w="17" h="32" />
-      <pivot x="11" y="0" />
+      <pivot x="5" y="0" />
       <duration value="3" />
     </frame>
 

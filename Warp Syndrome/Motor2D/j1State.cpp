@@ -446,6 +446,10 @@ bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
 	bool fliped = App->player->GetFliped();
 	if (currentpos.x < lastpos.x)fliped = true;
 	else if (currentpos.x > lastpos.x)fliped = false;
+	
+	
+	if (App->collision->LeftCollision())fliped = true;
+	if (App->collision->RightCollision())fliped = false;
 
 	return fliped;
 }

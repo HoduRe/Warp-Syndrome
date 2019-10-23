@@ -278,9 +278,9 @@ Update 0.0.9.0-debug
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-	Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files neede, did scene transitions, loading scene logistic and implemented the camera <br>
+<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files neede, did scene transitions, loading scene logistic and implemented the camera </ul><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-	Contribution: worked on the assets and music selection, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen <br>
+<ul>Contribution: worked on the assets and music selection, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
 
 ## License
 

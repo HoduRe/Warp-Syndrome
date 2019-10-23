@@ -19,6 +19,7 @@ Currently there is no installation required, just open the .exe provided in the 
 	F1: Start the first level
 	F2: Start the second level
 	F3: Starts from the beginning of the level
+	F4: Changes to the next level
 	F5: Saves the current state
 	F6: Loads the previous state
 	F9: Show / unshow colliders
@@ -35,7 +36,7 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ## History
 
-Up to version 0.0.9.0-debug:
+Up to version 0.1.0.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -274,13 +275,19 @@ Update 0.0.9.0-debug
 -Changed the variable name of "camvelocity" in the "scene" module to be "camaccel".
 </ul>
 
+Update 0.1.0.0-debug
+<ul>-Major overhaul of both the "level manager" module and the "transitions" module. They now hold all the code responsible for the change in levels and the transitions between them.<br>
+-Added 3 new debug keys: F1 to go to the 2nd level, F2 to go to the 1st level and F3 to change to the next level in the list.<br>
+-Cleaned the scene module. Some of its functions are now gone, replaced by the 2 new modules.
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files neede, did scene transitions, loading scene logistic and implemented the camera </ul><br>
+<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, created most of the art used in the levels, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files needed, did scene transitions, loading scene logistic and implemented the camera </ul><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-<ul>Contribution: worked on the assets and music selection, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
+<ul>Contribution: worked on the assets and music selection,created some of the art used in the levels, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
 
 Credits to various artists who put their creations at public use:
 <ul>
@@ -290,7 +297,9 @@ Matriax for the inca-themed tileset: https://kronbits.itch.io/ <br>
 ansimuz for his background used in parallax and his living tissue tileset: https://ansimuz.itch.io/magic-cliffs-environment <br>
 Jetrel for his stone tilesets: https://opengameart.org/users/jetrel <br>
 rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <br>
-
+<br>
+<br>
+Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 
 </ul>
 
 ## License

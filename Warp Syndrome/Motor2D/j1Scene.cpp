@@ -151,7 +151,7 @@ void j1Scene::RepositionCamera()
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
 
-	if (App->collision->GroundCollision()||start) //if its colliding with the ground execute camera movement
+	if (!App->state->GetGodmode()&&(App->collision->GroundCollision()||start)) //if its colliding with the ground execute camera movement
 	{
 
 

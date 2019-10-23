@@ -1,4 +1,4 @@
-Current version: 0.1.0.1-debug
+Current version: 0.1.1.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -204,3 +204,6 @@ Update 0.1.0.1-debug
 -Fixed 2 bugs related with god mode debugging:
 	-Now the camera doesn't move around while in god mode, it follows the player instead.
 	-God mode can now be controled correctly with WASD keys.
+
+Update 0.1.1.0-debug
+-Added Parallax to the 2nd level

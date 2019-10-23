@@ -38,197 +38,241 @@ Currently there is no installation required, just open the .exe provided in the 
 Up to version 0.0.9.0-debug:
 
 Update 0.0.1.1-debug
--Replaced the old framework file for a cleaner one
+<ul>-Replaced the old framework file for a cleaner one
+</ul>
 
 Update 0.0.1.2-debug
--Started working on a new module: Animation.h. It will hold the animation data
+<ul>-Started working on a new module: Animation.h. It will hold the animation data
 -Started working on a new module: Movement.h. It will hold the movement of the granade and some player movements
 (NOTE: those two modules are still work in progress and might get deleted later on)
 -Started working on 2 new modules: Player.h and Player.cpp. They will hold all the player information and his FiniteStateMachine
+</ul>
 
 Update 0.0.1.3-debug
--Animation.cpp added to avoid linker error
+<ul>-Animation.cpp added to avoid linker error
+</ul>
 
 Update 0.0.1.4-debug
--Significant preformance urpgade when displaying a large map. The game has now camera culling
+<ul>-Significant preformance urpgade when displaying a large map. The game has now camera culling
 -Added a new player.xml with information about the player including the animation data
 -Added functions to both the player module and the animation module to suppport the correct load of the player info
+</ul>
 
 Update 0.0.1.5-debug
--Added a new file: "player.xml". it loads the player info at the start of the game. Added its path to config.xml to load the first file from there
+<ul>-Added a new file: "player.xml". it loads the player info at the start of the game. Added its path to config.xml to load the first file from there
 -Added the main character spritesheet to the textures folder
 -Added code to the player module to load all the animations to memory when inicialized
 -Now the game blits a mockup of the player with the idle animation to screen
+</ul>
 
 Update 0.0.1.6-debug
--Added code for the camera (not finished and thus not called) in the Scene Module
+<ul>-Added code for the camera (not finished and thus not called) in the Scene Module
 -Added more functions to both the player and the animation modules
+</ul>
 
 Update 0.0.1.7-debug
--Collider module added
+<ul>-Collider module added
+</ul>
 
 Update 0.0.1.8-debug
--Collider map charge fixed
+<ul>-Collider map charge fixed
+</ul>
 
 Update 0.0.1.9-debug
--Added Basic camera (needs to be refined)
+<ul>-Added Basic camera (needs to be refined)
 -Enabled Vsync in the game and adjusted the duration of the frames in the"mockup animation".
+</ul>
 
 Update 0.0.1.10-debug
--Improved camera, still needs work
+<ul>-Improved camera, still needs work
 -Added new function to Player and fixed it in the collision module
+</ul>
 
 Update 0.0.1.11-debug
--State machine implemented
+<ul>-State machine implemented
+</ul>
 
 Update 0.0.1.12-debug
--State machine remade, added functionality and made it easier to read
+<ul>-State machine remade, added functionality and made it easier to read
+</ul>
 
 Update 0.0.1.13-debug
--Implemented the load of object layers and properties in the map module
+<ul>-Implemented the load of object layers and properties in the map module
 -Added code to let the collision module read collisions from the map object layers.
 -Updated the camera movement function to a more refined version but it is still buggy so we disabled it for the time being.
 -Now the camera centers on the player.
+</ul>
 
 Update 0.0.1.14-debug
--Collision module refine
+<ul>-Collision module refine
 -Jumping calculation redesigned
+</ul>
 
 Update 0.0.1.15-debug
--Added provisional background and parallax layers to prepare the project to try implementing parallax in code.
+<ul>-Added provisional background and parallax layers to prepare the project to try implementing parallax in code.
 -Added a new png in the maps floder that will be used for the background tileset
+</ul>
 
 Update 0.0.1.16-debug
--Fixed problem that caused the diferent tilesets of the map to not work properly
+<ul>-Fixed problem that caused the diferent tilesets of the map to not work properly
 -Player can move up, down, right, left, and can properly fall to platforms
+</ul>
 
 Update 0.0.1.17-debug
--Jumps calibrated, and right collisions added
+<ul>-Jumps calibrated, and right collisions added
 -Basic Parallax background added
+</ul>
 
 Update 0.0.1.18-debug
--Now the map can load layer properties
+<ul>-Now the map can load layer properties
 -The Draw function of the map has now code to support parallax motion of the background.
 (NOTE: this feature is disabled at the moment with a boolean due to a lack of performance when it's on)
 -Slightly modified the Blit() function. It now has 2 parameters (X,Y) controlling the speed instead of a general one.
+</ul>
 
 Update 0.0.1.19-debug (The Parallax update)
--The parallax effect now functions correctly and is fully optimized when drawing.
+<ul>-The parallax effect now functions correctly and is fully optimized when drawing.
 -Also optimized the layers in tiled to load as little as possible and thus increase game speed.
 -Tweaked the values of the parallax layers to mach their percieved distances to the camera better.
+</ul>
 
 Update 0.0.1.20-debug
--Machine state completely functional
+<ul>-Machine state completely functional
+</ul>
 
 Update 0.0.1.21-debug
--Wall jump implemented
+<ul>-Wall jump implemented
+</ul>
 
 Update 0.0.1.22-debug
--Shaking fixed
+<ul>-Shaking fixed
+</ul>
 
 Update 0.0.1.23-debug
--Now the camera has limits, so cannot move outside the map
+<ul>-Now the camera has limits, so cannot move outside the map
+</ul>
 
 Update 0.0.1.24-debug
--Redone camera, still a bit wonky has to be smoothed.
+<ul>-Redone camera, still a bit wonky has to be smoothed.
 -Added a function that determines whereas the player is flipped or not.
+</ul>
 
 Update: 0.0.1.25-debug
--Urpgaded camera, the code is now much more simple and the camera movement is also easily customizable. Camera works now as intended.
+<ul>-Urpgaded camera, the code is now much more simple and the camera movement is also easily customizable. Camera works now as intended.
+</ul>
 
 Update 0.0.1.26-debug
--Grenade module created
+<ul>-Grenade module created
 -Grenade logic incorporated
+</ul>
 
 Update 0.0.1.27-debug
--Completed the functions that will be used by the animation system, still work to do and errors to solve. 
+<ul>-Completed the functions that will be used by the animation system, still work to do and errors to solve. 
 -Deleted the "placeholder" animation that the player used, now fully works with the animation system.
+</ul>
 
 Update 0.0.2.0-debug
--The animations are now fully functional. Added a new function CheckAnimation() in the States module that controls when to change animation.
+<ul>-The animations are now fully functional. Added a new function CheckAnimation() in the States module that controls when to change animation.
 -Modified the Blit function, it now allows player flip, and we can also input the pivot as a separate number from the player position, the function des all the calculations for us including the flip ones.
 -Changed name of "rotated" variable from the player module to "fliped". This name is now much more intuitive regarding what the variable does.
 -Modified the old blits to function with the new parameters.
+</ul>
 
 Update 0.0.2.1-debug
--Grenade physiscs implemented
+<ul>-Grenade physiscs implemented
+</ul>
 
 Update 0.0.2.2-debug
--Grenade flip corrected
+<ul>-Grenade flip corrected
 -Player doesn't stop while the grenade exists
+</ul>
 
 Update 0.0.2.3-debug
--Added new textures for the Loading screen
+<ul>-Added new textures for the Loading screen
 -Added new load function: fades to black, starts the loading animation loop, loads the new map and finally fides to the map again.
 -Still work to do in this new load function, it is functional though.
+</ul>
 
 Update 0.0.2.4-debug
--Changed the textures for the loading screen to a bigger version.
+<ul>-Changed the textures for the loading screen to a bigger version.
 -Optimized the function loadingscreen(), it now recieves 2 parameters correspondiong to the center of the loading text and symbol for more customization.
 -Prepared the function to have its values loaded instead of having them hardcoded.
+</ul>
 
 Update 0.0.2.5-debug
--Updated some of the animations, they now look more fluid.
+<ul>-Updated some of the animations, they now look more fluid.
 -Now the map loads the collider type information.
+</ul>
 
 Update 0.0.2.6-debug
--Second map created, colliders incorporated
+<ul>-Second map created, colliders incorporated
+</ul>
 
 Update 0.0.2.7-debug
--Teleport mechanic incorporated
+<ul>-Teleport mechanic incorporated
 -Wall slide going up added
 -Loading screen with wallpaper image added
+</ul>
 
 Update 0.0.2.8-debug
--Added spawnpoint for the plaoyer in the 2nd level
+<ul>-Added spawnpoint for the plaoyer in the 2nd level
 -The player now loads all its starting information from xml.
 -Added new function to the player: ResetPlayerToStart(). It resets the player to its starting position in the current level.
 -Also implemented ResetPlayerToStart() to the loading function, it now resets the player position when loading a new level
+</ul>
 
 Update 0.0.2.9-debug
--Fixed minor granade inconveniences
+<ul>-Fixed minor granade inconveniences
 -Re-written how collisions are calculated
 -Unnecessary code cleaned
-
+</ul>
 
 Update 0.0.3.0-debug
--Implemented Save/Load capacity to the game, it currently saves&loads: camera pos, player pos and map.
+<ul>-Implemented Save/Load capacity to the game, it currently saves&loads: camera pos, player pos and map.
 -Changed name of the old Load() function in the map module due to conflicts with the load from document functions. It is now called LoadNew(). We use the Load() function to load the map from file.
 -Added new attributes to the player.xml: "hitbox w" and "hitbox h", the game loads them but they are not implemented in the collision module for now.
+</ul>
 
 Update 0.0.3.1-debug
--Implemented different types of colliders
+<ul>-Implemented different types of colliders
 -Grenade doesn't explode when inside grenade blocks
 -Diagonal jumping collisions fixed
 -Upper collisions fixed
+</ul>
 
 Update 0.0.4.0-debug
--Added new "level.xml". It will contain the diferent maps of the game in a list and their properties. It contains only the main frame of the document for now.
+<ul>-Added new "level.xml". It will contain the diferent maps of the game in a list and their properties. It contains only the main frame of the document for now.
 -Urpgaded camera. It now only moves around when the player is on the ground, thus improving visibility during the game.
 -Deteled an unused .exe in the game folder.
+</ul>
 
 Update 0.0.5.0-debug
--Added new module "level_manager". It will manage all the level changes, etc.
+<ul>-Added new module "level_manager". It will manage all the level changes, etc.
 -Added new module "transitions". it will make the fade-in's, fade-out's, etc.
 -Modified the "j1App" module to introduce those 2 new modules.
 -Changed the location of an include in the "player.h" module.
+</ul>
 
 Update 0.0.6.0-debug
--God mode added
+<ul>-God mode added
 -Minor grenade bug fixed
+</ul>
 
 Update 0.0.7.0-debug
--Collider blit functionality added
+<ul>-Collider blit functionality added
+</ul>
 
 Update 0.0.8.0-debug
--Audio added
+<ul>-Audio added
 -Minor godmode functionality added
+</ul>
 
 Update 0.0.9.0-debug
--Added new functions to the "transitions" module that allow fade-in, fade-out and loading.
+<ul>-Added new functions to the "transitions" module that allow fade-in, fade-out and loading.
 -The "level_manager" module now can load information from an xml.
 -Changed the first world loading from the scene module to be happening from the "level" module isntead.
 -Changed the variable name of "camvelocity" in the "scene" module to be "camaccel".
+</ul>
 
 ## Credits
 

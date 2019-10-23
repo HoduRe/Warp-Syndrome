@@ -282,6 +282,17 @@ Credits go to the team members: <br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
 <ul>Contribution: worked on the assets and music selection, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
 
+Credits to various artists who put their creations at public use:
+<ul>
+Bart for "The adventure begins": https://www.patreon.com/opengameart <br>
+Phillip Miller for "battle_music_01-loop": https://opengameart.org/users/pmiller <br>
+Matriax for the inca-themed tileset: https://kronbits.itch.io/ <br>
+ansimuz for his background used in parallax and his living tissue tileset: https://ansimuz.itch.io/magic-cliffs-environment <br>
+Jetrel for his stone tilesets: https://opengameart.org/users/jetrel <br>
+rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <br>
+
+</ul>
+
 ## License
 
 SDL license:<br>

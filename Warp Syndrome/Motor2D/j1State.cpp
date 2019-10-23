@@ -66,18 +66,18 @@ void j1State::CheckInputs() {
 	case WALK_BACKWARD:
 	case RUN_FORWARD:
 	case RUN_BACKWARD:
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { current_state = FREE_JUMP; }
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD;  }
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT == KEY_DOWN)) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { current_state = FREE_JUMP; }
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD;  }
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
 			current_state = WALK_FORWARD; 
 			run_counter++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT == KEY_DOWN)) {
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A == KEY_DOWN)) {
 			current_state = WALK_BACKWARD;
 			run_counter++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 			current_state = THROWING_GRENADE;
 			SetGrenadeState(true);
 		}
@@ -85,33 +85,33 @@ void j1State::CheckInputs() {
 		break;
 	case FREE_JUMP:
 	case WALL_JUMP:
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 		current_state = THROWING_GRENADE_ON_AIR;
 		SetGrenadeState(true);
 		}
 		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
-		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
 			current_state = THROWING_GRENADE_ON_AIR;
 			SetGrenadeState(true);
 		}
 		break;
 	case SLIDING_ON_RIGHT_WALL:
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_LEFT;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
 		break;
 	case SLIDING_ON_LEFT_WALL:
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_RIGHT;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
 		break;
 	case THROWING_GRENADE:
 		if (App->grenade->DoesGrenadeExist() == true) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
@@ -125,10 +125,10 @@ void j1State::CheckInputs() {
 	case FREE_JUMP:
 	case WALL_JUMP:
 	case FREE_FALLING:
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			x_jumping_state = JST_GOING_LEFT;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			x_jumping_state = JST_GOING_RIGHT;
 		}
 		else { x_jumping_state = JST_IDLE; }
@@ -265,10 +265,10 @@ void j1State::CheckColliders() {
 	}
 	switch (App->collision->current_collision) {	// Avoids horizontal vibration
 	case LEFT_GROUND_COLLISION:
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) { current_state = WALK_FORWARD; }
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) { current_state = WALK_FORWARD; }
 		break;
 	case RIGHT_GROUND_COLLISION:
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) { current_state = WALK_BACKWARD; }
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
 	if (App->collision->DeathColliderTouched() == true) { current_state = DYING; }
@@ -630,17 +630,17 @@ void j1State::SetGodmode(bool state) {
 }
 
 void j1State::GodMode() {
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		App->player->AddPosition(-App->player->GetVelocity().x * 4, 0);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		App->player->AddPosition(App->player->GetVelocity().x * 4, 0);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		App->player->AddPosition(0, -App->player->GetVelocity().x * 4);
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		App->player->AddPosition(0, App->player->GetVelocity().x * 4);
 	}
 

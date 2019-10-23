@@ -41,27 +41,12 @@ bool j1Scene::Start()
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };
 	snapping = false;
-	reload = false;
 	start = true;
-	currentlevel = LEVEL1;
 
 	App->audio->PlayMusic(App->map->data.music_path.GetString());
 
-	//load loadingscreen textures
-	loading.hexagonLogo = App->tex->Load("textures/hexagon.png");
-	loading.externalLogo = App->tex->Load("textures/external.png");
-	loading.internalLogo = App->tex->Load("textures/internal.png");
-	loading.loadingText = App->tex->Load("textures/loading.png");
-	loading.imageLogo = App->tex->Load("textures/loadingimage.png");
 
-	//load loadingscreen
-	uint windSizeW;
-	uint windSizeH;
-	App->win->GetWindowSize(windSizeW, windSizeH);
-	textcenter.x = windSizeW / 2;
-	textcenter.y = (windSizeH / 2) - 100;
-	symbolcenter.x = windSizeW / 2;
-	symbolcenter.y = (windSizeH / 2) + 100;
+
 	return true;
 }
 
@@ -81,11 +66,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
-		reload = true;//When reload=true, reloads a map
-
-
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		App->state->SetBlitColliders();
 	}
@@ -94,10 +74,21 @@ bool j1Scene::Update(float dt)
 		App->state->SetGodmode();
 	}
 
-	//RepositionCamera currently deactivated
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		App->level_m->ChangeToLevel2();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		App->level_m->ChangeToLevel1();
+	}
 
-	//App->render->camera.x = -((App->player->GetPosition().x * App->win->GetScale()) - (App->render->camera.w / 2)); //Debug Camera. Center on half width 1/3 height
-	//App->render->camera.y = -((App->player->GetPosition().y * App->win->GetScale()) - (App->render->camera.w * 2 / 3));
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		App->level_m->RestartLevel();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		App->level_m->ChangeToNextLevel();
+	}
+
 
 	RepositionCamera();
 	//camera boundaries
@@ -114,7 +105,6 @@ bool j1Scene::Update(float dt)
 
 
 
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -130,7 +120,6 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
-	LoadNewLevel(textcenter, symbolcenter);
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -141,11 +130,6 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	App->tex->UnLoad(loading.externalLogo);
-	App->tex->UnLoad(loading.internalLogo);
-	App->tex->UnLoad(loading.hexagonLogo);
-	App->tex->UnLoad(loading.loadingText);
-	App->tex->UnLoad(loading.imageLogo);
 
 	return true;
 }
@@ -228,141 +212,6 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 
 
 	return newcamX;
-}
-
-
-void j1Scene::LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos)
-{
-	bool ret = true;
-	if (reload)
-	{
-		uint textwidth = 0;
-		uint textheight = 0;
-		uint symbolwidth = 0;
-		uint symbolheigth = 0;
-
-		App->tex->GetSize(loading.loadingText, textwidth, textheight);//gets the width and height of the texture
-		App->tex->GetSize(loading.externalLogo, symbolwidth, symbolheigth);//gets the width and height of the texture
-
-		iPoint textpos;//converts the center position to the upper left corner pos of the texture
-		textpos.x = textcenterpos.x - (textwidth / 2);
-		textpos.y = textcenterpos.y - (textheight / 2);
-		iPoint symbolpos;//converts the center position to the upper left corner pos of the texture
-		symbolpos.x = symbolcenter.x - (symbolwidth / 2);
-		symbolpos.y = symbolcenter.y - (symbolheigth / 2);
-
-
-		if (loading.currenttime >= loading.fadetime)//fade time 1 sec or 60 frames
-			loading.fadeended = true;
-
-		int alpha = (255 / loading.fadetime) * loading.currenttime; //every sec alpha goes from 0 to 255
-		SDL_Rect screen = App->render->viewport;
-		switch (loading.fade)
-		{
-		case FADE_UNKNOWN:
-			loading.fade = FADE_IN;
-			break;
-		case FADE_IN:
-
-			App->render->DrawQuad(screen, 0, 0, 0, alpha, true, false);
-
-			if (loading.fadeended)//finished fading in
-			{
-				App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
-				loading.currenttime = 0;
-				loading.fade = FADE_CHANGINGLVL;
-				loading.fadeended = false;
-			}
-			else
-				loading.currenttime++;
-
-			break;
-		case FADE_CHANGINGLVL:
-			App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
-
-			//blit the loading textures
-			App->render->Blit(loading.loadingText, textpos.x, textpos.y, NULL, NULL, NULL, NULL, 0, 0);
-			SDL_RenderCopy(App->render->renderer, loading.imageLogo, NULL, NULL);
-			App->render->Blit(loading.externalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees * 1.5, symbolwidth / 2, symbolheigth / 2);
-			App->render->Blit(loading.internalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, -loading.degrees, symbolwidth / 2, symbolheigth / 2);
-			App->render->Blit(loading.hexagonLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, loading.degrees, symbolwidth / 2, symbolheigth / 2);
-			loading.degrees++;
-
-
-			if (loading.transition == 120)//loads the next map
-			{
-
-				switch (currentlevel)
-				{
-				case NOLEVEL:
-					LOG("could not load a level, switching to default one.");
-					if (App->map->ReloadMap("hello2.tmx"))
-						LOG("Could not load default level. Error.");
-					break;
-				case LEVEL1:
-					currentlevel = LEVEL2;
-					App->map->ReloadMap("first_level.tmx");
-
-
-					break;
-				case LEVEL2:
-					currentlevel = LEVEL3;
-					App->map->ReloadMap("second_level.tmx");
-
-
-					break;
-				case LEVEL3:
-					currentlevel = LEVEL4;
-					App->map->ReloadMap("orthogonal-outside.tmx");
-
-
-					break;
-				case LEVEL4:
-					currentlevel = LEVEL1;
-					App->map->ReloadMap("first_level.tmx");
-
-
-					break;
-				}
-
-
-
-			}
-
-			App->player->ResetPlayerToStart();
-
-			if (loading.transition >= 360)
-			{
-				loading.transition = 0;
-				loading.fade = FADE_OUT;
-			}
-			loading.transition++;
-			break;
-
-		case FADE_OUT:
-			App->render->DrawQuad(screen, 0, 0, 0, 255 - alpha, true, false);
-
-			if (loading.fadeended)//finished fading in
-			{
-				loading.currenttime = 0;
-				loading.fade = FADE_ENDED;
-			}
-			else
-				loading.currenttime++;
-			break;
-		case FADE_ENDED:
-			loading.fade = FADE_UNKNOWN;
-			loading.degrees = 0;
-			loading.transition = 0;
-			loading.fadeended = false;
-			reload = false;
-			break;
-		default:
-			break;
-		}
-
-	}
-
 }
 
 

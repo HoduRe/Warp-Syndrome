@@ -2,9 +2,10 @@
 #include "j1App.h"
 #include "j1Map.h"
 #include "p2Log.h"
-#include "transitions.h"
 #include "j1Player.h"
 #include "j1State.h"
+#include "j1Map.h"
+#include "j1Render.h"
 
 
 
@@ -52,13 +53,21 @@ bool j1LevelManager::Update(float dt)
 
 bool j1LevelManager::PostUpdate()
 {
-	//App->transitions->actual_state = TS_FADE_IN;
-
 	return true;
 }
 
 bool j1LevelManager::CleanUp()
 {
+	p2List_item<level*>* item;
+	item = level_list.start;
+
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
+	level_list.clear();
+
 	return true;
 }
 
@@ -75,43 +84,38 @@ bool j1LevelManager::Save(pugi::xml_node& ldata) const
 
 bool j1LevelManager::RestartLevel()
 {
-	//TODO Work In Progress!
-	//make the player enter godmode here
-	switch (restart_states)
-	{
-	case TS_FADE_IN:	
-		App->transitions->ChangeState(TS_FADE_OUT, 120);
-
-		break;
-	case TS_LOADING_START:
-		break;
-	case TS_LOADING_PROCESS:
-		break;
-	case TS_LOADING_FINISH:
-		break;
-	case TS_FADE_OUT:
-		break;
-	case TS_UNKNOWN:
-		break;
-	default:
-		break;
-	}
-
-	//make the player exit godmode here
+	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 120);
 	return true;
 }
 bool j1LevelManager::ChangeToNextLevel()
 {
-	 //current_level->data->overworld.GetString();
+	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
 	return true;
 }
+bool j1LevelManager::ChangeToLevel1()
+{
+	if (current_level != level_list.start)
+	{
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
+	}
+	return true;
+}
+bool j1LevelManager::ChangeToLevel2()
+{
+	if (current_level != level_list.start->next)
+	{
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
+	}
+	return true;
+}
+
 
 bool j1LevelManager::LoadLevelList(pugi::xml_node& root)
 {
 
 	//load level list
 	pugi::xml_node leveliterator;
-	for ( leveliterator = root.child("level"); leveliterator; leveliterator = leveliterator.next_sibling("level"))
+	for (leveliterator = root.child("level"); leveliterator; leveliterator = leveliterator.next_sibling("level"))
 	{
 		level* set = new level();
 
@@ -120,7 +124,7 @@ bool j1LevelManager::LoadLevelList(pugi::xml_node& root)
 		if (set->hasnether == true)
 			set->nether = leveliterator.child("nether").child_value();
 		else set->nether = NULL;
-		
+
 		level_list.add(set);
 	}
 
@@ -131,15 +135,38 @@ bool j1LevelManager::LoadLevelList(pugi::xml_node& root)
 	p2List_item<level*>* defaultsearch = level_list.start;
 
 	bool search = true;
-	while (defaultsearch!=NULL&&search!=false)
+	while (defaultsearch != NULL && search != false)
 	{
-		if (defaultsearch->data->overworld==root.child("properties").attribute("default").as_string())
+		if (defaultsearch->data->overworld == root.child("properties").attribute("default").as_string())
 		{
 			default_level = defaultsearch;
+			current_level = default_level;
 			search = false;
 		}
 		defaultsearch->next;
 	}
 	return true;
 
+}
+
+
+bool j1LevelManager::RestartLevelObjects()
+{
+	App->player->ResetPlayerToStart();
+	App->render->camera.x = -(App->player->GetPosition().x - (App->render->camera.w / 2));
+	App->render->camera.y = -(App->player->GetPosition().y - (App->render->camera.h / 2));
+	return true;
+}
+
+bool j1LevelManager::Go_To_Next_Lvl()
+{
+	if (current_level->next == NULL)
+	{
+		current_level = level_list.start;
+	}
+	else current_level = current_level->next;
+
+	App->map->ReloadMap(current_level->data->overworld.GetString());
+	RestartLevelObjects();
+	return true;
 }

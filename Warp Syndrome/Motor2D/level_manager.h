@@ -11,10 +11,17 @@
 
 struct level
 {
-	p2SString overworld;
-	p2SString nether;
-	bool hasnether;
+	p2SString overworld="";
+	p2SString nether="";
+	bool hasnether = false;
 };
+
+//enum Transition_Mode
+//{
+//	TM_RESTART_LEVEL,
+//	TM_CHANGE_TO_NEXT_LEVEL,
+//	TM_UNKNOWN
+//};
 
 class j1LevelManager : public j1Module
 {
@@ -41,12 +48,21 @@ public:
 
 	bool RestartLevel();
 	bool ChangeToNextLevel();
+	bool ChangeToLevel1();
+	bool ChangeToLevel2();
+	bool RestartLevelObjects();
+	bool Go_To_Next_Lvl();
 
 	//Save/Load
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
 	bool LoadLevelList(pugi::xml_node& root);
+
+	
+
+	
+	/*bool finished = false;*/
 
 public:
 
@@ -62,7 +78,7 @@ public:
 	pugi::xml_node rootnode;
 	p2SString filename;
 	Transition_States restart_states;
-
+	Transition_States change_lvl_states;
 
 };
 

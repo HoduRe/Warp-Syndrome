@@ -10,14 +10,22 @@
 
 enum Transition_States
 {
-	TS_FADE_IN,
+	TS_START,
+	TS_FADE_OUT,
 	TS_LOADING_START,
+	TS_BLACK_SCREEN,
 	TS_LOADING_PROCESS,
 	TS_LOADING_FINISH,
-	TS_FADE_OUT,
+	TS_FADE_IN,
+	TS_FINISHED,
 	TS_UNKNOWN
 };
-
+enum Transition_Mode
+{
+	TM_RESTART_LEVEL,
+	TM_CHANGE_TO_NEXT_LEVEL,
+	TM_UNKNOWN
+};
 
 class j1Transitions : public j1Module
 {
@@ -57,12 +65,14 @@ public:
 
 	bool BlackScreen(uint frames_length);
 	
-	void ChangeState(Transition_States state, uint frames_length);
+	bool BlackScreen();
 
-	//returns true if the no transition is happening right now
-	bool AllStatesFinished();
+	void ChangeTransition(Transition_Mode mode, uint frames_length);
 
 	Transition_States actual_state;
+	Transition_Mode actual_transition;
+	bool transitionended = false;
+
 private:
 	
 	uint timer;
@@ -82,8 +92,6 @@ private:
 	int currenttime = 0;
 	bool fadeended = false;
 
-	iPoint textcenterpos;
-	iPoint symbolcenterpos;
 };
 
 

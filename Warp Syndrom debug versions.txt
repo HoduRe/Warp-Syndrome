@@ -1,4 +1,4 @@
-Current version: 0.0.9.0-debug
+Current version: 0.1.0.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -195,3 +195,8 @@ Update 0.0.9.0-debug
 -Changed the first world loading from the scene module to be happening from the "level" module isntead.
 -Changed the variable name of "camvelocity" in the "scene" module to be "camaccel".
 
+
+Update 0.1.0.0-debug
+-Major overhaul of both the "level manager" module and the "transitions" module. They now hold all the code responsible for the change in levels and the transitions between them.
+-Added 3 new debug keys: F1 to go to the 2nd level, F2 to go to the 1st level and F3 to change to the next level in the list.
+-Cleaned the scene module. Some of its functions are now gone, replaced by the 2 new modules.

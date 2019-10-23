@@ -13,32 +13,8 @@ enum MapLoaded
 };
 
 struct SDL_Texture;
-enum Fade
-{
-	FADE_IN,
-	FADE_OUT,
-	FADE_CHANGINGLVL,
-	FADE_ENDED,
-	FADE_UNKNOWN
-};
-struct Loading
-{
-	SDL_Texture* loadingText = nullptr;
-	SDL_Texture* externalLogo = nullptr;
-	SDL_Texture* internalLogo = nullptr;
-	SDL_Texture* hexagonLogo = nullptr;
-	SDL_Texture* imageLogo = nullptr;
-	float degreesperframe = 1; //TODO Load this from scene.xml
-	float degrees = 0;
-	int fadetime = 60;
-	int transition = 0;
-	int currenttime = 0;
-	bool fadeended = false;
-
-	Fade fade = FADE_UNKNOWN;
 
 
-};
 
 class j1Scene : public j1Module
 {
@@ -74,20 +50,15 @@ public:
 	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
 
 private:
-	bool reload;
 	bool start;
-	MapLoaded currentlevel; //TODO make a new module to store the different levels and their relation with functions to change to a different level with fadeout
 
-	Loading loading;
 	//Reposition Camera Variables========================================================================
 	fPoint camaccel;
 	bool targetRight;//true if Right, false if Left
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
 	fPoint distancetoplayer;//camera distance to player
-	//LoadingScreen======================================================================================
-	iPoint textcenter;
-	iPoint symbolcenter;
+	
 };
 
 #endif // __j1SCENE_H__

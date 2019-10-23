@@ -3,6 +3,7 @@
 #include "j1Window.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "level_manager.h"
 
 j1Transitions::j1Transitions() {}
 
@@ -31,6 +32,7 @@ bool j1Transitions::Start()
 	symbolcenter.x = windSizeW / 2;
 	symbolcenter.y = (windSizeH / 2) + 100;
 	actual_state = TS_UNKNOWN;
+	actual_transition = TM_UNKNOWN;
 	return true;
 }
 
@@ -47,36 +49,99 @@ bool j1Transitions::Update(float dt)
 
 bool j1Transitions::PostUpdate()
 {
-	switch (actual_state)
+
+
+	switch (actual_transition)
 	{
-	case TS_FADE_IN:
-		if (Fade_In(function_frames_length) == true)
+	case TM_RESTART_LEVEL:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_frames_length))
+			{
+				actual_state = TS_BLACK_SCREEN;
+			}
+			break;
+		case TS_BLACK_SCREEN:
+			BlackScreen();
+			App->level_m->RestartLevelObjects();
+			actual_state = TS_FADE_IN;
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_frames_length))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+
+		case TS_FINISHED:
 			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		}
 		break;
-	case TS_LOADING_START:
-		if (LoadingScreen(function_frames_length) == true)
+	case TM_CHANGE_TO_NEXT_LEVEL:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_frames_length))
+			{
+				actual_state = TS_LOADING_START;
+			}
+			break;
+		case TS_LOADING_START:
+			if (LoadingScreen(function_frames_length))
+			{
+				actual_state = TS_LOADING_FINISH;
+				App->level_m->Go_To_Next_Lvl();
+			}
+			break;
+		case TS_LOADING_FINISH:
+			if (LoadingScreen(function_frames_length))
+			{
+				actual_state = TS_FADE_IN;
+			}
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_frames_length))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+		case TS_FINISHED:
 			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		default:
+			break;
+		}
 		break;
-	case TS_LOADING_PROCESS:
-		break;
-	case TS_LOADING_FINISH:
-		if (LoadingScreen(function_frames_length) == true)
-			actual_state = TS_UNKNOWN;
-		break;
-	case TS_FADE_OUT:
-		if (Fade_Out(function_frames_length) == true)
-			actual_state = TS_UNKNOWN;
-		break;
-	case TS_UNKNOWN:
+	case TM_UNKNOWN:
 		break;
 	default:
 		break;
 	}
+
 	return true;
 }
 
 bool j1Transitions::CleanUp()
 {
+	App->tex->UnLoad(externalLogo);
+	App->tex->UnLoad(internalLogo);
+	App->tex->UnLoad(hexagonLogo);
+	App->tex->UnLoad(loadingText);
+	App->tex->UnLoad(imageLogo);
 	return true;
 }
 
@@ -90,12 +155,12 @@ bool j1Transitions::Save(pugi::xml_node& ldata) const
 	return true;
 }
 
-bool j1Transitions::Fade_In(uint frames_length)
+bool j1Transitions::Fade_Out(uint frames_length)
 {
 	bool ret = false;
 	SDL_Rect screen = App->render->viewport;
 
-	int alpha = (255 / frames_length) * timer;
+	int alpha = (256 / frames_length) * timer;
 	App->render->DrawQuad(screen, 0, 0, 0, alpha, true, false);
 	timer++;
 	if (timer >= frames_length) {
@@ -105,12 +170,12 @@ bool j1Transitions::Fade_In(uint frames_length)
 	return ret;
 }
 
-bool j1Transitions::Fade_Out(uint frames_length)
+bool j1Transitions::Fade_In(uint frames_length)
 {
 	bool ret = false;
 	SDL_Rect screen = App->render->viewport;
-	   
-	int alpha = (255 / frames_length) * timer;
+
+	int alpha = (256 / frames_length) * timer;
 	App->render->DrawQuad(screen, 0, 0, 0, 255 - alpha, true, false);
 	timer++;
 	if (timer >= frames_length)
@@ -133,8 +198,8 @@ bool j1Transitions::LoadingScreen(uint frames_length)
 	App->tex->GetSize(externalLogo, symbolwidth, symbolheigth);//gets the width and height of the texture
 
 	iPoint textpos;//converts the center position to the upper left corner pos of the texture
-	textpos.x = textcenterpos.x - (textwidth / 2);
-	textpos.y = textcenterpos.y - (textheight / 2);
+	textpos.x = textcenter.x - (textwidth / 2);
+	textpos.y = textcenter.y - (textheight / 2);
 	iPoint symbolpos;//converts the center position to the upper left corner pos of the texture
 	symbolpos.x = symbolcenter.x - (symbolwidth / 2);
 	symbolpos.y = symbolcenter.y - (symbolheigth / 2);
@@ -174,15 +239,22 @@ bool j1Transitions::BlackScreen(uint frames_length)
 	return ret;
 }
 
-void j1Transitions::ChangeState(Transition_States state, uint frames_length)
-{
-	actual_state = state;
-	function_frames_length = frames_length;
-}
-
-bool j1Transitions::AllStatesFinished()
+bool j1Transitions::BlackScreen()
 {
 	bool ret = false;
-	if (actual_state == TS_UNKNOWN)ret = true;
+	SDL_Rect screen = App->render->viewport;
+	App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
 	return ret;
 }
+
+void j1Transitions::ChangeTransition(Transition_Mode mode, uint frames_length)
+{
+	if (actual_transition == TM_UNKNOWN)
+	{
+		actual_transition = mode;
+		actual_state = TS_START;
+		function_frames_length = frames_length;
+	}
+
+}
+

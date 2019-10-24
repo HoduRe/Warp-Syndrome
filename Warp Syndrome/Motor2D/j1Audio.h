@@ -14,6 +14,8 @@ class j1Audio : public j1Module
 {
 public:
 
+	//--------INTERNAL CONTROL---------//
+	//Constructor
 	j1Audio();
 
 	// Destructor
@@ -28,6 +30,8 @@ public:
 	// Play a music file
 	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
+
+	//--------AUDIO---------//
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
 
@@ -35,8 +39,10 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
 private:
-
-	_Mix_Music*			music;
+	//--------AUDIO---------//
+	//Pointer to the level's track
+	_Mix_Music* music;
+	//List to all sound effects
 	p2List<Mix_Chunk*>	fx;
 };
 

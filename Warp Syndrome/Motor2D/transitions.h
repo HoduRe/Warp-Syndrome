@@ -69,6 +69,8 @@ public:
 
 	void ChangeTransition(Transition_Mode mode, uint frames_length);
 
+public:
+
 	Transition_States actual_state;
 	Transition_Mode actual_transition;
 	bool transitionended = false;

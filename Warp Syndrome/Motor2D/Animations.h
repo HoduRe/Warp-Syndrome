@@ -17,7 +17,6 @@ struct FrameInfo
 	int actualduration; //how many units of duration have passed since the first frame
 	SDL_Rect animationRect; //rectangle with the location of the frame in the spritesheet
 	iPoint textureoffset;//texture offset from the source position
-	//TODO finish working on the data stored in here
 };
 //stores Info about a single animation and all its frames
 class Animations
@@ -55,12 +54,10 @@ private:
 	//SDL_Texture* texture;//pointer to the animation spritesheet
 	bool animationloop; //0 if the animation cannot loop / 1 if the animation can be looped
 	int numberofFrames; //Contains information about the number of frames this animation has
-	p2List_item<FrameInfo*>* currentanimframe;//pointer to the current frame of the animation(TODO can be replaced if we use p2list which has index)	
+	p2List_item<FrameInfo*>* currentanimframe;//pointer to the current frame of the animation	
 	p2List<FrameInfo*> animationframes; //list containing all the frames of the animation
 	bool animationfinished; 
    
-	//TODO finish working on the data stored in here
-
 };
 
 #endif // !__ANIMATIONS_H__

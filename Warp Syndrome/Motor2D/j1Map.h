@@ -114,7 +114,7 @@ public:
 	bool LoadNew(const char* path);
 	bool ReloadMap(p2SString newmap);
 	inline uint Get(int x, int y, p2List_item<MapLayer*>currentlayer) const;
-	int MapToWorldCoordinates(int pos, MapData& dat);//TODO change the function to output an iPoint
+	int MapToWorldCoordinates(int pos, MapData& dat);
 	iPoint WorldToMap(int x, int y, MapData& dat) const;
 private:
 
@@ -122,13 +122,13 @@ private:
 
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	bool j1Map::UnloadTilesetImage(SDL_Texture* texture);
+	bool UnloadTilesetImage(SDL_Texture* texture);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjGroup(pugi::xml_node& node, ObjectGroup* group);
 
 	SDL_Rect RectFromTileId(uint tile_id, p2List_item<TileSet*>currenttileset);
 
-	TileSet* j1Map::GetTilesetFromTileId(int id) const;
+	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 

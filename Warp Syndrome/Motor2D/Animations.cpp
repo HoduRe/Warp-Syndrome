@@ -14,6 +14,14 @@ Animations::Animations()
 
 Animations::~Animations()
 {
+
+	p2List_item<FrameInfo*>* item;
+	item = animationframes.start;
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
 	delete currentanimframe;
 	animationframes.clear();
 

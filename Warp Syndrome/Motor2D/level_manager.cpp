@@ -67,7 +67,6 @@ bool j1LevelManager::CleanUp()
 		item = item->next;
 	}
 	level_list.clear();
-
 	return true;
 }
 
@@ -89,14 +88,14 @@ bool j1LevelManager::RestartLevel()
 }
 bool j1LevelManager::ChangeToNextLevel()
 {
-	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
+	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
 	return true;
 }
 bool j1LevelManager::ChangeToLevel1()
 {
 	if (current_level != level_list.start)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
 	}
 	return true;
 }
@@ -104,7 +103,7 @@ bool j1LevelManager::ChangeToLevel2()
 {
 	if (current_level != level_list.start->next)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 120);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
 	}
 	return true;
 }

@@ -9,6 +9,7 @@
 #include "p2List.h"
 #include "Animations.h"
 #include "j1App.h"
+#include "level_manager.h"
 
 j1State::j1State() : j1Module() {
 	name.create("state");
@@ -272,6 +273,8 @@ void j1State::CheckColliders() {
 		break;
 	}
 	if (App->collision->DeathColliderTouched() == true) { current_state = DYING; }
+	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
+
 //	if (current_state == DYING && GetAnimationFinish() == true) { current_state = DEAD; } APPARENTLY, GetAnimationFinish doesn't fucking exist
 	// and I'm way to tired to take care of this shit
 }

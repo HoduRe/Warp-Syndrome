@@ -89,6 +89,14 @@ bool j1Player::PostUpdate()
 bool j1Player::CleanUp()
 {
 	App->tex->UnLoad(playertexture);
+	p2List_item<Animations*>* item;
+	item = playerAnimations.start;
+
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
 	playerAnimations.clear();
 	return true;
 }

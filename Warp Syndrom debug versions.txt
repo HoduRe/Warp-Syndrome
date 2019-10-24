@@ -1,4 +1,4 @@
-Current version: 0.1.1.0-debug
+Current version: 0.1.2.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -207,3 +207,9 @@ Update 0.1.0.1-debug
 
 Update 0.1.1.0-debug
 -Added Parallax to the 2nd level
+
+Update 0.1.2.0-debug
+-Updated "CleanUp" function in some of the modules.
+-Cleaned code a little bit in some places.
+-Player can now go to next level when passing in front of a door.
+-Adjusted transition timing for the loading screen.

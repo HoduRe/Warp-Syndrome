@@ -103,6 +103,7 @@ public:
 	// gets the type of the current collider
 	collider_type GetCurrentCollider(p2SString name);
 
+public:
 	collision_type current_collision;
 	collider_buffer current_collision_buffer;
 

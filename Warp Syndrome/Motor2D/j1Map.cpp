@@ -70,7 +70,7 @@ void j1Map::Draw()
 		{
 			for (int j = 0; j < item_layer->data->width; j++)//number of columns
 			{
-				if (hasparallax)//TODO code for the tiles with parallax take out the false once we want the paralaxx to print out
+				if (hasparallax)
 				{
 
 					int xpositionleft = (int)(-App->render->camera.x * parallaxvalue) + MapToWorldCoordinates(j, data) * scale;
@@ -82,7 +82,7 @@ void j1Map::Draw()
 						{
 
 
-							int id = item_layer->data->gid[Get(j, i, *item_layer)];//TODO this is a provisional code for the parallax, and does print all the tiles including the ones not in-screen
+							int id = item_layer->data->gid[Get(j, i, *item_layer)];
 							if (id > 0)
 							{
 								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)),NULL,NULL,NULL, parallaxvalue);
@@ -93,7 +93,7 @@ void j1Map::Draw()
 				else//code for the tiles WITHOUT parallax
 				{
 
-					if (i<down_right_cam_corner.y + 1 && i>up_left_cam_corner.y - 1)//TODO Optimize those 2 if, These are a camera culling implementation the game just draws what's seen in the camera
+					if (i<down_right_cam_corner.y + 1 && i>up_left_cam_corner.y - 1)//These are a camera culling implementation the game just draws what's seen in the camera
 					{
 						if (j<down_right_cam_corner.x + 1 && j>up_left_cam_corner.x - 1)
 						{
@@ -144,6 +144,7 @@ bool j1Map::CleanUp()
 
 	while (item != NULL)
 	{
+		App->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}

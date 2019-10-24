@@ -49,7 +49,7 @@ bool j1Collision::Update(float dt) {
 }
 
 bool j1Collision::CleanUp() {
-
+	//already cleaned in the map module
 	return true;
 }
 

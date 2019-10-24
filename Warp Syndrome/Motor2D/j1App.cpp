@@ -96,7 +96,7 @@ bool j1App::Awake()
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
 
-		save_game.create(app_config.child("saves").child_value());//TODO those 2 lines of code should go on an specific module
+		save_game.create(app_config.child("saves").child_value());
 		load_game.create(save_game.GetString());
 
 	}

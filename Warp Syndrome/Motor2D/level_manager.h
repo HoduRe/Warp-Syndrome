@@ -16,13 +16,6 @@ struct level
 	bool hasnether = false;
 };
 
-//enum Transition_Mode
-//{
-//	TM_RESTART_LEVEL,
-//	TM_CHANGE_TO_NEXT_LEVEL,
-//	TM_UNKNOWN
-//};
-
 class j1LevelManager : public j1Module
 {
 public:
@@ -62,8 +55,6 @@ public:
 	
 
 	
-	/*bool finished = false;*/
-
 public:
 
 	//map variables================================

@@ -1,4 +1,4 @@
-Current version: 0.1.3.1-debug
+Current version: 0.1.4.1-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -225,3 +225,7 @@ Update 0.1.4.0-debug
 -Death implemented
 -Borders implemented
 
+Update 0.1.4.1-debug
+-Fixed the player not reseting his state once death.
+-Fixed the sound on death animation, the player doesn't loop it anymore.
+-Fixed length of jump sound.

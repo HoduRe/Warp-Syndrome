@@ -279,14 +279,14 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height) {
+	if (current_state!=DYING&&(App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height)) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
 	}
 	if (current_state == DYING) {
 		death_counter++;
 		if (death_counter >= 30) { // TODO put this into an xml? It's the length of the dying animation
-			App->map->ReloadMap(App->map->data.name);
+			App->level_m->RestartLevel();
 		}
 	}
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }

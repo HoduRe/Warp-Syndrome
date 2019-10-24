@@ -152,6 +152,7 @@ bool j1LevelManager::LoadLevelList(pugi::xml_node& root)
 bool j1LevelManager::RestartLevelObjects()
 {
 	App->player->ResetPlayerToStart();
+	App->state->current_state = IDLE;
 	App->render->camera.x = -(App->player->GetPosition().x - (App->render->camera.w / 2));
 	App->render->camera.y = -(App->player->GetPosition().y - (App->render->camera.h / 2));
 	return true;

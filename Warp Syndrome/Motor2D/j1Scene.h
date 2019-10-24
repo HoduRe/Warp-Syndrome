@@ -49,6 +49,10 @@ public:
 
 	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
 
+	int teleport_sfx;
+	int jump_sfx;
+	int death_sfx;
+
 private:
 	bool start;
 

@@ -6,6 +6,8 @@
 #include "j1Input.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
+#include "j1Scene.h"
+#include "j1Audio.h"
 #include "j1Textures.h"
 #include "j1App.h"
 
@@ -175,6 +177,7 @@ void j1Grenade::GrenadeState() {
 		grenade_timer.x = 0.0f;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;
+		App->audio->PlayFx(App->scene->teleport_sfx);
 		App->state->SetGrenadeState(false);
 		fPoint position;
 		fPoint measures;

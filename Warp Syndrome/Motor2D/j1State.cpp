@@ -6,6 +6,8 @@
 #include "j1Player.h"
 #include "j1Grenade.h"
 #include "j1Input.h"
+#include "j1Scene.h"
+#include "j1Audio.h"
 #include "p2List.h"
 #include "Animations.h"
 #include "j1App.h"
@@ -67,7 +69,10 @@ void j1State::CheckInputs() {
 	case WALK_BACKWARD:
 	case RUN_FORWARD:
 	case RUN_BACKWARD:
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { current_state = FREE_JUMP; }
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			current_state = FREE_JUMP;
+			App->audio->PlayFx(App->scene->jump_sfx);
+		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD;  }
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
@@ -103,6 +108,7 @@ void j1State::CheckInputs() {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_LEFT;
+			App->audio->PlayFx(App->scene->jump_sfx);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
 		break;
@@ -111,6 +117,7 @@ void j1State::CheckInputs() {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_RIGHT;
+			App->audio->PlayFx(App->scene->jump_sfx);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
 		break;
@@ -272,11 +279,12 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (App->collision->DeathColliderTouched() == true) { current_state = DYING; }
+	if (App->collision->DeathColliderTouched() == true) {
+		current_state = DYING;
+		App->audio->PlayFx(App->scene->death_sfx);
+	}
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
 
-//	if (current_state == DYING && GetAnimationFinish() == true) { current_state = DEAD; } APPARENTLY, GetAnimationFinish doesn't fucking exist
-	// and I'm way to tired to take care of this shit
 }
 
 void j1State::MovePlayer() {

@@ -229,7 +229,7 @@
     <frame>
       <rectangle x="473" y="38" w="29" h="24" />
       <pivot x="29" y="0" />
-      <duration value="5" />
+      <duration value="5000" />
     </frame>
   </animation>
   <animation name="dead" number_of_frames="1" canloop="1">

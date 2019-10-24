@@ -37,6 +37,9 @@ bool j1Scene::Start()
 	App->map->LoadNew(App->level_m->default_level->data->overworld.GetString());
 	App->render->camera.x = -(App->player->GetPosition().x-(App->render->camera.w/2));
 	App->render->camera.y = -(App->player->GetPosition().y-(App->render->camera.h / 2));
+	teleport_sfx = App->audio->LoadFx("audio/fx/casting_charge_matter_grow_04.wav");
+	jump_sfx = App->audio->LoadFx("audio/fx/ferba_says_huh.wav");
+	death_sfx = App->audio->LoadFx("audio/fx/mud_splat_heavy_03.wav");
 	camaccel = { 0.0f,0.0f };
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };

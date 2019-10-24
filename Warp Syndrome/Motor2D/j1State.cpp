@@ -74,7 +74,7 @@ void j1State::CheckInputs() {
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD;  }
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD; }
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
 			current_state = WALK_FORWARD; 
 			run_counter++;
@@ -279,15 +279,22 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (App->collision->DeathColliderTouched() == true) {
+	if (App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height) {
 		current_state = DYING;
-		App->audio->PlayFx(App->scene->death_sfx);
+		App->audio->PlayFx(App->scene->death_sfx, 0);
+	}
+	if (current_state == DYING) {
+		death_counter++;
+		if (death_counter >= 30) { // TODO put this into an xml? It's the length of the dying animation
+			App->map->ReloadMap(App->map->data.name);
+		}
 	}
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
 
 }
 
 void j1State::MovePlayer() {
+
 	// X AXIS MOVEMENT
 	switch (current_state) {
 	case WALK_FORWARD:
@@ -308,7 +315,7 @@ void j1State::MovePlayer() {
 	}
 
 	// Y AXIS MOVEMENT
-	if (current_state != DYING && current_state != DEAD) {
+	if (current_state != DYING) {
 		JumpMoveY();
 		switch (current_state) {
 		case SLIDING_ON_LEFT_WALL:
@@ -317,6 +324,7 @@ void j1State::MovePlayer() {
 			break;
 		}		// TODO JUMPS
 
+		CheckMapBorder();
 		AvoidShaking();
 	}
 }
@@ -448,6 +456,23 @@ void j1State::AvoidShaking() {
 	}
 }
 
+void j1State::CheckMapBorder() {
+	if (App->player->GetPosition().x <= 0) {
+		switch (App->collision->current_collision) {
+		case GROUND_COLLISION:
+		case LEFT_GROUND_COLLISION:
+		case RIGHT_GROUND_COLLISION:
+			current_state = IDLE;
+			App->player->SetPosition(0, App->player->GetPosition().y);
+			break;
+		default:
+			App->player->SetPosition(App->player->GetVelocity().x, App->player->GetPosition().y);
+			x_jumping_state = JST_IDLE;
+			break;
+		}
+	}
+}
+
 bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
 {
 	bool fliped = App->player->GetFliped();
@@ -515,9 +540,6 @@ void j1State::ChangeAnimation(Animation_list animations)
 		break;
 	case AL_DYING:
 		newanim = currentanim->data->GetAnimFromName("hurt", pAnimList);
-		break;
-	case AL_DEAD:
-		newanim = currentanim->data->GetAnimFromName("dead", pAnimList);
 		break;
 	case AL_UNKNOWN:
 		newanim = currentanim->data->GetAnimFromName("", pAnimList);
@@ -596,8 +618,6 @@ void j1State::CheckAnimation(state_list currentstate, state_list laststate)
 		case DYING:
 			ChangeAnimation(AL_DYING);
 			break;
-		case DEAD:
-			ChangeAnimation(AL_DEAD);
 		case GOD_MODE:
 			ChangeAnimation(AL_IDLE);
 			break;

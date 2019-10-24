@@ -40,6 +40,7 @@ bool j1Grenade::Update(float dt) {
 
 	if (App->state->GetGrenadeState() == true) {
 		GrenadeCollisions();
+		CheckMapBorder();
 		GrenadeState();
 		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, &grenade_animation->data->StepAnimation()->animationRect);
 	}
@@ -192,6 +193,13 @@ void j1Grenade::GrenadeState() {
 		break;
 	}
 
+}
+
+void j1Grenade::CheckMapBorder() {
+	if (grenade_position.x <= 0 + grenade_measures.x + 1) {
+		if (grenade_state == GST_MOVING_LEFT_DOWN) { grenade_state = GST_MOVING_RIGHT_DOWN; }
+		else if (grenade_state == GST_MOVING_LEFT_UP) { grenade_state = GST_MOVING_RIGHT_UP; }
+	}
 }
 
 void j1Grenade::AddPosition(float x, float y) {

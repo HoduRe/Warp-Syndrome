@@ -42,6 +42,9 @@ public:
 	// Simple machine state for the grenade
 	void GrenadeState();
 
+	// Checks that the grenade is not going out of the map
+	void CheckMapBorder();
+
 	// return true if the grenade exists
 	bool DoesGrenadeExist();
 

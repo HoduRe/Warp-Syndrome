@@ -44,7 +44,6 @@ enum state_list {
 	SLIDING_TO_IDLE,
 	WAKE_UP,
 	DYING,
-	DEAD,
 	GOD_MODE
 };
 
@@ -65,7 +64,6 @@ enum Animation_list
 	AL_WAKEUP,
 	AL_WALKING,
 	AL_DYING,
-	AL_DEAD,
 	AL_UNKNOWN
 };
 
@@ -117,6 +115,9 @@ public:
 	// Avoids shaking when going inside a collider
 	void AvoidShaking();
 
+	// Calculates if player is falling through map borders, and corrects it
+	void CheckMapBorder();
+
 	// Moves player if it is in God Mode
 	void GodMode();
 
@@ -150,7 +151,8 @@ private:
 	bool grenade;
 	bool god_mode;
 	bool blit_colliders;
-	int run_counter;;
+	int run_counter = 0;
+	int death_counter = 0;
 	float jump_timer;
 	SlidingStates wall_jump;
 	JumpingStatesX x_jumping_state;

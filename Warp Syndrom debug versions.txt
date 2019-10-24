@@ -229,3 +229,6 @@ Update 0.1.4.1-debug
 -Fixed the player not reseting his state once death.
 -Fixed the sound on death animation, the player doesn't loop it anymore.
 -Fixed length of jump sound.
+
+Update 0.1.5.0-debug
+-Implemented parallax of the second stage

@@ -243,6 +243,8 @@ bool j1Player::ResetPlayerToStart()
 		playerpos.y = 0.0f;
 	}
 
+	App->state->current_state = IDLE;
+	App->state->SetGrenadeState(false);
 
 	return true;
 }

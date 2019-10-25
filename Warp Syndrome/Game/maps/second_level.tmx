@@ -64020,7 +64020,7 @@
  </layer>
  <layer id="4" name="Parallax 1" width="160" height="400">
   <properties>
-   <property name="Parallax" type="float" value="0.5"/>
+   <property name="Parallax" type="float" value="0.65"/>
   </properties>
   <data>
    <tile/>

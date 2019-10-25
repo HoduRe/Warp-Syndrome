@@ -125,7 +125,7 @@ void j1Grenade::GrenadeCollisions() {
 void j1Grenade::GrenadeState() {
 	
 	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
-		(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || grenade_time_to_explode >= 40))) {
+		App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
@@ -176,7 +176,6 @@ void j1Grenade::GrenadeState() {
 		break;
 	case GST_EXPLODING:
 		grenade_state = GST_UNKNOWN;
-		grenade_timer.x = 0.0f;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;
 		App->audio->PlayFx(App->scene->teleport_sfx);
@@ -192,6 +191,13 @@ void j1Grenade::GrenadeState() {
 		App->collision->CheckLoop(&position, &measures, OBJECT_PLAYER);
 		App->state->MovePlayer();
 		break;
+	}
+
+	if (grenade_time_to_explode >= 40) {
+		grenade_state = GST_UNKNOWN;
+		grenade_timer.y = 0.0f;
+		grenade_time_to_explode = 0;
+		App->state->SetGrenadeState(false);
 	}
 
 }

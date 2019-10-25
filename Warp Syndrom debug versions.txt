@@ -1,4 +1,4 @@
-Current version: 0.1.7.0-debug
+Current version: 0.1.8.1-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -250,3 +250,6 @@ Update 0.1.7.0-debug
 
 Update 0.1.8.0-debug
 -Now when changing level, the music corresponding to that level is loaded correctly.
+
+Update 0.1.8.1-debug
+-Fixed audio noise.

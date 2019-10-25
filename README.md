@@ -38,7 +38,7 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ## History
 
-Up to version 0.1.0.0-debug:
+Up to version 0.1.8.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -342,6 +342,13 @@ Update 0.1.7.0-debug
 -Updated "particles.h" and added "particles.cpp" modules, they don't do anything for the moment but we are preparing them for a near future.
 </ul>
 
+Update 0.1.8.0-debug
+<ul>-Now when changing level, the music corresponding to that level is loaded correctly.
+</ul>
+
+Update 0.1.8.1-debug
+<ul>-Fixed audio noise.
+</ul>
 
 
 

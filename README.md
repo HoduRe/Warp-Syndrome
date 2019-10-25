@@ -1,4 +1,4 @@
-# Warp-Syndrome
+﻿# Warp-Syndrome
 Game Development platform project
 
 A platform game ambiented in a medieval-fantasy setting based on the mechanic of a teleportation granade that allows fluid movement,
@@ -14,6 +14,8 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ### General Controls :
 	ESC: Close the game
+	Keypad (-): Decrease the volume
+	Keypad (+): Increase the volume
 	
 ### Debug Controls:<br>
 	F1: Start the first level
@@ -280,6 +282,68 @@ Update 0.1.0.0-debug
 -Added 3 new debug keys: F1 to go to the 2nd level, F2 to go to the 1st level and F3 to change to the next level in the list.<br>
 -Cleaned the scene module. Some of its functions are now gone, replaced by the 2 new modules.
 </ul>
+
+Update 0.1.0.1-debug
+<ul>-Fixed 2 bugs related with god mode debugging:<br>
+	-Now the camera doesn't move around while in god mode, it follows the player instead.<br>
+	-God mode can now be controled correctly with WASD keys.<br>
+</ul>
+
+Update 0.1.1.0-debug
+<ul>-Added Parallax to the 2nd level
+</ul>
+
+Update 0.1.2.0-debug
+<ul>-Updated "CleanUp" function in some of the modules.<br>
+-Cleaned code a little bit in some places.<br>
+-Player can now go to next level when passing in front of a door.<br>
+-Adjusted transition timing for the loading screen.
+</ul>
+
+Update 0.1.3.0-debug
+<ul>-Added a new module called "Particles.h", it will serve as a class where we store our particles; it's still work in progress.<br>
+-Added new column tiles to the "Earth_tileset".(Also saved the photoshop project there in case we need quick iterations of the texture. NOTE, delete it when finished)
+</ul>
+
+Update 0.1.3.1-debug
+<ul>-Fixed audio sounds
+</ul>
+
+Update 0.1.4.0-debug
+<ul>-Death implemented<br>
+-Borders implemented
+</ul>
+
+Update 0.1.4.1-debug
+<ul>-Fixed the player not reseting his state once death.<br>
+-Fixed the sound on death animation, the player doesn't loop it anymore.<br>
+-Fixed length of jump sound.
+</ul>
+
+Update 0.1.5.0-debug
+<ul>-Implemented parallax of the second stage
+</ul>
+
+Update 0.1.5.1-debug
+<ul>-Adjusted grenade controls<br>
+-Adjusted grenade speeds
+</ul>
+
+Update 0.1.6.0-debug
+<ul>-Adjusted wall jump
+</ul>
+
+Update 0.1.7.0-debug
+<ul>-Added new tilesets for the coins.<br>
+-Added added volume to the config file.<br>
+-Modified the columns in the 2nd level.<br>
+-Added load and save functionality to the volume.<br>
+-The volume is now changeable, can be increased with the keypad plus key, and decreased with the keypad minus key.<br>
+-Updated "particles.h" and added "particles.cpp" modules, they don't do anything for the moment but we are preparing them for a near future.
+</ul>
+
+
+
 
 ## Credits
 

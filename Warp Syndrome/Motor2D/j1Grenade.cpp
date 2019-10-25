@@ -193,7 +193,7 @@ void j1Grenade::GrenadeState() {
 		break;
 	}
 
-	if (grenade_time_to_explode >= 40) {
+	if (grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
 		grenade_state = GST_UNKNOWN;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;

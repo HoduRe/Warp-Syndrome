@@ -485,13 +485,13 @@ void j1State::AvoidShaking() {
 }
 
 void j1State::CheckMapBorder() {
-	if (App->player->GetPosition().x <= 0) {
+	if (App->player->GetPosition().x <= 5) {
 		switch (App->collision->current_collision) {
 		case GROUND_COLLISION:
 		case LEFT_GROUND_COLLISION:
 		case RIGHT_GROUND_COLLISION:
 			current_state = IDLE;
-			App->player->SetPosition(0, App->player->GetPosition().y);
+			App->player->SetPosition(5, App->player->GetPosition().y);
 			break;
 		default:
 			App->player->SetPosition(App->player->GetVelocity().x, App->player->GetPosition().y);

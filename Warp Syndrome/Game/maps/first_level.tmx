@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="230" height="90" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="133">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="230" height="90" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="134">
  <properties>
   <property name="Music" value="audio/music/TheAdventureBEGINS.ogg"/>
  </properties>
@@ -186417,5 +186417,6 @@
   <object id="130" type="regular_collider" x="3296" y="1760" width="128" height="96"/>
   <object id="131" type="door_collider" x="6760" y="1880" width="12" height="8"/>
   <object id="132" type="regular_collider" x="6304" y="1856" width="96" height="128"/>
+  <object id="133" type="regular_collider" x="0" y="-32" width="7360" height="32"/>
  </objectgroup>
 </map>

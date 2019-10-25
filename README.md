@@ -35,6 +35,7 @@ Currently there is no installation required, just open the .exe provided in the 
     Special movement:
         J: Throws the grenade
 	K: Teleports to the grenade
+	L: Makes the thrown grenade disappear
 	Space (while sliding on a wall): wall-jump
 
 ## History

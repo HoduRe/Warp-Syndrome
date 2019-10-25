@@ -6,6 +6,7 @@
 #include "j1State.h"
 #include "j1Map.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 
 
 
@@ -167,6 +168,7 @@ bool j1LevelManager::Go_To_Next_Lvl()
 	else current_level = current_level->next;
 
 	App->map->ReloadMap(current_level->data->overworld.GetString());
+	App->audio->PlayMusic(App->map->data.music_path.GetString());
 	RestartLevelObjects();
 	return true;
 }

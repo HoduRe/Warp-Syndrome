@@ -128025,7 +128025,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Capa de Patrones 1" width="160" height="400" visible="0">
+ <layer name="Capa de Patrones 1" width="160" height="400">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -192029,7 +192029,7 @@
    <tile gid="222"/>
   </data>
  </layer>
- <objectgroup name="Capa de Objetos 1" visible="0">
+ <objectgroup name="Capa de Objetos 1">
   <object id="143" type="regular_collider" x="0.00390625" y="11808" width="5120" height="992"/>
   <object id="144" type="regular_collider" x="576.004" y="11488" width="224" height="32"/>
   <object id="145" type="regular_collider" x="448.004" y="11360" width="160" height="32"/>

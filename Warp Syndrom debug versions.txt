@@ -248,3 +248,5 @@ Update 0.1.7.0-debug
 -The volume is now changeable, can be increased with the keypad plus key, and decreased with the keypad minus key.
 -Updated "particles.h" and added "particles.cpp" modules, they don't do anything for the moment but we are preparing them for a near future.
 
+Update 0.1.8.0-debug
+-Now when changing level, the music corresponding to that level is loaded correctly.

@@ -153,10 +153,13 @@ private:
 	bool blit_colliders;
 	int run_counter = 0;
 	int death_counter = 0;
+	float wall_jump_timer = 0;
 	float jump_timer;
 	SlidingStates wall_jump;
+	SlidingStates wall_jump_extra_move;
 	JumpingStatesX x_jumping_state;
 	JumpingStatesY y_jumping_state;
+	state_list bufferlaststate;
 };
 
 #endif // __j1STATE_H__

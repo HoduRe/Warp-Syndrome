@@ -237,3 +237,6 @@ Update 0.1.5.1-debug
 -Adjusted grenade controls
 -Adjusted grenade speeds
 
+Update 0.1.6.0-debug
+-Adjusted wall jump
+

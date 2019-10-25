@@ -30,6 +30,7 @@ bool j1State::Start() {
 	SetGrenadeState(false);
 	run_counter = 0;
 	jump_timer = 0;
+	wall_jump_timer = App->player->GetVelocity().x;
 	wall_jump = SST_IDLE;
 	x_jumping_state = JST_IDLE;
 	y_jumping_state = JST_UNKNOWN;
@@ -40,7 +41,7 @@ bool j1State::Update(float dt) {
 
 	bool ret = true;
 	fPoint playerposbuffer = App->player->GetPosition();
-	state_list bufferlaststate = current_state;
+	bufferlaststate = current_state;
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
 	if (god_mode == false) {
@@ -108,6 +109,7 @@ void j1State::CheckInputs() {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_LEFT;
+			wall_jump_extra_move = SST_JUMPING_LEFT;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { wall_jump = SST_FALLING_LEFT; }
@@ -117,6 +119,7 @@ void j1State::CheckInputs() {
 			current_state = WALL_JUMP;
 			y_jumping_state = JST_GOING_UP;
 			wall_jump = SST_JUMPING_RIGHT;
+			wall_jump_extra_move = SST_JUMPING_RIGHT;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
@@ -130,8 +133,8 @@ void j1State::CheckInputs() {
 	}
 
 	switch (current_state) {	// Just here for legibility's sake, it determines how to move on the X axis for jumps
-	case FREE_JUMP:
 	case WALL_JUMP:
+	case FREE_JUMP:
 	case FREE_FALLING:
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			x_jumping_state = JST_GOING_LEFT;
@@ -279,7 +282,7 @@ void j1State::CheckColliders() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (current_state!=DYING&&(App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height)) {
+	if (current_state!=DYING && (App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height)) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
 	}
@@ -290,7 +293,6 @@ void j1State::CheckColliders() {
 		}
 	}
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
-
 }
 
 void j1State::MovePlayer() {
@@ -339,9 +341,30 @@ void j1State::JumpMoveX() {
 	case RIGHT_UPPER_COLLISION:
 		break;
 	default:
-		if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
-		else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
-		else if (x_jumping_state == JST_IDLE) {}
+		switch (current_state) {
+		case WALL_JUMP:
+			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < App->player->GetVelocity().x / 2) {
+				App->player->AddPosition(-App->player->GetVelocity().x, 0.0f);
+			}
+			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < App->player->GetVelocity().x / 2) {
+				App->player->AddPosition(App->player->GetVelocity().x, 0.0f);
+			}
+			else if (x_jumping_state == JST_IDLE) {}
+			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0) {
+				App->player->AddPosition(-wall_jump_timer, 0);
+				wall_jump_timer -= 0.1;
+			}
+			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0) {
+				App->player->AddPosition(wall_jump_timer, 0);
+				wall_jump_timer -= 0.1;
+			}
+			break;
+		default:
+			if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->GetVelocity().x, 0.0f); }
+			else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->GetVelocity().x, 0.0f); }
+			else if (x_jumping_state == JST_IDLE) {}
+			break;
+		}
 		break;
 	}
 }
@@ -453,6 +476,11 @@ void j1State::AvoidShaking() {
 		break;
 	default:
 		break;
+	}
+
+	if (current_state != WALL_JUMP) {
+		wall_jump_timer = App->player->GetVelocity().x;
+		if (current_state != WALL_JUMP) { wall_jump_extra_move = SST_IDLE; }
 	}
 }
 

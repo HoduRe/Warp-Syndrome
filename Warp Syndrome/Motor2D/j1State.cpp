@@ -343,10 +343,10 @@ void j1State::JumpMoveX() {
 	default:
 		switch (current_state) {
 		case WALL_JUMP:
-			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < App->player->GetVelocity().x / 2) {
+			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < App->player->GetVelocity().x * 7 / 8) {
 				App->player->AddPosition(-App->player->GetVelocity().x, 0.0f);
 			}
-			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < App->player->GetVelocity().x / 2) {
+			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < App->player->GetVelocity().x * 7 / 8) {
 				App->player->AddPosition(App->player->GetVelocity().x, 0.0f);
 			}
 			else if (x_jumping_state == JST_IDLE) {}

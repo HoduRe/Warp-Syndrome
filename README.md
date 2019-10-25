@@ -33,7 +33,8 @@ Currently there is no installation required, just open the .exe provided in the 
         A: Move to the left
         D: Move to the right
     Special movement:
-        J: activates / detonates grenade
+        J: Throws the grenade
+	K: Teleports to the grenade
 	Space (while sliding on a wall): wall-jump
 
 ## History

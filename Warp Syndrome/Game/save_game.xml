@@ -3,16 +3,16 @@
 	<input />
 	<window />
 	<textures />
-	<audio />
+	<audio music_vol="9" fx_vol="9" />
 	<level_m />
 	<map name="first_level.tmx" />
 	<collision />
 	<state />
 	<scene />
-	<player x="1741" y="1760" />
+	<player x="224" y="1760" />
 	<grenade />
 	<:anonymous />
 	<renderer>
-		<camera x="-1126" y="-1248" />
+		<camera x="0" y="-1248" />
 	</renderer>
 </game_state>

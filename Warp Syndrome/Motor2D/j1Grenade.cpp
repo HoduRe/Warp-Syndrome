@@ -140,13 +140,12 @@ void j1Grenade::GrenadeState() {
 		switch (App->player->GetFliped()) {
 		case true:
 			grenade_state = GST_MOVING_LEFT_UP;
-			grenade_timer.y = grenade_vel.y;
 			break;
 		case false:
 			grenade_state = GST_MOVING_RIGHT_UP;
-			grenade_timer.y = grenade_vel.y;
 			break;
 		}
+		grenade_timer.y = grenade_vel.y;
 		break;
 	case GST_MOVING_UP:	// NOT BEING USED
 		grenade_timer.y += (1.0f / 10.0f);

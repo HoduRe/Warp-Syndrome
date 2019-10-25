@@ -1,4 +1,4 @@
-Current version: 0.1.4.1-debug
+Current version: 0.1.7.0-debug
 
 Update 0.0.1.1-debug
 -Replaced the old framework file for a cleaner one
@@ -239,4 +239,12 @@ Update 0.1.5.1-debug
 
 Update 0.1.6.0-debug
 -Adjusted wall jump
+
+Update 0.1.7.0-debug
+-Added new tilesets for the coins.
+-Added added volume to the config file.
+-Modified the columns in the 2nd level.
+-Added load and save functionality to the volume.
+-The volume is now changeable, can be increased with the keypad plus key, and decreased with the keypad minus key.
+-Updated "particles.h" and added "particles.cpp" modules, they don't do anything for the moment but we are preparing them for a near future.
 

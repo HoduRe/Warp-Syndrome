@@ -15,11 +15,31 @@ j1Audio::j1Audio() : j1Module()
 
 // Destructor
 j1Audio::~j1Audio()
-{}
+{
+
+}
+
+bool j1Audio::Load(pugi::xml_node& data)
+{
+	music_volume=data.attribute("music_vol").as_uint(128);
+	fx_volume=data.attribute("fx_vol").as_uint(128);
+	SetVolume(fx_volume, FX);
+	SetVolume(music_volume, MUSIC);
+
+	return true;
+}
+bool j1Audio::Save(pugi::xml_node& data) const
+{
+	data.append_attribute("music_vol") =music_volume;
+	data.append_attribute("fx_vol") = fx_volume;
+	return true;
+}
+
 
 // Called before render is available
 bool j1Audio::Awake(pugi::xml_node& config)
 {
+
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
@@ -50,8 +70,13 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	//Mix_Volume(-1, config.child("volume").attribute("general").as_int());
-	//Mix_VolumeMusic(config.child("volume").attribute("music").as_int());
+	uint vol = config.child("volume").attribute("value").as_uint(128);
+	
+		music_volume = fx_volume = vol;
+		SetVolume(vol);
+		LOG("Seting volume");
+	
+
 
 	return ret;
 }
@@ -89,7 +114,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 
 	if (!active)
 		return false;
-	Mix_VolumeMusic(MIX_MAX_VOLUME / 4);
+	Mix_VolumeMusic(music_volume);
 
 	if (music != NULL)
 	{
@@ -174,4 +199,61 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+
+void j1Audio::SetVolume(int volume,int flag)
+{
+	int aux_volume = volume;
+	if (aux_volume > 128)aux_volume = 128;
+	if (aux_volume < 0)aux_volume = 0;
+	switch (flag)
+	{
+	case MUSIC:
+		Mix_VolumeMusic(aux_volume);
+		break;
+	case FX:
+		Mix_Volume(-1, aux_volume);
+		break;
+	case MUSIC_AND_FX:
+	default:
+		fx_volume = aux_volume;
+		music_volume = aux_volume;
+		Mix_Volume(-1, aux_volume);
+		Mix_VolumeMusic(aux_volume);
+		break;
+	}
+}
+
+void j1Audio::AddVolume(int volume, int flag)
+{
+	int aux_fx=fx_volume;
+	int aux_music=music_volume;
+	aux_fx += volume;
+	aux_music += volume;
+
+	if (aux_fx > 128)aux_fx = 128;
+	if (aux_music > 128)aux_music = 128;
+	if (aux_fx < 0)aux_fx =0;
+	if (aux_music < 0)aux_music = 0;
+
+	switch (flag)
+	{
+	case MUSIC:
+		music_volume = aux_music;
+		Mix_VolumeMusic(music_volume);
+		break;
+	case FX:
+		fx_volume = aux_fx;
+		Mix_Volume(-1, fx_volume);
+		break;
+	case MUSIC_AND_FX:
+	default:
+		music_volume = aux_music;
+		fx_volume = aux_fx;
+		Mix_Volume(-1, fx_volume);
+		Mix_VolumeMusic(music_volume);
+		break;
+	}
+
 }

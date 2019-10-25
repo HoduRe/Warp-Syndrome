@@ -2,6 +2,7 @@
 #define __PARTICLES_H__
 
 #include "Animations.h"
+#include "j1Module.h"
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "p2SString.h"
@@ -14,53 +15,64 @@ enum Particle_behaviour
 	PB_DYNAMIC,
 	PB_STATIC_COLLIDABLE,
 	PB_DYNAMIC_COLLIDABLE,
+	PB_STATIC_LOOP,
+	PB_DYNAMIC_LOOP,
+	PB_STATIC_COLLIDABLE_LOOP,
+	PB_DYNAMIC_COLLIDABLE_LOOP,
 	PB_UNKNOWN
 };
-
-class Particles
+struct Particle
 {
-public:
-	Particles();
-	Particles(p2SString name,iPoint pos, fPoint vel, int lifetime,SDL_Texture* texture, bool fliped);
-	~Particles();
-
-private:
-	p2SString name;
+	//TODO collider
 	Animations* anim;
 	FrameInfo* currentframe;
-	iPoint pos;
-	fPoint vel;
-	int lifetime_in_frames;//-1 to be inmortal
-	SDL_Texture* texture;
-	bool fliped;
+	uint fx = 0;
+	iPoint position;
+	iPoint speed;
+	Uint32 born = 0;
+	Uint32 life = 0;
+	Particle_behaviour behaviour;
+	p2SString name;
+	bool fx_played = false;
+	bool fliped = false;
+	//=============================
+	Particle();
+	Particle(const Particle& p);
+	~Particle();
+	bool Update();
+};
+
+class j1ParticleManager:public j1Module
+{
+public:
+	j1ParticleManager();
+	virtual ~j1ParticleManager();
+
+	bool Start();
+
+	// Called before all Updates
+	bool PreUpdate();
+
+	// Called each loop iteration
+	bool Update(float dt);
+
+	// Called before all Updates
+	bool PostUpdate();
+
+	// Called before quitting
+	bool CleanUp();
+
+	void AddParticle(const Particle& particle, int x, int y, bool fliped, Uint32 delay = 0);
+
+private:
+	
 
 };
 
-Particles::Particles()
+void AddParticle(const Particle& particle, int x, int y, bool fliped, Uint32 delay = 0)
 {
-	name = "";
-	anim = nullptr;
-	pos = { 0,0 };
-	vel = { 0,0 };
-	lifetime_in_frames=-1;
-}
-Particles::Particles(p2SString pname, iPoint ppos, fPoint pvel, int plifetime, SDL_Texture* ptexture, bool pfliped)
-{
-	name = pname;
-	pos = ppos;
-	vel = pvel;
-	lifetime_in_frames = plifetime;
-	texture = ptexture;
-	fliped = pfliped;
-}
 
-Particles::~Particles()
-{
-	App->tex->UnLoad(texture);
-	delete anim;
 }
-
-
 
 
 

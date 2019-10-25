@@ -92,6 +92,12 @@ bool j1Scene::Update(float dt)
 		App->level_m->ChangeToNextLevel();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {
+		App->audio->AddVolume(-1);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
+		App->audio->AddVolume(1);
+	}
 
 	RepositionCamera();
 	//camera boundaries

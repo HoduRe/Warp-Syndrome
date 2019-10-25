@@ -63,8 +63,7 @@ public:
 	collision_type ColliderBuffer();
 
 private:
-	fPoint grenade_position, grenade_timer;
-	fPoint grenade_measures;
+	fPoint grenade_position, grenade_timer, grenade_vel, grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
 	collision_type grenade_collider_buffer;
 	SDL_Texture* grenade_texture;

@@ -31,6 +31,8 @@ bool j1Grenade::Start() {
 	anim_list = App->player->GetAnimationList();
 	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
 	grenade_texture = App->player->GetTexture();
+	grenade_vel.x = App->player->GetVelocity().x * 3 / 2;
+	grenade_vel.y = App->player->GetVelocity().y;
 
 	return true;
 }
@@ -123,7 +125,7 @@ void j1Grenade::GrenadeCollisions() {
 void j1Grenade::GrenadeState() {
 	
 	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
-		(App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || grenade_time_to_explode >= 40))) {
+		(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || grenade_time_to_explode >= 40))) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
@@ -134,44 +136,44 @@ void j1Grenade::GrenadeState() {
 	case GST_UNKNOWN:
 		grenade_position.x = App->player->GetPosition().x;
 		grenade_position.y = App->player->GetPosition().y - App->player->GetWidthHeight().x;
-		grenade_timer.x = App->player->GetVelocity().x;
+		grenade_timer.x = grenade_vel.x;
 		switch (App->player->GetFliped()) {
 		case true:
 			grenade_state = GST_MOVING_LEFT_UP;
-			grenade_timer.y = App->player->GetVelocity().y;
+			grenade_timer.y = grenade_vel.y;
 			break;
 		case false:
 			grenade_state = GST_MOVING_RIGHT_UP;
-			grenade_timer.y = App->player->GetVelocity().y;
+			grenade_timer.y = grenade_vel.y;
 			break;
 		}
 		break;
 	case GST_MOVING_UP:	// NOT BEING USED
 		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(0.0f, -App->player->GetVelocity().y + grenade_timer.y);
-		if (grenade_timer.y >= App->player->GetVelocity().y) { grenade_state = GST_MOVING_DOWN; }
+		AddPosition(0.0f, -grenade_vel.y + grenade_timer.y);
+		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_DOWN; }
 		break;
 	case GST_MOVING_DOWN: // NOT BEING USED
 		if(grenade_timer.y >= 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(0.0f, App->player->GetVelocity().y - grenade_timer.y);
+		AddPosition(0.0f, grenade_vel.y - grenade_timer.y);
 		break;
 	case GST_MOVING_LEFT_UP:
 		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(-App->player->GetVelocity().x, -App->player->GetVelocity().y + grenade_timer.y);
-		if (grenade_timer.y >= App->player->GetVelocity().y) { grenade_state = GST_MOVING_LEFT_DOWN; }
+		AddPosition(-grenade_vel.x, -grenade_vel.y + grenade_timer.y);
+		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_LEFT_DOWN; }
 		break;
 	case GST_MOVING_LEFT_DOWN:
 		if (grenade_timer.y > 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(-App->player->GetVelocity().x, -grenade_timer.y + App->player->GetVelocity().y);
+		AddPosition(-grenade_vel.x, -grenade_timer.y + grenade_vel.y);
 		break;
 	case GST_MOVING_RIGHT_UP:
 		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(App->player->GetVelocity().x, -App->player->GetVelocity().y + grenade_timer.y);
-		if (grenade_timer.y >= App->player->GetVelocity().y) { grenade_state = GST_MOVING_RIGHT_DOWN; }
+		AddPosition(grenade_vel.x, -grenade_vel.y + grenade_timer.y);
+		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_RIGHT_DOWN; }
 		break;
 	case GST_MOVING_RIGHT_DOWN:
 		if (grenade_timer.y > 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(App->player->GetVelocity().x, -grenade_timer.y + App->player->GetVelocity().y);
+		AddPosition(grenade_vel.x, -grenade_timer.y + grenade_vel.y);
 		break;
 	case GST_EXPLODING:
 		grenade_state = GST_UNKNOWN;

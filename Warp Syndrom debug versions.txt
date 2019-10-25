@@ -232,3 +232,8 @@ Update 0.1.4.1-debug
 
 Update 0.1.5.0-debug
 -Implemented parallax of the second stage
+
+Update 0.1.5.1-debug
+-Adjusted grenade controls
+-Adjusted grenade speeds
+

@@ -34,9 +34,9 @@ Currently there is no installation required, just open the .exe provided in the 
         D: Move to the right
     Special movement:
         J/Left Mouse Button: Throws the grenade
-	K/Right Mouse Button: Teleports to the grenade
-	L/Middle Mouse Button: Makes the thrown grenade disappear
-	W/Space (while sliding on a wall): wall-jump
+        K/Right Mouse Button: Teleports to the grenade
+        L/Middle Mouse Button: Makes the thrown grenade disappear
+        W/Space (while sliding on a wall): wall-jump
 
 ## History
 

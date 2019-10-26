@@ -186403,8 +186403,8 @@
   <object id="115" type="regular_collider" x="4608" y="1696" width="181.333" height="864"/>
   <object id="116" type="regular_collider" x="4544" y="1760" width="240" height="169.333"/>
   <object id="117" type="regular_collider" x="3744" y="1856" width="864" height="448"/>
-  <object id="118" type="regular_collider" x="3872" y="2496" width="96" height="148"/>
-  <object id="119" type="regular_collider" x="3872" y="2232" width="96" height="168"/>
+  <object id="118" type="regular_collider" x="3872" y="2491" width="96" height="165"/>
+  <object id="119" type="regular_collider" x="3872" y="2232" width="96" height="173.75"/>
   <object id="120" type="regular_collider" x="3392" y="1984" width="1306" height="320"/>
   <object id="121" type="regular_collider" x="3264" y="2304" width="224" height="64"/>
   <object id="122" type="regular_collider" x="3328" y="2240" width="98" height="88"/>

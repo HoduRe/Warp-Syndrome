@@ -23,7 +23,7 @@ Currently there is no installation required, just open the .exe provided in the 
 	F3: Starts from the beginning of the level
 	F4: Changes to the next level
 	F5: Saves the current state
-	F6: Loads the previous state
+	F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
 	F9: Show / unshow colliders
 	F10: Activate / deactivate God Mode
 
@@ -365,7 +365,10 @@ Update 0.2.0.0-debug
 -Added some additional keybindings:you can now jump with "W" key. The grenade can now be thrown with left mouse button and destroyed with mouse middle button. Teleporting to the grenade can be done with mouse right button.
 </ul>
 
-
+Update 0.2.0.1-debug
+<ul>-Minor bugs fixed<br>
+-Second map corrections applied
+</ul>
 
 
 ## Credits

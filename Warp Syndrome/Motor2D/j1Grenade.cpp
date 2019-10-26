@@ -125,7 +125,7 @@ void j1Grenade::GrenadeCollisions() {
 void j1Grenade::GrenadeState() {
 	
 	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
-		App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN)) {
+		(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN))) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {

@@ -125,10 +125,10 @@ void j1State::CheckInputs() {
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) { wall_jump = SST_FALLING_RIGHT; }
 		break;
 	case THROWING_GRENADE:
-		if (App->grenade->DoesGrenadeExist() == true) { current_state = IDLE; }	// TODO a function that changes this bool based on the player throwing a grenade
+		if (App->grenade->DoesGrenadeExist() == true) { current_state = IDLE; }
 		break;
 	case THROWING_GRENADE_ON_AIR:
-		if (App->grenade->DoesGrenadeExist() == true) { current_state = FREE_FALLING; y_jumping_state = JST_GOING_DOWN; }	// TODO a function that changes this bool based on the player throwing a grenade
+		if (App->grenade->DoesGrenadeExist() == true) { current_state = FREE_FALLING; y_jumping_state = JST_GOING_DOWN; }
 		break;
 	}
 
@@ -324,7 +324,7 @@ void j1State::MovePlayer() {
 		case SLIDING_ON_RIGHT_WALL:
 			App->player->AddPosition(0.0f, App->player->GetVelocity().y / 2.0f);
 			break;
-		}		// TODO JUMPS
+		}
 
 		CheckMapBorder();
 		AvoidShaking();

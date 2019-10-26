@@ -20,8 +20,11 @@ Compared to what was asked for the assignment, this project comes with extra con
 <ul>-The project can sustain and manage and indefinite amount of maps, it's not limited to two. With F4 you can cycle along the "x" amount of maps.<br>
 -In the movement section, the game comes with walljump, wallsliding and teleport mechanics<br>
 -The volume of the game can be adjusted and saved<br>
--The game features a loading screen in-between maps.
--Comes with the first bit of the intended narrative told through visual clues
+-The game features a loading screen in-between maps<br>
+-Comes with the first bit of the intended narrative told through visual clues (in the first level, the three imprisoned black eyes, with the fourth missing at the
+left-lower corner. On the second level, the origins of the eye are told at the highest point of the "normal route" (since what is found higher is the black eye itself),
+conveying how it was born, grew uncontrollably, and was sealed by four figures. At the end of the level, it's shown how, eventually, on of the guardians was killed,
+represented by the eyes over the door that brings the player to the next level)
 </ul>
 
 
@@ -396,6 +399,10 @@ Update 0.2.1.0-debug
 -Modified "transitions" module includes.
 <ul>
 
+Update 0.2.2.0-debug
+<ul>-Platform that you can go through if jumping from behind added
+-Map and tilesets modifications
+</ul>
 
 ## Credits
 

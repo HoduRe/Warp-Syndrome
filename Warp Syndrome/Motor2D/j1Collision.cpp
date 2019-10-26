@@ -36,6 +36,7 @@ bool j1Collision::Update(float dt) {
 	door_collider_touched = false;
 	grenade_collider_touched = false;
 
+	if(GroundCollision() == true){ y_player_buffer = App->player->GetPosition().y; }
 	//player variables
 	position.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
 	position.y = App->player->GetPosition().y;
@@ -44,6 +45,7 @@ bool j1Collision::Update(float dt) {
 	if(App->state->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
 	}
+	y_player_buffer = App->player->GetPosition().y;
 
 	return ret;
 }
@@ -104,6 +106,12 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 					current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
 					collision_array[current_collision] = current_collision;
 					if (current_collision != NONE_COLLISION) { door_collider_touched = true; }
+				}
+				break;
+			case under_platform_collider:
+				if (y_player_buffer <= itemO->data->boundingbox.y) {
+					current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+					collision_array[current_collision] = current_collision;
 				}
 				break;
 			case starting_point:
@@ -187,6 +195,7 @@ collider_type j1Collision::GetCurrentCollider(p2SString name) {
 	else if (name == "door_collider") { return door_collider;	}
 	else if (name == "starting_point") { return starting_point;	}
 	else if (name == "death_collider") { return death_collider;	}
+	else if (name == "under_platform_collider") { return under_platform_collider; }
 }
 
 //Called from the Map module every time a map is loaded

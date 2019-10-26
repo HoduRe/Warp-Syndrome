@@ -192164,7 +192164,7 @@
   <object id="274" type="regular_collider" x="2400" y="6528" width="1376" height="224"/>
   <object id="275" type="regular_collider" x="2688" y="6496" width="1088" height="32"/>
   <object id="276" type="regular_collider" x="3584" y="7072" width="96" height="64"/>
-  <object id="277" type="regular_collider" x="3616" y="7136" width="64" height="32"/>
+  <object id="277" type="regular_collider" x="3616" y="7067.75" width="64" height="100.25"/>
   <object id="278" type="regular_collider" x="2784" y="7456" width="1152" height="32"/>
   <object id="279" type="regular_collider" x="2944" y="7424" width="992" height="64"/>
   <object id="280" type="regular_collider" x="2976" y="7392" width="960" height="96"/>

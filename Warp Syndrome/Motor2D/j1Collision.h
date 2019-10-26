@@ -22,6 +22,7 @@ enum collider_type {
 	regular_collider,
 	grenade_collider,
 	door_collider,
+	under_platform_collider,
 	starting_point,
 	death_collider
 };
@@ -110,6 +111,7 @@ public:
 private:
 	fPoint position;
 	fPoint measures;
+	int y_player_buffer;
 	collider_type current_collider_type;
 	p2List<ObjectGroup*> pObjGroupList;
 	bool has_already_collided;

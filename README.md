@@ -40,7 +40,7 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ## History
 
-Up to version 0.2.0.0-debug:
+Up to version 0.2.0.2-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -369,6 +369,12 @@ Update 0.2.0.1-debug
 <ul>-Minor bugs fixed<br>
 -Second map corrections applied
 </ul>
+
+Update 0.2.0.2-debug
+<ul>-Added new tiles to the map tileset to distinghuish better the background from the foreground.<br>
+-Adjusted some minor default values to prevent things from not loading correctly.
+</ul>
+
 
 
 ## Credits

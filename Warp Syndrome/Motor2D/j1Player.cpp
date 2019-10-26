@@ -104,8 +104,8 @@ bool j1Player::CleanUp()
 // Load / Save
 bool j1Player::Load(pugi::xml_node& data)
 {
-	playerpos.x = data.attribute("x").as_int();
-	playerpos.y = data.attribute("y").as_int();
+	playerpos.x = data.attribute("x").as_int(0);
+	playerpos.y = data.attribute("y").as_int(0);
 
 	return true;
 }

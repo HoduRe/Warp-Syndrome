@@ -12,6 +12,8 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ## Usage
 
+Advice: if when throwing the first grenade, the player freezes, execute the .exe with the administrator permission.
+
 ### General Controls :
 	ESC: Close the game
 	Keypad (-): Decrease the volume

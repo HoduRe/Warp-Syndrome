@@ -74,6 +74,10 @@ void j1State::CheckInputs() {
 			current_state = FREE_JUMP;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
+		else if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN) && App->grenade->DoesGrenadeExist() == false && !App->grenade->GetGrenadeCooldown()) {
+			current_state = THROWING_GRENADE;
+			SetGrenadeState(true);
+		}
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD;  }
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD; }
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
@@ -83,10 +87,6 @@ void j1State::CheckInputs() {
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A == KEY_DOWN)) {
 			current_state = WALK_BACKWARD;
 			run_counter++;
-		}
-		else if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN ||App->input->GetMouseButtonDown(1) == KEY_DOWN) && App->grenade->DoesGrenadeExist() == false && !App->grenade->GetGrenadeCooldown()) {
-			current_state = THROWING_GRENADE;
-			SetGrenadeState(true);
 		}
 		else { current_state = IDLE; run_counter = 0; }
 		break;

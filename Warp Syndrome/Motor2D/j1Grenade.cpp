@@ -46,7 +46,7 @@ bool j1Grenade::Update(float dt) {
 		GrenadeState();
 		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, &grenade_animation->data->StepAnimation()->animationRect);
 	}
-
+	else StepGrenadeCooldown();
 	return true;
 }
 
@@ -125,7 +125,7 @@ void j1Grenade::GrenadeCollisions() {
 void j1Grenade::GrenadeState() {
 	
 	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
-		App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)) {
+		App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN)) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
@@ -193,7 +193,7 @@ void j1Grenade::GrenadeState() {
 		break;
 	}
 
-	if (grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+	if (grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||App->input->GetMouseButtonDown(2) == KEY_DOWN) {
 		grenade_state = GST_UNKNOWN;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;
@@ -234,4 +234,26 @@ fPoint j1Grenade::GetMeasures() {
 
 collision_type j1Grenade::ColliderBuffer() {
 	return grenade_collider_buffer;
+}
+
+bool j1Grenade::GetGrenadeCooldown()
+{
+	if (cooldown_timer < 120)
+	{
+		return true;
+	}
+	return false;
+}
+
+void j1Grenade::StepGrenadeCooldown()
+{
+	if (cooldown_timer < 120)
+	{
+		cooldown_timer++;
+	}
+}
+
+void j1Grenade::GrenadeCooldownReset()
+{
+	cooldown_timer = 0;
 }

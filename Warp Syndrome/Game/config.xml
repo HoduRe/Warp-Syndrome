@@ -12,7 +12,7 @@
   </renderer>
 
     <audio>
-     <volume value="100"/>
+     <volume value="10"/>
     </audio>
 
   <window>

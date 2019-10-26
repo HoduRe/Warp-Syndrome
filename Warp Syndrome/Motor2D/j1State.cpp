@@ -70,7 +70,7 @@ void j1State::CheckInputs() {
 	case WALK_BACKWARD:
 	case RUN_FORWARD:
 	case RUN_BACKWARD:
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 			current_state = FREE_JUMP;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
@@ -84,7 +84,7 @@ void j1State::CheckInputs() {
 			current_state = WALK_BACKWARD;
 			run_counter++;
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		else if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN ||App->input->GetMouseButtonDown(1) == KEY_DOWN) && App->grenade->DoesGrenadeExist() == false && !App->grenade->GetGrenadeCooldown()) {
 			current_state = THROWING_GRENADE;
 			SetGrenadeState(true);
 		}
@@ -92,14 +92,14 @@ void j1State::CheckInputs() {
 		break;
 	case FREE_JUMP:
 	case WALL_JUMP:
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN) && App->grenade->DoesGrenadeExist() == false &&!App->grenade->GetGrenadeCooldown()) {
 		current_state = THROWING_GRENADE_ON_AIR;
 		SetGrenadeState(true);
 		}
 		else if (y_jumping_state == JST_GOING_DOWN) { current_state = FREE_FALLING; }
 		break;
 	case FREE_FALLING:
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && App->grenade->DoesGrenadeExist() == false) {
+		if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN) && App->grenade->DoesGrenadeExist() == false && !App->grenade->GetGrenadeCooldown()) {
 			current_state = THROWING_GRENADE_ON_AIR;
 			SetGrenadeState(true);
 		}
@@ -663,6 +663,8 @@ bool j1State::GetGrenadeState()
 void j1State::SetGrenadeState(bool state)
 {
 	grenade = state;
+	if (state == false)App->grenade->GrenadeCooldownReset();
+
 }
 
 bool j1State::BlitColliders() {

@@ -258,3 +258,9 @@ Update 0.1.9.0-debug
 -Fixed map limits
 -Add button to desintegrate grenade
 -Level 2 modified
+
+Update 0.2.0.0-debug
+-Adjusted general volume at the sart of the game to be not that loud.
+-Changed the animation of the granade: it now has an intermitent green/red light and can be distinghuished better when in front of a dark background.
+-Added some functions to the grenade module: the grenade has now a cooldown of 2 sec before being able to be thrown again.
+-Added some additional keybindings:you can now jump with "W" key. The grenade can now be thrown with left mouse button and destroyed with mouse middle button. Teleporting to the grenade can be done with mouse right button.

@@ -29,18 +29,18 @@ Currently there is no installation required, just open the .exe provided in the 
 
 ### Player 1 Controls: <br>
     Movement (keyboard / gamepad):
-        Space: Jump
+        W/Space: Jump
         A: Move to the left
         D: Move to the right
     Special movement:
-        J: Throws the grenade
-	K: Teleports to the grenade
-	L: Makes the thrown grenade disappear
-	Space (while sliding on a wall): wall-jump
+        J/Left Mouse Button: Throws the grenade
+	K/Right Mouse Button: Teleports to the grenade
+	L/Middle Mouse Button: Makes the thrown grenade disappear
+	W/Space (while sliding on a wall): wall-jump
 
 ## History
 
-Up to version 0.1.8.1-debug:
+Up to version 0.2.0.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -351,6 +351,20 @@ Update 0.1.8.0-debug
 Update 0.1.8.1-debug
 <ul>-Fixed audio noise.
 </ul>
+
+Update 0.1.9.0-debug
+<ul>-Fixed map limits<br>
+-Add button to desintegrate grenade<br>
+-Level 2 modified
+</ul>
+
+Update 0.2.0.0-debug
+<ul>-Adjusted general volume at the sart of the game to be not that loud.<br>
+-Changed the animation of the granade: it now has an intermitent green/red light and can be distinghuished better when in front of a dark background.<br>
+-Added some functions to the grenade module: the grenade has now a cooldown of 2 sec before being able to be thrown again.<br>
+-Added some additional keybindings:you can now jump with "W" key. The grenade can now be thrown with left mouse button and destroyed with mouse middle button. Teleporting to the grenade can be done with mouse right button.
+</ul>
+
 
 
 

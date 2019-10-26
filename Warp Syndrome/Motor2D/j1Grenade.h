@@ -62,6 +62,13 @@ public:
 
 	collision_type ColliderBuffer();
 
+	//returns true if granade is in cooldown, false if its not
+	bool GetGrenadeCooldown();
+
+	void StepGrenadeCooldown();
+
+	void GrenadeCooldownReset();
+
 private:
 	fPoint grenade_position, grenade_timer, grenade_vel, grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
@@ -70,6 +77,8 @@ private:
 	p2List<Animations*>* anim_list;
 	p2List_item<Animations*>* grenade_animation;
 	float grenade_time_to_explode;
+	int cooldown_timer = 0;
+
 };
 
 #endif // __j1GRENADE_H__

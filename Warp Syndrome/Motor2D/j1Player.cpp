@@ -10,6 +10,7 @@
 #include "j1State.h"
 #include "j1Player.h"
 #include "j1Map.h"
+#include "j1Grenade.h"
 
 #include "SDL/include/SDL.h"
 
@@ -48,8 +49,11 @@ bool j1Player::Start()
 	}
 
 	//initializes playernode to be the root node of the doc
-	playernode = playerdoc.child("player");
 
+
+	playernode = playerdoc.child("player");
+	grenadenode = playernode.child("grenade");
+	App->grenade->SetMeasures(grenadenode);
 	LoadAnimations(playernode);
 
 	pugi::xml_node texturenode = playernode.child("texture");

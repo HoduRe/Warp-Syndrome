@@ -20,7 +20,6 @@ j1State::j1State() : j1Module() {
 j1State::~j1State() {}
 
 bool j1State::Awake(pugi::xml_node& config) {
-	//filename.create(config.child("load").attribute("docname").as_string());
 	return true;
 }
 
@@ -45,12 +44,14 @@ bool j1State::Update(float dt) {
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
 	if (god_mode == false) {
+		StepCurrentAnimation();	// steps the current animation
 		CheckInputs();	// Checks active states (based on inputs)
 		CheckColliders(); // Checks colliders
 		MovePlayer();	// Moves player position
 		App->player->SetFliped(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
-		CheckAnimation(current_state, bufferlaststate);
-		StepCurrentAnimation();	// steps the current animation
+		CheckAnimation(current_state, bufferlaststate);	
+		
+
 	}
 	else { GodMode(); }	// moves the player in God Mode
 
@@ -288,7 +289,7 @@ void j1State::CheckColliders() {
 	}
 	if (current_state == DYING) {
 		death_counter++;
-		if (death_counter >= 30) { // TODO put this into an xml? It's the length of the dying animation
+		if (App->player->GetCurrentAnim()->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
 			App->level_m->RestartLevel();
 		}
 	}
@@ -400,7 +401,7 @@ void j1State::JumpMoveY() {
 			y_jumping_state = JST_UNKNOWN;
 			jump_timer = 0;
 		}
-		else if (jump_timer <= App->player->GetVelocity().y) {
+		else if (jump_timer <= App->player->GetVelocity().y*100) {
 			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
 			App->player->AddPosition(0.0f, App->player->GetVelocity().y - jump_timer);
 		}
@@ -589,11 +590,6 @@ Animation_state j1State::StepCurrentAnimation()
 	frame = currentanim->data->StepAnimation();
 
 	App->player->SetCurrentFrame(frame);
-
-	if (currentanim->data->GetAnimationFinish())
-		state = AS_FINISHED;
-	else state = AS_UNFINISHED;
-
 
 	return state;
 }

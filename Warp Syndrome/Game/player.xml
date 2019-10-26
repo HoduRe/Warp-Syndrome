@@ -1,5 +1,9 @@
 <player>
-  
+
+  <grenade>
+    <measures w="6" h="6"  />
+  </grenade>
+
   <texture>
     <folder>textures/</folder>
     <load texturename="Main_Character.png"/>
@@ -229,7 +233,7 @@
     <frame>
       <rectangle x="473" y="38" w="29" h="24" />
       <pivot x="29" y="0" />
-      <duration value="5000" />
+      <duration value="60" />
     </frame>
   </animation>
   <animation name="wallsliding" number_of_frames="2" canloop="1">
@@ -394,53 +398,53 @@
 
 
 
-<animation name="pulsar_in" number_of_frames="4" canloop="0">
+  <animation name="pulsar_in" number_of_frames="4" canloop="0">
     <frame>
-       <rectangle x="1" y="227" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="1" y="227" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
     <frame>
-       <rectangle x="102" y="227" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
-    </frame>
-     <frame>
-       <rectangle x="203" y="227" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="102" y="227" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
     <frame>
-       <rectangle x="304" y="227" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="203" y="227" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
+    </frame>
+    <frame>
+      <rectangle x="304" y="227" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
   </animation>
-<animation name="pulsar_out" number_of_frames="5" canloop="0">
+  <animation name="pulsar_out" number_of_frames="5" canloop="0">
     <frame>
-       <rectangle x="1" y="314" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="1" y="314" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
     <frame>
-       <rectangle x="102" y="314" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
-    </frame>
-     <frame>
-       <rectangle x="203" y="314" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="102" y="314" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
     <frame>
-       <rectangle x="304" y="314" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="203" y="314" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
     <frame>
-       <rectangle x="405" y="314" w="100" h="312" />
-       <pivot x="50" y="156" />
-       <duration value="3" />
+      <rectangle x="304" y="314" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
+    </frame>
+    <frame>
+      <rectangle x="405" y="314" w="100" h="312" />
+      <pivot x="50" y="156" />
+      <duration value="3" />
     </frame>
   </animation>
 

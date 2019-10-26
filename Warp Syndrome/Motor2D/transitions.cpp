@@ -1,9 +1,9 @@
-#include "transitions.h"
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Textures.h"
-#include "j1Render.h"
 #include "level_manager.h"
+#include "transitions.h"
+#include "j1Render.h"
 
 j1Transitions::j1Transitions() {}
 

@@ -4,7 +4,7 @@ Animations::Animations()
 {
 
 	currentanimframe = animationframes.start;
-	animationfinished = 0;
+	animationfinished = false;
 	numberofFrames = 0;
 	animationloop = false;
 	animationname = "";
@@ -65,7 +65,7 @@ bool Animations::GetAnimationFinish()
 {
 	if (animationfinished)
 	{
-		animationfinished = 0;
+		animationfinished = false;
 		return true;
 	}
 	return false;

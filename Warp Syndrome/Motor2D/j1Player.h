@@ -78,6 +78,7 @@ private:
 	SDL_Event events;
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;
+	pugi::xml_node grenadenode;
 	p2SString filename;
 	SDL_Texture* playertexture;
 	bool fliped;

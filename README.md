@@ -14,6 +14,17 @@ Currently there is no installation required, just open the .exe provided in the 
 
 Advice: if when throwing the first grenade, the player freezes, execute the .exe with the administrator permission.
 
+## Innovation
+
+Compared to what was asked for the assignment, this project comes with extra content:
+<ul>-The project can sustain and manage and indefinite amount of maps, it's not limited to two. With F4 you can cycle along the "x" amount of maps.<br>
+-In the movement section, the game comes with walljump, wallsliding and teleport mechanics<br>
+-The volume of the game can be adjusted and saved<br>
+-The game features a loading screen in-between maps.
+-Comes with the first bit of the intended narrative told through visual clues
+</ul>
+
+
 ### General Controls :
 	ESC: Close the game
 	Keypad (-): Decrease the volume
@@ -42,7 +53,7 @@ Advice: if when throwing the first grenade, the player freezes, execute the .exe
 
 ## History
 
-Up to version 0.2.0.2-debug:
+Up to version 0.2.1.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -377,6 +388,13 @@ Update 0.2.0.2-debug
 -Adjusted some minor default values to prevent things from not loading correctly.
 </ul>
 
+Update 0.2.1.0-debug
+<ul>-Updated death animation.<br>
+-Updated Death state, it now works well with its animation.<br>
+-Granade measures now are loaded from the "player module".<br>
+-Modified StepCurrentAnimation() function, it now doesn't check if the aniamtion is finished, you have to do it separatedly.<br>
+-Modified "transitions" module includes.
+<ul>
 
 
 ## Credits

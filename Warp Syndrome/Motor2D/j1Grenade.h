@@ -2,6 +2,7 @@
 #define __j1GRENADE_H__
 
 #include "j1Module.h"
+#include "j1Collision.h"
 #include "p2List.h"
 
 enum grenade_states {
@@ -68,6 +69,8 @@ public:
 	void StepGrenadeCooldown();
 
 	void GrenadeCooldownReset();
+
+	void SetMeasures(pugi::xml_node root);
 
 private:
 	fPoint grenade_position, grenade_timer, grenade_vel, grenade_measures;

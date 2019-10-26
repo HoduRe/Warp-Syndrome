@@ -19,9 +19,8 @@ j1Grenade::j1Grenade() {
 j1Grenade::~j1Grenade() {}
 
 // Called before render is available
-bool j1Grenade::Awake(pugi::xml_node&) {
-	grenade_measures.x = 6;
-	grenade_measures.y = 6;	// TODO put this on an xml
+bool j1Grenade::Awake(pugi::xml_node& ) {
+
 	return true;
 }
 
@@ -256,4 +255,11 @@ void j1Grenade::StepGrenadeCooldown()
 void j1Grenade::GrenadeCooldownReset()
 {
 	cooldown_timer = 0;
+}
+
+void j1Grenade::SetMeasures(pugi::xml_node root)
+{
+	grenade_measures.x= root.child("measures").attribute("w").as_uint(6);
+	grenade_measures.y = root.child("measures").attribute("h").as_uint(6);
+
 }

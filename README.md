@@ -400,8 +400,12 @@ Update 0.2.1.0-debug
 <ul>
 
 Update 0.2.2.0-debug
-<ul>-Platform that you can go through if jumping from behind added
+<ul>-Platform that you can go through if jumping from behind added<br>
 -Map and tilesets modifications
+</ul>
+
+Update 0.2.3.0-debug
+<ul>-Final first assignment check (small map imperfection corrected)
 </ul>
 
 ## Credits

@@ -19,6 +19,7 @@ class j1State;
 class j1Grenade;
 class j1LevelManager;
 class j1Transitions;
+class j1Enemies;
 
 class j1App
 {
@@ -95,6 +96,7 @@ public:
 	j1Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
+	j1Enemies*			enemies;
 
 private:
 

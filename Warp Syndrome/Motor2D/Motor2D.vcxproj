@@ -77,7 +77,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="j1Collision.cpp" />
+    <ClCompile Include="j1Enemies.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -98,7 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="j1Collision.h" />
+    <ClInclude Include="j1Enemies.h" />
     <ClInclude Include="j1Grenade.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Player.h" />

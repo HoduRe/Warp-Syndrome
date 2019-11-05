@@ -69,19 +69,4 @@ private:
 
 };
 
-void AddParticle(const Particle& particle, int x, int y, bool fliped, Uint32 delay = 0)
-{
-
-}
-
-
-
-
-
-
-
-
-
-
-
 #endif // !__PARTICLES_H__

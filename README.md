@@ -408,6 +408,11 @@ Update 0.2.3.0-debug
 <ul>-Final first assignment check (small map imperfection corrected)
 </ul>
 
+Update 0.2.4.0-debug
+<ul>-Enemies logic implemented
+</ul>
+
+
 ## Credits
 
 Credits go to the team members: <br>

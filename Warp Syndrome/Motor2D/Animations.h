@@ -23,7 +23,10 @@ class Animations
 {
 public:
 	Animations();
+	Animations(p2SString aName,bool aLoop, int aNumberOfFrames);
 	~Animations();
+	bool CleanUp();
+
 
 	//adds a new frame to the animation
 	void AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffset);
@@ -36,8 +39,13 @@ public:
 
 	//returns the frame with the given id in the frame list
 	FrameInfo* GetFrame(int id);
+	
+	FrameInfo* GetCurrentFrame();
 
 	p2SString GetName();
+
+	bool GetLoopable();
+	void SetLoopable(bool loopable);
 
 
 	//loads an animation from an animation node
@@ -45,7 +53,6 @@ public:
 	bool LoadAnim(pugi::xml_node& animationnode);
 
 	p2List_item<Animations*>* GetAnimFromName(p2SString name, p2List<Animations*>* animlist);
-
 
 	void ResetAnimation();
 

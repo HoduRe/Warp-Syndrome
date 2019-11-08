@@ -12,6 +12,7 @@
 #include "j1Player.h"
 #include "j1Collision.h"
 #include "level_manager.h"
+#include "Particles.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -40,6 +41,9 @@ bool j1Scene::Start()
 	teleport_sfx = App->audio->LoadFx("audio/fx/casting_charge_matter_grow_04.wav");
 	jump_sfx = App->audio->LoadFx("audio/fx/ferba_says_huh.wav");
 	death_sfx = App->audio->LoadFx("audio/fx/mud_splat_heavy_03.wav");
+	parttexture = App->tex->Load("textures/particle_debug_anim.png");//TODO delete this once stop debugging
+	partanimtexture = App->tex->Load("textures/particle_debug.png");//TODO delete this once stop debugging and move it into particles manager
+
 	camaccel = { 0.0f,0.0f };
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };
@@ -47,8 +51,12 @@ bool j1Scene::Start()
 	start = true;
 
 	App->audio->PlayMusic(App->map->data.music_path.GetString());
-
-
+	
+	//TODO delete this once stop debugging=====================
+	animat = Animations("", false, 3);
+	animat.AddFrame(60, { 0,0,16,16 }, { 0,0 });
+	animat.AddFrame(60, { 16,0,16,16 }, { 0,0 });
+	animat.AddFrame(60, { 32,0,16,16 }, { 0,0 });
 
 	return true;
 }
@@ -98,6 +106,50 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN) {
 		App->audio->AddVolume(1);
 	}
+
+	//Particle debug keys=============================================================
+	if (App->input->GetKey(SDL_SCANCODE_P)==KEY_DOWN)
+	{
+		iPoint pos;
+		fPoint speed = {5.0f,0.0f};
+		pos.x = App->player->GetPosition().x;
+		pos.y = App->player->GetPosition().y;
+		Particle* p=new AnimatedParticle(animat, true, pos, parttexture, 1); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
+		App->particle_m->AddParticle(p);
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		
+		iPoint pos;
+		fPoint speed = { 5.0f,0.0f };
+		pos.x = App->player->GetPosition().x;
+		pos.y = App->player->GetPosition().y;
+		Particle*p= new AnimatedParticle(animat, false, pos, speed, 1.0f, parttexture, 10); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
+		App->particle_m->AddParticle(p);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		
+		iPoint pos;
+		fPoint speed = { 5.0f,0.0f };
+		pos.x = App->player->GetPosition().x;
+		pos.y = App->player->GetPosition().y;
+		
+
+		Particle* p = new Particle(pos, speed, 1.0f, parttexture, 60); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
+		App->particle_m->AddParticle(p);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	{
+		iPoint pos;
+		pos.x = App->player->GetPosition().x;
+		pos.y = App->player->GetPosition().y;
+		
+		Particle* p = new Particle(pos, parttexture, 200); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
+		App->particle_m->AddParticle(p);
+	}
+	//End of particle debug keys=======================================
 
 	RepositionCamera();
 	//camera boundaries

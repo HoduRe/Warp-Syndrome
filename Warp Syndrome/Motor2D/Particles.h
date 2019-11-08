@@ -1,54 +1,67 @@
 #ifndef __PARTICLES_H__
 #define __PARTICLES_H__
 
-#include "Animations.h"
 #include "j1Module.h"
 #include "p2Defs.h"
 #include "p2Point.h"
 #include "p2SString.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "Animations.h"
 
-enum Particle_behaviour
+
+
+class Particle
 {
-	PB_STATIC,
-	PB_DYNAMIC,
-	PB_STATIC_COLLIDABLE,
-	PB_DYNAMIC_COLLIDABLE,
-	PB_STATIC_LOOP,
-	PB_DYNAMIC_LOOP,
-	PB_STATIC_COLLIDABLE_LOOP,
-	PB_DYNAMIC_COLLIDABLE_LOOP,
-	PB_UNKNOWN
+public:
+	iPoint position;
+	fPoint speed;
+	fPoint forces;
+	SDL_Texture* texture;
+	
+	int lifespan;
+	float mass;
+	bool fliped;
+
+	//=============================
+	Particle(iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f);
+	Particle(iPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f);
+	virtual ~Particle();
+	virtual void ParticleUpdate();
+	void Integrate();
+	virtual void Display();
+	void ApplyForce(fPoint aForce);
+	bool IsDead();
+
 };
-struct Particle
+
+class AnimatedParticle :public Particle
 {
-	//TODO collider
+public:
 	Animations* anim;
 	FrameInfo* currentframe;
-	uint fx = 0;
-	iPoint position;
-	iPoint speed;
-	Uint32 born = 0;
-	Uint32 life = 0;
-	Particle_behaviour behaviour;
-	p2SString name;
-	bool fx_played = false;
-	bool fliped = false;
+	bool dieOnEndAnim;
+
 	//=============================
-	Particle();
-	Particle(const Particle& p);
-	~Particle();
-	bool Update();
+	AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan);
+	AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, SDL_Texture* pTexture, float aLifespan);
+	virtual~AnimatedParticle();
+
+	void ParticleUpdate();
+	void Display();
+
 };
+
 
 class j1ParticleManager:public j1Module
 {
 public:
 	j1ParticleManager();
+
 	virtual ~j1ParticleManager();
 
 	bool Start();
+	bool Start(fPoint aGravity);
 
 	// Called before all Updates
 	bool PreUpdate();
@@ -61,12 +74,13 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	void AddParticle(Particle* particle);
+	bool DeleteParticle(Particle* particle);
 
-	void AddParticle(const Particle& particle, int x, int y, bool fliped, Uint32 delay = 0);
 
 private:
-	
-
+	p2List<Particle*> particles;
+	fPoint gravity;
 };
 
 #endif // !__PARTICLES_H__

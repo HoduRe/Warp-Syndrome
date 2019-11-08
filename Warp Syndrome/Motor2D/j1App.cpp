@@ -16,6 +16,7 @@
 #include "j1State.h"
 #include "j1Grenade.h"
 #include "j1Enemies.h"
+#include "Particles.h"
 #include "transitions.h"
 
 
@@ -39,6 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
 	enemies = new j1Enemies();
+	particle_m = new j1ParticleManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,6 +56,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(enemies);
 	AddModule(grenade);
+	AddModule(particle_m);//has to be always directly before transititions
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
 	AddModule(render);

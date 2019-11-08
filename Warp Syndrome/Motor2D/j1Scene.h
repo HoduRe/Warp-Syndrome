@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "Animations.h"//TODO delete when stopeed debugging particles
 
 enum MapLoaded
 {
@@ -62,7 +63,12 @@ private:
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
 	fPoint distancetoplayer;//camera distance to player
-	
+
+	//TODO delete when stopeed debugging particles===============================
+	SDL_Texture* parttexture;
+	SDL_Texture* partanimtexture;
+	Animations animat;
+
 };
 
 #endif // __j1SCENE_H__

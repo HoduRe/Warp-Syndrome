@@ -3,7 +3,7 @@
 Animations::Animations()
 {
 
-	currentanimframe = animationframes.start;
+	currentanimframe =nullptr;
 	animationfinished = false;
 	numberofFrames = 0;
 	animationloop = false;
@@ -12,9 +12,25 @@ Animations::Animations()
 	//texture = nullptr;
 }
 
+Animations::Animations(p2SString aName, bool aLoop, int aNumberOfFrames)
+{
+	animationname = aName;
+	animationloop = aLoop;
+	numberofFrames = aNumberOfFrames;
+	currentanimframe = nullptr;
+	animationfinished = false;
+}
+
+
 Animations::~Animations()
 {
 
+	CleanUp();
+
+}
+
+bool Animations::CleanUp()
+{
 	p2List_item<FrameInfo*>* item;
 	item = animationframes.start;
 	while (item != NULL)
@@ -22,10 +38,11 @@ Animations::~Animations()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	delete currentanimframe;
 	animationframes.clear();
-
+	delete currentanimframe;
+	return true;
 }
+
 
 void Animations::AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffset)
 {
@@ -75,6 +92,11 @@ FrameInfo* Animations::GetFrame(int id)
 {
 	return animationframes.At(id)->data;
 }
+FrameInfo* Animations::GetCurrentFrame()
+{
+	return currentanimframe->data;
+}
+
 
 bool Animations::LoadAnim(pugi::xml_node& animationnode)
 {
@@ -136,4 +158,13 @@ void Animations::ResetAnimation()
 
 	currentanimframe = animationframes.start;
 	animationfinished = false;
+}
+
+bool Animations::GetLoopable()
+{
+	return animationloop;
+}
+void Animations::SetLoopable(bool loopable)
+{
+	animationloop = loopable;
 }

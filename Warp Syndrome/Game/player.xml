@@ -402,22 +402,22 @@
     <frame>
       <rectangle x="1" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="102" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="203" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
     <frame>
       <rectangle x="304" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="3" />
+      <duration value="4" />
     </frame>
   </animation>
   
@@ -425,27 +425,27 @@
     <frame>
       <rectangle x="1" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="10" />
+      <duration value="6" />
     </frame>
     <frame>
       <rectangle x="102" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="10" />
+      <duration value="6" />
     </frame>
     <frame>
       <rectangle x="203" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="10" />
+      <duration value="6" />
     </frame>
     <frame>
       <rectangle x="304" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="10" />
+      <duration value="6" />
     </frame>
     <frame>
       <rectangle x="405" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="10" />
+      <duration value="6" />
     </frame>
   </animation>
 

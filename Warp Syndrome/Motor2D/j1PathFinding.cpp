@@ -70,7 +70,7 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 }
 
 void j1PathFinding::SetBlitPathfinding() {
-	blit = !blit;
+	/*blit = !blit;
 	int i = 0;
 	if (blit == true) {
 		while (last_path[i].x != NULL) {
@@ -82,7 +82,7 @@ void j1PathFinding::SetBlitPathfinding() {
 			App->render->DrawQuad(rect, 155, 155, 155);
 			i++;
 		}
-	}
+	}*/
 }
 
 // PathList ------------------------------------------------------------------------

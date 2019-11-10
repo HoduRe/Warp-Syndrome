@@ -16,6 +16,7 @@
 #include "j1State.h"
 #include "j1Grenade.h"
 #include "j1Enemies.h"
+#include "j1PathFinding.h"
 #include "Particles.h"
 #include "transitions.h"
 
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new j1Transitions();
 	enemies = new j1Enemies();
 	particle_m = new j1ParticleManager();
+	pathfinding = new j1PathFinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -53,6 +55,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(state);
 	AddModule(scene);
+	AddModule(pathfinding);
 	AddModule(player);
 	AddModule(enemies);
 	AddModule(grenade);

@@ -64,6 +64,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Programming %28p2%29=========</Filter>
     </ClCompile>
+    <ClCompile Include="j1PathFinding.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Programming %28p2%29=========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PathFinding.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

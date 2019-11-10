@@ -21,6 +21,7 @@ class j1LevelManager;
 class j1Transitions;
 class j1Enemies;
 class j1ParticleManager;
+class j1PathFinding;
 
 class j1App
 {
@@ -99,6 +100,7 @@ public:
 	j1Transitions*		transitions;
 	j1Enemies*			enemies;
 	j1ParticleManager*  particle_m;
+	j1PathFinding*		pathfinding;
 
 private:
 

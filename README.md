@@ -412,6 +412,9 @@ Update 0.2.4.0-debug
 <ul>-Enemies logic implemented
 </ul>
 
+Update 0.2.4.1-debug
+<ul>-Pahtfinding implemented
+</ul>
 
 ## Credits
 

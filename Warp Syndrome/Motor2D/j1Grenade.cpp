@@ -10,6 +10,7 @@
 #include "j1Audio.h"
 #include "j1Textures.h"
 #include "j1App.h"
+#include "Particles.h"
 
 j1Grenade::j1Grenade() {
 	name.create("grenade");
@@ -182,7 +183,16 @@ void j1Grenade::GrenadeState() {
 		fPoint position;
 		fPoint measures;
 		App->state->current_state = TELEPORT;
-		if (App->state->current_state == TELEPORT) { App->player->SetPosition(App->grenade->GetPosition()); }
+		if (App->state->current_state == TELEPORT) 
+		{ 
+			//generate a particle on the player then move the player and generate the other when TPed
+			AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200, {0.0f,0.0f}, { -50.0f,-43.0f });
+			App->particle_m->AddParticle(p);
+			App->player->SetPosition(App->grenade->GetPosition()); 
+			AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
+			App->particle_m->AddParticle(q);
+
+		}
 		position.x = App->player->GetPosition().x;
 		position.y = App->player->GetPosition().y;
 		measures.x = App->player->GetWidthHeight().x;

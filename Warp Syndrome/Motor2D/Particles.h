@@ -14,23 +14,27 @@
 class Particle
 {
 public:
-	iPoint position;
+	fPoint position;
+	fPoint offset;
 	fPoint speed;
+	fPoint gravityaccel;
 	fPoint forces;
 	SDL_Texture* texture;
-	
+	SDL_Rect texturesection;
+
 	int lifespan;
 	float mass;
 	bool fliped;
 
 	//=============================
-	Particle(iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f);
-	Particle(iPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f);
+	Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 });
+	Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 });
 	virtual ~Particle();
 	virtual void ParticleUpdate();
 	void Integrate();
 	virtual void Display();
 	void ApplyForce(fPoint aForce);
+	void ApplyGravity(fPoint aGravity);
 	bool IsDead();
 
 };
@@ -38,13 +42,12 @@ public:
 class AnimatedParticle :public Particle
 {
 public:
-	Animations* anim;
-	FrameInfo* currentframe;
+	Animations anim;
 	bool dieOnEndAnim;
 
 	//=============================
-	AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan);
-	AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, SDL_Texture* pTexture, float aLifespan);
+	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f });
+	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan=1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f });
 	virtual~AnimatedParticle();
 
 	void ParticleUpdate();
@@ -74,12 +77,16 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	fPoint GetGravity();
+	void SetGravity(fPoint aGravity);
+
 	void AddParticle(Particle* particle);
 	bool DeleteParticle(Particle* particle);
 
-
 private:
 	p2List<Particle*> particles;
+	
 	fPoint gravity;
 };
 

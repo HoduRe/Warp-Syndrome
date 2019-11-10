@@ -41,9 +41,7 @@ bool j1Scene::Start()
 	teleport_sfx = App->audio->LoadFx("audio/fx/casting_charge_matter_grow_04.wav");
 	jump_sfx = App->audio->LoadFx("audio/fx/ferba_says_huh.wav");
 	death_sfx = App->audio->LoadFx("audio/fx/mud_splat_heavy_03.wav");
-	parttexture = App->tex->Load("textures/particle_debug_anim.png");//TODO delete this once stop debugging
-	partanimtexture = App->tex->Load("textures/particle_debug.png");//TODO delete this once stop debugging and move it into particles manager
-
+	
 	camaccel = { 0.0f,0.0f };
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };
@@ -52,11 +50,6 @@ bool j1Scene::Start()
 
 	App->audio->PlayMusic(App->map->data.music_path.GetString());
 	
-	//TODO delete this once stop debugging=====================
-	animat = Animations("", false, 3);
-	animat.AddFrame(60, { 0,0,16,16 }, { 0,0 });
-	animat.AddFrame(60, { 16,0,16,16 }, { 0,0 });
-	animat.AddFrame(60, { 32,0,16,16 }, { 0,0 });
 
 	return true;
 }
@@ -107,48 +100,6 @@ bool j1Scene::Update(float dt)
 		App->audio->AddVolume(1);
 	}
 
-	//Particle debug keys=============================================================
-	if (App->input->GetKey(SDL_SCANCODE_P)==KEY_DOWN)
-	{
-		iPoint pos;
-		fPoint speed = {5.0f,0.0f};
-		pos.x = App->player->GetPosition().x;
-		pos.y = App->player->GetPosition().y;
-		Particle* p=new AnimatedParticle(animat, true, pos, parttexture, 1); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
-		App->particle_m->AddParticle(p);
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	{
-		
-		iPoint pos;
-		fPoint speed = { 5.0f,0.0f };
-		pos.x = App->player->GetPosition().x;
-		pos.y = App->player->GetPosition().y;
-		Particle*p= new AnimatedParticle(animat, false, pos, speed, 1.0f, parttexture, 10); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
-		App->particle_m->AddParticle(p);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		
-		iPoint pos;
-		fPoint speed = { 5.0f,0.0f };
-		pos.x = App->player->GetPosition().x;
-		pos.y = App->player->GetPosition().y;
-		
-
-		Particle* p = new Particle(pos, speed, 1.0f, parttexture, 60); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
-		App->particle_m->AddParticle(p);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-	{
-		iPoint pos;
-		pos.x = App->player->GetPosition().x;
-		pos.y = App->player->GetPosition().y;
-		
-		Particle* p = new Particle(pos, parttexture, 200); //TODO, the particle list of aprticle manager doesn't distinguish between the main class and its chind, therefore it uses the base class functions
-		App->particle_m->AddParticle(p);
-	}
 	//End of particle debug keys=======================================
 
 	RepositionCamera();
@@ -163,9 +114,28 @@ bool j1Scene::Update(float dt)
 	else if (-App->render->camera.y + App->render->camera.h > App->map->data.height * App->map->data.tile_height)
 		App->render->camera.y = -(App->map->data.height * App->map->data.tile_height - App->render->camera.h);
 
-
-
-
+	//Debugging Particles
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200);
+		App->particle_m->AddParticle(p);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, { 0.0f,-10.0f }, 1.0f, App->player->GetTexture(), 200);
+		App->particle_m->AddParticle(p);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		Particle* p = new Particle({ App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 100);
+		App->particle_m->AddParticle(p);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+	{
+		Particle* p = new Particle({ App->player->GetPosition().x,App->player->GetPosition().y }, { 0.1f,0.0f }, 1.0f, App->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
+		App->particle_m->AddParticle(p);
+	}
+	//end of debug particles
 	App->map->Draw();
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",

@@ -428,6 +428,12 @@ Update 0.2.5.1-debug
 -Adjusted animation time
 </ul>
 
+Update 0.2.5.2-debug
+<ul>-PathFinding Debug workable<br>
+-Grenade exploit that avoided death prevented
+</ul>
+
+
 ## Credits
 
 Credits go to the team members: <br>

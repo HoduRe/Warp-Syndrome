@@ -24,7 +24,7 @@ Particle::Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTextur
 	forces = { 0,0 };
 	fliped = false;
 }
-//static particle constructor
+	//static particle constructor
 Particle::Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, SDL_Rect aTextureSection)
 {
 	offset = aOffset;

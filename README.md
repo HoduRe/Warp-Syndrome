@@ -56,7 +56,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.2.5.0-debug:
+Up to version 0.2.5.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -421,6 +421,11 @@ Update 0.2.5.0-debug
 -Added 4 debug keys to spawn particles to try out the different parameters: u, i, o, p. <br>
 -When the player uses the TP, the game now spawns particles.<br>
 -Made some changes to some of the animations in the "player.xml".
+</ul>
+
+Update 0.2.5.1-debug
+<ul>-Changed color of TP anim<br>
+-Adjusted animation time
 </ul>
 
 ## Credits

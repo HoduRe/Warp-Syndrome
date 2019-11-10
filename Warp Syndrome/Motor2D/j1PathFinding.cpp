@@ -85,7 +85,7 @@ void j1PathFinding::BlitPathfinding() {
 			App->render->DrawQuad(rect, 255, 200, 40);
 			i++;
 		}
-	}
+	}*/
 }
 
 // PathList ------------------------------------------------------------------------

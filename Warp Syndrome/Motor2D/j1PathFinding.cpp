@@ -69,17 +69,20 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 	return &last_path;
 }
 
-void j1PathFinding::SetBlitPathfinding() {
-	blit = !blit;
+void j1PathFinding::SetBlitPathfinding() { blit = !blit; }
+
+bool j1PathFinding::GetBlitPathfinding() { return blit; }
+
+void j1PathFinding::BlitPathfinding() {
 	int i = 0;
 	if (blit == true) {
-		while (last_path[i].x != NULL) {
+		while (!(i >= last_path.Count())) {
 			SDL_Rect rect;
 			rect.x = last_path[i].x;
 			rect.y = last_path[i].y;
 			rect.w = App->map->data.tile_width;
 			rect.h = App->map->data.tile_height;
-			App->render->DrawQuad(rect, 155, 155, 155);
+			App->render->DrawQuad(rect, 255, 200, 40);
 			i++;
 		}
 	}

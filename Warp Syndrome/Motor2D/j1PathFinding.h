@@ -47,8 +47,12 @@ public:
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 
-	// Blits the pathdinfing
+	// Sets the blit bool
 	void SetBlitPathfinding();
+	// Returns the bool variable to print on scene
+	bool GetBlitPathfinding();
+	// Blits the path
+	void BlitPathfinding();
 
 private:
 

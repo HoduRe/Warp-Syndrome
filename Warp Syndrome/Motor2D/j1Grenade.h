@@ -13,7 +13,8 @@ enum grenade_states {
 	GST_MOVING_RIGHT_DOWN,
 	GST_MOVING_LEFT_UP,
 	GST_MOVING_LEFT_DOWN,
-	GST_EXPLODING
+	GST_EXPLODING,
+	GST_UNUSABLE
 };
 
 class j1Grenade : public j1Module

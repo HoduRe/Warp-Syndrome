@@ -131,6 +131,9 @@ void j1Grenade::GrenadeState() {
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
 		grenade_time_to_explode += 0.1;
 	}
+	if (App->state->current_state == DYING) {
+		grenade_state = GST_UNUSABLE;
+	}
 
 	switch (grenade_state) {
 	case GST_UNKNOWN:
@@ -202,7 +205,8 @@ void j1Grenade::GrenadeState() {
 		break;
 	}
 
-	if (grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||App->input->GetMouseButtonDown(2) == KEY_DOWN) {
+	if ((grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||App->input->GetMouseButtonDown(2) == KEY_DOWN)
+		|| grenade_state == GST_UNUSABLE) {
 		grenade_state = GST_UNKNOWN;
 		grenade_timer.y = 0.0f;
 		grenade_time_to_explode = 0;

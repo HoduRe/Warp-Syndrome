@@ -139,6 +139,7 @@ bool j1Scene::Update(float dt)
 	}
 	//end of debug particles
 	App->map->Draw();
+	if (App->pathfinding->GetBlitPathfinding() == true) { App->pathfinding->BlitPathfinding(); }
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		App->map->data.width, App->map->data.height,

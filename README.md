@@ -397,7 +397,7 @@ Update 0.2.1.0-debug
 -Granade measures now are loaded from the "player module".<br>
 -Modified StepCurrentAnimation() function, it now doesn't check if the aniamtion is finished, you have to do it separatedly.<br>
 -Modified "transitions" module includes.
-<ul>
+</ul>
 
 Update 0.2.2.0-debug
 <ul>-Platform that you can go through if jumping from behind added<br>

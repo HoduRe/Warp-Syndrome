@@ -400,51 +400,52 @@
 
   <animation name="pulsar_in" number_of_frames="4" canloop="0">
     <frame>
-      <rectangle x="1" y="227" w="100" h="312" />
-      <pivot x="50" y="156" />
+      <rectangle x="1" y="227" w="100" h="86" />
+      <pivot x="50" y="43" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="102" y="227" w="100" h="312" />
-      <pivot x="50" y="156" />
+      <rectangle x="102" y="227" w="100" h="86" />
+      <pivot x="50" y="43" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="203" y="227" w="100" h="312" />
-      <pivot x="50" y="156" />
+      <rectangle x="203" y="227" w="100" h="86" />
+      <pivot x="50" y="43" />
       <duration value="3" />
     </frame>
     <frame>
-      <rectangle x="304" y="227" w="100" h="312" />
-      <pivot x="50" y="156" />
+      <rectangle x="304" y="227" w="100" h="86" />
+      <pivot x="50" y="43" />
       <duration value="3" />
     </frame>
   </animation>
+  
   <animation name="pulsar_out" number_of_frames="5" canloop="0">
     <frame>
-      <rectangle x="1" y="314" w="100" h="312" />
-      <pivot x="50" y="156" />
-      <duration value="3" />
+      <rectangle x="1" y="314" w="100" h="86" />
+      <pivot x="50" y="43" />
+      <duration value="10" />
     </frame>
     <frame>
-      <rectangle x="102" y="314" w="100" h="312" />
-      <pivot x="50" y="156" />
-      <duration value="3" />
+      <rectangle x="102" y="314" w="100" h="86" />
+      <pivot x="50" y="43" />
+      <duration value="10" />
     </frame>
     <frame>
-      <rectangle x="203" y="314" w="100" h="312" />
-      <pivot x="50" y="156" />
-      <duration value="3" />
+      <rectangle x="203" y="314" w="100" h="86" />
+      <pivot x="50" y="43" />
+      <duration value="10" />
     </frame>
     <frame>
-      <rectangle x="304" y="314" w="100" h="312" />
-      <pivot x="50" y="156" />
-      <duration value="3" />
+      <rectangle x="304" y="314" w="100" h="86" />
+      <pivot x="50" y="43" />
+      <duration value="10" />
     </frame>
     <frame>
-      <rectangle x="405" y="314" w="100" h="312" />
-      <pivot x="50" y="156" />
-      <duration value="3" />
+      <rectangle x="405" y="314" w="100" h="86" />
+      <pivot x="50" y="43" />
+      <duration value="10" />
     </frame>
   </animation>
 

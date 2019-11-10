@@ -56,7 +56,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.2.1.0-debug:
+Up to version 0.2.5.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -397,7 +397,7 @@ Update 0.2.1.0-debug
 -Granade measures now are loaded from the "player module".<br>
 -Modified StepCurrentAnimation() function, it now doesn't check if the aniamtion is finished, you have to do it separatedly.<br>
 -Modified "transitions" module includes.
-<ul>
+</ul>
 
 Update 0.2.2.0-debug
 <ul>-Platform that you can go through if jumping from behind added<br>
@@ -414,6 +414,13 @@ Update 0.2.4.0-debug
 
 Update 0.2.4.1-debug
 <ul>-Pahtfinding implemented
+</ul>
+
+Update 0.2.5.0-debug
+<ul>-All the particle system has been remade during the last few commits. It now supports static and dynamic particles with and without animations and a simple physics integrator.<br>
+-Added 4 debug keys to spawn particles to try out the different parameters: u, i, o, p. <br>
+-When the player uses the TP, the game now spawns particles.<br>
+-Made some changes to some of the animations in the "player.xml".
 </ul>
 
 ## Credits

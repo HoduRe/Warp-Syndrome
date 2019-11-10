@@ -2,26 +2,41 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "Animations.h"
-
+#include "j1Player.h"
+#include"j1Input.h"
 //particle functions======================================================================
 	//dynamic particle constructor
-Particle::Particle(iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan)
+Particle::Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, SDL_Rect aTextureSection)
 {
-	position = pPos;
+	offset = aOffset;
+	position.x = pPos.x + offset.x;
+	position.y = pPos.y + offset.y;
 	speed = pSpeed;
 	mass = aMass;
 	texture = pTexture;
 	lifespan = aLifespan;
+	gravityaccel = aGravity;
+	texturesection = aTextureSection;
+	fPoint nullgravity = { 0.0f,0.0f };
+	if (gravityaccel == nullgravity)//if the input gravity is 0, set the world gravity instead of a local one
+		gravityaccel = App->particle_m->GetGravity();
 
 	forces = { 0,0 };
 	fliped = false;
 }
 //static particle constructor
-Particle::Particle(iPoint pPos, SDL_Texture* pTexture, float aLifespan)
+Particle::Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, SDL_Rect aTextureSection)
 {
-	position = pPos;
+	offset = aOffset;
+	position.x = pPos.x + offset.x;
+	position.y = pPos.y + offset.y;
 	texture = pTexture;
 	lifespan = aLifespan;
+	gravityaccel = aGravity;
+	texturesection = aTextureSection;
+	fPoint nullgravity = { 0.0f,0.0f };
+	if (gravityaccel == nullgravity)//if the input gravity is 0, set the world gravity instead of a local one
+		gravityaccel = App->particle_m->GetGravity();
 
 	speed = { 0,0 };
 	forces = { 0,0 };
@@ -41,7 +56,11 @@ void Particle::Integrate()
 	{
 		accel.x = forces.x / mass;
 		accel.y = forces.y / mass;
+		accel.x += gravityaccel.x;//add gravity
+		accel.y += gravityaccel.y;
 	}
+
+
 	speed.x += accel.x;
 	speed.y += accel.y;
 
@@ -61,12 +80,20 @@ void Particle::ParticleUpdate()
 
 void Particle::Display()
 {
-	App->render->Blit(texture, position.x, position.y, NULL, fliped);
+	if (SDL_RectEmpty(&texturesection))
+		App->render->Blit(texture, position.x, position.y, NULL, fliped);
+
+	else App->render->Blit(texture, position.x, position.y, &texturesection, fliped);
+
 }
 
 void Particle::ApplyForce(fPoint aForce)
 {
 	forces += aForce;
+}
+void Particle::ApplyGravity(fPoint aGravity)
+{
+	gravityaccel = aGravity;
 }
 
 bool Particle::IsDead()
@@ -81,50 +108,49 @@ bool Particle::IsDead()
 
 //animated particle functions=============================================================
 	//static particle constructor
-AnimatedParticle::AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, SDL_Texture* pTexture, float aLifespan) :Particle(pPos, pTexture, aLifespan)
+AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset) :Particle(pPos, pTexture, aLifespan, aGravity, aOffset)
 {
-	anim = new Animations(aAnim);
-	currentframe = anim->GetCurrentFrame();
+
+	p2List<Animations*>* list = App->player->GetAnimationList();
+	p2List_item<Animations*>* item = list->start;
+	item = item->data->GetAnimFromName(aAnimName, list);
+	anim = *item->data;
+
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim->SetLoopable(false);
+		anim.SetLoopable(false);
 		lifespan = 1;
 	}
-	else anim->SetLoopable(true);
+	else anim.SetLoopable(true);
 }
 //dynamic particle constructor
-AnimatedParticle::AnimatedParticle(Animations aAnim, bool aDieOnEndAnim, iPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan) :Particle(pPos, pSpeed, aMass, pTexture, aLifespan)
+AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset) :Particle(pPos, pSpeed, aMass, pTexture, aLifespan, aGravity, aOffset)
 {
-	anim = new Animations(aAnim);
+	p2List<Animations*>* list = App->player->GetAnimationList();
+	p2List_item<Animations*>* item = list->start;
+	item = item->data->GetAnimFromName(aAnimName, list);
+	anim = *item->data;
 
-	currentframe = anim->GetCurrentFrame();
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim->SetLoopable(false);
+		anim.SetLoopable(false);
 		lifespan = 1;
 	}
-	else anim->SetLoopable(true);
+	else anim.SetLoopable(true);
 }
 AnimatedParticle::~AnimatedParticle()
 {
-	if (anim != nullptr)
-		delete anim;
-	anim = nullptr;
-
-	if (currentframe != nullptr)
-		delete currentframe;
-	currentframe = nullptr;
 }
 
 //called every update
 void AnimatedParticle::ParticleUpdate()
 {
 	Integrate();
-	anim->StepAnimation();
+	anim.StepAnimation();
 
-	if (dieOnEndAnim && anim->GetAnimationFinish())//if the aprticle dies when its animation finishes change its state to death
+	if (dieOnEndAnim && anim.GetAnimationFinish())//if the aprticle dies when its animation finishes change its state to death
 		lifespan = 0;
 
 	else if (!dieOnEndAnim)//if the particle dies of age lower its life
@@ -135,7 +161,7 @@ void AnimatedParticle::ParticleUpdate()
 
 void AnimatedParticle::Display()
 {
-	FrameInfo* currframe = anim->GetCurrentFrame();
+	FrameInfo* currframe = anim.GetCurrentFrame();
 	App->render->Blit(texture, position.x, position.y, &currframe->animationRect, fliped);
 }
 
@@ -144,7 +170,7 @@ void AnimatedParticle::Display()
 //particle manager functions==============================================================
 j1ParticleManager::j1ParticleManager()
 {
-	gravity = { 0,0.1f };//TODO ASSIGN THIS FROM AN XML
+	gravity = { 0.0f,0.2f };//TODO ASSIGN THIS FROM AN XML
 }
 j1ParticleManager::~j1ParticleManager()
 {
@@ -172,7 +198,6 @@ bool j1ParticleManager::PreUpdate()
 		{
 			if (item->data->IsDead())
 			{
-				RELEASE(item->data);
 				particles.del(item);
 			}
 
@@ -180,6 +205,8 @@ bool j1ParticleManager::PreUpdate()
 		}
 
 	}
+
+
 	return true;
 }
 
@@ -192,7 +219,7 @@ bool j1ParticleManager::Update(float dt)
 
 	while (item != NULL)//Updates all particles
 	{
-		item->data->ApplyForce(gravity);
+
 		item->data->ParticleUpdate();
 		item = item->next;
 	}
@@ -216,11 +243,6 @@ bool j1ParticleManager::PostUpdate()
 bool j1ParticleManager::CleanUp()
 {
 	p2List_item<Particle*>* item = particles.start;
-	while (item != NULL)
-	{
-		RELEASE(item->data);
-		item = item->next;
-	}
 	particles.clear();
 	return true;
 }
@@ -228,8 +250,7 @@ bool j1ParticleManager::CleanUp()
 //adds a particle to the list
 void j1ParticleManager::AddParticle(Particle* particle)
 {
-	Particle* part = particle;
-	particles.add(part);
+	particles.add(particle);
 }
 
 //deletes a particle from the list
@@ -243,11 +264,19 @@ bool j1ParticleManager::DeleteParticle(Particle* particle)
 		if (item->data == particle)//if theres a coincidence in the list
 		{
 			ret = true;
-			RELEASE(item->data);
 			particles.del(item);
 		}
 
 		item = item->next;
 	}
 	return ret;
+}
+
+fPoint j1ParticleManager::GetGravity()
+{
+	return gravity;
+}
+void j1ParticleManager::SetGravity(fPoint aGravity)
+{
+	gravity = aGravity;
 }

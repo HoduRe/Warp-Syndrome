@@ -13,6 +13,7 @@
 #include "j1Collision.h"
 #include "level_manager.h"
 #include "Particles.h"
+#include "j1PathFinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -79,6 +80,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		App->state->SetBlitColliders();
+		App->pathfinding->SetBlitPathfinding();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {

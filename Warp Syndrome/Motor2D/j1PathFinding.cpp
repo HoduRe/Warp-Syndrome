@@ -2,12 +2,15 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "j1Render.h"
+#include "j1Map.h"
 #include "p2List.h"
 
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.create("pathfinding");
+	blit = false;
 }
 
 // Destructor
@@ -64,6 +67,22 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
+}
+
+void j1PathFinding::SetBlitPathfinding() {
+	blit = !blit;
+	int i = 0;
+	if (blit == true) {
+		while (last_path[i].x != NULL) {
+			SDL_Rect rect;
+			rect.x = last_path[i].x;
+			rect.y = last_path[i].y;
+			rect.w = App->map->data.tile_width;
+			rect.h = App->map->data.tile_height;
+			App->render->DrawQuad(rect, 155, 155, 155);
+			i++;
+		}
+	}
 }
 
 // PathList ------------------------------------------------------------------------

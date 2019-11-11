@@ -84,7 +84,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 			switch (current_collider_type) {
 			case death_collider:
 			case regular_collider:
-				current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+				current_collision = CheckCollision(itemO, &position->x, &position->y, &measures->x, &measures->y);
 				collision_array[current_collision] = current_collision;
 				if (current_collider_type == death_collider && current_collision != NONE_COLLISION) {
 					death_collider_touched = true;
@@ -92,7 +92,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 				break;
 			case grenade_collider:
 				if (object_name != OBJECT_GRENADE) {
-					current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+					current_collision = CheckCollision(itemO, &position->x, &position->y, &measures->x, &measures->y);
 					collision_array[current_collision] = current_collision;
 				}
 				else{
@@ -103,14 +103,14 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 				break;
 			case door_collider:
 				if (object_name == OBJECT_PLAYER) {
-					current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+					current_collision = CheckCollision(itemO, &position->x, &position->y, &measures->x, &measures->y);
 					collision_array[current_collision] = current_collision;
 					if (current_collision != NONE_COLLISION) { door_collider_touched = true; }
 				}
 				break;
 			case under_platform_collider:
 				if (y_player_buffer <= itemO->data->boundingbox.y) {
-					current_collision = CheckCollider(itemO, &position->x, &position->y, &measures->x, &measures->y);
+					current_collision = CheckCollision(itemO, &position->x, &position->y, &measures->x, &measures->y);
 					collision_array[current_collision] = current_collision;
 				}
 				break;
@@ -124,10 +124,10 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 
 		itemOG = itemOG->next;
 	}
-	current_collision = GetCollisionType(collision_array, current_collision);
+	current_collision = CalculateFinalCollision(collision_array, current_collision);
 }
 
-collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj, float *x, float *y, float *w,  float *h) {
+collision_type j1Collision::CheckCollision(p2List_item<Object*>* currentobj, float *x, float *y, float *w,  float *h) {
 
 	//collider variables
 	float collider_x = (float)currentobj->data->boundingbox.x;
@@ -136,25 +136,25 @@ collision_type j1Collision::CheckCollider(p2List_item<Object*>* currentobj, floa
 	float collider_h = (float)currentobj->data->boundingbox.h;
 
 	if (collider_y <= *y && collider_y > *y - *h && collider_x < *x + *w && collider_x + collider_w > *x) {
-		GetBufferCollision(collider_x, collider_y, true);
+		CollisionPriority(collider_x, collider_y, true);
 		return GROUND_COLLISION;
 	}
 	else if (collider_x > *x && collider_x <= *x + *w && collider_y < *y && collider_y + collider_h > *y - *h) {
-		GetBufferCollision(collider_x - *w, collider_y, false);
+		CollisionPriority(collider_x - *w, collider_y, false);
 		return RIGHT_COLLISION;
 	}
 	else if (collider_x + collider_w < *x + *w && collider_x + collider_w >= *x && collider_y < *y && collider_y + collider_h > *y - *h) {
-		GetBufferCollision(collider_x + collider_w, collider_y, false);
+		CollisionPriority(collider_x + collider_w, collider_y, false);
 		return LEFT_COLLISION;
 	}
 	else if (collider_y + collider_h >= *y - *h && collider_y + collider_h <= *y && collider_x < *x + *w && collider_x + collider_w > *x) {
-		GetBufferCollision(collider_x, collider_y + collider_h + *h, true);
+		CollisionPriority(collider_x, collider_y + collider_h + *h, true);
 		return UPPER_COLLISION;
 	}
 	else { return NONE_COLLISION; }
 }
 
-collision_type j1Collision::GetCollisionType(collision_type collision_array[], collision_type current_collision) {
+collision_type j1Collision::CalculateFinalCollision(collision_type collision_array[], collision_type current_collision) {
 	int collision_count = 0;
 
 	for (int i = 0; i < LAST_COLLISION; i++) {
@@ -173,7 +173,7 @@ collision_type j1Collision::GetCollisionType(collision_type collision_array[], c
 }
 
 // Gets the buffer collider to avoid the player going into a solid mass
-void j1Collision::GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider) {
+void j1Collision::CollisionPriority(float collider_x, float collider_y, bool horizontal_collider) {
 
 	switch (has_already_collided) {
 	case false:

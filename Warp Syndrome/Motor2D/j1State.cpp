@@ -46,7 +46,7 @@ bool j1State::Update(float dt) {
 	if (god_mode == false) {
 		StepCurrentAnimation();	// steps the current animation
 		CheckInputs();	// Checks active states (based on inputs)
-		CheckColliders(); // Checks colliders
+		CheckCollisions(); // Checks colliders
 		MovePlayer();	// Moves player position
 		App->player->fliped=(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
 		CheckAnimation(current_state, bufferlaststate);	
@@ -153,7 +153,7 @@ void j1State::CheckInputs() {
 	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen
 }
 
-void j1State::CheckColliders() {
+void j1State::CheckCollisions() {
 
 	switch (App->collision->current_collision) {
 	case NONE:	// Falling from a cliff collisions

@@ -69,10 +69,10 @@ public:
 	void CheckLoop(fPoint* position, fPoint* measures, object_colliding object_name);	// Exists because it's also used in the grenade
 
 	// checks if the collider recieved is in contact with the object
-	collision_type CheckCollider(p2List_item<Object*>* currentobj, float *x, float *y, float *w, float *h);
+	collision_type CheckCollision(p2List_item<Object*>* currentobj, float *x, float *y, float *w, float *h);
 
 	// checks all collisions to return collisions in both axis, if they exist
-	collision_type GetCollisionType(collision_type collision_array[], collision_type current_collision);
+	collision_type CalculateFinalCollision(collision_type collision_array[], collision_type current_collision);
 
 	// return true if the object is inside a collider
 	bool InsideCollider(p2List_item<Object*>* currentobj, float* x, float* y, float* w, float* h);
@@ -96,7 +96,7 @@ public:
 	bool RightCollision();
 
 	// checks what collision goes first for the AvoidShaking function (moving the player out of the collision)
-	void GetBufferCollision(float collider_x, float collider_y, bool horizontal_collider);
+	void CollisionPriority(float collider_x, float collider_y, bool horizontal_collider);
 
 	// If player has pressed F9, prints colliders
 	void PrintColliders();

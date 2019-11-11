@@ -97,7 +97,7 @@ public:
 	// Gives a state based on inputs
 	void CheckInputs();
 	// Checks Colliders
-	void CheckColliders();
+	void CheckCollisions();
 	// Moves player position
 	void MovePlayer();
 	// Puts the proper animation

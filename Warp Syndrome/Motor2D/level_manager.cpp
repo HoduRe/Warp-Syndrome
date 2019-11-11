@@ -42,21 +42,6 @@ bool j1LevelManager::Start()
 	return true;
 }
 
-bool j1LevelManager::PreUpdate()
-{
-	return true;
-}
-
-bool j1LevelManager::Update(float dt)
-{
-	return true;
-}
-
-bool j1LevelManager::PostUpdate()
-{
-	return true;
-}
-
 bool j1LevelManager::CleanUp()
 {
 	p2List_item<level*>* item;

@@ -124,12 +124,11 @@ public:
 	// Checks if the animation has to be changed
 	void CheckAnimation(state_list currentstate, state_list laststate);
 
-	state_list current_state;
 
 	// returns true if the grenade exists
 	bool GetGrenadeState();
 
-	// changes the stata of the grenade
+	// changes the stata of the grenade and resets cooldown
 	void SetGrenadeState(bool state);
 
 	// returns true if the player presses F9
@@ -146,7 +145,10 @@ public:
 
 	// changes godmode based on what is being requested
 	void SetGodmode(bool state);
-	
+
+public:
+	state_list current_state;
+
 private:
 	bool grenade;
 	bool god_mode;

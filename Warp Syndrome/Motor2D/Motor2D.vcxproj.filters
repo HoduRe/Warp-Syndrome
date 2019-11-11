@@ -123,9 +123,6 @@
     <ClInclude Include="j1Player.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Movement.h">
-      <Filter>Programming %28p2%29=========</Filter>
-    </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Programming %28p2%29=========</Filter>
     </ClInclude>

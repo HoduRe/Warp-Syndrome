@@ -68,7 +68,7 @@ bool j1Player::Start()
 	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
 	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
-	SetCurrentAnim(defaultanim);
+	currentAnim=defaultanim;
 	return ret;
 }
 
@@ -163,46 +163,13 @@ fPoint j1Player::GetPosition()
 	return  playerpos;
 }
 
-//returns true if player is flipped
-bool j1Player::GetFliped()
-{
-	return fliped;
-}
 
-void j1Player::SetFliped(bool flip)
-{
-	fliped = flip;
-}
-
-fPoint j1Player::GetVelocity()
-{
-	return playervel;
-}
 
 p2List<Animations*>* j1Player::GetAnimationList()
 {
 	return &playerAnimations;
 }
 
-void j1Player::SetCurrentAnim(p2List_item<Animations*>* animationpointer)
-{
-	currentAnim = animationpointer;
-}
-
-p2List_item<Animations*>* j1Player::GetCurrentAnim()
-{
-	return currentAnim;
-}
-
-FrameInfo* j1Player::GetCurrentFrame()
-{
-	return currentframe;
-}
-
-void j1Player::SetCurrentFrame(FrameInfo* frame)
-{
-	currentframe = frame;
-}
 
 SDL_Texture* j1Player::GetTexture() {
 	return playertexture;

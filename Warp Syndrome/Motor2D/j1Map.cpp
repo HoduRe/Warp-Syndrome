@@ -512,7 +512,7 @@ bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
 	{
 		Object* set = new Object;
 		set->id = currentobj.attribute("id").as_uint();
-		set->type = currentobj.attribute("type").as_string();
+		set->type = currentobj.attribute("type").as_int();
 		set->boundingbox.x = currentobj.attribute("x").as_int();
 		set->boundingbox.y = currentobj.attribute("y").as_int();
 		set->boundingbox.h = currentobj.attribute("height").as_int();

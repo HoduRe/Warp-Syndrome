@@ -80,7 +80,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
 		while (itemO != NULL)
 		{
-			current_collider_type = GetCurrentCollider(itemO->data->type.GetString());
+			current_collider_type = GetCurrentCollider(itemO->data->type);
 			switch (current_collider_type) {
 			case death_collider:
 			case regular_collider:
@@ -189,13 +189,13 @@ void j1Collision::GetBufferCollision(float collider_x, float collider_y, bool ho
 	}
 }
 
-collider_type j1Collision::GetCurrentCollider(p2SString name) {
-	if (name == "regular_collider") { return regular_collider;	}
-	else if (name == "grenade_collider") { return grenade_collider;	}
-	else if (name == "door_collider") { return door_collider;	}
-	else if (name == "starting_point") { return starting_point;	}
-	else if (name == "death_collider") { return death_collider;	}
-	else if (name == "under_platform_collider") { return under_platform_collider; }
+collider_type j1Collision::GetCurrentCollider(int id) {
+	if (id == 0) { return regular_collider;	}
+	else if (id == 1) { return grenade_collider;	}
+	else if (id == 2) { return door_collider;	}
+	else if (id == 4) { return starting_point;	}
+	else if (id == 5) { return death_collider;	}
+	else if (id == 3) { return under_platform_collider; }
 }
 
 //Called from the Map module every time a map is loaded
@@ -262,7 +262,7 @@ void j1Collision::PrintColliders() {
 		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
 		while (itemO != NULL)
 		{
-			aux_collider_type = App->collision->GetCurrentCollider(itemO->data->type.GetString());
+			aux_collider_type = App->collision->GetCurrentCollider(itemO->data->type);
 			rect.x = itemO->data->boundingbox.x;
 			rect.y = itemO->data->boundingbox.y;
 			rect.w = itemO->data->boundingbox.w;

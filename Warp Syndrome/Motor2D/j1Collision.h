@@ -102,7 +102,7 @@ public:
 	void PrintColliders();
 	
 	// gets the type of the current collider
-	collider_type GetCurrentCollider(p2SString name);
+	collider_type GetCurrentCollider(int id);
 
 public:
 	collision_type current_collision;

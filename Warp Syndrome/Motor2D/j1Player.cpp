@@ -225,7 +225,7 @@ bool j1Player::ResetPlayerToStart()
 		p2List_item<Object*>* object = group->data->objlist.start;
 		while (object != NULL && !found)
 		{
-			if (object->data->type == "starting_point")
+			if (object->data->type == 4)
 			{
 				startingpoint = object;
 				found = true;

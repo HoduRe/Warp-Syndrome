@@ -67,6 +67,12 @@
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Hell_horse.cpp">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire_skull.cpp">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -153,6 +159,12 @@
     <ClInclude Include="j1PathFinding.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Hell_horse.h">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire_skull.h">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Development============">
@@ -172,6 +184,9 @@
     </Filter>
     <Filter Include="Programming %28p2%29=========">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\Modules\Enemies">
+      <UniqueIdentifier>{e34267b6-1706-427c-b37f-fe4ae6ead85e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

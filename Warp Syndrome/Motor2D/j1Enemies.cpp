@@ -6,7 +6,8 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Enemy.h"
-
+#include "Hell_horse.h"
+#include "Fire_skull.h"
 
 #define SPAWN_MARGIN 50
 

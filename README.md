@@ -433,6 +433,10 @@ Update 0.2.5.2-debug
 -Grenade exploit that avoided death prevented
 </ul>
 
+Update 0.2.5.3-debug
+<ul>-Specific enemies types implemented
+</ul>
+
 
 ## Credits
 

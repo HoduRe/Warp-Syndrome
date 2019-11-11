@@ -3,12 +3,16 @@
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
+#include "Hell_horse.h"
+#include "Fire_skull.h"
 
 #define MAX_ENEMIES 100
 
 enum ENEMY_TYPES
 {
 	NO_TYPE,
+	HELL_HORSE,
+	FIRE_SKULL
 };
 
 class Enemy;
@@ -37,8 +41,6 @@ public:
 private:
 
 	void SpawnEnemy(const EnemyInfo& info);
-
-private:
 
 	EnemyInfo queue[MAX_ENEMIES];
 	Enemy* enemies[MAX_ENEMIES];

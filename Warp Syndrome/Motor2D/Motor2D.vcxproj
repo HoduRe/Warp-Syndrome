@@ -78,6 +78,8 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Fire_skull.cpp" />
+    <ClCompile Include="Hell_horse.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Enemies.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
@@ -102,6 +104,8 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Fire_skull.h" />
+    <ClInclude Include="Hell_horse.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Enemies.h" />
     <ClInclude Include="j1Grenade.h" />

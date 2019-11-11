@@ -19,7 +19,7 @@ Particle::Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTextur
 	texturesection = aTextureSection;
 	fPoint nullgravity = { 0.0f,0.0f };
 	if (gravityaccel == nullgravity)//if the input gravity is 0, set the world gravity instead of a local one
-		gravityaccel = App->particle_m->GetGravity();
+		gravityaccel = App->particle_m->gravity;
 
 	forces = { 0,0 };
 	fliped = false;
@@ -36,7 +36,7 @@ Particle::Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint a
 	texturesection = aTextureSection;
 	fPoint nullgravity = { 0.0f,0.0f };
 	if (gravityaccel == nullgravity)//if the input gravity is 0, set the world gravity instead of a local one
-		gravityaccel = App->particle_m->GetGravity();
+		gravityaccel = App->particle_m->gravity;
 
 	speed = { 0,0 };
 	forces = { 0,0 };
@@ -119,10 +119,10 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim.SetLoopable(false);
+		anim.animationloop=false;
 		lifespan = 1;
 	}
-	else anim.SetLoopable(true);
+	else anim.animationloop=true;
 }
 //dynamic particle constructor
 AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset) :Particle(pPos, pSpeed, aMass, pTexture, aLifespan, aGravity, aOffset)
@@ -135,10 +135,10 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim.SetLoopable(false);
+		anim.animationloop=false;
 		lifespan = 1;
 	}
-	else anim.SetLoopable(true);
+	else anim.animationloop=true;
 }
 AnimatedParticle::~AnimatedParticle()
 {
@@ -270,13 +270,4 @@ bool j1ParticleManager::DeleteParticle(Particle* particle)
 		item = item->next;
 	}
 	return ret;
-}
-
-fPoint j1ParticleManager::GetGravity()
-{
-	return gravity;
-}
-void j1ParticleManager::SetGravity(fPoint aGravity)
-{
-	gravity = aGravity;
 }

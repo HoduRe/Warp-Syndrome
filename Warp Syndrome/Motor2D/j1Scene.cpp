@@ -173,7 +173,7 @@ void j1Scene::RepositionCamera()
 {
 	////variables-------------------------------------------------------------------
 	fPoint playerpos = App->player->GetPosition();
-	bool playerfliped = App->player->GetFliped();
+	bool playerfliped = App->player->fliped;
 
 	//int scale = App->win->GetScale();
 	int camW = App->render->camera.w;
@@ -218,7 +218,7 @@ void j1Scene::RepositionCamera()
 float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 {
 	float newcamX = camera.x;
-	float playervel = App->player->GetVelocity().x;
+	float playervel = App->player->playervel.x;
 	float camdisplacementvel = playervel * 3;
 
 	if (camaccel.x > 1.0f)camaccel.x = 1.0f;

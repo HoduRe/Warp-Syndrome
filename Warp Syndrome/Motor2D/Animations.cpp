@@ -127,16 +127,12 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 
 }
 
-p2SString Animations::GetName()
-{
-	return animationname;
-}
 p2List_item<Animations*>* Animations::GetAnimFromName(p2SString name, p2List<Animations*>* animlist)
 {
 	p2List_item<Animations*>* animitem = animlist->start;
 	while (animitem != NULL)
 	{
-		if (animitem->data->GetName() == name)
+		if (animitem->data->animationname == name)
 		{
 			break;
 		}
@@ -158,13 +154,4 @@ void Animations::ResetAnimation()
 
 	currentanimframe = animationframes.start;
 	animationfinished = false;
-}
-
-bool Animations::GetLoopable()
-{
-	return animationloop;
-}
-void Animations::SetLoopable(bool loopable)
-{
-	animationloop = loopable;
 }

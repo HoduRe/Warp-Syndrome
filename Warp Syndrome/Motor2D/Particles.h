@@ -78,16 +78,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	fPoint GetGravity();
-	void SetGravity(fPoint aGravity);
-
+	
 	void AddParticle(Particle* particle);
 	bool DeleteParticle(Particle* particle);
+public:
+	fPoint gravity;
 
 private:
 	p2List<Particle*> particles;
 	
-	fPoint gravity;
 };
 
 #endif // !__PARTICLES_H__

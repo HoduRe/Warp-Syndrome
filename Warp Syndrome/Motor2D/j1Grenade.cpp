@@ -31,8 +31,8 @@ bool j1Grenade::Start() {
 	anim_list = App->player->GetAnimationList();
 	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
 	grenade_texture = App->player->GetTexture();
-	grenade_vel.x = App->player->GetVelocity().x * 3 / 2;
-	grenade_vel.y = App->player->GetVelocity().y;
+	grenade_vel.x = App->player->playervel.x * 3 / 2;
+	grenade_vel.y = App->player->playervel.y;
 
 	return true;
 }
@@ -140,7 +140,7 @@ void j1Grenade::GrenadeState() {
 		grenade_position.x = App->player->GetPosition().x;
 		grenade_position.y = App->player->GetPosition().y - App->player->GetWidthHeight().x;
 		grenade_timer.x = grenade_vel.x;
-		switch (App->player->GetFliped()) {
+		switch (App->player->fliped) {
 		case true:
 			grenade_state = GST_MOVING_LEFT_UP;
 			break;

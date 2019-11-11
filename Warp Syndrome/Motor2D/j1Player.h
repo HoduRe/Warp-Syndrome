@@ -44,21 +44,9 @@ public:
 	void AddPosition(float x, float y);
 
 	fPoint GetPosition();
-	fPoint GetVelocity();
-
-	bool GetFliped();
-
-	void SetFliped(bool flip);
 
 	p2List<Animations*>* GetAnimationList();
 	
-	p2List_item<Animations*>* GetCurrentAnim();
-
-	FrameInfo* GetCurrentFrame();
-	void SetCurrentFrame(FrameInfo* frame);
-
-	void SetCurrentAnim(p2List_item<Animations*>* animationpointer);
-
 	SDL_Texture* GetTexture();
 
 	iPoint GetWidthHeight();
@@ -67,21 +55,22 @@ public:
 
 	bool ResetPlayerToStart();
 
+public:
+	FrameInfo* currentframe;
+	fPoint playervel;
+	bool fliped;
+	p2List_item<Animations*>* currentAnim;
 
 private:
 	fPoint playerpos;
-	fPoint playervel;
 	iPoint hitbox_w_h;
 	p2List<Animations*> playerAnimations;
-	p2List_item<Animations*>* currentAnim;
-	FrameInfo* currentframe;
 	SDL_Event events;
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;
 	pugi::xml_node grenadenode;
 	p2SString filename;
 	SDL_Texture* playertexture;
-	bool fliped;
 };
 
 

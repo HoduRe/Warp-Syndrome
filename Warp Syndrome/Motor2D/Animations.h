@@ -42,12 +42,6 @@ public:
 	
 	FrameInfo* GetCurrentFrame();
 
-	p2SString GetName();
-
-	bool GetLoopable();
-	void SetLoopable(bool loopable);
-
-
 	//loads an animation from an animation node
 	//returns true if loaded correctly, false, if the number of frames loaded don't correspond to the one specified in the .xml 
 	bool LoadAnim(pugi::xml_node& animationnode);
@@ -56,10 +50,10 @@ public:
 
 	void ResetAnimation();
 
-private:
-	p2SString animationname; //name of the current animation
-	//SDL_Texture* texture;//pointer to the animation spritesheet
+public:
 	bool animationloop; //0 if the animation cannot loop / 1 if the animation can be looped
+	p2SString animationname; //name of the current animation
+private:
 	int numberofFrames; //Contains information about the number of frames this animation has
 	p2List_item<FrameInfo*>* currentanimframe;//pointer to the current frame of the animation	
 	p2List<FrameInfo*> animationframes; //list containing all the frames of the animation

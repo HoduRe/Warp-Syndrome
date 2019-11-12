@@ -1,5 +1,5 @@
-#ifndef __j1Enemies_H__
-#define __j1Enemies_H__
+#ifndef __J1ENEMYMANAGER_H__
+#define __J1ENEMYMANAGER_H__
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
@@ -23,12 +23,12 @@ struct EnemyInfo
 	int x, y;
 };
 
-class j1Enemies : public j1Module
+class j1EnemyManager : public j1Module
 {
 public:
 
-	j1Enemies();
-	~j1Enemies();
+	j1EnemyManager();
+	~j1EnemyManager();
 
 	bool Start();
 	bool PreUpdate();
@@ -47,4 +47,4 @@ private:
 	SDL_Texture* sprites;
 };
 
-#endif // __j1Enemies_H__
+#endif // __J1ENEMYMANAGER_H__

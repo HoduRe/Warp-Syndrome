@@ -15,7 +15,7 @@
 #include "j1Collision.h"
 #include "j1State.h"
 #include "j1Grenade.h"
-#include "j1Enemies.h"
+#include "j1EnemyManager.h"
 #include "j1PathFinding.h"
 #include "Particles.h"
 #include "transitions.h"
@@ -40,7 +40,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	grenade = new j1Grenade();
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
-	enemies = new j1Enemies();
+	enemies = new j1EnemyManager();
 	particle_m = new j1ParticleManager();
 	pathfinding = new j1PathFinding();
 

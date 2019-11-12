@@ -58,12 +58,6 @@
     <ClCompile Include="Particles.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemies.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Programming %28p2%29=========</Filter>
-    </ClCompile>
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
@@ -72,6 +66,12 @@
     </ClCompile>
     <ClCompile Include="Fire_skull.cpp">
       <Filter>Development============\Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EnemyManager.cpp">
+      <Filter>Development============\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,12 +150,6 @@
     <ClInclude Include="Particles.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemies.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Programming %28p2%29=========</Filter>
-    </ClInclude>
     <ClInclude Include="j1PathFinding.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
@@ -164,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="Fire_skull.h">
       <Filter>Development============\Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Development============\Modules\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EnemyManager.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

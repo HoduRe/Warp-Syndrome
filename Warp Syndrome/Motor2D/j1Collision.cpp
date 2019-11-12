@@ -114,7 +114,7 @@ void j1Collision::CheckLoop(fPoint *position, fPoint *measures, object_colliding
 					collision_array[current_collision] = current_collision;
 				}
 				break;
-			case starting_point:
+			default:
 				break;
 			}
 
@@ -196,6 +196,7 @@ collider_type j1Collision::GetCurrentCollider(int id) {
 	else if (id == 4) { return starting_point;	}
 	else if (id == 5) { return death_collider;	}
 	else if (id == 3) { return under_platform_collider; }
+	else { return unknown_collider; }
 }
 
 //Called from the Map module every time a map is loaded

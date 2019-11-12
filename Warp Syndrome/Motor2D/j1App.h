@@ -19,7 +19,7 @@ class j1State;
 class j1Grenade;
 class j1LevelManager;
 class j1Transitions;
-class j1Enemies;
+class j1EnemyManager;
 class j1ParticleManager;
 class j1PathFinding;
 
@@ -98,7 +98,7 @@ public:
 	j1Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
-	j1Enemies*			enemies;
+	j1EnemyManager*			enemies;
 	j1ParticleManager*  particle_m;
 	j1PathFinding*		pathfinding;
 

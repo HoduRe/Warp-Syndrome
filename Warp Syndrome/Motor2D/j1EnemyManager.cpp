@@ -1,7 +1,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
-#include "j1Enemies.h"
+#include "j1EnemyManager.h"
 #include "j1Textures.h"
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -11,18 +11,18 @@
 
 #define SPAWN_MARGIN 50
 
-j1Enemies::j1Enemies()
+j1EnemyManager::j1EnemyManager()
 {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 		enemies[i] = nullptr;
 }
 
 // Destructor
-j1Enemies::~j1Enemies()
+j1EnemyManager::~j1EnemyManager()
 {
 }
 
-bool j1Enemies::Start()
+bool j1EnemyManager::Start()
 {
 	// Create a prototype for each enemy available so we can copy them around
 	sprites = App->tex->Load("rtype/enemies.png");
@@ -30,7 +30,7 @@ bool j1Enemies::Start()
 	return true;
 }
 
-bool j1Enemies::PreUpdate()
+bool j1EnemyManager::PreUpdate()
 {
 	// check camera position to decide what to spawn
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
@@ -50,7 +50,7 @@ bool j1Enemies::PreUpdate()
 }
 
 // Called before render is available
-bool j1Enemies::Update(float dt)
+bool j1EnemyManager::Update(float dt)
 {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 		if(enemies[i] != nullptr) enemies[i]->Move();
@@ -61,7 +61,7 @@ bool j1Enemies::Update(float dt)
 	return true;
 }
 
-bool j1Enemies::PostUpdate()
+bool j1EnemyManager::PostUpdate()
 {
 	// check camera position to decide what to spawn
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
@@ -81,7 +81,7 @@ bool j1Enemies::PostUpdate()
 }
 
 // Called before quitting
-bool j1Enemies::CleanUp()
+bool j1EnemyManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 
@@ -99,7 +99,7 @@ bool j1Enemies::CleanUp()
 	return true;
 }
 
-bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
+bool j1EnemyManager::AddEnemy(ENEMY_TYPES type, int x, int y)
 {
 	bool ret = false;
 
@@ -118,7 +118,7 @@ bool j1Enemies::AddEnemy(ENEMY_TYPES type, int x, int y)
 	return ret;
 }
 
-void j1Enemies::SpawnEnemy(const EnemyInfo& info)
+void j1EnemyManager::SpawnEnemy(const EnemyInfo& info)
 {
 	// find room for the new enemy
 	uint i = 0;

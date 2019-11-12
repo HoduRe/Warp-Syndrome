@@ -4,7 +4,6 @@
 
 Enemy_FireSkull::Enemy_FireSkull(int x, int y) : Enemy(x, y)
 {
-//	fly.PushBack({ 5,6,24,24 });
 	
 	animation = &fly;
 

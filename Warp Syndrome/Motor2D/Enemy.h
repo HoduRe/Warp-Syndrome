@@ -6,7 +6,6 @@
 #include "j1Collision.h"
 
 struct SDL_Texture;
-struct Collider;
 
 class Enemy
 {
@@ -16,12 +15,11 @@ protected:
 
 public:
 	iPoint position;
+	bool enabled;
 
 public:
 	Enemy(int x, int y);
 	virtual ~Enemy();
-
-	const collision_type GetCollider() const;
 
 	virtual void Move() {};
 	virtual void Draw(SDL_Texture* sprites);

@@ -15,7 +15,8 @@ struct collider_buffer {
 enum object_colliding {
 	OBJECT_UNKNOWN,
 	OBJECT_PLAYER,
-	OBJECT_GRENADE
+	OBJECT_GRENADE,
+	OBJECT_ENEMY
 };
 
 enum collider_type {
@@ -24,7 +25,11 @@ enum collider_type {
 	door_collider,
 	under_platform_collider,
 	starting_point,
-	death_collider
+	death_collider,
+	enemy_elemental,
+	enemy_horse,
+	enemy_skull,
+	unknown_collider
 };
 
 enum collision_type {

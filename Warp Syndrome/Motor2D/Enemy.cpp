@@ -4,19 +4,14 @@
 #include "Particles.h"
 #include "j1Render.h"
 
-Enemy::Enemy(int x, int y) : position(x, y)
-{}
+Enemy::Enemy(int x, int y) : position(x, y){
+	enabled = false;
+}
 
 Enemy::~Enemy()
 {}
 
-const collision_type Enemy::GetCollider() const
-{
-	return collider;
-}
-
-void Enemy::Draw(SDL_Texture* sprites)
-{
+void Enemy::Draw(SDL_Texture* sprites) {
 //	if (animation != nullptr)
 //		App->render->Blit(sprites, position.x, position.y, &(animation->GetFrame(0)));
 }

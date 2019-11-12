@@ -1,0 +1,11 @@
+-Definir en quins punts apareixen els enemics
+-Posar-los tots dins d'una llista
+-Fer els path de lògica enabled-disabled (module enemy manager)
+-Fer la lògica de l'enabled per cada enemic
+
+
+elemental = 6
+horse = 7
+skull = 8
+
+

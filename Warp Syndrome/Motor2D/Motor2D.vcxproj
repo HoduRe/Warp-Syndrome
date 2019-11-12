@@ -81,7 +81,7 @@
     <ClCompile Include="Fire_skull.cpp" />
     <ClCompile Include="Hell_horse.cpp" />
     <ClCompile Include="j1Collision.cpp" />
-    <ClCompile Include="j1Enemies.cpp" />
+    <ClCompile Include="j1EnemyManager.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -107,7 +107,7 @@
     <ClInclude Include="Fire_skull.h" />
     <ClInclude Include="Hell_horse.h" />
     <ClInclude Include="j1Collision.h" />
-    <ClInclude Include="j1Enemies.h" />
+    <ClInclude Include="j1EnemyManager.h" />
     <ClInclude Include="j1Grenade.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1PathFinding.h" />

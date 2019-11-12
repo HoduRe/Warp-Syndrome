@@ -452,10 +452,12 @@ Bart for "The adventure begins": https://www.patreon.com/opengameart <br>
 Phillip Miller for "battle_music_01-loop": https://opengameart.org/users/pmiller <br>
 Matriax for the inca-themed tileset: https://kronbits.itch.io/ <br>
 ansimuz for his background used in parallax and his living tissue tileset: https://ansimuz.itch.io/magic-cliffs-environment <br>
+and also for his gothicvania sprites: https://ansimuz.itch.io/gothicvania-patreon-collection <br>
 Jetrel for his stone tilesets: https://opengameart.org/users/jetrel <br>
 rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <br>
-Gamemaseter audio for the grenade teleport sound: https://sonniss.com/sound-effects/magic-spell-sounds/
-Soundrangers for the death sound: https://sonniss.com/sound-effects/hydrology-bubbles-splashes/
+Gamemaseter audio for the grenade teleport sound: https://sonniss.com/sound-effects/magic-spell-sounds/ <br>
+Soundrangers for the death sound: https://sonniss.com/sound-effects/hydrology-bubbles-splashes/ <br>
+Elthen for his elemental pixelart sprites: https://elthen.itch.io/ice-elemental <br>
 <br>
 <br>
 Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 

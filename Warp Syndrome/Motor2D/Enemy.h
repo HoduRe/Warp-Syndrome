@@ -18,6 +18,7 @@ public:
 	bool enabled;
 
 public:
+	Enemy();
 	Enemy(int x, int y);
 	virtual ~Enemy();
 

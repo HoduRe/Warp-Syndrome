@@ -193,9 +193,12 @@ collider_type j1Collision::GetCurrentCollider(int id) {
 	if (id == 0) { return regular_collider;	}
 	else if (id == 1) { return grenade_collider;	}
 	else if (id == 2) { return door_collider;	}
+	else if (id == 3) { return under_platform_collider; }
 	else if (id == 4) { return starting_point;	}
 	else if (id == 5) { return death_collider;	}
-	else if (id == 3) { return under_platform_collider; }
+	else if (id == 6) { return enemy_elemental; }
+	else if (id == 7) { return enemy_horse; }
+	else if (id == 8) { return enemy_skull; }
 	else { return unknown_collider; }
 }
 

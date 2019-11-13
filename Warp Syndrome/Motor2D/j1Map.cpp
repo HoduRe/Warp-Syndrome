@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Collision.h"
+#include "j1EnemyManager.h"
 #include "j1Scene.h"
 #include <math.h>
 
@@ -517,6 +518,20 @@ bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
 		set->boundingbox.y = currentobj.attribute("y").as_int();
 		set->boundingbox.h = currentobj.attribute("height").as_int();
 		set->boundingbox.w = currentobj.attribute("width").as_int();
+
+		switch (set->type) {
+		case 6:
+			App->enemies->AddEnemy(enemy_elemental, set->boundingbox.x, set->boundingbox.y);
+			break;
+		case 7:
+			App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);
+			break;
+		case 8:
+			App->enemies->AddEnemy(enemy_skull, set->boundingbox.x, set->boundingbox.y);
+			break;
+		default:
+			break;
+		}
 
 		group->objlist.add(set);
 	}

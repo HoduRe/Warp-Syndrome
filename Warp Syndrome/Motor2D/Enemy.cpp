@@ -4,6 +4,8 @@
 #include "Particles.h"
 #include "j1Render.h"
 
+Enemy::Enemy(){}
+
 Enemy::Enemy(int x, int y) : position(x, y){
 	enabled = false;
 }

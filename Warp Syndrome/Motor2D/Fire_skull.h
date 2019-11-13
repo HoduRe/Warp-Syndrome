@@ -12,6 +12,7 @@ private:
 public:
 
 	Enemy_FireSkull(int x, int y);
+	~Enemy_FireSkull();
 
 	void Move();
 };

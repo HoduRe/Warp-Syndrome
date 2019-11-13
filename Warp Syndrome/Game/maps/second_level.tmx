@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="160" height="400" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="319">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="160" height="400" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="329">
  <properties>
   <property name="Music" value="audio/music/battle_music_01-loop.ogg"/>
  </properties>
@@ -164148,7 +164148,7 @@
    <tile gid="245"/>
    <tile gid="246"/>
    <tile gid="246"/>
-   <tile gid="247"/>
+   <tile gid="392"/>
    <tile/>
    <tile/>
    <tile/>
@@ -164308,7 +164308,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="392"/>
    <tile gid="392"/>
    <tile gid="197"/>
    <tile gid="198"/>
@@ -192139,7 +192139,7 @@
   <object id="249" type="0" x="1056" y="9792" width="96" height="1024"/>
   <object id="250" type="0" x="4352" y="6464" width="768" height="2240"/>
   <object id="251" type="0" x="4224" y="6592" width="192" height="2112"/>
-  <object id="252" type="0" x="3776" y="6496" width="128" height="736"/>
+  <object id="252" type="0" x="3776" y="6496" width="128" height="704"/>
   <object id="253" type="0" x="3872" y="6496" width="160" height="352"/>
   <object id="254" type="0" x="4064" y="6880" width="192" height="64"/>
   <object id="255" type="0" x="3936" y="7232" width="288" height="1472"/>
@@ -192197,7 +192197,7 @@
   <object id="308" type="5" x="2048" y="6661" width="64" height="27"/>
   <object id="309" type="5" x="1664" y="7429" width="448" height="27"/>
   <object id="310" type="5" x="2240" y="7461.5" width="544" height="26.5"/>
-  <object id="311" type="grenade_collider" x="3904" y="7232" width="32" height="32"/>
+  <object id="311" type="1" x="3893.67" y="7232" width="42.3333" height="32"/>
   <object id="312" type="2" x="4329" y="6580.25" width="11.125" height="14.375"/>
   <object id="313" type="0" x="608" y="9920" width="192" height="32"/>
   <object id="314" type="0" x="768" y="9312" width="32" height="640"/>
@@ -192205,5 +192205,15 @@
   <object id="316" type="0" x="416" y="9120" width="32" height="192"/>
   <object id="317" type="0" x="4032" y="6912" width="320" height="640"/>
   <object id="318" type="0" x="2432" y="6400" width="224" height="32"/>
+  <object id="319" type="0" x="3776" y="7168" width="96" height="64"/>
+  <object id="320" type="1" x="3872" y="7200" width="32" height="64"/>
+  <object id="321" type="7" x="3584" y="7200" width="32" height="32"/>
+  <object id="322" type="8" x="1728" y="4480" width="32" height="32"/>
+  <object id="323" type="8" x="128" y="2944" width="32" height="32"/>
+  <object id="324" type="8" x="576" y="5152" width="32" height="32"/>
+  <object id="325" type="8" x="64" y="1920" width="32" height="32"/>
+  <object id="326" type="8" x="96" y="1664" width="32" height="32"/>
+  <object id="327" type="8" x="320" y="1376" width="32" height="32"/>
+  <object id="328" type="8" x="864" y="1376" width="32" height="32"/>
  </objectgroup>
 </map>

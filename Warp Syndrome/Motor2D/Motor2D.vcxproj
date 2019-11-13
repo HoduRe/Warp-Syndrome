@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fire_skull.cpp" />
     <ClCompile Include="Hell_horse.cpp" />
@@ -103,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fire_skull.h" />
     <ClInclude Include="Hell_horse.h" />

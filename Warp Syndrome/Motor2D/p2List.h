@@ -69,7 +69,7 @@ public:
 	/**
 	* Add new item
 	*/
-	p2List_item<tdata>* add(const tdata& item)
+	p2List_item<tdata>* add(tdata& item)
 	{
 		p2List_item<tdata>*   p_data_item;
 		p_data_item = new p2List_item < tdata >(item);

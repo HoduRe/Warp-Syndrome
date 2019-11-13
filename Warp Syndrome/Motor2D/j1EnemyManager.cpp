@@ -3,24 +3,22 @@
 #include "j1Render.h"
 #include "j1EnemyManager.h"
 #include "j1Textures.h"
+#include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Enemy.h"
 #include "Hell_horse.h"
 #include "Fire_skull.h"
 
-#define SPAWN_MARGIN 50
+#define SPAWN_DISTANCE 25
 
-j1EnemyManager::j1EnemyManager()
-{
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		enemies[i] = nullptr;
+j1EnemyManager::j1EnemyManager() {
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		enemy_list[i] = nullptr;
+	}
 }
 
-// Destructor
-j1EnemyManager::~j1EnemyManager()
-{
-}
+j1EnemyManager::~j1EnemyManager() {}
 
 bool j1EnemyManager::Start()
 {
@@ -32,17 +30,10 @@ bool j1EnemyManager::Start()
 
 bool j1EnemyManager::PreUpdate()
 {
-	// check camera position to decide what to spawn
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if(queue[i].type != ENEMY_TYPES::NO_TYPE)
-		{
-			if(queue[i].x < App->render->camera.x + App->render->camera.w + SPAWN_MARGIN)
-			{
-				SpawnEnemy(queue[i]);
-				queue[i].type = ENEMY_TYPES::NO_TYPE;
-				LOG("Spawning enemy at %d", queue[i].x);
-			}
+	// Enables enemies
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
+			enemy_list[i]->enabled = true;
 		}
 	}
 
@@ -53,27 +44,20 @@ bool j1EnemyManager::PreUpdate()
 bool j1EnemyManager::Update(float dt)
 {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		if(enemies[i] != nullptr) enemies[i]->Move();
+		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true) enemy_list[i]->Move();
 
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		if(enemies[i] != nullptr) enemies[i]->Draw(sprites);
-
+		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true) enemy_list[i]->Draw(sprites);
+	
 	return true;
 }
 
 bool j1EnemyManager::PostUpdate()
 {
-	// check camera position to decide what to spawn
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if(enemies[i] != nullptr)
-		{
-			if(enemies[i]->position.x < (App->render->camera.x) - SPAWN_MARGIN)
-			{
-				LOG("DeSpawning enemy at %d", enemies[i]->position.x);
-				delete enemies[i];
-				enemies[i] = nullptr;
-			}
+	// Disables dead enemies
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) > SPAWN_DISTANCE) {
+			enemy_list[i]->enabled = false;
 		}
 	}
 
@@ -89,47 +73,45 @@ bool j1EnemyManager::CleanUp()
 
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if(enemies[i] != nullptr)
+		if(enemy_list[i] != nullptr)
 		{
-			delete enemies[i];
-			enemies[i] = nullptr;
+			delete enemy_list[i];
+			enemy_list[i] = nullptr;
 		}
 	}
-
+	
 	return true;
 }
 
-bool j1EnemyManager::AddEnemy(ENEMY_TYPES type, int x, int y)
-{
-	bool ret = false;
-
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if(queue[i].type == ENEMY_TYPES::NO_TYPE)
-		{
-			queue[i].type = type;
-			queue[i].x = x;
-			queue[i].y = y;
-			ret = true;
-			break;
+void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
+	switch (type) {
+	case enemy_elemental:
+		for (int i = 0; i < MAX_ENEMIES; i++) {
+			if (enemy_list[i] == nullptr) {
+				enemy_list[i] = new Enemy_Elemental(x, y);
+			}
 		}
+		break;
+	case enemy_horse:
+		for (int i = 0; i < MAX_ENEMIES; i++) {
+			if (enemy_list[i] == nullptr) {
+				enemy_list[i] = new Enemy_HellHorse(x, y);
+			}
+		}
+		break;
+	case enemy_skull:
+		for (int i = 0; i < MAX_ENEMIES; i++) {
+			if (enemy_list[i] == nullptr) {
+				enemy_list[i] = new Enemy_FireSkull(x, y);
+			}
+		}
+		break;
+	default:
+		break;
 	}
-
-	return ret;
 }
 
-void j1EnemyManager::SpawnEnemy(const EnemyInfo& info)
-{
-	// find room for the new enemy
-	uint i = 0;
-	for(; enemies[i] != nullptr && i < MAX_ENEMIES; ++i);
-
-	if(i != MAX_ENEMIES)
-	{
-		switch(info.type)
-		{
-		default:
-			break;
-		}
-	}
+int j1EnemyManager::CheckDistance(int x, int y) {
+	return sqrt((App->player->GetPosition().x - x) * (App->player->GetPosition().x - x) +
+		(App->player->GetPosition().y - y) * (App->player->GetPosition().y - y));
 }

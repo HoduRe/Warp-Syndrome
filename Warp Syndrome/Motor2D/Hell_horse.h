@@ -11,7 +11,9 @@ private:
 
 public:
 
+	Enemy_HellHorse();
 	Enemy_HellHorse(int x, int y);
+	~Enemy_HellHorse();
 
 	void Move();
 };

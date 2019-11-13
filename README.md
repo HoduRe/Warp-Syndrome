@@ -437,6 +437,12 @@ Update 0.2.5.3-debug
 <ul>-Specific enemies types implemented
 </ul>
 
+Update 0.2.5.4-debug
+<ul>-Enemies loop implemented<br>
+-Elemental enemy type implemented<br>
+-Tiled colliders type changed to numerical internal inputs
+</ul>
+
 
 ## Credits
 

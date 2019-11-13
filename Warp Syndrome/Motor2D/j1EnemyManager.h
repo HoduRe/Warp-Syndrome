@@ -5,23 +5,11 @@
 #include "SDL/include/SDL.h"
 #include "Hell_horse.h"
 #include "Fire_skull.h"
+#include "Elemental.h"
 
-#define MAX_ENEMIES 100
-
-enum ENEMY_TYPES
-{
-	NO_TYPE,
-	HELL_HORSE,
-	FIRE_SKULL
-};
+#define MAX_ENEMIES 40
 
 class Enemy;
-
-struct EnemyInfo
-{
-	ENEMY_TYPES type = ENEMY_TYPES::NO_TYPE;
-	int x, y;
-};
 
 class j1EnemyManager : public j1Module
 {
@@ -36,14 +24,15 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	bool AddEnemy(ENEMY_TYPES type, int x, int y);
+	// Adds an enemy to the array
+	void AddEnemy(collider_type type, int x, int y);
+
+	// Checks distance between player and enemy
+	int CheckDistance(int x, int y);
 
 private:
 
-	void SpawnEnemy(const EnemyInfo& info);
-
-	EnemyInfo queue[MAX_ENEMIES];
-	Enemy* enemies[MAX_ENEMIES];
+	Enemy *enemy_list[MAX_ENEMIES];
 	SDL_Texture* sprites;
 };
 

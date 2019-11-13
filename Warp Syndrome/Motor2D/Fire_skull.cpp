@@ -10,6 +10,8 @@ Enemy_FireSkull::Enemy_FireSkull(int x, int y) : Enemy(x, y)
 	original_y = y;
 }
 
+Enemy_FireSkull::~Enemy_FireSkull() {}
+
 void Enemy_FireSkull::Move() {
 
 }

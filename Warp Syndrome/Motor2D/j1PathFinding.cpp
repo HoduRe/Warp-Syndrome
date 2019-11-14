@@ -189,7 +189,7 @@ int PathNode::CalculateF(int originG, const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	PathList frontier;
 	PathList visited;
@@ -238,7 +238,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				else { stop = true; }
 			} while (stop == false);
 			last_path.Flip();
-			return 0;
+			return last_path;
 		}
 
 		// TODO 5: Fill a list of all adjancent nodes

@@ -3,6 +3,7 @@
 
 #include "p2Point.h"
 #include "Animations.h"
+#include "p2DynArray.h"
 #include "j1Collision.h"
 
 struct SDL_Texture;
@@ -16,6 +17,7 @@ protected:
 public:
 	iPoint position;
 	bool enabled;
+	p2DynArray<iPoint> path;
 
 public:
 	Enemy();
@@ -24,6 +26,7 @@ public:
 
 	virtual void Move() {};
 	virtual void Draw(SDL_Texture* sprites);
+	void GeneralMove(int *x, int *y, p2DynArray<iPoint>& path){}
 };
 
 #endif // __ENEMY_H__

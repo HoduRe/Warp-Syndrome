@@ -6,8 +6,6 @@
 class Enemy_HellHorse : public Enemy
 {
 private:
-	int original_y = 0;
-	Animations move;
 
 public:
 

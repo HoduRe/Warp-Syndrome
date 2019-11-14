@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1EnemyManager.h"
 #include "j1Textures.h"
+#include "j1PathFinding.h"
 #include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -31,9 +32,14 @@ bool j1EnemyManager::Start()
 bool j1EnemyManager::PreUpdate()
 {
 	// Enables enemies
+	iPoint player_pos;
+	player_pos.x = App->player->GetPosition().x / App->map->data.tile_width;
+	player_pos.y = App->player->GetPosition().y / App->map->data.tile_height;
+
 	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = true;
+			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_list[i]->position);
 		}
 	}
 
@@ -70,11 +76,12 @@ bool j1EnemyManager::CleanUp()
 	LOG("Freeing all enemies");
 
 	App->tex->UnLoad(sprites);
-
+	
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 	{
 		if(enemy_list[i] != nullptr)
 		{
+			enemy_list[i]->path.Clear();
 			delete enemy_list[i];
 			enemy_list[i] = nullptr;
 		}

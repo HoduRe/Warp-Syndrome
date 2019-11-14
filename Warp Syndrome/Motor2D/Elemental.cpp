@@ -13,5 +13,5 @@ Enemy_Elemental::Enemy_Elemental(int x, int y) : Enemy(x, y)
 Enemy_Elemental::~Enemy_Elemental() {}
 
 void Enemy_Elemental::Move() {
-
+	GeneralMove(&position.x, &position.y, path);
 }

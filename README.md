@@ -443,6 +443,10 @@ Update 0.2.5.4-debug
 -Tiled colliders type changed to numerical internal inputs
 </ul>
 
+Update 0.2.5.5-debug
+<ul>-Enemies movement implemented
+</ul>
+
 
 ## Credits
 

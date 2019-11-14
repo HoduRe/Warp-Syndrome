@@ -5,9 +5,6 @@
 
 class Enemy_FireSkull : public Enemy
 {
-private:
-	int original_y = 0;
-	Animations fly;
 
 public:
 

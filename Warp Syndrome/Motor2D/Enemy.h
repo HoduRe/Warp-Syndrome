@@ -9,11 +9,9 @@ struct SDL_Texture;
 
 class Enemy
 {
-protected:
-	Animations* animation = nullptr;
-	collision_type collider = LAST_COLLISION;
-
 public:
+	p2List<Animations> animations;//list of animations that the enemy will use when active (this has to be a copy of the correct p2List member of the EnemyAnimations Struct)
+	collision_type collider = LAST_COLLISION;
 	iPoint position;
 	bool enabled;
 

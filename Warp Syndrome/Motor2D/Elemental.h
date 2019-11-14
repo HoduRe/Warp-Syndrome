@@ -5,10 +5,6 @@
 
 class Enemy_Elemental : public Enemy
 {
-private:
-	int original_y = 0;
-	Animations move;
-
 public:
 
 	Enemy_Elemental(int x, int y);

@@ -35,5 +35,9 @@
 <player>
   <load docname="player.xml"/>
 </player>
+<enemies>
+  <load docname="enemies.xml"/>
+</enemies>
+
 
 </config>

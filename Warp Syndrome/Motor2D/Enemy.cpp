@@ -6,7 +6,10 @@
 
 Enemy::Enemy(){}
 
-Enemy::Enemy(int x, int y) : position(x, y){
+Enemy::Enemy(int x, int y){
+	position.x = x;
+	position.y = y;
+	//FERRAN the animation is in the parent class, so you don't need to change all the constructors, only this one adding the animation. The animation list variable is in the .h
 	enabled = false;
 }
 

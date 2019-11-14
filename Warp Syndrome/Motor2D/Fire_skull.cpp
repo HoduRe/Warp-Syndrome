@@ -4,10 +4,6 @@
 
 Enemy_FireSkull::Enemy_FireSkull(int x, int y) : Enemy(x, y)
 {
-	
-	animation = &fly;
-
-	original_y = y;
 }
 
 Enemy_FireSkull::~Enemy_FireSkull() {}

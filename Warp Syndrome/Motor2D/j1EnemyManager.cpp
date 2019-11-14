@@ -128,6 +128,7 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 
 	//first loads the correct animation from the list
 	p2List_item<EnemyAnimations*>* item = enemies_animation_list.start;
+	anim_item = nullptr;
 	while (item != NULL)
 	{
 		if (item->data->enemy_type == type)//copies the animation list for this current enemy
@@ -170,8 +171,8 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {
-	return sqrt((App->player->GetPosition().x - x) * (App->player->GetPosition().x - x) +
-		(App->player->GetPosition().y - y) * (App->player->GetPosition().y - y));
+	return sqrt((App->player->GetPosition().x / App->map->data.tile_height - x / App->map->data.tile_height) * (App->player->GetPosition().x / App->map->data.tile_height - x / App->map->data.tile_height) +
+		(App->player->GetPosition().y / App->map->data.tile_height - y / App->map->data.tile_height) * (App->player->GetPosition().y / App->map->data.tile_height - y / App->map->data.tile_height));
 }
 
 //imput the enemy node and the list you 

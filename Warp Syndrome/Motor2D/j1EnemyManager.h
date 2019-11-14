@@ -40,6 +40,8 @@ public:
 	//Loads aniamtions from node
 	bool LoadAnimations(pugi::xml_node& rootnode, p2List_item<EnemyAnimations*>* animlist);
 
+	p2List<Animations>* anim_item = nullptr;
+
 private:
 	p2List<EnemyAnimations*> enemies_animation_list; //FERRAN this is the list whith all the data, there's one item for enemy, each containing the enemy id and a list of animations for that enemy, it is loaded when starting the program. Loads Perfectly
 	Enemy *enemy_list[MAX_ENEMIES];

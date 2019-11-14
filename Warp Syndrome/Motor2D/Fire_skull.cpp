@@ -2,9 +2,9 @@
 #include "Fire_Skull.h"
 #include "j1Collision.h"
 
-Enemy_FireSkull::Enemy_FireSkull(int x, int y) : Enemy(x, y)
-{
-}
+Enemy_FireSkull::Enemy_FireSkull() : Enemy(){}
+
+Enemy_FireSkull::Enemy_FireSkull(int x, int y) : Enemy(x, y) {}
 
 Enemy_FireSkull::~Enemy_FireSkull() {}
 

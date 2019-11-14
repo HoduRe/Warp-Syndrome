@@ -128,33 +128,29 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 		
 	//first loads the correct animation from the list
 	p2List_item<EnemyAnimations*>* item = enemies_animation_list.start;
-	p2List<Animations>* anim_item;
 	while (item!=NULL)
 	{
 		if (item->data->enemy_type==type)//copies the animation list for this current enemy
 			anim_item = &item->data->enemy_animations;//FERRAN anim_item is the correct p2_list that we are looking for (i tried to put this as a parameter when constructing the object, didn't work :C)
-		
-		item = item->next;
-	}
-	
+			
 	switch (type) {
 	case enemy_elemental:
 		for (int i = 0; i < MAX_ENEMIES; i++) {
-			if (enemy_list[i] == nullptr) {
+			if (enemy_list[i] == nullptr && anim_item != NULL) {
 				enemy_list[i] = new Enemy_Elemental(x, y);//FERRAN Enter a new parameter to the constructor, with the correct animation list
 			}
 		}
 		break;
 	case enemy_horse:
 		for (int i = 0; i < MAX_ENEMIES; i++) {
-			if (enemy_list[i] == nullptr) {
+			if (enemy_list[i] == nullptr && anim_item != NULL) {
 				enemy_list[i] = new Enemy_HellHorse(x, y);//FERRAN Enter a new parameter to the constructor, with the correct animation list
 			}
 		}
 		break;
 	case enemy_skull:
 		for (int i = 0; i < MAX_ENEMIES; i++) {
-			if (enemy_list[i] == nullptr) {
+			if (enemy_list[i] == nullptr && anim_item != NULL) {
 				enemy_list[i] = new Enemy_FireSkull(x, y);//FERRAN Enter a new parameter to the constructor, with the correct animation list
 			}
 		}
@@ -162,6 +158,9 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 	default:
 		break;
 	}
+	item = item->next;
+	}
+
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {

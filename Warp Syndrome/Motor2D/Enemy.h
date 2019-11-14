@@ -20,7 +20,7 @@ public:
 	Enemy(int x, int y);
 	virtual ~Enemy();
 
-	virtual void Move() {};
+	virtual void Move();
 	virtual void Draw(SDL_Texture* sprites);
 };
 

@@ -8,6 +8,7 @@ class Enemy_FireSkull : public Enemy
 
 public:
 
+	Enemy_FireSkull();
 	Enemy_FireSkull(int x, int y);
 	~Enemy_FireSkull();
 

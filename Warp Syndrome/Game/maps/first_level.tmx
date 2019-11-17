@@ -186421,15 +186421,15 @@
   <object id="134" type="1" x="2016" y="1174.67" width="32" height="414.667"/>
   <object id="135" type="1" x="1952" y="1755.5" width="32" height="169.5"/>
   <object id="136" type="3" x="4538" y="557" width="138" height="19"/>
-  <object id="138" type="6" x="5216" y="480" width="32" height="32"/>
-  <object id="139" type="6" x="6176" y="480" width="32" height="32"/>
-  <object id="140" type="6" x="6272" y="480" width="32" height="32"/>
-  <object id="141" type="6" x="6336" y="480" width="32" height="32"/>
-  <object id="142" type="6" x="6400" y="480" width="32" height="32"/>
-  <object id="143" type="6" x="6464" y="480" width="32" height="32"/>
-  <object id="144" type="6" x="6528" y="480" width="32" height="32"/>
-  <object id="145" type="6" x="6592" y="480" width="32" height="32"/>
-  <object id="146" type="6" x="6656" y="480" width="32" height="32"/>
-  <object id="147" type="6" x="6720" y="480" width="32" height="32"/>
+  <object id="138" type="6" x="5216" y="512" width="32" height="32"/>
+  <object id="139" type="6" x="6176" y="512" width="32" height="32"/>
+  <object id="140" type="6" x="6272" y="512" width="32" height="32"/>
+  <object id="141" type="6" x="6336" y="512" width="32" height="32"/>
+  <object id="142" type="6" x="6400" y="512" width="32" height="32"/>
+  <object id="143" type="6" x="6464" y="512" width="32" height="32"/>
+  <object id="144" type="6" x="6528" y="512" width="32" height="32"/>
+  <object id="145" type="6" x="6592" y="512" width="32" height="32"/>
+  <object id="146" type="6" x="6656" y="512" width="32" height="32"/>
+  <object id="147" type="6" x="6720" y="512" width="32" height="32"/>
  </objectgroup>
 </map>

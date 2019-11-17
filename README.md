@@ -447,6 +447,10 @@ Update 0.2.5.5-debug
 <ul>-Enemies movement implemented
 </ul>
 
+Update 0.2.5.6-debug
+<ul>-Pathfinding values adjusted
+</ul>
+
 
 ## Credits
 

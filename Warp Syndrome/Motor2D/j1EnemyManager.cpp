@@ -33,13 +33,17 @@ bool j1EnemyManager::PreUpdate()
 {
 	// Enables enemies
 	iPoint player_pos;
+	iPoint enemy_pos;
+	int distance;
 	player_pos.x = App->player->GetPosition().x / App->map->data.tile_width;
 	player_pos.y = App->player->GetPosition().y / App->map->data.tile_height;
-
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
+		enemy_pos.x = enemy_list[i]->position.x / App->map->data.tile_width;
+		enemy_pos.y = enemy_list[i]->position.y / App->map->data.tile_height;
+		distance = CheckDistance(enemy_pos.x, enemy_pos.y);
+		if (distance <= SPAWN_DISTANCE && distance >= -SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = true;
-			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_list[i]->position);
+			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_pos);
 		}
 	}
 
@@ -52,9 +56,8 @@ bool j1EnemyManager::Update(float dt)
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true) enemy_list[i]->Move();
 
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true) enemy_list[i]->Draw(sprites);
-	
+//	for(uint i = 0; i < MAX_ENEMIES; ++i)
+//BLIT	
 	return true;
 }
 
@@ -119,6 +122,6 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {
-	return sqrt((App->player->GetPosition().x - x) * (App->player->GetPosition().x - x) +
-		(App->player->GetPosition().y - y) * (App->player->GetPosition().y - y));
+	return App->player->GetPosition().x / App->map->data.tile_width - x +
+		App->player->GetPosition().y / App->map->data.tile_height - y;
 }

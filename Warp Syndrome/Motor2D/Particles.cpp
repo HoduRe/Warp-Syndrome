@@ -3,7 +3,9 @@
 #include "j1Textures.h"
 #include "Animations.h"
 #include "j1Player.h"
-#include"j1Input.h"
+#include "j1Input.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 //particle functions======================================================================
 	//dynamic particle constructor
 Particle::Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, SDL_Rect aTextureSection)
@@ -24,7 +26,7 @@ Particle::Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTextur
 	forces = { 0,0 };
 	fliped = false;
 }
-	//static particle constructor
+//static particle constructor
 Particle::Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, SDL_Rect aTextureSection)
 {
 	offset = aOffset;
@@ -111,7 +113,7 @@ bool Particle::IsDead()
 AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset) :Particle(pPos, pTexture, aLifespan, aGravity, aOffset)
 {
 
-	p2List<Animations*>* list = App->player->GetAnimationList();
+	p2List<Animations*>* list = App->entity_m->player->GetAnimationList();
 	p2List_item<Animations*>* item = list->start;
 	item = item->data->GetAnimFromName(aAnimName, list);
 	anim = *item->data;
@@ -119,15 +121,15 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim.animationloop=false;
+		anim.animationloop = false;
 		lifespan = 1;
 	}
-	else anim.animationloop=true;
+	else anim.animationloop = true;
 }
 //dynamic particle constructor
 AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset) :Particle(pPos, pSpeed, aMass, pTexture, aLifespan, aGravity, aOffset)
 {
-	p2List<Animations*>* list = App->player->GetAnimationList();
+	p2List<Animations*>* list = App->entity_m->player->GetAnimationList();
 	p2List_item<Animations*>* item = list->start;
 	item = item->data->GetAnimFromName(aAnimName, list);
 	anim = *item->data;
@@ -135,10 +137,10 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{
-		anim.animationloop=false;
+		anim.animationloop = false;
 		lifespan = 1;
 	}
-	else anim.animationloop=true;
+	else anim.animationloop = true;
 }
 AnimatedParticle::~AnimatedParticle()
 {

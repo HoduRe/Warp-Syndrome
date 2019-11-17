@@ -5,7 +5,8 @@
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Render.h"
-#include "j1Player.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 #include "j1Grenade.h"
 
 j1Render::j1Render() : j1Module()
@@ -268,10 +269,10 @@ void j1Render::PrintPlayerObjects() {
 	SDL_Rect rect;
 	uint alpha = 80;
 // Blits player
-	rect.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
-	rect.y = App->player->GetPosition().y - App->player->GetWidthHeight().y;
-	rect.w = App->player->GetWidthHeight().x;
-	rect.h = App->player->GetWidthHeight().y;
+	rect.x = App->entity_m->player->GetPosition().x - App->entity_m->player->GetWidthHeight().x / 2;
+	rect.y = App->entity_m->player->GetPosition().y - App->entity_m->player->GetWidthHeight().y;
+	rect.w = App->entity_m->player->GetWidthHeight().x;
+	rect.h = App->entity_m->player->GetWidthHeight().y;
 	DrawQuad(rect, 255, 255, 0, alpha);
 // Blits grenade
 	if (App->grenade->DoesGrenadeExist() == true) {

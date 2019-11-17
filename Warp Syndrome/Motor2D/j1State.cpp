@@ -12,6 +12,8 @@
 #include "Animations.h"
 #include "j1App.h"
 #include "level_manager.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 
 j1State::j1State() : j1Module() {
 	name.create("state");
@@ -29,7 +31,7 @@ bool j1State::Start() {
 	SetGrenadeState(false);
 	run_counter = 0;
 	jump_timer = 0;
-	wall_jump_timer = App->player->playervel.x;
+	wall_jump_timer = App->entity_m->player->speed.x;
 	wall_jump = SST_IDLE;
 	x_jumping_state = JST_IDLE;
 	y_jumping_state = JST_UNKNOWN;
@@ -39,7 +41,7 @@ bool j1State::Start() {
 bool j1State::Update(float dt) {
 
 	bool ret = true;
-	fPoint playerposbuffer = App->player->GetPosition();
+	fPoint playerposbuffer = App->entity_m->player->GetPosition();
 	bufferlaststate = current_state;
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
@@ -48,7 +50,7 @@ bool j1State::Update(float dt) {
 		CheckInputs();	// Checks active states (based on inputs)
 		CheckCollisions(); // Checks colliders
 		MovePlayer();	// Moves player position
-		App->player->fliped=(FlipPlayer(App->player->GetPosition(), playerposbuffer));//flips the player
+		App->entity_m->player->fliped=(FlipPlayer(App->entity_m->player->GetPosition(), playerposbuffer));//flips the player
 		CheckAnimation(current_state, bufferlaststate);	
 		
 
@@ -283,13 +285,13 @@ void j1State::CheckCollisions() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (current_state!=DYING && (App->collision->DeathColliderTouched() == true || App->player->GetPosition().y - App->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height)) {
+	if (current_state!=DYING && (App->collision->DeathColliderTouched() == true || App->entity_m->player->GetPosition().y - App->entity_m->player->GetWidthHeight().y > App->map->data.height * App->map->data.tile_height)) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
 	}
 	if (current_state == DYING) {
 		death_counter++;
-		if (App->player->currentAnim->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
+		if (App->entity_m->player->currentAnim->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
 			App->level_m->RestartLevel();
 		}
 	}
@@ -302,13 +304,13 @@ void j1State::MovePlayer() {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD) { App->player->AddPosition(App->player->playervel.x / 2, 0.0f); }
-		else { App->player->AddPosition(App->player->playervel.x, 0.0f); }
+		if (current_state == WALK_FORWARD) { App->entity_m->player->AddPosition(App->entity_m->player->speed.x / 2, 0.0f); }
+		else { App->entity_m->player->AddPosition(App->entity_m->player->speed.x, 0.0f); }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD) { App->player->AddPosition(-App->player->playervel.x / 2, 0.0f); }
-		else { App->player->AddPosition(-App->player->playervel.x, 0.0f); }
+		if (current_state == WALK_BACKWARD) { App->entity_m->player->AddPosition(-App->entity_m->player->speed.x / 2, 0.0f); }
+		else { App->entity_m->player->AddPosition(-App->entity_m->player->speed.x, 0.0f); }
 		break;
 	case FREE_JUMP:
 	case FREE_FALLING:
@@ -323,7 +325,7 @@ void j1State::MovePlayer() {
 		switch (current_state) {
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
-			App->player->AddPosition(0.0f, App->player->playervel.y / 2.0f);
+			App->entity_m->player->AddPosition(0.0f, App->entity_m->player->speed.y / 2.0f);
 			break;
 		}
 
@@ -344,25 +346,25 @@ void j1State::JumpMoveX() {
 	default:
 		switch (current_state) {
 		case WALL_JUMP:
-			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < App->player->playervel.x * 7 / 8) {
-				App->player->AddPosition(-App->player->playervel.x, 0.0f);
+			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < App->entity_m->player->speed.x * 7 / 8) {
+				App->entity_m->player->AddPosition(-App->entity_m->player->speed.x, 0.0f);
 			}
-			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < App->player->playervel.x * 7 / 8) {
-				App->player->AddPosition(App->player->playervel.x, 0.0f);
+			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < App->entity_m->player->speed.x * 7 / 8) {
+				App->entity_m->player->AddPosition(App->entity_m->player->speed.x, 0.0f);
 			}
 			else if (x_jumping_state == JST_IDLE) {}
 			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0) {
-				App->player->AddPosition(-wall_jump_timer, 0);
+				App->entity_m->player->AddPosition(-wall_jump_timer, 0);
 				wall_jump_timer -= 0.1;
 			}
 			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0) {
-				App->player->AddPosition(wall_jump_timer, 0);
+				App->entity_m->player->AddPosition(wall_jump_timer, 0);
 				wall_jump_timer -= 0.1;
 			}
 			break;
 		default:
-			if (x_jumping_state == JST_GOING_LEFT) { App->player->AddPosition(-App->player->playervel.x, 0.0f); }
-			else if (x_jumping_state == JST_GOING_RIGHT) { App->player->AddPosition(App->player->playervel.x, 0.0f); }
+			if (x_jumping_state == JST_GOING_LEFT) { App->entity_m->player->AddPosition(-App->entity_m->player->speed.x, 0.0f); }
+			else if (x_jumping_state == JST_GOING_RIGHT) { App->entity_m->player->AddPosition(App->entity_m->player->speed.x, 0.0f); }
 			else if (x_jumping_state == JST_IDLE) {}
 			break;
 		}
@@ -382,18 +384,18 @@ void j1State::JumpMoveY() {
 		}
 		else if (current_state == FREE_FALLING) {
 			y_jumping_state = JST_GOING_DOWN;
-			jump_timer = App->player->playervel.y;
+			jump_timer = App->entity_m->player->speed.y;
 		}
 		break;
 	case JST_GOING_UP:
-		if (jump_timer >= 0 && jump_timer < App->player->playervel.y) {
+		if (jump_timer >= 0 && jump_timer < App->entity_m->player->speed.y) {
 			jump_timer += (1.0f / 10.0f);
-			App->player->AddPosition(0.0f, -App->player->playervel.y + jump_timer);
+			App->entity_m->player->AddPosition(0.0f, -App->entity_m->player->speed.y + jump_timer);
 		}
-		else { jump_timer = App->player->playervel.y; y_jumping_state = JST_GOING_DOWN; }
+		else { jump_timer = App->entity_m->player->speed.y; y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_TRANSITION:
-		jump_timer = App->player->playervel.y;
+		jump_timer = App->entity_m->player->speed.y;
 		if (current_state != THROWING_GRENADE_ON_AIR) { y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_GOING_DOWN:
@@ -401,9 +403,9 @@ void j1State::JumpMoveY() {
 			y_jumping_state = JST_UNKNOWN;
 			jump_timer = 0;
 		}
-		else if (jump_timer <= App->player->playervel.y*100) {
+		else if (jump_timer <= App->entity_m->player->speed.y*100) {
 			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
-			App->player->AddPosition(0.0f, App->player->playervel.y - jump_timer);
+			App->entity_m->player->AddPosition(0.0f, App->entity_m->player->speed.y - jump_timer);
 		}
 		break;
 	}
@@ -414,30 +416,30 @@ void j1State::AvoidShaking() {
 	// This switch prevents shaking when colliding happens
 	switch (App->collision->current_collision) {
 	case GROUND_COLLISION:
-		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
-		if (current_state == FREE_JUMP) { App->player->AddPosition(0, -1); }
+		App->entity_m->player->SetPosition(App->entity_m->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		if (current_state == FREE_JUMP) { App->entity_m->player->AddPosition(0, -1); }
 		break;
 	case UPPER_COLLISION:
-		App->player->SetPosition(App->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
-		if (current_state == FREE_FALLING) { App->player->AddPosition(0, 1); }
+		App->entity_m->player->SetPosition(App->entity_m->player->GetPosition().x, App->collision->current_collision_buffer.collider1.y);
+		if (current_state == FREE_FALLING) { App->entity_m->player->AddPosition(0, 1); }
 		break;
 	case LEFT_COLLISION:
 	case RIGHT_COLLISION:
-		App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x) / 2, App->player->GetPosition().y);
+		App->entity_m->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->entity_m->player->GetWidthHeight().x) / 2, App->entity_m->player->GetPosition().y);
 		switch (wall_jump) {
 		case SST_JUMPING_RIGHT:
-			App->player->AddPosition(1.0f, -1.0f);
+			App->entity_m->player->AddPosition(1.0f, -1.0f);
 			current_state = WALL_JUMP;
 			break;
 		case SST_JUMPING_LEFT:
-			App->player->AddPosition(-1.0f, -1.0f);
+			App->entity_m->player->AddPosition(-1.0f, -1.0f);
 			current_state = WALL_JUMP;
 			break;
 		case SST_FALLING_RIGHT:
-			App->player->AddPosition(1.0f, 1.0f);
+			App->entity_m->player->AddPosition(1.0f, 1.0f);
 			break;
 		case SST_FALLING_LEFT:
-			App->player->AddPosition(-1.0f, 1.0f);
+			App->entity_m->player->AddPosition(-1.0f, 1.0f);
 			break;
 		default:
 			break;
@@ -447,10 +449,10 @@ void j1State::AvoidShaking() {
 	case RIGHT_GROUND_COLLISION:
 		if (current_state != WALK_BACKWARD && current_state != WALK_FORWARD && current_state != FREE_JUMP) {
 			if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
+				App->entity_m->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->entity_m->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
 			}
 			else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
+				App->entity_m->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->entity_m->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
 			}
 		}
 		break;
@@ -458,18 +460,18 @@ void j1State::AvoidShaking() {
 	case RIGHT_UPPER_COLLISION:
 		if (current_state != SLIDING_ON_LEFT_WALL && current_state != SLIDING_ON_RIGHT_WALL) {
 			if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
+				App->entity_m->player->SetPosition(App->collision->current_collision_buffer.collider2.x + (App->entity_m->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider1.y);
 			}
 			else if (App->collision->current_collision_buffer.is_first_collider_horizontal == false) {
-				App->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
+				App->entity_m->player->SetPosition(App->collision->current_collision_buffer.collider1.x + (App->entity_m->player->GetWidthHeight().x / 2), App->collision->current_collision_buffer.collider2.y);
 			}
 		}
 		switch (wall_jump) {
 		case SST_FALLING_RIGHT:
-			App->player->AddPosition(1.0f, 1.0f);
+			App->entity_m->player->AddPosition(1.0f, 1.0f);
 			break;
 		case SST_FALLING_LEFT:
-			App->player->AddPosition(-1.0f, 1.0f);
+			App->entity_m->player->AddPosition(-1.0f, 1.0f);
 			break;
 		default:
 			break;
@@ -480,22 +482,22 @@ void j1State::AvoidShaking() {
 	}
 
 	if (current_state != WALL_JUMP) {
-		wall_jump_timer = App->player->playervel.x;
+		wall_jump_timer = App->entity_m->player->speed.x;
 		if (current_state != WALL_JUMP) { wall_jump_extra_move = SST_IDLE; }
 	}
 }
 
 void j1State::CheckMapBorder() {
-	if (App->player->GetPosition().x <= 5) {
+	if (App->entity_m->player->GetPosition().x <= 5) {
 		switch (App->collision->current_collision) {
 		case GROUND_COLLISION:
 		case LEFT_GROUND_COLLISION:
 		case RIGHT_GROUND_COLLISION:
 			current_state = IDLE;
-			App->player->SetPosition(5, App->player->GetPosition().y);
+			App->entity_m->player->SetPosition(5, App->entity_m->player->GetPosition().y);
 			break;
 		default:
-			App->player->SetPosition(App->player->playervel.x, App->player->GetPosition().y);
+			App->entity_m->player->SetPosition(App->entity_m->player->speed.x, App->entity_m->player->GetPosition().y);
 			x_jumping_state = JST_IDLE;
 			break;
 		}
@@ -504,7 +506,7 @@ void j1State::CheckMapBorder() {
 
 bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
 {
-	bool fliped = App->player->fliped;
+	bool fliped = App->entity_m->player->fliped;
 	if (currentpos.x < lastpos.x)fliped = true;
 	else if (currentpos.x > lastpos.x)fliped = false;
 	
@@ -517,8 +519,8 @@ bool j1State::FlipPlayer(fPoint currentpos, fPoint lastpos)
 
 void j1State::ChangeAnimation(Animation_list animations)
 {
-	p2List<Animations*>* pAnimList = App->player->GetAnimationList();//pointer to the player's animation list
-	p2List_item<Animations*>* currentanim = App->player->currentAnim;//pointer to the current animation
+	p2List<Animations*>* pAnimList = App->entity_m->player->GetAnimationList();//pointer to the player's animation list
+	p2List_item<Animations*>* currentanim = App->entity_m->player->currentAnim;//pointer to the current animation
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
 
@@ -577,7 +579,7 @@ void j1State::ChangeAnimation(Animation_list animations)
 		break;
 	}
 
-	App->player->currentAnim=newanim;//sets the current animation of the player
+	App->entity_m->player->currentAnim=newanim;//sets the current animation of the player
 
 }
 
@@ -585,11 +587,11 @@ Animation_state j1State::StepCurrentAnimation()
 {
 	Animation_state state = AS_UNKNOWN;
 
-	p2List_item<Animations*>* currentanim = App->player->currentAnim;
+	p2List_item<Animations*>* currentanim = App->entity_m->player->currentAnim;
 	FrameInfo* frame;
 	frame = currentanim->data->StepAnimation();
 
-	App->player->currentframe=frame;
+	App->entity_m->player->currentframe=frame;
 
 	return state;
 }
@@ -688,17 +690,17 @@ void j1State::SetGodmode(bool state) {
 
 void j1State::GodMode() {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		App->player->AddPosition(-App->player->playervel.x * 4, 0);
+		App->entity_m->player->AddPosition(-App->entity_m->player->speed.x * 4, 0);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		App->player->AddPosition(App->player->playervel.x * 4, 0);
+		App->entity_m->player->AddPosition(App->entity_m->player->speed.x * 4, 0);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		App->player->AddPosition(0, -App->player->playervel.x * 4);
+		App->entity_m->player->AddPosition(0, -App->entity_m->player->speed.x * 4);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		App->player->AddPosition(0, App->player->playervel.x * 4);
+		App->entity_m->player->AddPosition(0, App->entity_m->player->speed.x * 4);
 	}
 
 }

@@ -13,15 +13,16 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class j1Player;
+//class j1Player;
 class j1Collision;
 class j1State;
-class j1Grenade;
+//class j1Grenade;
 class j1LevelManager;
 class j1Transitions;
-class j1EnemyManager;
+//class j1EnemyManager;
 class j1ParticleManager;
-class j1PathFinding;
+//class j1PathFinding;
+class j1EntityManager;
 
 class j1App
 {
@@ -92,15 +93,16 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Player*			player;
+	//j1Player*			player;
 	j1Collision*		collision;
 	j1State*			state;
-	j1Grenade*			grenade;
+	//j1Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
-	j1EnemyManager*			enemies;
-	j1ParticleManager*  particle_m;
-	j1PathFinding*		pathfinding;
+	//j1EnemyManager*			enemies;
+	//j1ParticleManager*  particle_m;
+	//j1PathFinding*		pathfinding;
+	j1EntityManager*	entity_m;
 
 private:
 

@@ -19,6 +19,7 @@
 #include "j1PathFinding.h"
 #include "Particles.h"
 #include "transitions.h"
+#include "j1EntityManager.h"
 
 
 // Constructor
@@ -34,15 +35,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	player = new j1Player();
+	//player = new j1Player();
 	collision = new j1Collision();
 	state = new j1State();
-	grenade = new j1Grenade();
+	//grenade = new j1Grenade();
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
-	enemies = new j1EnemyManager();
-	particle_m = new j1ParticleManager();
-	pathfinding = new j1PathFinding();
+	//enemies = new j1EnemyManager();
+	//particle_m = new j1ParticleManager();
+	//pathfinding = new j1PathFinding();
+	entity_m = new j1EntityManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -55,11 +57,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(state);
 	AddModule(scene);
-	AddModule(pathfinding);
-	AddModule(player);
-	AddModule(enemies);
-	AddModule(grenade);
-	AddModule(particle_m);//has to be always directly before transititions
+	//AddModule(pathfinding);
+	AddModule(entity_m);
+	//AddModule(player);
+	//AddModule(enemies);
+	//AddModule(grenade);
+	//AddModule(particle_m);//has to be always directly before transititions
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
 	AddModule(render);

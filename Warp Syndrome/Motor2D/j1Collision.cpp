@@ -8,7 +8,9 @@
 #include "j1Render.h"
 #include "p2List.h"
 #include "p2SString.h"
+#include "j1EntityManager.h"
 #include "j1App.h"
+#include "Player.h"
 
 j1Collision::j1Collision() : j1Module() 
 {
@@ -36,16 +38,16 @@ bool j1Collision::Update(float dt) {
 	door_collider_touched = false;
 	grenade_collider_touched = false;
 
-	if(GroundCollision() == true){ y_player_buffer = App->player->GetPosition().y; }
+	if(GroundCollision() == true){ y_player_buffer = App->entity_m->player->GetPosition().y; }
 	//player variables
-	position.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
-	position.y = App->player->GetPosition().y;
-	measures.x = App->player->GetWidthHeight().x;
-	measures.y = App->player->GetWidthHeight().y;
+	position.x = App->entity_m->player-> GetPosition().x - App->entity_m->player->GetPosition().x / 2;
+	position.y = App->entity_m->player->GetPosition().y;
+	measures.x = App->entity_m->player->GetWidthHeight().x;
+	measures.y = App->entity_m->player->GetWidthHeight().y;
 	if(App->state->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
 	}
-	y_player_buffer = App->player->GetPosition().y;
+	y_player_buffer = App->entity_m->player->GetPosition().y;
 
 	return ret;
 }

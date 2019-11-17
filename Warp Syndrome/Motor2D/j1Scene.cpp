@@ -14,6 +14,8 @@
 #include "level_manager.h"
 #include "Particles.h"
 #include "j1PathFinding.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -37,8 +39,8 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->LoadNew(App->level_m->default_level->data->overworld.GetString());
-	App->render->camera.x = -(App->player->GetPosition().x-(App->render->camera.w/2));
-	App->render->camera.y = -(App->player->GetPosition().y-(App->render->camera.h / 2));
+	App->render->camera.x = -(App->entity_m->player->GetPosition().x-(App->render->camera.w/2));
+	App->render->camera.y = -(App->entity_m->player->GetPosition().y-(App->render->camera.h / 2));
 	teleport_sfx = App->audio->LoadFx("audio/fx/casting_charge_matter_grow_04.wav");
 	jump_sfx = App->audio->LoadFx("audio/fx/ferba_says_huh.wav");
 	death_sfx = App->audio->LoadFx("audio/fx/mud_splat_heavy_03.wav");
@@ -119,22 +121,22 @@ bool j1Scene::Update(float dt)
 	//Debugging Particles
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200);
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200);
 		App->particle_m->AddParticle(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, { 0.0f,-10.0f }, 1.0f, App->player->GetTexture(), 200);
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, { 0.0f,-10.0f }, 1.0f, App->entity_m->player->GetTexture(), 200);
 		App->particle_m->AddParticle(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 100);
+		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 100);
 		App->particle_m->AddParticle(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->player->GetPosition().x,App->player->GetPosition().y }, { 0.1f,0.0f }, 1.0f, App->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
+		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, { 0.1f,0.0f }, 1.0f, App->entity_m->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
 		App->particle_m->AddParticle(p);
 	}
 	//end of debug particles
@@ -172,8 +174,8 @@ bool j1Scene::CleanUp()
 void j1Scene::RepositionCamera()
 {
 	////variables-------------------------------------------------------------------
-	fPoint playerpos = App->player->GetPosition();
-	bool playerfliped = App->player->fliped;
+	fPoint playerpos = App->entity_m->player->GetPosition();
+	bool playerfliped = App->entity_m->player->fliped;
 
 	//int scale = App->win->GetScale();
 	int camW = App->render->camera.w;
@@ -218,7 +220,7 @@ void j1Scene::RepositionCamera()
 float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 {
 	float newcamX = camera.x;
-	float playervel = App->player->playervel.x;
+	float playervel = App->entity_m->player->speed.x;
 	float camdisplacementvel = playervel * 3;
 
 	if (camaccel.x > 1.0f)camaccel.x = 1.0f;

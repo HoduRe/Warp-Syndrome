@@ -24,9 +24,9 @@ public:
 	Enemy(int x, int y);
 	virtual ~Enemy();
 
-	virtual void Move() {};
+	virtual void Move();
 	virtual void Draw(SDL_Texture* sprites);
-	void GeneralMove(int *x, int *y, p2DynArray<iPoint>& path){}
+	void GeneralMove(int* x, int* y, p2DynArray<iPoint>& path);
 };
 
 #endif // __ENEMY_H__

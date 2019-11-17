@@ -10,6 +10,8 @@
 #include "Enemy.h"
 #include "Hell_horse.h"
 #include "Fire_skull.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 
 #define SPAWN_DISTANCE 25
 
@@ -33,8 +35,8 @@ bool j1EnemyManager::PreUpdate()
 {
 	// Enables enemies
 	iPoint player_pos;
-	player_pos.x = App->player->GetPosition().x / App->map->data.tile_width;
-	player_pos.y = App->player->GetPosition().y / App->map->data.tile_height;
+	player_pos.x = App->entity_m->player->GetPosition().x / App->map->data.tile_width;
+	player_pos.y = App->entity_m->player->GetPosition().y / App->map->data.tile_height;
 
 	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
@@ -119,6 +121,6 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {
-	return sqrt((App->player->GetPosition().x - x) * (App->player->GetPosition().x - x) +
-		(App->player->GetPosition().y - y) * (App->player->GetPosition().y - y));
+	return sqrt((App->entity_m->player->GetPosition().x - x) * (App->entity_m->player->GetPosition().x - x) +
+		(App->entity_m->player->GetPosition().y - y) * (App->entity_m->player->GetPosition().y - y));
 }

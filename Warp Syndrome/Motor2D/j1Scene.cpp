@@ -5,7 +5,6 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Render.h"
-#include "j1State.h"
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
@@ -74,12 +73,12 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		App->state->SetBlitColliders();
+		App->entity_m->player->SetBlitColliders();
 		App->pathfinding->SetBlitPathfinding();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		App->state->SetGodmode();
+		App->entity_m->player->SetGodmode();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -187,7 +186,7 @@ void j1Scene::RepositionCamera()
 	currentcam.x = App->render->camera.x;
 	currentcam.y = App->render->camera.y;
 
-	if (!App->state->GetGodmode()&&(App->collision->GroundCollision()||start)) //if its colliding with the ground execute camera movement
+	if (!App->entity_m->player->GetGodmode()&&(App->collision->GroundCollision()||start)) //if its colliding with the ground execute camera movement
 	{
 
 

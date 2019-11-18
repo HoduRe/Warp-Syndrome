@@ -11,9 +11,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
-#include "j1Player.h"
 #include "j1Collision.h"
-#include "j1State.h"
 #include "j1Grenade.h"
 #include "j1EnemyManager.h"
 #include "j1PathFinding.h"
@@ -35,9 +33,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	//player = new j1Player();
 	collision = new j1Collision();
-	state = new j1State();
 	//grenade = new j1Grenade();
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
@@ -55,11 +51,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(level_m);
 	AddModule(map);
 	AddModule(collision);
-	AddModule(state);
 	AddModule(scene);
 	//AddModule(pathfinding);
 	AddModule(entity_m);
-	//AddModule(player);
 	//AddModule(enemies);
 	//AddModule(grenade);
 	//AddModule(particle_m);//has to be always directly before transititions

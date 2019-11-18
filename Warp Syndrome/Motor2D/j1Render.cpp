@@ -1,7 +1,6 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
-#include "j1State.h"
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Render.h"
@@ -77,7 +76,7 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
-	if (App->state->BlitColliders() == true) {
+	if (App->entity_m->player->BlitColliders() == true) {
 		App->collision->PrintColliders();
 		PrintPlayerObjects();
 	}

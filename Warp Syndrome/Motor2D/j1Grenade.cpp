@@ -192,10 +192,10 @@ void j1Grenade::GrenadeState() {
 		{ 
 			//generate a particle on the player then move the player and generate the other when TPed
 			AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200, {0.0f,0.0f}, { -50.0f,-43.0f });
-			App->particle_m->AddParticle(p);
+			App->entity_m->AddEntity(p);
 			App->entity_m->player->SetPosition(App->grenade->GetPosition());
 			AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
-			App->particle_m->AddParticle(q);
+			App->entity_m->AddEntity(p);
 
 		}
 		position.x = App->entity_m->player->GetPosition().x;

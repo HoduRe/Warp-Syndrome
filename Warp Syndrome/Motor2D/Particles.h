@@ -8,34 +8,28 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "Animations.h"
+#include "Entity.h"
 
 
 
-class Particle
+class Particle:public Entity
 {
 public:
-	fPoint position;
 	fPoint offset;
-	fPoint speed;
 	fPoint gravityaccel;
 	fPoint forces;
-	SDL_Texture* texture;
-	SDL_Rect texturesection;
 
-	int lifespan;
 	float mass;
-	bool fliped;
 
 	//=============================
-	Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 });
-	Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 });
+	Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 },EntityType type=E_TYPE_PARTICLE);
+	Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 }, EntityType type = E_TYPE_PARTICLE);
 	virtual ~Particle();
-	virtual void ParticleUpdate();
+	virtual void Update();
 	void Integrate();
-	virtual void Display();
+	virtual void PostUpdate();
 	void ApplyForce(fPoint aForce);
 	void ApplyGravity(fPoint aGravity);
-	bool IsDead();
 
 };
 
@@ -50,43 +44,9 @@ public:
 	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan=1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f });
 	virtual~AnimatedParticle();
 
-	void ParticleUpdate();
-	void Display();
+	virtual void Update();
+	virtual void PostUpdate();
 
-};
-
-
-class j1ParticleManager:public j1Module
-{
-public:
-	j1ParticleManager();
-
-	virtual ~j1ParticleManager();
-
-	bool Start();
-	bool Start(fPoint aGravity);
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called each loop iteration
-	bool Update(float dt);
-
-	// Called before all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
-
-	
-	void AddParticle(Particle* particle);
-	bool DeleteParticle(Particle* particle);
-public:
-	fPoint gravity;
-
-private:
-	p2List<Particle*> particles;
-	
 };
 
 #endif // !__PARTICLES_H__

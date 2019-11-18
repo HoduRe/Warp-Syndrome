@@ -121,22 +121,22 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200);
-		App->particle_m->AddParticle(p);
+		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
 		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, { 0.0f,-10.0f }, 1.0f, App->entity_m->player->GetTexture(), 200);
-		App->particle_m->AddParticle(p);
+		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
 		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 100);
-		App->particle_m->AddParticle(p);
+		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
 		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, { 0.1f,0.0f }, 1.0f, App->entity_m->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
-		App->particle_m->AddParticle(p);
+		App->entity_m->AddEntity(p);
 	}
 	//end of debug particles
 	App->map->Draw();

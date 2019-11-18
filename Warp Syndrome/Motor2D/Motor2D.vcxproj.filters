@@ -55,9 +55,6 @@
     <ClCompile Include="transitions.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Particles.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
@@ -83,6 +80,9 @@
       <Filter>Development============\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -159,9 +159,6 @@
     <ClInclude Include="transitions.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Particles.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1PathFinding.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
@@ -187,6 +184,9 @@
       <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,9 +33,6 @@ public:
 	virtual bool CleanUp();
 	virtual bool Load(pugi::xml_node&);
 	virtual bool Save(pugi::xml_node&) const;
-	void Enable();
-	void Disable();
-
 public:
 
 	fPoint pos;

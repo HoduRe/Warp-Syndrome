@@ -47,5 +47,3 @@ bool Entity::Awake()
  {
 	 return true;
  }
-void Entity::Enable(){}
-void Entity::Disable(){}

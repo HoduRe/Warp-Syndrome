@@ -21,6 +21,7 @@ public:
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
+	bool Start(fPoint aGravity);
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool PostUpdate(float dt);
@@ -28,12 +29,15 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 	Entity* CreateEntity(EntityType type);
-	void DestroyEntity(Entity* entity);
+	bool AddEntity(Entity*);
+	bool DestroyEntity(Entity* entity);
 
 public:
 	Player* player;
+	fPoint gravity;
 private:
 	p2List<Entity*> entity_list;
+	
 	//Player* player; //TODO when created the player class assign this pointer to the player
 };
 

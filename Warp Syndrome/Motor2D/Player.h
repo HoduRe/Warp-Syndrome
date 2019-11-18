@@ -67,7 +67,6 @@ private:
 	pugi::xml_node playernode;
 	pugi::xml_node grenadenode;
 	p2SString filename;
-	SDL_Texture* playertexture;
 };
 
 

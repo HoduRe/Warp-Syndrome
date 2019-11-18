@@ -21,7 +21,7 @@ Player::Player():Entity(EntityType::E_TYPE_PLAYER)
 	currentframe=nullptr;
 	currentAnim=nullptr;
 	hitbox_w_h = {0,0};
-	playertexture=nullptr;
+	texture=nullptr;
 	//creates the name of the class for usage to target the right node of coniguration in the awake function
 	//name.create("player");
 }
@@ -71,7 +71,7 @@ bool Player::Start()
 	hitbox_w_h.y = playernode.child("hitbox").attribute("h").as_int();
 	
 	//Load image
-	playertexture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
+	texture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
 	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
 	currentAnim = defaultanim;
@@ -90,7 +90,7 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	if (currentframe != NULL)
-		App->render->Blit(playertexture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
+		App->render->Blit(texture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
 
 	return true;
 }
@@ -98,7 +98,7 @@ bool Player::PostUpdate()
 // Called before quitting
 bool Player::CleanUp()
 {
-	App->tex->UnLoad(playertexture);
+	App->tex->UnLoad(texture);
 	p2List_item<Animations*>* item;
 	item = playerAnimations.start;
 
@@ -178,7 +178,7 @@ p2List<Animations*>* Player::GetAnimationList()
 
 
 SDL_Texture* Player::GetTexture() {
-	return playertexture;
+	return texture;
 }
 
 iPoint Player::GetWidthHeight() {

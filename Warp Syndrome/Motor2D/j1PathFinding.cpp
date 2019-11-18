@@ -4,20 +4,18 @@
 #include "j1PathFinding.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 #include "p2List.h"
 
 
-j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
+j1PathFinding::j1PathFinding() : j1Module(), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.create("pathfinding");
 	blit = false;
 }
 
 // Destructor
-j1PathFinding::~j1PathFinding()
-{
-	RELEASE_ARRAY(map);
-}
+j1PathFinding::~j1PathFinding() {}
 
 // Called before quitting
 bool j1PathFinding::CleanUp()
@@ -25,7 +23,6 @@ bool j1PathFinding::CleanUp()
 	LOG("Freeing pathfinding library");
 
 	last_path.Clear();
-	RELEASE_ARRAY(map);
 	return true;
 }
 
@@ -34,10 +31,6 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
-
-	RELEASE_ARRAY(map);
-	map = new uchar[width * height];
-	memcpy(map, data, width * height);
 }
 
 // Utility: return true if pos is inside the map boundaries
@@ -50,17 +43,9 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1PathFinding::IsWalkable(const iPoint& pos) const
 {
-	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t > 0;
-}
+	if (CheckBoundaries(pos)) { if (App->collision->CheckWalkability((iPoint&)pos)) { return true; } }
 
-// Utility: return the walkability value of a tile
-uchar j1PathFinding::GetTileAt(const iPoint& pos) const
-{
-	if (CheckBoundaries(pos))
-		return map[(pos.y * width) + pos.x];
-
-	return INVALID_WALK_CODE;
+	return false;
 }
 
 // To request all tiles involved in the last generated path
@@ -197,34 +182,26 @@ p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint&
 	PathList aux_list;
 	bool stop = false;
 
-	// TODO 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
-		return -1;
-	}
+	width = App->map->data.width;
+	height = App->map->data.height;
 
-	// TODO 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
+	last_path.Clear();
+
+	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
+		return last_path;
+	}
 
 	aux_path.pos = origin;
 	aux_path.parent.x = 0;
 	aux_path.parent.y = 0;
 	aux_path.g = 0;
 	aux_path.h = aux_path.pos.DistanceTo(destination);
-
 	frontier.list.add(aux_path);
-	last_path.Clear();
 
 	while (frontier.list.start != NULL) {
-		// TODO 3: Move the lowest score cell from open list to the closed list
 		visited.list.add(frontier.GetNodeLowestScore()->data);
 		aux_path = visited.list.end->data;
 		frontier.list.del(frontier.GetNodeLowestScore());
-
-		// TODO 4: If we just added the destination, we are done!
-		// Backtrack to create the final path
-		// Use the Pathnode::parent and Flip() the path when you are finish
-
 		if (visited.list.end->data.pos == destination) {
 			do {	// Take the last tile --> do I have it? --> take its parent --> make parent the last tile
 				last_path.PushBack(aux_path.pos);
@@ -241,16 +218,8 @@ p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint&
 			return last_path;
 		}
 
-		// TODO 5: Fill a list of all adjancent nodes
 		aux_list.list.clear();
 		aux_path.FindWalkableAdjacents(aux_list);
-
-		// TODO 6: Iterate adjancent nodes:
-		// ignore nodes in the closed list
-		// If it is NOT found, calculate its F and add it to the open list
-		// If it is already in the open list, check if it is a better path (compare G)
-		// If it is a better path, Update the parent
-
 		p2List_item<PathNode>* f = aux_list.list.start;
 
 		while (f != NULL) {
@@ -267,6 +236,6 @@ p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint&
 
 	}
 
-	return 0;
+	return last_path;
 }
 

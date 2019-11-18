@@ -38,12 +38,14 @@ bool j1EnemyManager::PreUpdate()
 	player_pos.x = App->player->GetPosition().x / App->map->data.tile_width;
 	player_pos.y = App->player->GetPosition().y / App->map->data.tile_height;
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		enemy_pos.x = enemy_list[i]->position.x / App->map->data.tile_width;
-		enemy_pos.y = enemy_list[i]->position.y / App->map->data.tile_height;
-		distance = CheckDistance(enemy_pos.x, enemy_pos.y);
-		if (distance <= SPAWN_DISTANCE && distance >= -SPAWN_DISTANCE) {
-			enemy_list[i]->enabled = true;
-			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_pos);
+		if (enemy_list[i] != nullptr) {
+			enemy_pos.x = enemy_list[i]->position.x / App->map->data.tile_width;
+			enemy_pos.y = enemy_list[i]->position.y / App->map->data.tile_height;
+			distance = CheckDistance(enemy_pos.x, enemy_pos.y);
+			if (distance <= SPAWN_DISTANCE && distance >= -SPAWN_DISTANCE) {
+				enemy_list[i]->enabled = true;
+				enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_pos);
+			}
 		}
 	}
 
@@ -65,7 +67,7 @@ bool j1EnemyManager::PostUpdate()
 {
 	// Disables dead enemies
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) > SPAWN_DISTANCE) {
+		if (enemy_list[i] != nullptr && CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) > SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = false;
 		}
 	}
@@ -99,6 +101,7 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 		for (int i = 0; i < MAX_ENEMIES; i++) {
 			if (enemy_list[i] == nullptr) {
 				enemy_list[i] = new Enemy_Elemental(x, y);
+				i = MAX_ENEMIES;
 			}
 		}
 		break;
@@ -106,6 +109,7 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 		for (int i = 0; i < MAX_ENEMIES; i++) {
 			if (enemy_list[i] == nullptr) {
 				enemy_list[i] = new Enemy_HellHorse(x, y);
+				i = MAX_ENEMIES;
 			}
 		}
 		break;
@@ -113,6 +117,7 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 		for (int i = 0; i < MAX_ENEMIES; i++) {
 			if (enemy_list[i] == nullptr) {
 				enemy_list[i] = new Enemy_FireSkull(x, y);
+				i = MAX_ENEMIES;
 			}
 		}
 		break;
@@ -122,6 +127,10 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {
-	return App->player->GetPosition().x / App->map->data.tile_width - x +
-		App->player->GetPosition().y / App->map->data.tile_height - y;
+	iPoint playerpos;
+	playerpos.x = App->player->GetPosition().x / App->map->data.tile_width - x;
+	playerpos.y = App->player->GetPosition().y / App->map->data.tile_height - y;
+	if (playerpos.x < 0) { playerpos.x = -playerpos.x; }
+	if (playerpos.y < 0) { playerpos.y = -playerpos.y; }
+	return playerpos.x + playerpos.y;
 }

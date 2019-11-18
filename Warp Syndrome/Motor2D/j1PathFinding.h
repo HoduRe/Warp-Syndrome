@@ -44,9 +44,6 @@ public:
 	// Utility: returns true is the tile is walkable
 	bool IsWalkable(const iPoint& pos) const;
 
-	// Utility: return the walkability value of a tile
-	uchar GetTileAt(const iPoint& pos) const;
-
 	// Sets the blit bool
 	void SetBlitPathfinding();
 	// Returns the bool variable to print on scene
@@ -59,8 +56,6 @@ private:
 	// size of the map
 	uint width;
 	uint height;
-	// all map walkability values [0..255]
-	uchar* map;
 	// we store the created path here
 	p2DynArray<iPoint> last_path;
 	bool blit;

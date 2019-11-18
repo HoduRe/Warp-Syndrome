@@ -294,3 +294,26 @@ void j1Collision::PrintColliders() {
 		itemOG = itemOG->next;
 	}
 }
+
+bool j1Collision::CheckWalkability(iPoint& tile) {
+	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	collider_type aux_collider_type;
+
+	while (itemOG != NULL) {
+		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
+		while (itemO != NULL) {
+			aux_collider_type = App->collision->GetCurrentCollider(itemO->data->type);
+			switch (aux_collider_type) {
+			case death_collider:
+			case regular_collider:
+			case grenade_collider:
+			case under_platform_collider:
+				if (itemO->data->boundingbox.x <= tile.x && itemO->data->boundingbox.x + itemO->data->boundingbox.w - App->map->data.tile_width >= tile.x
+					&& itemO->data->boundingbox.y <= tile.y && itemO->data->boundingbox.y + itemO->data->boundingbox.h - App->map->data.tile_height >= tile.y) {
+					return false;
+				}
+				break;
+			} itemO = itemO->next;
+		} itemOG = itemOG->next;
+	} return true;
+}

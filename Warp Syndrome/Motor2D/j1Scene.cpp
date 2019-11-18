@@ -131,12 +131,12 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 100);
+		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 100);
 		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, { 0.1f,0.0f }, 1.0f, App->entity_m->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
+		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { 0.1f,0.0f }, 1.0f, App->entity_m->player->GetTexture(), 160.0f, { 0.1f,0.1f }, {-100.0f,-100.0f});
 		App->entity_m->AddEntity(p);
 	}
 	//end of debug particles

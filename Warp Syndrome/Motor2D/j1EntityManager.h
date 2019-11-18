@@ -38,7 +38,6 @@ public:
 private:
 	p2List<Entity*> entity_list;
 	
-	//Player* player; //TODO when created the player class assign this pointer to the player
 };
 
 

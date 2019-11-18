@@ -14,8 +14,7 @@
 #include "j1EntityManager.h"
 #include "Player.h"
 
-j1Grenade::j1Grenade() {
-	name.create("grenade");
+j1Grenade::j1Grenade(){
 }
 
 // Destructor
@@ -30,9 +29,9 @@ bool j1Grenade::Awake(pugi::xml_node& ) {
 // Called before the first frame
 bool j1Grenade::Start() {
 
-	anim_list = App->entity_m->player->GetAnimationList();
+	anim_list = &App->entity_m->player->playerAnimations;
 	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
-	grenade_texture = App->entity_m->player->GetTexture();
+	grenade_texture = App->entity_m->player->texture;
 	grenade_vel.x = App->entity_m->player->speed.x * 3 / 2;
 	grenade_vel.y = App->entity_m->player->speed.y;
 
@@ -139,8 +138,8 @@ void j1Grenade::GrenadeState() {
 
 	switch (grenade_state) {
 	case GST_UNKNOWN:
-		grenade_position.x = App->entity_m->player->GetPosition().x;
-		grenade_position.y = App->entity_m->player->GetPosition().y - App->entity_m->player->GetWidthHeight().x;
+		grenade_position.x = App->entity_m->player->pos.x;
+		grenade_position.y = App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.x;
 		grenade_timer.x = grenade_vel.x;
 		switch (App->entity_m->player->fliped) {
 		case true:
@@ -191,17 +190,17 @@ void j1Grenade::GrenadeState() {
 		if (App->state->current_state == TELEPORT) 
 		{ 
 			//generate a particle on the player then move the player and generate the other when TPed
-			AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200, {0.0f,0.0f}, { -50.0f,-43.0f });
+			AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 200, {0.0f,0.0f}, { -50.0f,-43.0f });
 			App->entity_m->AddEntity(p);
-			App->entity_m->player->SetPosition(App->grenade->GetPosition());
-			AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->entity_m->player->GetPosition().x,App->entity_m->player->GetPosition().y }, App->entity_m->player->GetTexture(), 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
+			App->entity_m->player->pos= App->grenade->GetPosition();
+			AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
 			App->entity_m->AddEntity(p);
 
 		}
-		position.x = App->entity_m->player->GetPosition().x;
-		position.y = App->entity_m->player->GetPosition().y;
-		measures.x = App->entity_m->player->GetWidthHeight().x;
-		measures.y = App->entity_m->player->GetWidthHeight().y;
+		position.x = App->entity_m->player->pos.x;
+		position.y = App->entity_m->player->pos.y;
+		measures.x = App->entity_m->player->pos.x;
+		measures.y = App->entity_m->player->pos.y;
 		App->collision->CheckLoop(&position, &measures, OBJECT_PLAYER);
 		App->state->MovePlayer();
 		break;

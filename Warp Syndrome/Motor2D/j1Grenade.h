@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "j1Collision.h"
 #include "p2List.h"
+#include "Entity.h"
 
 enum grenade_states {
 	GST_UNKNOWN,
@@ -17,7 +18,7 @@ enum grenade_states {
 	GST_UNUSABLE
 };
 
-class j1Grenade : public j1Module
+class j1Grenade : public AnimatedParticle
 {
 public:
 
@@ -74,13 +75,9 @@ public:
 	void SetMeasures(pugi::xml_node root);
 
 private:
-	fPoint grenade_position, grenade_timer, grenade_vel, grenade_measures;
+	fPoint grenade_measures;
 	grenade_states grenade_state = GST_UNKNOWN;
 	collision_type grenade_collider_buffer;
-	SDL_Texture* grenade_texture;
-	p2List<Animations*>* anim_list;
-	p2List_item<Animations*>* grenade_animation;
-	float grenade_time_to_explode;
 	int cooldown_timer = 0;
 
 };

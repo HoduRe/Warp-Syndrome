@@ -1,6 +1,5 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "j1State.h"
 #include "j1Collision.h"
 #include "j1Player.h"
 #include "j1Input.h"

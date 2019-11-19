@@ -214,6 +214,14 @@ p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint&
 				}
 				else { stop = true; }
 			} while (stop == false);
+			int i = 0;
+			while (last_path.At(i) != NULL) {
+				iPoint a;
+				a.x = last_path.At(i)->x;
+				a.y = last_path.At(i)->y;
+				LOG("%i: %i %i", i, a.x, a.y);
+				i++;
+			}
 			last_path.Flip();
 			return last_path;
 		}

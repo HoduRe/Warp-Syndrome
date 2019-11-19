@@ -92,7 +92,6 @@
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1PathFinding.cpp" />
-    <ClCompile Include="j1Player.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="level_manager.cpp" />
     <ClCompile Include="p2Log.cpp" />
@@ -118,7 +117,6 @@
     <ClInclude Include="j1Grenade.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1PathFinding.h" />
-    <ClInclude Include="j1Player.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="level_manager.h" />
     <ClInclude Include="p2DynArray.h" />

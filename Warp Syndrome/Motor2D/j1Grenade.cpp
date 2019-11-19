@@ -1,7 +1,6 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1Collision.h"
-#include "j1Player.h"
 #include "j1Input.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
@@ -28,11 +27,10 @@ bool j1Grenade::Awake(pugi::xml_node& ) {
 // Called before the first frame
 bool j1Grenade::Start() {
 
-	anim_list = &App->entity_m->player->playerAnimations;
-	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
-	grenade_texture = App->entity_m->player->texture;
-	grenade_vel.x = App->entity_m->player->speed.x * 3 / 2;
-	grenade_vel.y = App->entity_m->player->speed.y;
+	anim =*App->entity_m->player->playerAnimations.start->data->GetAnimFromName("grenade", &App->entity_m->player->playerAnimations)->data;
+	texture = App->entity_m->player->texture;
+	speed.x = App->entity_m->player->speed.x * 3 / 2;
+	speed.y = App->entity_m->player->speed.y;
 
 	return true;
 }
@@ -52,13 +50,12 @@ bool j1Grenade::Update(float dt) {
 
 // Called before quitting
 bool j1Grenade::CleanUp() {
-	App->tex->UnLoad(grenade_texture);
-	anim_list->clear();
+	App->tex->UnLoad(texture);
 	return true;
 }
 
 void j1Grenade::GrenadeCollisions() {
-	App->collision->CheckLoop(&grenade_position, &grenade_measures, OBJECT_GRENADE);
+	App->collision->CheckLoop(&pos, &grenade_measures, OBJECT_GRENADE);
 	switch (App->collision->current_collision) {
 	case GROUND_COLLISION:
 		switch(grenade_state){
@@ -122,24 +119,24 @@ void j1Grenade::GrenadeCollisions() {
 	grenade_collider_buffer = App->collision->current_collision;
 }
 
-void j1Grenade::GrenadeState() {
+void j1Grenade::GrenadeState() {//TODO parameter will be dt
 	
 	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
 		(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN))) {
 		grenade_state = GST_EXPLODING;
 	}
 	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
-		grenade_time_to_explode += 0.1;
+		health -= 0.1;
 	}
-	if (App->state->current_state == DYING) {
+	if (App->entity_m->player->current_state == DYING) {
 		grenade_state = GST_UNUSABLE;
 	}
 
 	switch (grenade_state) {
 	case GST_UNKNOWN:
-		grenade_position.x = App->entity_m->player->pos.x;
-		grenade_position.y = App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.x;
-		grenade_timer.x = grenade_vel.x;
+		pos.x = App->entity_m->player->pos.x;
+		pos.y = App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.x;
+		grenade_timer.x = grenade_vel.x;//TODO WTF?!
 		switch (App->entity_m->player->fliped) {
 		case true:
 			grenade_state = GST_MOVING_LEFT_UP;

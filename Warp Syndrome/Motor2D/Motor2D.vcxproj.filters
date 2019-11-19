@@ -34,9 +34,6 @@
     <ClCompile Include="j1Map.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Animations.cpp">
       <Filter>Programming %28p2%29=========</Filter>
     </ClCompile>
@@ -136,9 +133,6 @@
       <Filter>Development============\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="j1Map.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Player.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Animations.h">

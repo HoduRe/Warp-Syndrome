@@ -5,6 +5,7 @@
 #include "j1Collision.h"
 #include "p2List.h"
 #include "Entity.h"
+#include "Particles.h"
 
 enum grenade_states {
 	GST_UNKNOWN,
@@ -23,6 +24,7 @@ class j1Grenade : public AnimatedParticle
 public:
 
 	j1Grenade();
+	j1Grenade(fPoint position, fPoint speed, float health);
 
 	// Destructor
 	~j1Grenade();
@@ -33,8 +35,12 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	bool PreUpdate(float dt);
+
 	// Called each loop iteration
 	bool Update(float dt);
+
+	bool PostUpdate(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -45,41 +51,11 @@ public:
 	// Simple machine state for the grenade
 	void GrenadeState();
 
-	// Checks that the grenade is not going out of the map
-	void CheckMapBorder();
+	void Teleport();
 
-	// return true if the grenade exists
-	bool DoesGrenadeExist();
-
-	// returns true if the grenade is in GST_EXPLODING
-	bool IsGrenadeExploding();
-
-	// adds the numbers given to the current grenade position
-	void AddPosition(float x, float y);
-
-	// returns the position
-	fPoint GetPosition();
-
-	// returns the width and height of the grenade
-	fPoint GetMeasures();
-
-	collision_type ColliderBuffer();
-
-	//returns true if granade is in cooldown, false if its not
-	bool GetGrenadeCooldown();
-
-	void StepGrenadeCooldown();
-
-	void GrenadeCooldownReset();
-
-	void SetMeasures(pugi::xml_node root);
-
-private:
-	fPoint grenade_measures;
-	grenade_states grenade_state = GST_UNKNOWN;
-	collision_type grenade_collider_buffer;
-	int cooldown_timer = 0;
-
+public:
+	collision_type grenade_collider_buffer=NONE_COLLISION;
+	grenade_states state = GST_UNKNOWN;
 };
 
 #endif // __j1GRENADE_H__

@@ -2,7 +2,6 @@
 #include "j1App.h"
 #include "j1Map.h"
 #include "p2Log.h"
-#include "j1Player.h"
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Audio.h"
@@ -140,8 +139,8 @@ bool j1LevelManager::RestartLevelObjects()
 {
 	App->entity_m->player->ResetPlayerToStart();
 	App->entity_m->player->current_state = IDLE;
-	App->render->camera.x = -(App->entity_m->player->GetPosition().x - (App->render->camera.w / 2));
-	App->render->camera.y = -(App->entity_m->player->GetPosition().y - (App->render->camera.h / 2));
+	App->render->camera.x = -(App->entity_m->player->pos.x - (App->render->camera.w / 2));
+	App->render->camera.y = -(App->entity_m->player->pos.y - (App->render->camera.h / 2));
 	return true;
 }
 

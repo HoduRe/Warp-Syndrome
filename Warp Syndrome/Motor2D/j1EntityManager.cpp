@@ -117,7 +117,7 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::E_TYPE_ANIMATED_PARTICLE:
 		assert("tried to create a particle from scratch"); //TODO delete this when going to do the release(including the case)
 		break;
-	/*case EntityType::E_TYPE_GRENEDE:
+	/*case EntityType::E_TYPE_GRENADE:
 		ret = new Grenade();
 		break;
 	case EntityType::E_TYPE_ELEMENTAL:

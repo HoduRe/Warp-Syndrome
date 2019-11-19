@@ -4,7 +4,6 @@
 #include "j1EnemyManager.h"
 #include "j1Textures.h"
 #include "j1PathFinding.h"
-#include "j1Player.h"
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Enemy.h"
@@ -35,8 +34,8 @@ bool j1EnemyManager::PreUpdate()
 {
 	// Enables enemies
 	iPoint player_pos;
-	player_pos.x = App->entity_m->player->GetPosition().x / App->map->data.tile_width;
-	player_pos.y = App->entity_m->player->GetPosition().y / App->map->data.tile_height;
+	player_pos.x = App->entity_m->player->pos.x / App->map->data.tile_width;
+	player_pos.y = App->entity_m->player->pos.y / App->map->data.tile_height;
 
 	for (int i = 0; i < MAX_ENEMIES; i++) {
 		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
@@ -121,6 +120,6 @@ void j1EnemyManager::AddEnemy(collider_type type, int x, int y) {
 }
 
 int j1EnemyManager::CheckDistance(int x, int y) {
-	return sqrt((App->entity_m->player->GetPosition().x - x) * (App->entity_m->player->GetPosition().x - x) +
-		(App->entity_m->player->GetPosition().y - y) * (App->entity_m->player->GetPosition().y - y));
+	return sqrt((App->entity_m->player->pos.x - x) * (App->entity_m->player->pos.x - x) +
+		(App->entity_m->player->pos.y - y) * (App->entity_m->player->pos.y - y));
 }

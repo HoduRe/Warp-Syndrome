@@ -22,12 +22,14 @@ public:
 	float mass;
 
 	//=============================
+	Particle(EntityType type = E_TYPE_PARTICLE);
 	Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 },EntityType type=E_TYPE_PARTICLE);
 	Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 }, EntityType type = E_TYPE_PARTICLE);
 	virtual ~Particle();
+	virtual void PreUpdate();
 	virtual void Update();
-	void Integrate();
 	virtual void PostUpdate();
+	void Integrate();
 	void ApplyForce(fPoint aForce);
 	void ApplyGravity(fPoint aGravity);
 
@@ -40,10 +42,12 @@ public:
 	bool dieOnEndAnim;
 
 	//=============================
-	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f });
-	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan=1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f });
+	AnimatedParticle(EntityType type = E_TYPE_ANIMATED_PARTICLE);
+	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, EntityType type = E_TYPE_ANIMATED_PARTICLE);
+	AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan=1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f } , EntityType type = E_TYPE_ANIMATED_PARTICLE);
 	virtual~AnimatedParticle();
 
+	virtual void PreUpdate();
 	virtual void Update();
 	virtual void PostUpdate();
 

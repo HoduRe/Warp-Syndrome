@@ -620,15 +620,15 @@ void Player::CheckMapBorder() {
 
 bool Player::FlipPlayer(fPoint currentpos, fPoint lastpos)
 {
-	bool fliped = fliped;
-	if (currentpos.x < lastpos.x)fliped = true;
-	else if (currentpos.x > lastpos.x)fliped = false;
+	bool pfliped = fliped;
+	if (currentpos.x < lastpos.x)pfliped = true;
+	else if (currentpos.x > lastpos.x)pfliped = false;
 
 
-	if (App->collision->LeftCollision())fliped = true;
-	if (App->collision->RightCollision())fliped = false;
+	if (App->collision->LeftCollision())pfliped = true;
+	if (App->collision->RightCollision())pfliped = false;
 
-	return fliped;
+	return pfliped;
 }
 
 void Player::ChangeAnimation(Animation_list animations)

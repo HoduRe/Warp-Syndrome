@@ -268,10 +268,10 @@ void j1Render::PrintPlayerObjects() {
 	SDL_Rect rect;
 	uint alpha = 80;
 // Blits player
-	rect.x = App->entity_m->player->GetPosition().x - App->entity_m->player->GetWidthHeight().x / 2;
-	rect.y = App->entity_m->player->GetPosition().y - App->entity_m->player->GetWidthHeight().y;
-	rect.w = App->entity_m->player->GetWidthHeight().x;
-	rect.h = App->entity_m->player->GetWidthHeight().y;
+	rect.x = App->entity_m->player->pos.x - App->entity_m->player->hitbox_w_h.x / 2;
+	rect.y = App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.y;
+	rect.w = App->entity_m->player->hitbox_w_h.x;
+	rect.h = App->entity_m->player->hitbox_w_h.y;
 	DrawQuad(rect, 255, 255, 0, alpha);
 // Blits grenade
 	if (App->grenade->DoesGrenadeExist() == true) {

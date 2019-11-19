@@ -2,7 +2,6 @@
 #include "p2Log.h"
 #include "j1Map.h"
 #include "j1Collision.h"
-#include "j1Player.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
 #include "p2List.h"
@@ -37,16 +36,16 @@ bool j1Collision::Update(float dt) {
 	door_collider_touched = false;
 	grenade_collider_touched = false;
 
-	if(GroundCollision() == true){ y_player_buffer = App->entity_m->player->GetPosition().y; }
+	if(GroundCollision() == true){ y_player_buffer = App->entity_m->player->pos.y; }
 	//player variables
-	position.x = App->entity_m->player-> GetPosition().x - App->entity_m->player->GetPosition().x / 2;
-	position.y = App->entity_m->player->GetPosition().y;
-	measures.x = App->entity_m->player->GetWidthHeight().x;
-	measures.y = App->entity_m->player->GetWidthHeight().y;
+	position.x = App->entity_m->player->pos.x - App->entity_m->player->pos.x / 2;
+	position.y = App->entity_m->player->pos.y;
+	measures.x = App->entity_m->player->hitbox_w_h.x;
+	measures.y = App->entity_m->player->hitbox_w_h.y;
 	if(App->entity_m->player->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
 	}
-	y_player_buffer = App->entity_m->player->GetPosition().y;
+	y_player_buffer = App->entity_m->player->pos.y;
 
 	return ret;
 }

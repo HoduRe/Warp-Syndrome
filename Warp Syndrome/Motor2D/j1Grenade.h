@@ -48,9 +48,6 @@ public:
 	// Chechk collisions
 	void GrenadeCollisions();
 
-	// Simple machine state for the grenade
-	void GrenadeState();
-
 	void Teleport();
 
 public:

@@ -18,6 +18,7 @@ j1EntityManager::~j1EntityManager()
 bool j1EntityManager::Awake(pugi::xml_node& node)
 {
 	player = (Player*)CreateEntity(EntityType::E_TYPE_PLAYER);
+	grenade = nullptr;
 	player->Awake(node);
 	return true;
 }
@@ -135,7 +136,8 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 
 	if (ret != nullptr)
 		entity_list.add(ret);
-	return ret;
+	return ret;
+
 }
 
 //adds an existing entity to the list (mainly used for particles due to their customizable nature)

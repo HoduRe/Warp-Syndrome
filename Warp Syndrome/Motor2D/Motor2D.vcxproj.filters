@@ -40,12 +40,6 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1State.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Grenade.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="level_manager.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
@@ -80,6 +74,9 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
     <ClCompile Include="Particles.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Grenade.cpp">
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,12 +138,6 @@
     <ClInclude Include="j1Collision.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1State.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Grenade.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="level_manager.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
@@ -181,6 +172,9 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
     <ClInclude Include="Particles.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Grenade.h">
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,7 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new j1Transitions();
 	//enemies = new j1EnemyManager();
 	//particle_m = new j1ParticleManager();
-	//pathfinding = new j1PathFinding();
+	pathfinding = new j1PathFinding();
 	entity_m = new j1EntityManager();
 
 	// Ordered for awake / Start / Update
@@ -52,7 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(collision);
 	AddModule(scene);
-	//AddModule(pathfinding);
+	AddModule(pathfinding);
 	AddModule(entity_m);
 	//AddModule(enemies);
 	//AddModule(grenade);

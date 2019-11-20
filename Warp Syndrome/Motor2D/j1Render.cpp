@@ -274,11 +274,11 @@ void j1Render::PrintPlayerObjects() {
 	rect.h = App->entity_m->player->hitbox_w_h.y;
 	DrawQuad(rect, 255, 255, 0, alpha);
 // Blits grenade
-	if (App->grenade->DoesGrenadeExist() == true) {
-		rect.x = App->grenade->GetPosition().x;
-		rect.y = App->grenade->GetPosition().y;
-		rect.w = App->grenade->GetMeasures().x;
-		rect.h = App->grenade->GetMeasures().y;
+	if (App->entity_m->grenade!=nullptr) {
+		rect.x = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.x;
+		rect.y = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.y;
+		rect.w = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.w;
+		rect.h = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.h;
 		DrawQuad(rect, 255, 255, 255, alpha);
 	}
 }

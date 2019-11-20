@@ -213,7 +213,8 @@ bool j1Collision::InsideCollider(p2List_item<Object*>* currentobj, float* x, flo
 	float collider_y = (float)currentobj->data->boundingbox.y;
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
-	if (*x >= collider_x - App->grenade->GetMeasures().x && *x + *w <= collider_x + collider_w + App->grenade->GetMeasures().x && *y >= collider_y - App->grenade->GetMeasures().y && *y + *h <= collider_y + collider_h + App->grenade->GetMeasures().y) {
+	SDL_Rect rect = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect;
+	if (*x >= collider_x - rect.w && *x + *w <= collider_x + collider_w + rect.w && *y >= collider_y - rect.h && *y + *h <= collider_y + collider_h + rect.h) {
 		return true;
 	}
 	else { return false; }

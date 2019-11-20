@@ -49,10 +49,15 @@ j1Grenade::j1Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedPartic
 	mass = 1.0f;
 
 	dieOnEndAnim = false;
+	App->entity_m->grenade = (j1Grenade*)App->entity_m->CreateEntity(EntityType::E_TYPE_GRENADE);
+
 }
 
 // Destructor
-j1Grenade::~j1Grenade() {}
+j1Grenade::~j1Grenade() 
+{
+	App->entity_m->grenade = nullptr;
+}
 
 // Called before the first frame
 bool j1Grenade::Start() {
@@ -66,7 +71,7 @@ bool j1Grenade::Start() {
 // Called each loop iteration
 bool j1Grenade::Update(float dt) {
 
-	bool playercantp = false;
+	bool playercantp = true;
 
 
 	//TODO, multiply velocity component of the granade *-0.9f when collision happens. X for horizontal collisions and Y for vertical ones
@@ -75,13 +80,13 @@ bool j1Grenade::Update(float dt) {
 	//and change the playercantp variable to true accordingly (its already implemented that if its true tp doesn't happen)
 
 
-
 	App->render->Blit(texture, pos.x, pos.y, &anim.StepAnimation()->animationRect);
 
 	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)//explode the granade
 		destroy = true;
 	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) &&App->entity_m->player->current_state != DYING && playercantp==true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
+
 	return true;
 }
 

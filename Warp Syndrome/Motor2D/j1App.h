@@ -19,7 +19,7 @@ class j1LevelManager;
 class j1Transitions;
 //class j1EnemyManager;
 class j1ParticleManager;
-//class j1PathFinding;
+class j1PathFinding;
 class j1EntityManager;
 
 class j1App
@@ -97,7 +97,7 @@ public:
 	j1Transitions*		transitions;
 	//j1EnemyManager*			enemies;
 	//j1ParticleManager*  particle_m;
-	//j1PathFinding*		pathfinding;
+	j1PathFinding*		pathfinding;
 	j1EntityManager*	entity_m;
 
 private:

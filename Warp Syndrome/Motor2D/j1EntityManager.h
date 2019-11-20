@@ -10,6 +10,7 @@
 #include "j1Textures.h"
 #include "Entity.h"
 #include "Player.h"
+#include "j1Grenade.h"
 
 
 //Manages all entities in the game
@@ -34,6 +35,8 @@ public:
 
 public:
 	Player* player;
+	j1Grenade* grenade;
+
 	fPoint gravity;
 private:
 	p2List<Entity*> entity_list;

@@ -4,11 +4,17 @@
 #include "p2Log.h"
 #include "j1App.h"
 
+//Brofiler
+#pragma comment(lib,"brofiler/Brofiler/ProfilerCore32.lib")
+#include "brofiler/Brofiler/Brofiler.h"
 // This is needed here because SDL redefines main function
 // do not add any other libraries here, instead put them in their modules
 #include "SDL/include/SDL.h"
 #pragma comment( lib, "SDL/libx86/SDL2.lib" )
 #pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+
+
+
 
 enum MainState
 {
@@ -30,18 +36,18 @@ int main(int argc, char* args[])
 	MainState state = MainState::CREATE;
 	int result = EXIT_FAILURE;
 
-	while(state != EXIT)
+	while (state != EXIT)
 	{
-		switch(state)
+		switch (state)
 		{
 
 			// Allocate the engine --------------------------------------------
-			case CREATE:
+		case CREATE:
 			LOG("CREATION PHASE ===============================");
 
 			App = new j1App(argc, args);
 
-			if(App != NULL)
+			if (App != NULL)
 				state = AWAKE;
 			else
 				state = FAIL;
@@ -49,9 +55,9 @@ int main(int argc, char* args[])
 			break;
 
 			// Awake all modules -----------------------------------------------
-			case AWAKE:
+		case AWAKE:
 			LOG("AWAKE PHASE ===============================");
-			if(App->Awake() == true)
+			if (App->Awake() == true)
 				state = START;
 			else
 			{
@@ -62,9 +68,9 @@ int main(int argc, char* args[])
 			break;
 
 			// Call all modules before first frame  ----------------------------
-			case START:
+		case START:
 			LOG("START PHASE ===============================");
-			if(App->Start() == true)
+			if (App->Start() == true)
 			{
 				state = LOOP;
 				LOG("UPDATE PHASE ===============================");
@@ -77,15 +83,19 @@ int main(int argc, char* args[])
 			break;
 
 			// Loop all modules until we are asked to leave ---------------------
-			case LOOP:
-			if(App->Update() == false)
+		case LOOP:
+		{
+			BROFILER_FRAME("FRAME");
+
+			BROFILER_CATEGORY("Mainloop", Profiler::Color::Green);
+			if (App->Update() == false)
 				state = CLEAN;
 			break;
-
-			// Cleanup allocated memory -----------------------------------------
-			case CLEAN:
+		}
+		// Cleanup allocated memory -----------------------------------------
+		case CLEAN:
 			LOG("CLEANUP PHASE ===============================");
-			if(App->CleanUp() == true)
+			if (App->CleanUp() == true)
 			{
 				RELEASE(App);
 				result = EXIT_SUCCESS;
@@ -97,7 +107,7 @@ int main(int argc, char* args[])
 			break;
 
 			// Exit with errors and shame ---------------------------------------
-			case FAIL:
+		case FAIL:
 			LOG("Exiting with errors :(");
 			result = EXIT_FAILURE;
 			state = EXIT;

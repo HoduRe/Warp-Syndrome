@@ -4,6 +4,8 @@
 #include "p2List.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
+#include "brofiler/Brofiler/Brofiler.h"
+
 
 // Modules
 class j1Window;

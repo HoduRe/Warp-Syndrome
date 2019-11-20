@@ -80,14 +80,16 @@ bool j1Grenade::Update(float dt) {
 	//and change the playercantp variable to true accordingly (its already implemented that if its true tp doesn't happen)
 
 
-	App->render->Blit(texture, pos.x, pos.y, &anim.StepAnimation()->animationRect);
-
 	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)//explode the granade
 		destroy = true;
 	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) &&App->entity_m->player->current_state != DYING && playercantp==true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
 
 	return true;
+}
+bool j1Grenade::PostUpdate(float dt)
+{
+	App->render->Blit(texture, pos.x, pos.y, &anim.StepAnimation()->animationRect);
 }
 
 // Called before quitting

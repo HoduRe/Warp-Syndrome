@@ -11,13 +11,10 @@ struct SDL_Texture;
 class Enemy
 {
 protected:
-	Animations* animation = nullptr;
-	collision_type collider = LAST_COLLISION;
-
-public:
-	iPoint position;
-	bool enabled;
-	p2DynArray<iPoint> path;
+	FrameInfo* currentframe;
+	p2List_item<Animations*>* currentAnim;
+	iPoint hitbox_w_h;
+	p2List<Animations*> playerAnimations;
 
 public:
 	Enemy();

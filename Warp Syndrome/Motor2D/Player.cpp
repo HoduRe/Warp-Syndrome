@@ -633,8 +633,8 @@ bool Player::FlipPlayer(fPoint currentpos, fPoint lastpos)
 
 void Player::ChangeAnimation(Animation_list animations)
 {
-	p2List<Animations*>* pAnimList = &playerAnimations;//pointer to the player's animation list
-	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation
+	p2List<Animations*>* pAnimList = &playerAnimations;//pointer to the player's animation list //TODO this is now loaded directly from the class, no need for a pointer
+	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation//TODO this is now loaded directly from the class, no need for a pointer
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
 

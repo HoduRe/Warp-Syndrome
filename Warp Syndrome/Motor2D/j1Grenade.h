@@ -52,7 +52,6 @@ public:
 
 public:
 	collision_type grenade_collider_buffer=NONE_COLLISION;
-	grenade_states state = GST_UNKNOWN;
 };
 
 #endif // __j1GRENADE_H__

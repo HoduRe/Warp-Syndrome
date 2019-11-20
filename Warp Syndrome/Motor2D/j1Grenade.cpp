@@ -73,12 +73,9 @@ bool j1Grenade::Update(float dt) {
 
 	bool playercantp = true;
 
-
-	//TODO, multiply velocity component of the granade *-0.9f when collision happens. X for horizontal collisions and Y for vertical ones
-	//be careful if grenade was on for example ground collision and enters a ground-right collision not to flip the vertical component again
-	//also detect if the collision is happening with a grenade collision object(the ones that grenades can pass through but player can't)
-	//and change the playercantp variable to true accordingly (its already implemented that if its true tp doesn't happen)
-
+	CorrectCollider();
+	
+	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
 
 	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)//explode the granade
 		destroy = true;
@@ -147,5 +144,34 @@ void j1Grenade::GrenadeCollisions()
 	grenade_collider_buffer = App->collision->current_collision;
 }
 
-
-
+void j1Grenade::CorrectCollider() {
+	fPoint measures(6, 6);
+	App->collision->CheckLoop(&pos, &measures, OBJECT_GRENADE);
+	switch (App->collision->current_collision) {
+	case GROUND_COLLISION:
+	case UPPER_COLLISION:
+		speed.y = speed.y * -0.9;
+		pos.y = App->collision->current_collision_buffer.collider1.y;
+		break;
+	case LEFT_COLLISION:
+	case RIGHT_COLLISION:
+		speed.x = speed.x * -0.9;
+		pos.x = App->collision->current_collision_buffer.collider1.x;
+		break;
+	case LEFT_GROUND_COLLISION:
+	case RIGHT_GROUND_COLLISION:
+	case LEFT_UPPER_COLLISION:
+	case RIGHT_UPPER_COLLISION:
+		speed.x = speed.x * -0.9;
+		speed.y = speed.y * -0.9;
+		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
+			pos.y = App->collision->current_collision_buffer.collider1.y;
+			pos.x = App->collision->current_collision_buffer.collider2.x;
+		}
+		else {
+			pos.x = App->collision->current_collision_buffer.collider1.x;
+			pos.y = App->collision->current_collision_buffer.collider2.y;
+		}
+		break;
+	}
+}

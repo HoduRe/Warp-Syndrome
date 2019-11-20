@@ -41,7 +41,7 @@ bool j1EnemyManager::PreUpdate() {
 			distance = CheckDistance(enemy_pos.x, enemy_pos.y);
 			if (distance <= SPAWN_DISTANCE) {
 				enemy_list[i]->enabled = true;
-				enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_pos);
+				App->pathfinding->CreatePath(player_pos, enemy_pos, enemy_list[i]);
 			}
 		}
 	}
@@ -52,7 +52,8 @@ bool j1EnemyManager::PreUpdate() {
 // Called before render is available
 bool j1EnemyManager::Update(float dt) {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true) enemy_list[i]->Move();
+		if(enemy_list[i] != nullptr && enemy_list[i]->enabled == true)
+			enemy_list[i]->Move();
 
 //	for(uint i = 0; i < MAX_ENEMIES; ++i)
 //BLIT	
@@ -62,10 +63,12 @@ bool j1EnemyManager::Update(float dt) {
 bool j1EnemyManager::PostUpdate() {
 	// Disables dead enemies
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		if (enemy_list[i] != nullptr && CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) > SPAWN_DISTANCE) {
+		if (enemy_list[i] != nullptr && CheckDistance(enemy_list[i]->position.x / App->map->data.tile_width,
+			enemy_list[i]->position.y / App->map->data.tile_width) > SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = false;
 		}
 	}
+	BlitEnemies();
 
 	return true;
 }
@@ -127,4 +130,28 @@ int j1EnemyManager::CheckDistance(int x, int y) {
 	if (playerpos.x < 0) { playerpos.x = -playerpos.x; }
 	if (playerpos.y < 0) { playerpos.y = -playerpos.y; }
 	return playerpos.x + playerpos.y;
+}
+
+void j1EnemyManager::SetBlitEnemies() { blit = !blit; }
+
+void j1EnemyManager::BlitEnemies() {
+	SDL_Rect rect;
+	for (int i = 0; i < MAX_ENEMIES; i++) {
+		if (enemy_list[i] != nullptr && enemy_list[i]->enabled == true) {
+			int j = 0;
+			rect.x = enemy_list[i]->position.x;
+			rect.y = enemy_list[i]->position.y;
+			rect.w = 20;
+			rect.h = 20;
+			App->render->DrawQuad(rect, 75, 75, 75);
+			while (enemy_list[i]->path.At(j) != NULL) {
+				rect.w = App->map->data.tile_width;
+				rect.h = App->map->data.tile_height;
+				rect.x = enemy_list[i]->path[j].x * rect.w;
+				rect.y = enemy_list[i]->path[j].y * rect.h;
+				App->render->DrawQuad(rect, 175, 175, 175, 60);
+				j++;
+			}
+		}
+	}
 }

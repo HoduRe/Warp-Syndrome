@@ -1,5 +1,6 @@
--Posar animacions
--Determinar quines tiles son walkable pel path_finder
+-Diferent paths for each enemy
+-Fer pathfinding cada x frames
+-Enemy level transition
 -Fer canvi d'estat quan mori
 -Programar què fa que mori
 -Fer diferents patrons de moviment (a x distància un, a y distància un altre)
@@ -9,4 +10,7 @@ elemental = 6
 horse = 7
 skull = 8
 
+
+x = 5210
+y = 509
 

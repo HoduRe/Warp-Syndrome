@@ -54,25 +54,6 @@ const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 	return &last_path;
 }
 
-void j1PathFinding::SetBlitPathfinding() { blit = !blit; }
-
-bool j1PathFinding::GetBlitPathfinding() { return blit; }
-
-void j1PathFinding::BlitPathfinding() {
-	int i = 0;
-	if (blit == true) {
-		while (!(i >= last_path.Count())) {
-			SDL_Rect rect;
-			rect.x = last_path[i].x;
-			rect.y = last_path[i].y;
-			rect.w = App->map->data.tile_width;
-			rect.h = App->map->data.tile_height;
-			App->render->DrawQuad(rect, 255, 200, 40);
-			i++;
-		}
-	}
-}
-
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------
@@ -174,76 +155,70 @@ int PathNode::CalculateF(int originG, const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-p2DynArray<iPoint> j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, Enemy* enemy)
 {
 	PathList frontier;
 	PathList visited;
 	PathNode aux_path;
 	PathList aux_list;
-	bool stop = false;
+	bool stop = false;	// ends the loop that fills the last_path
+	end = false;	// ends the function
 
 	width = App->map->data.width;
 	height = App->map->data.height;
 
 	last_path.Clear();
 
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
-		return last_path;
-	}
+	if (IsWalkable(origin) == true && IsWalkable(destination) == true) {
+		aux_path.pos = origin;
+		aux_path.parent.x = 0;
+		aux_path.parent.y = 0;
+		aux_path.g = 0;
+		aux_path.h = aux_path.pos.DistanceTo(destination);
+		frontier.list.add(aux_path);
 
-	aux_path.pos = origin;
-	aux_path.parent.x = 0;
-	aux_path.parent.y = 0;
-	aux_path.g = 0;
-	aux_path.h = aux_path.pos.DistanceTo(destination);
-	frontier.list.add(aux_path);
-
-	while (frontier.list.start != NULL) {
-		visited.list.add(frontier.GetNodeLowestScore()->data);
-		aux_path = visited.list.end->data;
-		frontier.list.del(frontier.GetNodeLowestScore());
-		if (visited.list.end->data.pos == destination) {
-			do {	// Take the last tile --> do I have it? --> take its parent --> make parent the last tile
-				last_path.PushBack(aux_path.pos);
-				if (aux_path.pos != origin) {
-					bool iterate = true;
-					int i = 0;
-					if (visited.Find(aux_path.pos) != NULL && visited.Find(aux_path.pos)->data.parent.x != -1) {
-						aux_path.pos = visited.Find(aux_path.pos)->data.parent;
+		while (frontier.list.start != NULL && end == false) {
+			visited.list.add(frontier.GetNodeLowestScore()->data);
+			aux_path = visited.list.end->data;
+			frontier.list.del(frontier.GetNodeLowestScore());
+			if (visited.list.end->data.pos == destination) {
+				do {	// Take the last tile --> do I have it? --> take its parent --> make parent the last tile
+					last_path.PushBack(aux_path.pos);
+					if (aux_path.pos != origin) {
+						bool iterate = true;
+						int i = 0;
+						if (visited.Find(aux_path.pos) != NULL && visited.Find(aux_path.pos)->data.parent.x != -1) {
+							aux_path.pos = visited.Find(aux_path.pos)->data.parent;
+						}
 					}
+					else { stop = true; }
+				} while (stop == false);
+				last_path.Flip();
+				enemy->path.Clear();
+				int i = 0;
+				while (last_path.At(i) != NULL) {
+					enemy->path.PushBack(*last_path.At(i));
+					i++;
 				}
-				else { stop = true; }
-			} while (stop == false);
-			int i = 0;
-			while (last_path.At(i) != NULL) {
-				iPoint a;
-				a.x = last_path.At(i)->x;
-				a.y = last_path.At(i)->y;
-				LOG("%i: %i %i", i, a.x, a.y);
-				i++;
+				end = true;
 			}
-			last_path.Flip();
-			return last_path;
-		}
 
-		aux_list.list.clear();
-		aux_path.FindWalkableAdjacents(aux_list);
-		p2List_item<PathNode>* f = aux_list.list.start;
+			aux_list.list.clear();
+			aux_path.FindWalkableAdjacents(aux_list);
+			p2List_item<PathNode>* f = aux_list.list.start;
 
-		while (f != NULL) {
-			if (visited.Find(f->data.pos) == NULL) {
-				f->data.CalculateF(aux_path.g, destination);	// THIS ALSO GIVES A VALUE TO G AND H
-				if (frontier.Find(f->data.pos) != NULL && frontier.Find(f->data.pos)->data.g > f->data.g) {
-					frontier.list.del(frontier.Find(f->data.pos));
-					frontier.list.add(f->data);
+			while (f != NULL) {
+				if (visited.Find(f->data.pos) == NULL) {
+					f->data.CalculateF(aux_path.g, destination);	// THIS ALSO GIVES A VALUE TO G AND H
+					if (frontier.Find(f->data.pos) != NULL && frontier.Find(f->data.pos)->data.g > f->data.g) {
+						frontier.list.del(frontier.Find(f->data.pos));
+						frontier.list.add(f->data);
+					}
+					else { frontier.list.add(f->data); }
 				}
-				else { frontier.list.add(f->data); }
+				f = f->next;
 			}
-			f = f->next;
 		}
-
 	}
-
-	return last_path;
 }
 

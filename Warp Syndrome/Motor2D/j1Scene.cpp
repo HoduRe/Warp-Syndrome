@@ -14,6 +14,7 @@
 #include "level_manager.h"
 #include "Particles.h"
 #include "j1PathFinding.h"
+#include "j1EnemyManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -73,7 +74,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		App->state->SetBlitColliders();
-		App->pathfinding->SetBlitPathfinding();
+		App->enemies->SetBlitEnemies();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -139,7 +140,6 @@ bool j1Scene::Update(float dt)
 	}
 	//end of debug particles
 	App->map->Draw();
-	if (App->pathfinding->GetBlitPathfinding() == true) { App->pathfinding->BlitPathfinding(); }
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		App->map->data.width, App->map->data.height,

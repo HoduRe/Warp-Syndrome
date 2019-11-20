@@ -29,10 +29,12 @@ public:
 
 	// Checks distance between player and enemy
 	int CheckDistance(int x, int y);
+	void SetBlitEnemies();
+	void BlitEnemies();
+	bool blit;
 
 private:
-
-	Enemy *enemy_list[MAX_ENEMIES];
+	Enemy* enemy_list[MAX_ENEMIES];
 	SDL_Texture* sprites;
 };
 

@@ -13,7 +13,7 @@ void Enemy_FireSkull::Move() {
 	int height = App->map->data.tile_height;
 	if (path.At(path.Count() - 3) != nullptr && path.At(path.Count())->y != path.At(path.Count() - 3)->y) {
 		if (path.At(path.Count())->y < path.At(path.Count() - 3)->y) {
-			position.y += height / 10;
+			position.y -= height / 10;
 		}
 	}	// This function allows low-diagonal movement, exclusive to flying units, hence why it's in the sub-class Move function
 }

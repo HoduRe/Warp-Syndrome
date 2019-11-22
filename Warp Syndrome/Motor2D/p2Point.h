@@ -110,8 +110,10 @@ public:
 	{
 		TYPE fx = x - v.x;
 		TYPE fy = y - v.y;
+		if (fx < 0) { fx *= -1; }
+		if (fy < 0) { fy *= -1; }
 
-		return sqrtf((fx*fx) + (fy*fy));
+		return fx + fy;
 	}
 
 	TYPE DistanceNoSqrt(const p2Point& v) const

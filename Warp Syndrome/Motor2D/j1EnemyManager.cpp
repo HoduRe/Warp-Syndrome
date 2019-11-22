@@ -41,7 +41,7 @@ bool j1EnemyManager::PreUpdate() {
 			distance = CheckDistance(enemy_pos.x, enemy_pos.y);
 			if (distance <= SPAWN_DISTANCE) {
 				enemy_list[i]->enabled = true;
-				App->pathfinding->CreatePath(player_pos, enemy_pos, enemy_list[i]);
+				App->pathfinding->CreatePath(enemy_pos, player_pos, enemy_list[i]);
 			}
 		}
 	}

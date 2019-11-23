@@ -1,6 +1,6 @@
--Diferent paths for each enemy
--Fer pathfinding cada x frames
--Enemy level transition
+-Diferent paths for each enemy (requires entities)
+-Fer pathfinding cada x frames (requires dt)
+-Enemy level transition (Oscar)
 -Fer canvi d'estat quan mori
 -Programar què fa que mori
 -Fer diferents patrons de moviment (a x distància un, a y distància un altre)

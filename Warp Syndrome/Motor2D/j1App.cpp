@@ -34,7 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
-	//grenade = new j1Grenade();
+	//grenade = new Grenade();
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
 	//enemies = new j1EnemyManager();

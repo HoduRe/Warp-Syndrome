@@ -56,16 +56,16 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
     <ClCompile Include="Elemental.cpp">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Fire_skull.cpp">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Hell_horse.cpp">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="j1EnemyManager.cpp">
       <Filter>Development============\Modules</Filter>
@@ -77,6 +77,9 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
     <ClCompile Include="j1Grenade.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -154,16 +157,16 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
     <ClInclude Include="Elemental.h">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Fire_skull.h">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Hell_horse.h">
-      <Filter>Development============\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="j1EnemyManager.h">
       <Filter>Development============\Modules</Filter>
@@ -175,6 +178,9 @@
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
     <ClInclude Include="j1Grenade.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
       <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
   </ItemGroup>
@@ -200,7 +206,7 @@
     <Filter Include="Development============\Entity Sistem">
       <UniqueIdentifier>{493f0520-6e99-483a-a4bd-725f3658e610}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development============\Enemies">
+    <Filter Include="Development============\Entity Sistem\Enemies">
       <UniqueIdentifier>{b10a643a-5b47-4b63-845c-7263c46eca15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

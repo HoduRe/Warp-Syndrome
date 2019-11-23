@@ -14,7 +14,7 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 class j1Collision;
-//class j1Grenade;
+//class Grenade;
 class j1LevelManager;
 class j1Transitions;
 //class j1EnemyManager;
@@ -92,7 +92,7 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collision*		collision;
-	//j1Grenade*			grenade;
+	//Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
 	//j1EnemyManager*			enemies;

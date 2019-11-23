@@ -19,15 +19,15 @@ enum grenade_states {
 	GST_UNUSABLE
 };
 
-class j1Grenade : public AnimatedParticle
+class Grenade : public AnimatedParticle
 {
 public:
 
-	j1Grenade();
-	j1Grenade(fPoint position, fPoint speed, float health);
+	Grenade();
+	Grenade(fPoint position, fPoint speed, float health);
 
 	// Destructor
-	~j1Grenade();
+	~Grenade();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

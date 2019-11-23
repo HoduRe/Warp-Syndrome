@@ -18,12 +18,12 @@
 #include "SDL/include/SDL.h"
 
 
-Player::Player():Entity(EntityType::E_TYPE_PLAYER)
+Player::Player() :Character(E_TYPE_PLAYER)
 {
-	currentframe=nullptr;
-	currentAnim=nullptr;
-	hitbox_w_h = {0,0};
-	texture=nullptr;
+	currentframe = nullptr;
+	currentAnim = nullptr;
+	hitbox_w_h = { 0,0 };
+	texture = nullptr;
 	//creates the name of the class for usage to target the right node of coniguration in the awake function
 	//name.create("player");
 }
@@ -71,11 +71,11 @@ bool Player::Start()
 	speed.y = playernode.child("velocity").attribute("y").as_float();
 	hitbox_w_h.x = playernode.child("hitbox").attribute("w").as_int();
 	hitbox_w_h.y = playernode.child("hitbox").attribute("h").as_int();
-	
+
 	//Load image
 	texture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
-	p2List_item<Animations*>* defaultanim = playerAnimations.start->data->GetAnimFromName("idle", &playerAnimations);
+	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
 	currentAnim = defaultanim;
 
 	current_state = IDLE;
@@ -84,7 +84,7 @@ bool Player::Start()
 	wall_jump_timer = speed.x;
 	wall_jump = SST_IDLE;
 	x_jumping_state = JST_IDLE;
-	y_jumping_state = JST_UNKNOWN;
+	y_jumping_state = JST_UNKNOWN_Y;
 
 	return ret;
 }
@@ -104,9 +104,10 @@ bool Player::Update(float dt)
 		CheckInputs();	// Checks active states (based on inputs)
 		CheckCollisions(); // Checks colliders
 		MovePlayer();	// Moves player position
-		fliped = (FlipPlayer(pos, playerposbuffer));//flips the player
+		fliped = (FlipCharacter(pos, playerposbuffer));//flips the player
 		CheckAnimation(current_state, bufferlaststate);
-	} else { GodMode(); }	// moves the player in God Mode
+	}
+	else { GodMode(); }	// moves the player in God Mode
 
 	return true;
 }
@@ -124,14 +125,14 @@ bool Player::CleanUp()
 {
 	App->tex->UnLoad(texture);
 	p2List_item<Animations*>* item;
-	item = playerAnimations.start;
+	item = animations_list.start;
 
 	while (item != NULL)
 	{
 		RELEASE(item->data);
 		item = item->next;
 	}
-	playerAnimations.clear();
+	animations_list.clear();
 	return true;
 }
 
@@ -153,18 +154,6 @@ bool Player::Save(pugi::xml_node& data) const
 
 //Loads all the animations needed for the player
 //returns false if no animation has been loaded, otherwise returns true
-bool Player::LoadAnimations(pugi::xml_node& rootnode)
-{
-	bool ret = false;
-	for (pugi::xml_node animationnode = rootnode.child("animation"); animationnode; animationnode = animationnode.next_sibling("animation"))
-	{
-		Animations* anim = new Animations;
-		ret = anim->LoadAnim(animationnode);
-
-		playerAnimations.add(anim);
-	}
-	return ret;
-}
 
 bool Player::ResetPlayerToStart() {
 	p2List_item<Object*>* startingpoint = nullptr;
@@ -304,7 +293,7 @@ void Player::CheckCollisions() {
 		case RUN_FORWARD:
 		case SLIDING_TO_IDLE:
 			current_state = DYING;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -315,7 +304,7 @@ void Player::CheckCollisions() {
 		case SLIDING_ON_LEFT_WALL:
 		case TELEPORT:
 			current_state = SLIDING_ON_RIGHT_WALL;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -327,7 +316,7 @@ void Player::CheckCollisions() {
 		case SLIDING_ON_LEFT_WALL:
 		case TELEPORT:
 			current_state = SLIDING_ON_RIGHT_WALL;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -338,7 +327,7 @@ void Player::CheckCollisions() {
 		case SLIDING_ON_RIGHT_WALL:
 		case TELEPORT:
 			current_state = SLIDING_ON_LEFT_WALL;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -350,7 +339,7 @@ void Player::CheckCollisions() {
 		case SLIDING_ON_RIGHT_WALL:
 		case TELEPORT:
 			current_state = SLIDING_ON_LEFT_WALL;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -360,7 +349,7 @@ void Player::CheckCollisions() {
 		case WALL_JUMP:
 		case TELEPORT:
 			current_state = IDLE;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -376,7 +365,7 @@ void Player::CheckCollisions() {
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
 			current_state = IDLE;
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			break;
 		}
 		break;
@@ -411,7 +400,7 @@ void Player::MovePlayer() {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
 		if (current_state == WALK_FORWARD) { pos.x += speed.x / 2; }
-		else { pos.x =  speed.x; }
+		else { pos.x = speed.x; }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
@@ -481,7 +470,7 @@ void Player::JumpMoveX() {
 void Player::JumpMoveY() {
 
 	switch (y_jumping_state) {
-	case JST_UNKNOWN:
+	case JST_UNKNOWN_Y:
 		if (current_state == FREE_JUMP || current_state == WALL_JUMP) {
 			y_jumping_state = JST_GOING_UP;
 			jump_timer = 0;
@@ -504,7 +493,7 @@ void Player::JumpMoveY() {
 		break;
 	case JST_GOING_DOWN:
 		if (current_state != FREE_FALLING && current_state != FREE_JUMP) {
-			y_jumping_state = JST_UNKNOWN;
+			y_jumping_state = JST_UNKNOWN_Y;
 			jump_timer = 0;
 		}
 		else if (jump_timer <= speed.y * 100) {
@@ -618,7 +607,7 @@ void Player::CheckMapBorder() {
 	}
 }
 
-bool Player::FlipPlayer(fPoint currentpos, fPoint lastpos)
+bool Player::FlipCharacter(fPoint currentpos, fPoint lastpos)
 {
 	bool pfliped = fliped;
 	if (currentpos.x < lastpos.x)pfliped = true;
@@ -633,7 +622,7 @@ bool Player::FlipPlayer(fPoint currentpos, fPoint lastpos)
 
 void Player::ChangeAnimation(Animation_list animations)
 {
-	p2List<Animations*>* pAnimList = &playerAnimations;//pointer to the player's animation list //TODO this is now loaded directly from the class, no need for a pointer
+	p2List<Animations*>* pAnimList = &animations_list;//pointer to the player's animation list //TODO this is now loaded directly from the class, no need for a pointer
 	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation//TODO this is now loaded directly from the class, no need for a pointer
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
@@ -692,19 +681,6 @@ void Player::ChangeAnimation(Animation_list animations)
 
 	currentAnim = newanim;//sets the current animation of the player
 
-}
-
-Animation_state Player::StepCurrentAnimation()
-{
-	Animation_state state = AS_UNKNOWN;
-
-	p2List_item<Animations*>* currentanim = currentAnim;
-	FrameInfo* frame;
-	frame = currentanim->data->StepAnimation();
-
-	currentframe = frame;
-
-	return state;
 }
 
 void Player::CheckAnimation(state_list currentstate, state_list laststate)

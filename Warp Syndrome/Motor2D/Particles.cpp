@@ -115,7 +115,7 @@ AnimatedParticle::AnimatedParticle(EntityType type) :Particle(type)
 AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, EntityType type) : Particle(pPos, pTexture, aLifespan, aGravity, aOffset, { 0,0,0,0 }, type)
 {
 
-	p2List<Animations*>* list = &App->entity_m->player->playerAnimations;
+	p2List<Animations*>* list = &App->entity_m->player->animations_list;
 	p2List_item<Animations*>* item = list->start;
 	item = item->data->GetAnimFromName(aAnimName, list);
 	anim = *item->data;
@@ -131,7 +131,7 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 //dynamic particle constructor
 AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan, fPoint aGravity, fPoint aOffset, EntityType type) :Particle(pPos, pSpeed, aMass, pTexture, aLifespan, aGravity, aOffset, { 0,0,0,0 }, type)
 {
-	p2List<Animations*>* list = &App->entity_m->player->playerAnimations;
+	p2List<Animations*>* list = &App->entity_m->player->animations_list;
 	p2List_item<Animations*>* item = list->start;
 	item = item->data->GetAnimFromName(aAnimName, list);
 	

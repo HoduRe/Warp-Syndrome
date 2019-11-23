@@ -3,10 +3,19 @@
 #include "j1Collision.h"
 #include "Particles.h"
 #include "j1Render.h"
+#include "j1EntityManager.h"
+#include "Entity.h"
 
-Enemy::Enemy(){}
+Enemy::Enemy(EntityType atype): Character(atype)
+{
+	state = E_STATE_UNKNOWN;
+}
 
-Enemy::Enemy(int x, int y) : position(x, y){
+Enemy::Enemy(int x, int y, EntityType atype):Character(atype)
+{
+	state = E_STATE_DEFAULT;
+	pos.x = x;
+	pos.y = y;
 	enabled = false;
 }
 
@@ -48,4 +57,9 @@ void Enemy::GeneralMove(int *x, int *y, p2DynArray<iPoint>& path) {
 			(*y) -= height / 4;
 		}
 	}	// This second comprovation is done in order to make movement more dynamic, and less rigid
+}
+int Enemy::CheckDistance(int x, int y)
+{
+	return sqrt((App->entity_m->player->pos.x - x) * (App->entity_m->player->pos.x - x) +
+		(App->entity_m->player->pos.y - y) * (App->entity_m->player->pos.y - y));
 }

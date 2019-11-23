@@ -38,9 +38,9 @@ bool j1EnemyManager::PreUpdate()
 	player_pos.y = App->entity_m->player->pos.y / App->map->data.tile_height;
 
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) <= SPAWN_DISTANCE) {
+		if (CheckDistance(enemy_list[i]->pos.x, enemy_list[i]->pos.y) <= SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = true;
-			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_list[i]->position);
+			enemy_list[i]->path = App->pathfinding->CreatePath(player_pos, enemy_list[i]->pos);
 		}
 	}
 
@@ -63,7 +63,7 @@ bool j1EnemyManager::PostUpdate()
 {
 	// Disables dead enemies
 	for (int i = 0; i < MAX_ENEMIES; i++) {
-		if (CheckDistance(enemy_list[i]->position.x, enemy_list[i]->position.y) > SPAWN_DISTANCE) {
+		if (CheckDistance(enemy_list[i]->pos.x, enemy_list[i]->pos.y) > SPAWN_DISTANCE) {
 			enemy_list[i]->enabled = false;
 		}
 	}

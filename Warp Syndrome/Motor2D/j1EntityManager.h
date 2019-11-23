@@ -35,7 +35,7 @@ public:
 
 public:
 	Player* player;
-	j1Grenade* grenade;
+	Grenade* grenade;
 
 	fPoint gravity;
 private:

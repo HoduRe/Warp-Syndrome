@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Particles.h"
+#include "j1Grenade.h"
 
 //Entity Manager=============================================
 
@@ -102,7 +103,7 @@ bool j1EntityManager::Save(pugi::xml_node&) const
 //to add a particle to the entity list create the particle and use the entity manager method AddEntity().
 Entity* j1EntityManager::CreateEntity(EntityType type)
 {
-	static_assert(EntityType::E_TYPE_UNKNOWN == 7, "code needs update");
+	static_assert(EntityType::E_TYPE_UNKNOWN == 9, "code needs update");
 	Entity* ret = nullptr;
 
 
@@ -118,9 +119,10 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::E_TYPE_ANIMATED_PARTICLE:
 		assert("tried to create a particle from scratch"); //TODO delete this when going to do the release(including the case)
 		break;
-	/*case EntityType::E_TYPE_GRENADE:
+	case EntityType::E_TYPE_GRENADE:
 		ret = new Grenade();
 		break;
+	/*
 	case EntityType::E_TYPE_ELEMENTAL:
 		ret = new Elemental();
 		break;
@@ -144,7 +146,7 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 bool j1EntityManager::AddEntity(Entity* newEntity)
 {
 	bool ret = false;
-	static_assert(EntityType::E_TYPE_UNKNOWN == 7, "code needs update");
+	static_assert(EntityType::E_TYPE_UNKNOWN == 9, "code needs update");
 	entity_list.add(newEntity);
 	return ret;
 }

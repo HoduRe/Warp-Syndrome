@@ -5,18 +5,21 @@
 #include "Animations.h"
 #include "SDL/include/SDL.h"
 #include "Entity.h"
+#include "Character.h"
 
 enum SlidingStates {
 	SST_JUMPING_LEFT,
 	SST_JUMPING_RIGHT,
 	SST_FALLING_LEFT,
 	SST_FALLING_RIGHT,
-	SST_IDLE
+	SST_IDLE,
+	SST_UNKNOWN
 };
 enum JumpingStatesX {
 	JST_GOING_LEFT,
 	JST_GOING_RIGHT,
-	JST_IDLE
+	JST_IDLE,
+	JST_UNKNOWN_X
 };
 
 enum JumpingStatesY
@@ -24,7 +27,7 @@ enum JumpingStatesY
 	JST_GOING_UP,
 	JST_TRANSITION,
 	JST_GOING_DOWN,
-	JST_UNKNOWN
+	JST_UNKNOWN_Y
 };
 
 enum state_list {
@@ -65,15 +68,8 @@ enum Animation_list
 	AL_UNKNOWN
 };
 
-enum Animation_state
-{
-	AS_UNFINISHED,
-	AS_FINISHED,
-	AS_UNKNOWN
-};
-
 //this class holds all the data for the player
-class Player : public Entity
+class Player : public Character
 {
 
 public:
@@ -103,8 +99,6 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	bool LoadAnimations(pugi::xml_node&);
-
 	bool ResetPlayerToStart();
 
 	// Gives a state based on inputs
@@ -116,9 +110,8 @@ public:
 	// Puts the proper animation
 	void ChangeAnimation(Animation_list animations);
 	//flips the player
-	bool FlipPlayer(fPoint currentpos, fPoint lastpos);
+	bool FlipCharacter(fPoint currentpos, fPoint lastpos);
 
-	Animation_state StepCurrentAnimation();
 	// Calculates jump shinanigans
 	void JumpMoveX();
 	void JumpMoveY();
@@ -142,11 +135,7 @@ public:
 	void SetGodmode(bool state);
 
 public:
-	FrameInfo* currentframe;
-	p2List_item<Animations*>* currentAnim;
 	state_list current_state;
-	iPoint hitbox_w_h;
-	p2List<Animations*> playerAnimations;
 
 private:
 	SDL_Event events;
@@ -155,17 +144,17 @@ private:
 	pugi::xml_node grenadenode;
 	p2SString filename;
 
-	bool grenade;
-	bool god_mode;
-	bool blit_colliders;
-	int run_counter = 0;
-	int death_counter = 0;
-	float wall_jump_timer = 0;
-	float jump_timer;
-	SlidingStates wall_jump;
-	SlidingStates wall_jump_extra_move;
-	JumpingStatesX x_jumping_state;
-	JumpingStatesY y_jumping_state;
+	bool grenade=false;
+	bool god_mode= false;
+	bool blit_colliders= false;
+	int run_counter = 0.0f;
+	int death_counter = 0.0f;
+	float wall_jump_timer = 0.0f;
+	float jump_timer=0.0f;
+	SlidingStates wall_jump=SST_UNKNOWN;
+	SlidingStates wall_jump_extra_move=SST_UNKNOWN;
+	JumpingStatesX x_jumping_state=JST_UNKNOWN_X;
+	JumpingStatesY y_jumping_state= JST_UNKNOWN_Y;
 	state_list bufferlaststate;
 };
 

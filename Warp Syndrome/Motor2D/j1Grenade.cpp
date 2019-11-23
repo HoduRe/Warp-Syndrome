@@ -13,7 +13,7 @@
 #include "Player.h"
 
 //default constructor
-j1Grenade::j1Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
+Grenade::Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
 {
 	pos = { 0.0f,0.0f };
 	speed = { 0.0f,0.0f };
@@ -32,7 +32,7 @@ j1Grenade::j1Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
 	dieOnEndAnim = false;
 }
 //constructor
-j1Grenade::j1Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, nullptr, aHealth, { 0.0f,0.0f }, { 0.0f,0.0f }, E_TYPE_GRENADE)
+Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, nullptr, aHealth, { 0.0f,0.0f }, { 0.0f,0.0f }, E_TYPE_GRENADE)
 {
 	pos = aPos;
 	speed = aSpeed;
@@ -49,18 +49,18 @@ j1Grenade::j1Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedPartic
 	mass = 1.0f;
 
 	dieOnEndAnim = false;
-	App->entity_m->grenade = (j1Grenade*)App->entity_m->CreateEntity(EntityType::E_TYPE_GRENADE);
+	App->entity_m->grenade = (Grenade*)App->entity_m->CreateEntity(EntityType::E_TYPE_GRENADE);
 
 }
 
 // Destructor
-j1Grenade::~j1Grenade() 
+Grenade::~Grenade() 
 {
 	App->entity_m->grenade = nullptr;
 }
 
 // Called before the first frame
-bool j1Grenade::Start() {
+bool Grenade::Start() {
 
 	texture = App->entity_m->player->texture;
 	speed.x = App->entity_m->player->speed.x * 3 / 2;
@@ -69,7 +69,7 @@ bool j1Grenade::Start() {
 }
 
 // Called each loop iteration
-bool j1Grenade::Update(float dt) {
+bool Grenade::Update(float dt) {
 
 	bool playercantp = true;
 
@@ -84,18 +84,19 @@ bool j1Grenade::Update(float dt) {
 
 	return true;
 }
-bool j1Grenade::PostUpdate(float dt)
+bool Grenade::PostUpdate(float dt)
 {
 	App->render->Blit(texture, pos.x, pos.y, &anim.StepAnimation()->animationRect);
+	return true;
 }
 
 // Called before quitting
-bool j1Grenade::CleanUp() {
+bool Grenade::CleanUp() {
 	App->tex->UnLoad(texture);//TODO don't know if its a copy of the player texture or a poniter to it, so maybe, when cleaning the player dissapears :p guess we will find out soon
 	return true;
 }
 
-void j1Grenade::Teleport()
+void Grenade::Teleport()
 {
 	App->audio->PlayFx(App->scene->teleport_sfx);
 	//generate a particle on the player then move the player and generate the other when TPed
@@ -108,7 +109,7 @@ void j1Grenade::Teleport()
 	destroy = true;
 }
 
-void j1Grenade::GrenadeCollisions() 
+void Grenade::GrenadeCollisions() 
 {
 
 	fPoint measures;
@@ -144,7 +145,7 @@ void j1Grenade::GrenadeCollisions()
 	grenade_collider_buffer = App->collision->current_collision;
 }
 
-void j1Grenade::CorrectCollider() {
+void Grenade::CorrectCollider() {
 	fPoint measures(6, 6);
 	App->collision->CheckLoop(&pos, &measures, OBJECT_GRENADE);
 	switch (App->collision->current_collision) {

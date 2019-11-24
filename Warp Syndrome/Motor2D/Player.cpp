@@ -401,7 +401,7 @@ void Player::MovePlayer() {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
 		if (current_state == WALK_FORWARD) { pos.x += speed.x / 2; }
-		else { pos.x = speed.x; }
+		else { pos.x += speed.x; }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:

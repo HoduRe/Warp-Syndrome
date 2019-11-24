@@ -4,6 +4,7 @@
 #include "Animations.h"
 #include "j1Input.h"
 #include "j1EntityManager.h"
+#include "Entity.h"
 #include "Player.h"
 //particle functions======================================================================
 	//default particle constructor
@@ -75,16 +76,16 @@ void Particle::Integrate()
 	forces = { 0,0 };//resets forces to 0
 
 }
-void Particle::PreUpdate()
-{}
+
 //called every update
-void Particle::Update()
+bool Particle::Update(float dt)
 {
 	Integrate();
 	health--;
+	return true;
 }
 
-void Particle::PostUpdate()
+bool Particle::PostUpdate()
 {
 	if (SDL_RectEmpty(&texture_section))
 		App->render->Blit(texture, pos.x, pos.y, NULL, fliped);
@@ -93,6 +94,7 @@ void Particle::PostUpdate()
 
 	if (health <= 0)
 		destroy = true;
+	return true;
 }
 
 void Particle::ApplyForce(fPoint aForce)
@@ -152,11 +154,9 @@ AnimatedParticle::~AnimatedParticle()
 {
 }
 
-void AnimatedParticle::PreUpdate()
-{}
 
 //called every update
-void AnimatedParticle::Update()
+bool AnimatedParticle::Update(float dt)
 {
 	Integrate();
 	anim.StepAnimation();
@@ -166,13 +166,15 @@ void AnimatedParticle::Update()
 	else if (!dieOnEndAnim)//if the particle dies of age lower its life
 		health--;
 
-
+	return true;
 }
 
-void AnimatedParticle::PostUpdate()
+bool AnimatedParticle::PostUpdate()
 {
 	FrameInfo* currframe = anim.GetCurrentFrame();
 	App->render->Blit(texture, pos.x, pos.y, &currframe->animationRect, fliped);
 	if (health <= 0)
 		destroy = true;
+
+	return true;
 }

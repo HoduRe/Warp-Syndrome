@@ -39,7 +39,6 @@ bool Player::Awake(pugi::xml_node& config)
 {
 	//gets the file name of the player document from the config document
 	filename.create(config.child("load").attribute("docname").as_string());
-	Start();
 	return true;
 };
 
@@ -61,8 +60,6 @@ bool Player::Start()
 	//initializes playernode to be the root node of the doc
 
 	playernode = playerdoc.child("player");
-	/*grenadenode = playernode.child("grenade");
-	App->grenade->SetMeasures(grenadenode);*/
 	LoadAnimations(playernode);
 
 	pugi::xml_node texturenode = playernode.child("texture");
@@ -74,6 +71,9 @@ bool Player::Start()
 	hitbox_w_h.y = playernode.child("hitbox").attribute("h").as_int();
 
 	//Load image
+	p2SString s = texturenode.child("folder").text().as_string();
+	p2SString q = texturenode.child("load").attribute("texturename").as_string();
+
 	texture = App->tex->Load(PATH(texturenode.child("folder").text().as_string(), texturenode.child("load").attribute("texturename").as_string()));
 
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);

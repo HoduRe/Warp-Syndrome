@@ -26,6 +26,7 @@ bool j1EntityManager::Awake(pugi::xml_node& node)
 bool j1EntityManager::Start()
 {
 	gravity = { 0.0f,0.2f };//TODO ASSIGN THIS FROM AN XML
+	player->Start();
 	return true;
 }
 bool j1EntityManager::Start(fPoint aGravity)
@@ -33,7 +34,7 @@ bool j1EntityManager::Start(fPoint aGravity)
 	gravity = aGravity;
 	return true;
 }
-bool j1EntityManager::PreUpdate(float dt)
+bool j1EntityManager::PreUpdate()
 {
 	p2List_item<Entity*>* item;
 	//deletes all the death entities=================================================
@@ -56,7 +57,7 @@ bool j1EntityManager::PreUpdate(float dt)
 	item = entity_list.start;
 	while (item != NULL)
 	{
-		item->data->PreUpdate(dt);
+		item->data->PreUpdate();
 		item = item->next;
 	}
 	return true;
@@ -72,14 +73,14 @@ bool j1EntityManager::Update(float dt)
 	}
 	return true;
 }
-bool j1EntityManager::PostUpdate(float dt)
+bool j1EntityManager::PostUpdate()
 {
 	//updates all the entities=======================================================
 
 	p2List_item<Entity*>* item = entity_list.start;
 	while (item != NULL)
 	{
-		item->data->PostUpdate(dt);
+		item->data->PostUpdate();
 		item = item->next;
 	}
 	return true;

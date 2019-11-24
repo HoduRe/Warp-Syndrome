@@ -29,9 +29,9 @@ public:
 
 	virtual bool Awake();
 	virtual bool Start();
-	virtual bool PreUpdate(float dt);
+	virtual bool PreUpdate();
 	virtual bool Update(float dt);
-	virtual bool PostUpdate(float dt);
+	virtual bool PostUpdate();
 	virtual bool CleanUp();
 	virtual bool Load(pugi::xml_node&);
 	virtual bool Save(pugi::xml_node&) const;

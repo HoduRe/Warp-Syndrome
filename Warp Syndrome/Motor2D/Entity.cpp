@@ -23,7 +23,7 @@ bool Entity::Awake()
  {
 	 return true;
  }
- bool Entity::PreUpdate(float dt)
+ bool Entity::PreUpdate()
  {
 	 return true;
  }
@@ -31,7 +31,7 @@ bool Entity::Awake()
  {
 	 return true;
  }
- bool Entity::PostUpdate(float dt)
+ bool Entity::PostUpdate()
  {
 	 return true;
  }

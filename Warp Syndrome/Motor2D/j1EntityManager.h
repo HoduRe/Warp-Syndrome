@@ -23,9 +23,9 @@ public:
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Start(fPoint aGravity);
-	bool PreUpdate(float dt);
+	bool PreUpdate();
 	bool Update(float dt);
-	bool PostUpdate(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;

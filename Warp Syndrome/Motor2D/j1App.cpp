@@ -13,7 +13,6 @@
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1Grenade.h"
-#include "j1EnemyManager.h"
 #include "j1PathFinding.h"
 #include "Particles.h"
 #include "transitions.h"

@@ -21,15 +21,13 @@ Character::~Character()
 
 Animation_state Character::StepCurrentAnimation()
 {
-	Animation_state state = AS_UNKNOWN;
-
+	Animation_state aState = AS_UNKNOWN;
 	p2List_item<Animations*>* currentanim = currentAnim;
 	FrameInfo* frame;
-	frame = currentanim->data->StepAnimation();
-
+	frame = currentanim->data->StepAnimation(aState);
 	currentframe = frame;
 
-	return state;
+	return aState;
 }
 
 bool Character::LoadAnimations(pugi::xml_node& rootnode)

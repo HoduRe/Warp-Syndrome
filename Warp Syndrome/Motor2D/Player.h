@@ -138,7 +138,6 @@ public:
 	state_list current_state;
 
 private:
-	SDL_Event events;
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;
 	pugi::xml_node grenadenode;

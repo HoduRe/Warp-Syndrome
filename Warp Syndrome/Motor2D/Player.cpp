@@ -39,6 +39,7 @@ bool Player::Awake(pugi::xml_node& config)
 {
 	//gets the file name of the player document from the config document
 	filename.create(config.child("load").attribute("docname").as_string());
+	Start();
 	return true;
 };
 

@@ -8,6 +8,13 @@
 #include "p2SString.h"
 #include "p2List.h"
 
+enum Animation_state
+{
+	AS_UNFINISHED,
+	AS_FINISHED,
+	AS_UNKNOWN
+};
+
 //stores Info about the current frame of the animation
 struct FrameInfo
 {
@@ -33,6 +40,8 @@ public:
 	
 	//returns the current frame of the animation and steps to the net one
 	FrameInfo* StepAnimation();
+	//returns the current frame of the animation and steps to the net one
+	FrameInfo* StepAnimation(Animation_state& state);
 	
 	//returns true if the animation has finished
 	bool GetAnimationFinish();

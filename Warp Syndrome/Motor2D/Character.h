@@ -5,13 +5,6 @@
 #include "Animations.h"
 #include "Entity.h"
 
-enum Animation_state
-{
-	AS_UNFINISHED,
-	AS_FINISHED,
-	AS_UNKNOWN
-};
-
 class Character :public Entity
 {
 public:

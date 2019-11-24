@@ -1,13 +1,17 @@
 #include "j1App.h"
 #include "Elemental.h"
 #include "j1Collision.h"
+#include "j1Render.h"
 
-Enemy_Elemental::Enemy_Elemental(int x, int y) : Enemy(x, y,E_STATE_DEFAULT,E_TYPE_ELEMENTAL)
+Enemy_Elemental::Enemy_Elemental(int x, int y) : Enemy(x, y, E_STATE_DEFAULT, E_TYPE_ELEMENTAL)
 {
-	last_state
+	last_state = E_STATE_UNKNOWN;
+	chase_distance = 15;
 }
-Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate) : Enemy(x, y,startingstate, E_TYPE_ELEMENTAL)
+Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate) : Enemy(x, y, startingstate, E_TYPE_ELEMENTAL)
 {
+	last_state = E_STATE_UNKNOWN;
+	chase_distance = 15;
 }
 
 
@@ -16,26 +20,78 @@ Enemy_Elemental::~Enemy_Elemental() {}
 
 bool Enemy_Elemental::PreUpdate()
 {
-
+	DoEnable();
+	return true;
 }
 
 bool Enemy_Elemental::Update(float dt)
 {
+	if (enabled)
+	{
+		fPoint posbuffer= pos;//saves the position before movement
 
+		player_distance = CheckDistance(pos.x, pos.y);
+		last_state = state;//last state is the state before changing it during the frame
+		anim_state= StepCurrentAnimation();	// steps the current animation and saves the flag about whether its finished or not
+
+
+		switch (state)//enemy state machine========================================================
+		{
+
+			//=========================================================================================
+		case E_STATE_DEFAULT: //normal enemy behaviour when doesn't see the player
+
+
+			if (player_distance <= chase_distance)//chase to chasing when sees an enemy
+				state = E_STATE_CHASING;
+			break;
+			//=========================================================================================
+			//=========================================================================================
+		case E_STATE_CHASING:
+			//TODO do pathfinding here, execute pathfinding once every 1/2 a sec or so
+			//Also move the player in this state, when arrived to the destination tile go to default case
+			Move();
+
+			break;
+			//=========================================================================================
+			//=========================================================================================
+		case E_STATE_ATTACKING:
+			//When attack ends go to default
+			break;
+			//=========================================================================================
+			//=========================================================================================
+		case E_STATE_DIE:
+			if (health <= 0.0f)
+			{
+				//execute die anim
+				//when die anim ends, destroy the entity
+				destroy = true;
+			}
+			break;
+			//=========================================================================================
+			//=========================================================================================
+		case E_STATE_UNKNOWN:
+			break;
+		default:
+			break;
+		}
+		fliped = (FlipCharacter(pos, posbuffer));//flips the player
+		CheckAnimation(state, last_state);
+	}
+
+	return true;
 }
 
 bool Enemy_Elemental::PostUpdate()
 {
-	Draw();
+	if (enabled)
+		Enemy::Draw();
+	return true;
 }
 
-void Enemy_Elemental::Draw()
+void Enemy_Elemental::Move()
 {
-
-}
-
-void Enemy_Elemental::Move() 
-{
+	//TODO move enemy accordingly to path
 }
 
 void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
@@ -64,7 +120,7 @@ void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 		newanim = currentanim->data->GetAnimFromName("", pAnimList);
 		break;
 	}
-	
+
 	currentAnim = newanim;//sets the current animation of the character
 
 }
@@ -93,6 +149,6 @@ void Enemy_Elemental::CheckAnimation(enemy_states currentstate, enemy_states las
 		default:
 			break;
 		}
-		
+
 	}
 }

@@ -61,15 +61,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Fire_skull.cpp">
-      <Filter>Development============\Entity Sistem\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Hell_horse.cpp">
-      <Filter>Development============\Entity Sistem\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="j1EnemyManager.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
@@ -161,15 +152,6 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Development============\Entity Sistem\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Fire_skull.h">
-      <Filter>Development============\Entity Sistem\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Hell_horse.h">
-      <Filter>Development============\Entity Sistem\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="j1EnemyManager.h">
-      <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Development============\Entity Sistem</Filter>

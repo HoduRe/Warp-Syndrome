@@ -24,8 +24,6 @@ public:
 	bool PostUpdate();
 	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	void ChangeAnimation(Elemental_Anim_List animations);
-	
-	void Draw();
 	void Move();
 };
 

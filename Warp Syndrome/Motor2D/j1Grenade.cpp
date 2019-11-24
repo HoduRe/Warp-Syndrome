@@ -69,6 +69,10 @@ bool Grenade::Start() {
 }
 
 // Called each loop iteration
+bool Grenade::PreUpdate(float dt)
+{
+	return true;
+}
 bool Grenade::Update(float dt) {
 
 	bool playercantp = true;

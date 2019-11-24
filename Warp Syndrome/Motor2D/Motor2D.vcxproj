@@ -81,10 +81,7 @@
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Fire_skull.cpp" />
-    <ClCompile Include="Hell_horse.cpp" />
     <ClCompile Include="j1Collision.cpp" />
-    <ClCompile Include="j1EnemyManager.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -110,10 +107,7 @@
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Fire_skull.h" />
-    <ClInclude Include="Hell_horse.h" />
     <ClInclude Include="j1Collision.h" />
-    <ClInclude Include="j1EnemyManager.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Grenade.h" />
     <ClInclude Include="j1Map.h" />

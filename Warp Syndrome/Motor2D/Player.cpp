@@ -93,6 +93,9 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	if (grenadecooldown > 0.0f)
+		grenadecooldown -= 1;
+
 	//Logic to spawn the grenade
 	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
 		throwinggrenade = true;
@@ -125,7 +128,7 @@ bool Player::PreUpdate()
 			grenadedirection.y /= vec_module;
 			grenadedirection.x *= 10;
 			grenadedirection.y *= 10;
-
+			grenadecooldown = 245.0f;
 			Grenade* newgrenade = new Grenade(grenade_pos, grenadedirection, 240.0f);
 			App->entity_m->AddEntity(newgrenade);
 			throwinggrenade = false;
@@ -161,14 +164,15 @@ bool Player::PostUpdate()
 	{
 		int x1 = pos.x;
 		int y1 = pos.y - (hitbox_w_h.y / 2);
-		int x2=0;
-		int y2=0;
+		int x2 = 0;
+		int y2 = 0;
 		App->input->GetMousePosition(x2, y2);
 		x2 -= App->render->camera.x;
 		y2 -= App->render->camera.y;
 
-		
-		App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
+		if (grenadecooldown > 0.0f)
+			App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
+		else App->render->DrawLine(x1, y1, x2, y2, 0, 255, 0, 255);
 	}
 
 	return true;

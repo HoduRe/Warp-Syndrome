@@ -80,6 +80,7 @@ bool Grenade::Update(float dt) {
 	{//explode the granade
 		destroy = true;
 		App->entity_m->grenade = nullptr;
+		App->entity_m->player->grenadecooldown = 120.0f;
 	}
 	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) && App->entity_m->player->current_state != DYING && playercantp == true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
@@ -111,6 +112,7 @@ void Grenade::Teleport()
 
 	destroy = true;
 	App->entity_m->grenade = nullptr;
+	App->entity_m->player->grenadecooldown = 120.0f;
 }
 
 void Grenade::GrenadeCollisions()

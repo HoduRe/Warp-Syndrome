@@ -137,6 +137,7 @@ public:
 public:
 	state_list current_state;
 	iPoint throwgrenade_vec;
+	float grenadecooldown = 0.0f;
 
 private:
 	pugi::xml_document playerdoc;
@@ -146,7 +147,6 @@ private:
 
 	bool grenade=false;
 	bool throwinggrenade = false;
-	float grenadecooldown = 0.0f;
 	bool god_mode= false;
 	bool blit_colliders= false;
 	int run_counter = 0.0f;

@@ -25,72 +25,71 @@ Grenade::Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
 	enabled = true;
 
 	offset = { 0.0f,0.0f };
-	gravityaccel = { 0.0f,0.0f };
 	forces = { 0.0f,0.0f };
 	mass = 1.0f;
 
 	dieOnEndAnim = false;
 }
 //constructor
-Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, nullptr, aHealth, { 0.0f,0.0f }, { 0.0f,0.0f }, E_TYPE_GRENADE)
+Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, texture, aHealth)
 {
 	pos = aPos;
 	speed = aSpeed;
 	health = aHealth;
 	fliped = false;
-	texture = nullptr;
+	texture = App->entity_m->player->texture;
 	texture_section = { 0,0,0,0 };
 	destroy = false;
 	enabled = true;
 
 	offset = { 0.0f,0.0f };
-	gravityaccel = { 0.0f,0.0f };
 	forces = { 0.0f,0.0f };
 	mass = 1.0f;
 
-	dieOnEndAnim = false;
-	App->entity_m->grenade = (Grenade*)App->entity_m->CreateEntity(EntityType::E_TYPE_GRENADE);
+	App->entity_m->grenade = this;
 
 }
 
 // Destructor
-Grenade::~Grenade() 
+Grenade::~Grenade()
 {
 	App->entity_m->grenade = nullptr;
 }
 
 // Called before the first frame
-bool Grenade::Start() {
-
-	texture = App->entity_m->player->texture;
-	speed.x = App->entity_m->player->speed.x * 3 / 2;
-	speed.y = App->entity_m->player->speed.y;
+bool Grenade::Start()
+{
 	return true;
 }
 
 // Called each loop iteration
-bool Grenade::PreUpdate(float dt)
+bool Grenade::PreUpdate()
 {
 	return true;
 }
 bool Grenade::Update(float dt) {
 
 	bool playercantp = true;
-
+	Integrate();
+	health-=1;
 	CorrectCollider();
-	
+
 	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
 
-	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)//explode the granade
+	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)
+	{//explode the granade
 		destroy = true;
-	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) &&App->entity_m->player->current_state != DYING && playercantp==true) //if the player is not dying, and the grenade hasn't been destroyed can tp
+		App->entity_m->grenade = nullptr;
+	}
+	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) && App->entity_m->player->current_state != DYING && playercantp == true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
 
 	return true;
 }
-bool Grenade::PostUpdate(float dt)
+bool Grenade::PostUpdate()
 {
-	App->render->Blit(texture, pos.x, pos.y, &anim.StepAnimation()->animationRect);
+	anim.StepAnimation();
+	App->render->Blit(texture, pos.x, pos.y, &anim.GetCurrentFrame()->animationRect);
 	return true;
 }
 
@@ -108,12 +107,13 @@ void Grenade::Teleport()
 	App->entity_m->AddEntity(p);
 	App->entity_m->player->pos = pos;
 	AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
-	App->entity_m->AddEntity(p);
+	App->entity_m->AddEntity(q);
 
 	destroy = true;
+	App->entity_m->grenade = nullptr;
 }
 
-void Grenade::GrenadeCollisions() 
+void Grenade::GrenadeCollisions()
 {
 
 	fPoint measures;
@@ -125,7 +125,7 @@ void Grenade::GrenadeCollisions()
 	if (grenade_collider_buffer != App->collision->current_collision) //if the last collision was different from the one happening now enter the switch//bad things can happen with this method, better remake the function
 	{
 
-		switch (App->collision->current_collision) 
+		switch (App->collision->current_collision)
 		{
 		case GROUND_COLLISION:
 

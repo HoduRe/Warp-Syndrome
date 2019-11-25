@@ -35,12 +35,12 @@ public:
 	// Called before the first frame
 	bool Start();
 
-	bool PreUpdate(float dt);
+	bool PreUpdate();
 
 	// Called each loop iteration
 	bool Update(float dt);
 
-	bool PostUpdate(float dt);
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();

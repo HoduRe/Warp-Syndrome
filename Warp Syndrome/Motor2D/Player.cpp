@@ -11,6 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 #include "level_manager.h"
+#include "j1EntityManager.h"
 #include "j1Scene.h"
 #include "Player.h"
 #include "Entity.h"
@@ -92,6 +93,45 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	//Logic to spawn the grenade
+	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
+		throwinggrenade = true;
+
+	if (throwinggrenade)
+	{
+		if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT || App->input->GetMouseButtonDown(1) == KEY_REPEAT))
+			App->input->GetMousePosition(throwgrenade_vec.x, throwgrenade_vec.y);//gets the vector to throw the grenade to
+
+		//spawns the grenade
+
+		if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_UP || App->input->GetMouseButtonDown(1) == KEY_UP) &&//if button pressed
+			App->entity_m->grenade == nullptr &&//and there is no current grenade 
+			grenadecooldown <= 0.0f//and the cooldown has finished
+			)//throw grenade
+		{
+			fPoint grenade_pos;//sets the new grenade position to the center of the player
+			grenade_pos.x = pos.x;
+			grenade_pos.y = pos.y - (hitbox_w_h.y / 2);
+
+			throwgrenade_vec.x -= App->render->camera.x;
+			throwgrenade_vec.y -= App->render->camera.y;
+
+			fPoint grenadedirection;//vector direction of the grenade
+			grenadedirection.x = throwgrenade_vec.x - grenade_pos.x;
+			grenadedirection.y = throwgrenade_vec.y - grenade_pos.y;
+
+			float vec_module = sqrtf((grenadedirection.x * grenadedirection.x) + (grenadedirection.y * grenadedirection.y));//module of the grenade direction module
+			grenadedirection.x /= vec_module;
+			grenadedirection.y /= vec_module;
+			grenadedirection.x *= 10;
+			grenadedirection.y *= 10;
+
+			Grenade* newgrenade = new Grenade(grenade_pos, grenadedirection, 240.0f);
+			App->entity_m->AddEntity(newgrenade);
+			throwinggrenade = false;
+		}
+	}
+
 	return true;
 }
 bool Player::Update(float dt)
@@ -117,6 +157,19 @@ bool Player::PostUpdate()
 {
 	if (currentframe != NULL)
 		App->render->Blit(texture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
+	if (throwinggrenade)
+	{
+		int x1 = pos.x;
+		int y1 = pos.y - (hitbox_w_h.y / 2);
+		int x2=0;
+		int y2=0;
+		App->input->GetMousePosition(x2, y2);
+		x2 -= App->render->camera.x;
+		y2 -= App->render->camera.y;
+
+		
+		App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
+	}
 
 	return true;
 }

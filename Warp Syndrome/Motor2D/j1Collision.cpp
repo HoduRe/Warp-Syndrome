@@ -38,7 +38,7 @@ bool j1Collision::Update(float dt) {
 
 	if(GroundCollision() == true){ y_player_buffer = App->entity_m->player->pos.y; }
 	//player variables
-	position.x = App->entity_m->player->pos.x - App->entity_m->player->pos.x / 2;
+	position.x = App->entity_m->player->pos.x - App->entity_m->player->hitbox_w_h.x / 2;
 	position.y = App->entity_m->player->pos.y;
 	measures.x = App->entity_m->player->hitbox_w_h.x;
 	measures.y = App->entity_m->player->hitbox_w_h.y;

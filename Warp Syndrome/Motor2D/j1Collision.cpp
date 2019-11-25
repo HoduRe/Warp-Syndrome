@@ -44,7 +44,7 @@ bool j1Collision::Update(float dt) {
 	measures.y = App->entity_m->player->hitbox_w_h.y;
 	if(App->entity_m->player->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
-	}
+	} else { current_collision = NONE_COLLISION; }
 	y_player_buffer = App->entity_m->player->pos.y;
 
 	return ret;

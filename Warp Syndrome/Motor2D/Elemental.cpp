@@ -30,10 +30,9 @@ bool Enemy_Elemental::Update(float dt)
 	{
 		fPoint posbuffer= pos;//saves the position before movement
 
-		player_distance = CheckDistance(pos.x, pos.y);
+		player_distance = CheckDistance(pos.x, pos.y);//checks the distance in tiles between the enemy and the player
 		last_state = state;//last state is the state before changing it during the frame
 		anim_state= StepCurrentAnimation();	// steps the current animation and saves the flag about whether its finished or not
-
 
 		switch (state)//enemy state machine========================================================
 		{
@@ -42,8 +41,9 @@ bool Enemy_Elemental::Update(float dt)
 		case E_STATE_DEFAULT: //normal enemy behaviour when doesn't see the player
 
 
-			if (player_distance <= chase_distance)//chase to chasing when sees an enemy
+			if (player_distance <= chase_distance)//change to chasing when sees an enemy
 				state = E_STATE_CHASING;
+
 			break;
 			//=========================================================================================
 			//=========================================================================================
@@ -108,7 +108,7 @@ void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);//TODO put valid animations here
 		break;
 	case EL_ANIM_MOVING:
-		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);
+		newanim = currentanim->data->GetAnimFromName("moving", pAnimList);
 		break;
 	case EL_ANIM_ATTACKING:
 		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);

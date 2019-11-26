@@ -30,6 +30,12 @@ public:
 	p2DynArray<iPoint> path;
 	int chase_distance;//variable set when creating the enemy, its the vision radius of the enemy
 	int player_distance;//the distance to the player in number of tiles
+
+
+	pugi::xml_document enemiesdoc;
+	pugi::xml_node enemiesnode;
+	p2SString filename;
+
 public:
 	Enemy(int x, int y, enemy_states startingstate=E_STATE_DEFAULT, EntityType atype = E_TYPE_ENEMY);
 	virtual ~Enemy();

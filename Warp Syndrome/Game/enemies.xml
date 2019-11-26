@@ -1,7 +1,7 @@
 <enemies>
 
   <texture>
-    <folder>textures/</folder>
+    <folder>textures</folder>
     <load texturename="Enemies.png"/>
   </texture>
 

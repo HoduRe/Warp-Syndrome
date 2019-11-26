@@ -70,9 +70,9 @@ bool Grenade::PreUpdate()
 bool Grenade::Update(float dt) {
 
 	bool playercantp = true;
-	Integrate();
-	health-=1;
-	CorrectCollider();
+	Integrate(dt);
+	health-=dt;
+	CorrectCollider(dt);
 
 	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
 
@@ -80,7 +80,7 @@ bool Grenade::Update(float dt) {
 	{//explode the granade
 		destroy = true;
 		App->entity_m->grenade = nullptr;
-		App->entity_m->player->grenadecooldown = 120.0f;
+		App->entity_m->player->grenadecooldown = 2.5f;
 	}
 	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) && App->entity_m->player->current_state != DYING && playercantp == true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
@@ -112,7 +112,7 @@ void Grenade::Teleport()
 
 	destroy = true;
 	App->entity_m->grenade = nullptr;
-	App->entity_m->player->grenadecooldown = 120.0f;
+	App->entity_m->player->grenadecooldown =2.5f;
 }
 
 void Grenade::GrenadeCollisions()
@@ -151,7 +151,7 @@ void Grenade::GrenadeCollisions()
 	grenade_collider_buffer = App->collision->current_collision;
 }
 
-void Grenade::CorrectCollider() {
+void Grenade::CorrectCollider(float dt) {
 	fPoint measures(6, 6);
 	App->collision->CheckLoop(&pos, &measures, OBJECT_GRENADE);
 	switch (App->collision->current_collision) {

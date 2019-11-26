@@ -25,7 +25,7 @@ bool j1EntityManager::Awake(pugi::xml_node& node)
 }
 bool j1EntityManager::Start()
 {
-	gravity = { 0.0f,0.2f };//TODO ASSIGN THIS FROM AN XML
+	gravity = { 0.0f,490.0f };//TODO ASSIGN THIS FROM AN XML
 	player->Start();
 	return true;
 }

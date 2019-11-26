@@ -119,22 +119,22 @@ bool j1Scene::Update(float dt)
 	//Debugging Particles
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, App->entity_m->player->pos,App->entity_m->player->texture,200);
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, App->entity_m->player->pos,App->entity_m->player->texture,2.0f);
 		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
-		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true,  App->entity_m->player->pos, { 0.0f,-10.0f }, 1.0f, App->entity_m->player->texture, 200);
+		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true,  App->entity_m->player->pos, { 0.0f,-500.0f }, 1.0f, App->entity_m->player->texture, 2.0f);
 		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 100);
+		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 1.0f);
 		App->entity_m->AddEntity(p);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 	{
-		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { 0.1f,0.0f }, 1.0f, App->entity_m->player->texture, 160.0f, { 0.1f,0.1f }, { -100.0f,-100.0f });
+		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { 1.0f,0.0f }, 1.0f, App->entity_m->player->texture, 1.60f, { 100.0f,100.0f }, { -100.0f,-100.0f });
 		App->entity_m->AddEntity(p);
 	}
 	//end of debug particles
@@ -145,8 +145,7 @@ bool j1Scene::Update(float dt)
 		App->map->data.width, App->map->data.height,
 		App->map->data.tile_width, App->map->data.tile_height,
 		App->map->data.tilesets.count());
-
-	App->win->SetTitle(title.GetString());
+	//App->win->SetTitle(title.GetString());
 	return true;
 }
 

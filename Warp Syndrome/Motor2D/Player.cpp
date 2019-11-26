@@ -93,8 +93,6 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	if (grenadecooldown > 0.0f)
-		grenadecooldown -= 1;
 
 	//Logic to spawn the grenade
 	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
@@ -126,10 +124,10 @@ bool Player::PreUpdate()
 			float vec_module = sqrtf((grenadedirection.x * grenadedirection.x) + (grenadedirection.y * grenadedirection.y));//module of the grenade direction module
 			grenadedirection.x /= vec_module;
 			grenadedirection.y /= vec_module;
-			grenadedirection.x *= 10;
-			grenadedirection.y *= 10;
-			grenadecooldown = 245.0f;
-			Grenade* newgrenade = new Grenade(grenade_pos, grenadedirection, 240.0f);
+			grenadedirection.x *= 500;
+			grenadedirection.y *= 500;
+			grenadecooldown = 2.5f;
+			Grenade* newgrenade = new Grenade(grenade_pos, grenadedirection, 5.0f);
 			App->entity_m->AddEntity(newgrenade);
 			throwinggrenade = false;
 		}
@@ -139,6 +137,9 @@ bool Player::PreUpdate()
 }
 bool Player::Update(float dt)
 {
+	if (grenadecooldown > 0.0f)
+		grenadecooldown -= dt;
+
 	fPoint playerposbuffer = pos;
 	bufferlaststate = current_state;
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping

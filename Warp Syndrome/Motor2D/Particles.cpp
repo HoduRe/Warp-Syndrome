@@ -54,7 +54,7 @@ Particle::~Particle()
 }
 
 //position integrator
-void Particle::Integrate()
+void Particle::Integrate(float dt)
 {
 	//Euler Integration===============================
 	fPoint accel = { 0,0 };
@@ -67,11 +67,11 @@ void Particle::Integrate()
 	}
 
 
-	speed.x += accel.x;
-	speed.y += accel.y;
+	speed.x += accel.x*dt;
+	speed.y += accel.y*dt;
 
-	pos.x += speed.x;
-	pos.y += speed.y;
+	pos.x += speed.x*dt;
+	pos.y += speed.y*dt;
 
 	forces = { 0,0 };//resets forces to 0
 
@@ -80,8 +80,8 @@ void Particle::Integrate()
 //called every update
 bool Particle::Update(float dt)
 {
-	Integrate();
-	health--;
+	Integrate(dt);
+	health-=dt;
 	return true;
 }
 
@@ -158,13 +158,13 @@ AnimatedParticle::~AnimatedParticle()
 //called every update
 bool AnimatedParticle::Update(float dt)
 {
-	Integrate();
+	Integrate(dt);
 	anim.StepAnimation();
 
 	if (dieOnEndAnim && anim.GetAnimationFinish())//if the aprticle dies when its animation finishes change its state to death
 		health = 0;
 	else if (!dieOnEndAnim)//if the particle dies of age lower its life
-		health--;
+		health-=dt;
 
 	return true;
 }

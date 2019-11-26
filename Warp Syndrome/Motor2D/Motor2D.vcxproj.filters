@@ -73,6 +73,12 @@
     <ClCompile Include="Character.cpp">
       <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Development============\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Development============\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -164,6 +170,12 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Development============\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Development============\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

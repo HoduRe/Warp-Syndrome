@@ -104,6 +104,8 @@ bool j1App::Awake()
 		save_game.create(app_config.child("saves").child_value());
 		load_game.create(save_game.GetString());
 
+		new_max_framerate = app_config.child("framerate_cap").attribute("value").as_uint();
+		dt = 1 / new_max_framerate;
 	}
 
 	if(ret == true)
@@ -177,6 +179,12 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	frame_count++;
+	last_sec_frame_count++;
+
+	//Calculate the dt: differential time since last frame
+	dt = frame_time.ReadSec();
+	frame_time.Start();
 }
 
 // ---------------------------------------------
@@ -187,6 +195,41 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	// Framerate calculations --
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+
+	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
+	//static char newtitle[256];
+	//sprintf_s(newtitle, 256,"%s//%s", previoustitle.GetString(), title.GetString());
+	//App->win->SetTitle(newtitle);
+	App->win->SetTitle(title.GetString());
+	//Use SDL_Delay to make sure you get your capped framerate
+	uint32 delay = (1000 / new_max_framerate) - last_frame_ms;
+	j1PerfTimer perf;
+	if (last_frame_ms < (1000 / new_max_framerate))
+	{
+		perf.Start();
+		SDL_Delay(delay);
+		LOG("We waited for %u milliseconds and got back in %f", delay, perf.ReadMs());
+	}
+
+	//Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
+
 }
 
 // Call modules before each loop iteration
@@ -231,6 +274,8 @@ bool j1App::DoUpdate()
 		}
 
 		ret = item->data->Update(dt);
+		LOG("Delta Time= %f", dt);
+
 	}
 
 	return ret;

@@ -26,7 +26,7 @@ public:
 	Particle(fPoint pPos, fPoint pSpeed, float aMass, SDL_Texture* pTexture, float aLifespan = 1.0f, fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 },EntityType type=E_TYPE_PARTICLE);
 	Particle(fPoint pPos, SDL_Texture* pTexture, float aLifespan = 1.0f,fPoint aGravity = { 0.0f,0.0f }, fPoint aOffset = { 0.0f,0.0f }, SDL_Rect aTextureSection = { 0,0,0,0 }, EntityType type = E_TYPE_PARTICLE);
 	virtual ~Particle();
-	void Integrate();
+	void Integrate(float dt);
 	void ApplyForce(fPoint aForce);
 	void ApplyGravity(fPoint aGravity);
 	virtual bool Update(float dt);

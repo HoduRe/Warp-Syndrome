@@ -2,13 +2,14 @@
 
 <config>
   <app>
+    <framerate_cap value="60"/>
     <title>Warp Syndrome</title>
     <organization>UPC</organization>
     <saves>save_game.xml</saves>
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
   </renderer>
 
     <audio>

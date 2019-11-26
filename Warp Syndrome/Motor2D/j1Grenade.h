@@ -51,7 +51,7 @@ public:
 	void Teleport();
 
 	// Moves the grenade outside of the colliders
-	void CorrectCollider();
+	void CorrectCollider(float dt);
 
 public:
 	collision_type grenade_collider_buffer=NONE_COLLISION;

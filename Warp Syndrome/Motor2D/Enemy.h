@@ -31,7 +31,6 @@ public:
 	int chase_distance;//variable set when creating the enemy, its the vision radius of the enemy
 	int player_distance;//the distance to the player in number of tiles
 
-
 	pugi::xml_document enemiesdoc;
 	pugi::xml_node enemiesnode;
 	p2SString filename;
@@ -41,11 +40,15 @@ public:
 	virtual ~Enemy();
 	virtual void Move();
 	void Draw();
+	// draws path and enemy collideres
+	void Enemy::BlitEnemiesLogic();
 	// Checks if the animation has to be changed
 	virtual void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	virtual void ChangeAnimation();
 	int CheckDistance(float x, float y);
+	int Enemy::CheckDistance2(int x, int y); // alternate method result of a branch merge
 	void DoEnable();//enables the entity when in vision of the camera and disables it when not
+	void DoPathFinding(); // fills the path with the result of the pathfinding
 };
 
 #endif // __ENEMY_H__

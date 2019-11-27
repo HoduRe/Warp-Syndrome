@@ -40,7 +40,6 @@ public:
 	fPoint gravity;
 private:
 	p2List<Entity*> entity_list;
-	
 };
 
 

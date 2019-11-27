@@ -7,6 +7,7 @@
 #include "j1EntityManager.h"
 #include "Player.h"
 #include "j1Grenade.h"
+#include "j1PathFinding.h"
 
 j1Render::j1Render() : j1Module()
 {

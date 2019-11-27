@@ -81,9 +81,9 @@ bool Player::Start()
 	currentAnim = defaultanim;
 
 	current_state = IDLE;
-	run_counter = 0;
-	jump_timer = 0;
-	wall_jump_timer = speed.x;
+	run_counter = 0.0f;
+	jump_timer = 0.0f;
+	wall_jump_timer = 0.0f;
 	wall_jump = SST_IDLE;
 	x_jumping_state = JST_IDLE;
 	y_jumping_state = JST_UNKNOWN_Y;
@@ -145,14 +145,14 @@ bool Player::Update(float dt)
 	wall_jump = SST_IDLE;	// Serves to reset the bool that passes from sliding to wall jumping
 
 	if (god_mode == false) {
-		StepCurrentAnimation();	// steps the current animation
-		CheckInputs();	// Checks active states (based on inputs)
+		StepCurrentAnimation(dt);	// steps the current animation
+		CheckInputs(dt);	// Checks active states (based on inputs)
 		CheckCollisions(); // Checks colliders
-		MovePlayer();	// Moves player position
+		MovePlayer(dt);	// Moves player position
 		fliped = (FlipCharacter(pos, playerposbuffer));//flips the player
 		CheckAnimation(current_state, bufferlaststate);
 	}
-	else { GodMode(); }	// moves the player in God Mode
+	else { GodMode(dt); }	// moves the player in God Mode
 
 	return true;
 }
@@ -198,8 +198,8 @@ bool Player::CleanUp()
 // Load / Save
 bool Player::Load(pugi::xml_node& data)
 {
-	pos.x = data.attribute("x").as_int(0);
-	pos.y = data.attribute("y").as_int(0);
+	pos.x = data.attribute("x").as_float(0);
+	pos.y = data.attribute("y").as_float(0);
 
 	return true;
 }
@@ -245,8 +245,9 @@ bool Player::ResetPlayerToStart() {
 	return true;
 }
 
-void Player::CheckInputs() {
+void Player::CheckInputs(float dt) {
 
+	run_counter;
 	switch (current_state) {
 	case IDLE:
 	case WALK_FORWARD:
@@ -257,19 +258,17 @@ void Player::CheckInputs() {
 			current_state = FREE_JUMP;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
-		else if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN) /*&& App->grenade->DoesGrenadeExist() == false && !App->grenade->GetGrenadeCooldown()*/) {
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 20) { current_state = RUN_FORWARD; }
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 20) { current_state = RUN_BACKWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 0.333f) { current_state = RUN_FORWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 0.333f) { current_state = RUN_BACKWARD; }
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
 			current_state = WALK_FORWARD;
-			run_counter++;
+			run_counter+=dt;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A == KEY_DOWN)) {
 			current_state = WALK_BACKWARD;
-			run_counter++;
+			run_counter+= dt;
 		}
-		else { current_state = IDLE; run_counter = 0; }
+		else { current_state = IDLE; run_counter = 0.0f; }
 		break;
 	case FREE_JUMP:
 	case WALL_JUMP:
@@ -444,7 +443,6 @@ void Player::CheckCollisions() {
 		App->audio->PlayFx(App->scene->death_sfx, 0);
 	}
 	if (current_state == DYING) {
-		death_counter++;
 		if (currentAnim->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
 			App->level_m->RestartLevel();
 		}
@@ -452,34 +450,34 @@ void Player::CheckCollisions() {
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
 }
 
-void Player::MovePlayer() {
+void Player::MovePlayer(float dt) {
 
 	// X AXIS MOVEMENT
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD) { pos.x += speed.x / 2; }
-		else { pos.x += speed.x; }
+		if (current_state == WALK_FORWARD) { pos.x += (speed.x*dt) / 2; }
+		else { pos.x += speed.x*dt; }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD) { pos.x += -speed.x / 2; }
-		else { pos.x += -speed.x; }
+		if (current_state == WALK_BACKWARD) { pos.x += -(speed.x*dt) / 2; }
+		else { pos.x += -speed.x*dt; }
 		break;
 	case FREE_JUMP:
 	case FREE_FALLING:
 	case WALL_JUMP:
-		JumpMoveX();
+		JumpMoveX(dt);
 		break;
 	}
 
 	// Y AXIS MOVEMENT
 	if (current_state != DYING) {
-		JumpMoveY();
+		JumpMoveY(dt);
 		switch (current_state) {
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
-			pos.y += speed.y / 2.0f;
+			pos.y += (speed.y*dt) / 2.0f;
 			break;
 		}
 
@@ -488,7 +486,7 @@ void Player::MovePlayer() {
 	}
 }
 
-void Player::JumpMoveX() {
+void Player::JumpMoveX(float dt) {
 	switch (App->collision->current_collision) {
 	case LEFT_COLLISION:
 	case LEFT_GROUND_COLLISION:
@@ -500,25 +498,25 @@ void Player::JumpMoveX() {
 	default:
 		switch (current_state) {
 		case WALL_JUMP:
-			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < speed.x * 7 / 8) {
-				pos.x += -speed.x;
+			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < (speed.x*dt) * (7 / 8)) {
+				pos.x += -speed.x*dt;
 			}
-			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < speed.x * 7 / 8) {
-				pos.x += speed.x;
+			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < (speed.x*dt) * (7 / 8)) {
+				pos.x += speed.x*dt;
 			}
 			else if (x_jumping_state == JST_IDLE) {}
-			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0) {
+			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0.0f) {
 				pos.x += -wall_jump_timer;
-				wall_jump_timer -= 0.1;
+				wall_jump_timer -= 6.25f*dt;
 			}
-			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0) {
+			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0.0f) {
 				pos.x += wall_jump_timer;
-				wall_jump_timer -= 0.1;
+				wall_jump_timer -= 6.25f*dt;
 			}
 			break;
 		default:
-			if (x_jumping_state == JST_GOING_LEFT) { pos.x += -speed.x; }
-			else if (x_jumping_state == JST_GOING_RIGHT) { pos.x += speed.x; }
+			if (x_jumping_state == JST_GOING_LEFT) { pos.x += -speed.x*dt; }
+			else if (x_jumping_state == JST_GOING_RIGHT) { pos.x += speed.x*dt; }
 			else if (x_jumping_state == JST_IDLE) {}
 			break;
 		}
@@ -526,37 +524,38 @@ void Player::JumpMoveX() {
 	}
 }
 
-void Player::JumpMoveY() {
+void Player::JumpMoveY(float dt) {
 
 	switch (y_jumping_state) {
 	case JST_UNKNOWN_Y:
 		if (current_state == FREE_JUMP || current_state == WALL_JUMP) {
 			y_jumping_state = JST_GOING_UP;
-			jump_timer = 0;
+			jump_timer = 0.0f;
 		}
 		else if (current_state == FREE_FALLING) {
 			y_jumping_state = JST_GOING_DOWN;
-			jump_timer = speed.y;
+			jump_timer = speed.y*dt;
 		}
 		break;
 	case JST_GOING_UP:
-		if (jump_timer >= 0 && jump_timer < speed.y) {
-			jump_timer += (1.0f / 10.0f);
-			pos.y += -speed.y + jump_timer;
+		if (jump_timer >= 0 && jump_timer < speed.y*dt) {
+			jump_timer += (1.0f / 10.0f)*dt;
+			pos.y += -speed.y*dt + jump_timer;
 		}
-		else { jump_timer = speed.y; y_jumping_state = JST_GOING_DOWN; }
+		else { jump_timer = speed.y*dt; y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_TRANSITION:
-		jump_timer = speed.y;
+		jump_timer = speed.y*dt;
 		y_jumping_state = JST_GOING_DOWN;
 		break;
 	case JST_GOING_DOWN:
 		if (current_state != FREE_FALLING && current_state != FREE_JUMP) {
 			y_jumping_state = JST_UNKNOWN_Y;
-			jump_timer = 0;
+			jump_timer = 0.0f;
 		}
-		else if (jump_timer <= speed.y * 100) {
-			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f); }
+		else if (jump_timer <= speed.y*dt * 100) {
+			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f)*dt; }
+
 			pos.y += speed.y - jump_timer;
 		}
 		break;
@@ -644,7 +643,7 @@ void Player::AvoidShaking() {
 	}
 
 	if (current_state != WALL_JUMP) {
-		wall_jump_timer = speed.x;
+		wall_jump_timer = speed.x*App->dt;
 		if (current_state != WALL_JUMP) { wall_jump_extra_move = SST_IDLE; }
 	}
 }
@@ -659,7 +658,7 @@ void Player::CheckMapBorder() {
 			pos.x = 5;
 			break;
 		default:
-			pos.x = speed.x;
+			pos.x = 5;
 			x_jumping_state = JST_IDLE;
 			break;
 		}
@@ -818,18 +817,18 @@ void Player::SetGodmode(bool state) {
 	else if (state == false) { god_mode = false; }
 }
 
-void Player::GodMode() {
+void Player::GodMode(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		pos.x += -speed.x * 4;
+		pos.x += -(speed.x*dt) * 4;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		pos.x += speed.x * 4;
+		pos.x += (speed.x*dt) * 4;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		pos.y += -speed.x * 4;
+		pos.y += -(speed.y*dt) * 4;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		pos.y += speed.x * 4;
+		pos.y += (speed.y*dt) * 4;
 	}
 }

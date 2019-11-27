@@ -8,7 +8,7 @@
     <folder>textures</folder>
     <load texturename="Main_Character.png"/>
   </texture>
-  <velocity x="4.0" y="5.0"/>
+  <velocity x="250.0f" y="375.0f"/>
   <hitbox w="20" h="30"/>
 
 
@@ -16,76 +16,76 @@
     <frame>
       <rectangle x="1" y="2" w="19" h="29" />
       <pivot x="7" y="0" />
-      <duration value="30" />
+      <duration value="0.5f" />
     </frame>
     <frame>
       <rectangle x="21" y="1" w="17" h="30" />
       <pivot x="5" y="0" />
-      <duration value="30" />
+      <duration value="0.5f" />
     </frame>
     <frame>
       <rectangle x="39" y="1" w="19" h="30" />
       <pivot x="6" y="0" />
-      <duration value="30" />
+      <duration value="0.5f" />
     </frame>
     <frame>
       <rectangle x="59" y="2" w="20" h="29" />
       <pivot x="8" y="0" />
-      <duration value="30" />
+      <duration value="0.5f" />
     </frame>
   </animation>
   <animation name="crouch" number_of_frames="4" canloop="0">
     <frame>
       <rectangle x="80" y="9" w="19" h="22" />
       <pivot x="5" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="100" y="9" w="20" h="22" />
       <pivot x="6" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="121" y="9" w="19" h="22" />
       <pivot x="6" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="141" y="9" w="17" h="22" />
       <pivot x="4" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
   </animation>
   <animation name="running" number_of_frames="6" canloop="1">
     <frame>
       <rectangle x="159" y="4" w="20" h="28" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="180" y="4" w="20" h="27" />
       <pivot x="12" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="201" y="6" w="20" h="25" />
       <pivot x="12" y0="" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="222" y="3" w="23" h="28" />
       <pivot x="10" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="246" y="4" w="20" h="27" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="267" y="6" w="20" h="25" />
       <pivot x="12" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
 
   </animation>
@@ -93,159 +93,159 @@
     <frame>
       <rectangle x="309" y="9" w="20" h="22" />
       <pivot x="0" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
   </animation>
   <animation name="throw_granade" number_of_frames="5" canloop="0">
     <frame>
       <rectangle x="331" y="6" w="18" h="25" />
       <pivot x="0" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="350" y="6" w="21" h="25" />
       <pivot x="3" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="372" y="6" w="41" h="25" />
       <pivot x="15" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="414" y="6" w="20" h="25"/>
       <pivot x="-2" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="435" y="6" w="18" h="25" />
       <pivot x="-3" y="0" />
-      <duration value="2" />
+      <duration value="0.033f" />
     </frame>
   </animation>
   <animation name="forward_jump" number_of_frames="7" canloop="0">
     <frame>
       <rectangle x="1" y="35" w="19" h="27" />
       <pivot x="4" y="0" />
-      <duration value="8" />
+      <duration value="0.133f" />
     </frame>
     <frame>
       <rectangle x="21" y="35" w="21" h="27" />
       <pivot x="9" y="0" />
-      <duration value="8" />
+      <duration value="0.133f" />
     </frame>
     <frame>
       <rectangle x="43" y="35" w="15" h="27" />
       <pivot x="4" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="59" y="35" w="23" h="27" />
       <pivot x="5" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="84" y="35" w="18" h="27" />
       <pivot x="5" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="106" y="35" w="23" h="27" />
       <pivot x="5" y="0" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="130" y="32" w="16" h="30" />
       <pivot x="6" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
   </animation>
   <animation name="falling" number_of_frames="2" canloop="1">
     <frame>
       <rectangle x="130" y="32" w="16" h="30" />
       <pivot x="6" y="0" />
-      <duration value="15" />
+      <duration value="0.25f" />
     </frame>
     <frame>
       <rectangle x="146" y="32" w="17" h="30" />
       <pivot x="7" y="0" />
-      <duration value="15" />
+      <duration value="0.25f" />
     </frame>
   </animation>
   <animation name="sliding" number_of_frames="5" canloop="1">
     <frame>
       <rectangle x="164" y="45" w="34" h="17" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="199" y="45" w="34" h="17" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="234" y="45" w="34" h="17" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="269" y="45" w="30" h="17" />
       <pivot x="8" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="300" y="45" w="22" h="17" />
       <pivot x="3" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
   </animation>
   <animation name="hurt" number_of_frames="7" canloop="0">
     <frame>
       <rectangle x="323" y="38" w="18" h="24" />
       <pivot x="3" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="342" y="38" w="20" h="24" />
       <pivot x="7" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="363" y="38" w="29" h="24" />
       <pivot x="26" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="393" y="38" w="24" h="24" />
       <pivot x="24" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="418" y="38" w="27" h="24" />
       <pivot x="23" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="446" y="38" w="26" h="24" />
       <pivot x="26" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="473" y="38" w="29" h="24" />
       <pivot x="29" y="0" />
-      <duration value="60" />
+      <duration value="1.0f" />
     </frame>
   </animation>
   <animation name="wallsliding" number_of_frames="2" canloop="1">
     <frame>
       <rectangle x="192" y="66" w="17" h="31" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="210" y="65" w="17" h="32" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
 
   </animation>
@@ -253,145 +253,145 @@
     <frame>
       <rectangle x="65" y="68" w="16" h="29" />
       <pivot x="7" y="0" />
-      <duration value="2" />
+      <duration value="0.033f" />
     </frame>
     <frame>
       <rectangle x="82" y="68" w="15" h="29" />
       <pivot x="6" y="0" />
-      <duration value="2" />
+      <duration value="0.033f" />
     </frame>
     <frame>
       <rectangle x="98" y="68" w="15" h="29" />
       <pivot x="7" y="0" />
-      <duration value="2" />
+      <duration value="0.033f" />
     </frame>
     <frame>
       <rectangle x="114" y="68" w="14" h="29" />
       <pivot x="5" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="129" y="68" w="15" h="29" />
       <pivot x="4" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
   </animation>
   <animation name="walljump" number_of_frames="6" canloop="0">
     <frame>
       <rectangle x="228" y="69" w="21" h="28" />
       <pivot x="6" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="250" y="69" w="19" h="28" />
       <pivot x="9" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="270" y="69" w="20" h="28" />
       <pivot x="7" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="291" y="69" w="22" h="28" />
       <pivot x="7" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="313" y="69" w="22" h="28" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="336" y="69" w="21" h="28" />
       <pivot x="8" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
   </animation>
   <animation name="wakeup" number_of_frames="6" canloop="0">
     <frame>
       <rectangle x="358" y="70" w="23" h="26" />
       <pivot x="23" y="0" />
-      <duration value="8" />
+      <duration value="0.133f" />
     </frame>
     <frame>
       <rectangle x="382" y="70" w="21" h="26" />
       <pivot x="21" y="0" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="404" y="70" w="26" h="26" />
       <pivot x="25" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="431" y="70" w="21" h="26" />
       <pivot x="11" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="452" y="70" w="24" h="26" />
       <pivot x="9" y="0" />
-      <duration value="3" />
+      <duration value="0.05f" />
     </frame>
     <frame>
       <rectangle x="477" y="70" w="22" h="26" />
       <pivot x="7" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
   </animation>
   <animation name="walking" number_of_frames="6" canloop="1">
     <frame>
       <rectangle x="1" y="99" w="17" h="29" />
       <pivot x="2" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="19" y="99" w="14" h="29" />
       <pivot x="1" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="34" y="99" w="15" h="29" />
       <pivot x="4" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="50" y="99" w="18" h="29" />
       <pivot x="4" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="69" y="99" w="16" h="29" />
       <pivot x="4" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="86" y="99" w="16" h="29" />
       <pivot x="6" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
   </animation>
   <animation name="grenade" number_of_frames="4" canloop="1">
     <frame>
       <rectangle x="460" y="15" w="6" h="6" />
       <pivot x="0" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="467" y="16" w="6" h="6" />
       <pivot x="0" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="475" y="15" w="6" h="6" />
       <pivot x="0" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
     <frame>
       <rectangle x="482" y="15" w="6" h="6" />
       <pivot x="0" y="0" />
-      <duration value="5" />
+      <duration value="0.083f" />
     </frame>
   </animation>
 
@@ -402,22 +402,22 @@
     <frame>
       <rectangle x="1" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="102" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="203" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
     <frame>
       <rectangle x="304" y="227" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="4" />
+      <duration value="0.066f" />
     </frame>
   </animation>
   
@@ -425,27 +425,27 @@
     <frame>
       <rectangle x="1" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="102" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="203" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="304" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
     <frame>
       <rectangle x="405" y="314" w="100" h="86" />
       <pivot x="50" y="43" />
-      <duration value="6" />
+      <duration value="0.1f" />
     </frame>
   </animation>
 

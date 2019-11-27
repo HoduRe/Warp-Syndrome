@@ -12,7 +12,7 @@ public:
 	~Character();
 
 	//steps the current animation and returns an Aniamtion state(finished, unfinished, unknown)
-	Animation_state StepCurrentAnimation();
+	Animation_state StepCurrentAnimation(float dt);
 
 	//loads animations from an xml
 	bool LoadAnimations(pugi::xml_node& rootnode);

@@ -7,6 +7,7 @@
 #include "Particles.h"
 #include "j1Render.h"
 #include "j1EntityManager.h"
+#include "j1PathFinding.h"
 #include "Entity.h"
 #include "j1Map.h"
 
@@ -73,6 +74,7 @@ void Enemy::Draw()
 {
 	SDL_Rect rect = currentframe->animationRect;
 	App->render->Blit(texture, pos.x, pos.y, &rect, fliped);
+	if (App->entity_m->player->GetBlitColliders() == true) { BlitEnemiesLogic(); }
 }
 
 int Enemy::CheckDistance(float x, float y)
@@ -105,6 +107,31 @@ void Enemy::DoEnable()
 		)
 	{
 		enabled = true;
+		DoPathFinding();
 	}
 	else enabled = false;
+}
+
+void Enemy::DoPathFinding() {
+	iPoint player_pos;
+	iPoint enemy_pos;
+	player_pos.x = App->entity_m->player->pos.x / App->map->data.tile_width;
+	player_pos.y = App->entity_m->player->pos.y / App->map->data.tile_height;
+	enemy_pos.x = pos.x / App->map->data.tile_width;
+	enemy_pos.y = pos.y / App->map->data.tile_height;
+	App->pathfinding->CreatePath(enemy_pos, player_pos, this);
+}
+
+void Enemy::BlitEnemiesLogic() {
+	SDL_Rect rect = texture_section;
+	int j = 0;
+	App->render->DrawQuad(rect, 75, 75, 75);
+	while (path.At(j) != NULL) {
+		rect.w = App->map->data.tile_width;
+		rect.h = App->map->data.tile_height;
+		rect.x = path[j].x * rect.w;
+		rect.y = path[j].y * rect.h;
+		App->render->DrawQuad(rect, 175, 175, 175, 60);
+		j++;
+	}
 }

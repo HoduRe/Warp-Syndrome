@@ -109,6 +109,9 @@ public:
 	// gets the type of the current collider
 	collider_type GetCurrentCollider(int id);
 
+	// Checks collision for pathfinding
+	bool CheckWalkability(iPoint& tile);
+
 public:
 	collision_type current_collision;
 	collider_buffer current_collision_buffer;

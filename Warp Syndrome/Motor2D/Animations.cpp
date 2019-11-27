@@ -44,7 +44,7 @@ bool Animations::CleanUp()
 }
 
 
-void Animations::AddFrame(float duration, SDL_Rect texturerect, iPoint textureoffset)
+void Animations::AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffset)
 {
 	FrameInfo* newframe = new FrameInfo;
 
@@ -57,10 +57,10 @@ void Animations::AddFrame(float duration, SDL_Rect texturerect, iPoint textureof
 	currentanimframe = animationframes.start;
 }
 
-FrameInfo* Animations::StepAnimation(float dt)
+FrameInfo* Animations::StepAnimation()
 {
 	FrameInfo* ret = currentanimframe->data;
-	if (ret->actualduration>= ret->frameduration)//only executes the code once the duration of the frame is max
+	if (ret->actualduration++ >= ret->frameduration)//only executes the code once the duration of the frame is max
 	{
 		ret->actualduration = 0;//restarts the duration
 
@@ -72,14 +72,13 @@ FrameInfo* Animations::StepAnimation(float dt)
 
 
 	}
-	ret->actualduration += dt;
 	return ret;
 }
-FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
+FrameInfo* Animations::StepAnimation(Animation_state&state)
 {
 	state = AS_UNKNOWN;
 	FrameInfo* ret = currentanimframe->data;
-	if (ret->actualduration >= ret->frameduration)//only executes the code once the duration of the frame is max
+	if (ret->actualduration++ >= ret->frameduration)//only executes the code once the duration of the frame is max
 	{
 		ret->actualduration = 0;//restarts the duration
 
@@ -99,7 +98,6 @@ FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
 		
 		
 	}
-	ret->actualduration += dt;
 	return ret;
 }
 
@@ -130,7 +128,7 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 	animationloop = animationnode.attribute("canloop").as_bool();
 	for (framenode = animationnode.child("frame"); framenode; framenode = framenode.next_sibling("frame"))
 	{
-		float duration = framenode.child("duration").attribute("value").as_float();
+		int duration = framenode.child("duration").attribute("value").as_int();
 
 		SDL_Rect rect;
 		rect.x = framenode.child("rectangle").attribute("x").as_int();

@@ -32,7 +32,7 @@ bool Enemy_Elemental::Update(float dt)
 
 		player_distance = CheckDistance(pos.x, pos.y);//checks the distance in tiles between the enemy and the player
 		last_state = state;//last state is the state before changing it during the frame
-		anim_state= StepCurrentAnimation(dt);	// steps the current animation and saves the flag about whether its finished or not
+		anim_state= StepCurrentAnimation();	// steps the current animation and saves the flag about whether its finished or not
 
 		switch (state)//enemy state machine========================================================
 		{

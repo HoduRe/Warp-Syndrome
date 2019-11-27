@@ -19,12 +19,12 @@ Character::~Character()
 	App->tex->UnLoad(texture);
 }
 
-Animation_state Character::StepCurrentAnimation(float dt)
+Animation_state Character::StepCurrentAnimation()
 {
 	Animation_state aState = AS_UNKNOWN;
 	p2List_item<Animations*>* currentanim = currentAnim;
 	FrameInfo* frame;
-	frame = currentanim->data->StepAnimation(aState,dt);
+	frame = currentanim->data->StepAnimation(aState);
 	currentframe = frame;
 
 	return aState;

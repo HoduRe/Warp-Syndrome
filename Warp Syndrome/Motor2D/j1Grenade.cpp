@@ -71,7 +71,7 @@ bool Grenade::Update(float dt) {
 
 	bool playercantp = true;
 	Integrate(dt);
-	health -= dt;
+	health-=dt;
 	CorrectCollider(dt);
 
 	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
@@ -85,12 +85,11 @@ bool Grenade::Update(float dt) {
 	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) && App->entity_m->player->current_state != DYING && playercantp == true) //if the player is not dying, and the grenade hasn't been destroyed can tp
 		Teleport();
 
-	anim.StepAnimation(dt);
 	return true;
 }
 bool Grenade::PostUpdate()
 {
-
+	anim.StepAnimation();
 	App->render->Blit(texture, pos.x, pos.y, &anim.GetCurrentFrame()->animationRect);
 	return true;
 }
@@ -113,7 +112,7 @@ void Grenade::Teleport()
 
 	destroy = true;
 	App->entity_m->grenade = nullptr;
-	App->entity_m->player->grenadecooldown = 2.5f;
+	App->entity_m->player->grenadecooldown =2.5f;
 }
 
 void Grenade::GrenadeCollisions()

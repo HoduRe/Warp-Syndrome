@@ -159,7 +159,7 @@ AnimatedParticle::~AnimatedParticle()
 bool AnimatedParticle::Update(float dt)
 {
 	Integrate(dt);
-	anim.StepAnimation(dt);
+	anim.StepAnimation();
 
 	if (dieOnEndAnim && anim.GetAnimationFinish())//if the aprticle dies when its animation finishes change its state to death
 		health = 0;

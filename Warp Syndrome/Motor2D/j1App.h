@@ -103,14 +103,11 @@ public:
 	j1PathFinding*		pathfinding;
 	j1EntityManager*	entity_m;
 
-
-	float				dt;
-	j1Timer				frame_time;
-
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
+	float				dt;
 	int					argc;
 	char**				args;
 
@@ -126,6 +123,7 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint64				frame_count = 0;
 	j1Timer				startup_time;
+	j1Timer				frame_time;
 	j1Timer				last_sec_frame_time;
 
 

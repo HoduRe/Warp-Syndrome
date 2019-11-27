@@ -102,25 +102,25 @@ public:
 	bool ResetPlayerToStart();
 
 	// Gives a state based on inputs
-	void CheckInputs(float dt);
+	void CheckInputs();
 	// Checks Colliders
 	void CheckCollisions();
 	// Moves player position
-	void MovePlayer(float dt);
+	void MovePlayer();
 	// Puts the proper animation
 	void ChangeAnimation(Animation_list animations);
 	//flips the player
 	bool FlipCharacter(fPoint currentpos, fPoint lastpos);
 
 	// Calculates jump shinanigans
-	void JumpMoveX(float dt);
-	void JumpMoveY(float dt);
+	void JumpMoveX();
+	void JumpMoveY();
 	// Avoids shaking when going inside a collider
 	void AvoidShaking();
 	// Calculates if player is falling through map borders, and corrects it
 	void CheckMapBorder();
 	// Moves player if it is in God Mode
-	void GodMode(float dt);
+	void GodMode();
 	// Checks if the animation has to be changed
 	void CheckAnimation(state_list currentstate, state_list laststate);
 	// returns true if the player presses F9
@@ -149,7 +149,8 @@ private:
 	bool throwinggrenade = false;
 	bool god_mode= false;
 	bool blit_colliders= false;
-	float run_counter = 0.0f;
+	int run_counter = 0.0f;
+	int death_counter = 0.0f;
 	float wall_jump_timer = 0.0f;
 	float jump_timer=0.0f;
 	SlidingStates wall_jump=SST_UNKNOWN;

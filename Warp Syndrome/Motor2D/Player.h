@@ -127,6 +127,8 @@ public:
 	bool BlitColliders();
 	// activates or deactivates the blit colliders F9
 	void SetBlitColliders();
+	// return true if blit colliders are blitting
+	bool GetBlitColliders();
 	// returns true if the player is in godmode
 	bool GetGodmode();
 	// sets god mode

@@ -803,6 +803,10 @@ void Player::SetBlitColliders() {
 	blit_colliders = !blit_colliders;
 }
 
+bool Player::GetBlitColliders() {
+	return blit_colliders;
+}
+
 bool Player::GetGodmode() {
 	if (god_mode == true) { return true; }
 	else { return false; }

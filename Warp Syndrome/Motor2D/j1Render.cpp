@@ -32,7 +32,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
-		LOG("Using vsync");
+	LOG("Using vsync");
+	App->vSyncActivated = true;
 	}
 
 	renderer = SDL_CreateRenderer(App->win->window, -1, flags);
@@ -280,4 +281,29 @@ void j1Render::PrintPlayerObjects() {
 		rect.h = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.h;
 		DrawQuad(rect, 255, 255, 255, alpha);
 	}
+}
+
+void j1Render::ToggleVsync()
+{
+	if (vSyncActive)
+	{
+		if (SDL_SetHint(SDL_HINT_RENDER_VSYNC, "0")==SDL_TRUE)
+		{
+			LOG("Vsync Deactivated");
+			vSyncActive = false;
+		}
+		else LOG("Vsync error!");
+		
+	}
+	else
+	{
+		if (SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1")==SDL_TRUE)
+		{
+			LOG("Vsync Activated");
+			vSyncActive = true;
+		}
+		else LOG("Vsync error!");
+		
+	}
+
 }

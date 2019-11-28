@@ -55,19 +55,19 @@ public:
 	bool Save(pugi::xml_node&) const;
 
 	//Fades into black in a gradient for the amount of frames you input
-	bool Fade_In(uint frames_length);
+	bool Fade_In(float seconds_length,float dt);
 
 	//Fades out of black in a gradient for the amount of frames you input
-	bool Fade_Out(uint frames_length);
+	bool Fade_Out(float seconds_length, float dt);
 
 	//Runs the animation for the loading screen
-	bool LoadingScreen(uint frames_length);
+	bool LoadingScreen(float seconds_length, float dt);
 
-	bool BlackScreen(uint frames_length);
+	bool BlackScreen(float seconds_length, float dt);
 	
 	bool BlackScreen();
 
-	void ChangeTransition(Transition_Mode mode, uint frames_length);
+	void ChangeTransition(Transition_Mode mode, float seconds_length, float dt);
 
 public:
 
@@ -77,18 +77,19 @@ public:
 
 private:
 	
-	uint timer;
+	float timer;
+	float deltatime;
 	iPoint textcenter;
 	iPoint symbolcenter;
 
-	uint function_frames_length;
+	float function_seconds_length;
 
 	SDL_Texture* loadingText = nullptr;
 	SDL_Texture* externalLogo = nullptr;
 	SDL_Texture* internalLogo = nullptr;
 	SDL_Texture* hexagonLogo = nullptr;
 	SDL_Texture* imageLogo = nullptr;
-	float degreesperframe = 1; //TODO Load this from scene.xml
+	float degreespersecond = 60; //TODO Load this from scene.xml
 	float degrees = 0;
 	int transition = 0;
 	int currenttime = 0;

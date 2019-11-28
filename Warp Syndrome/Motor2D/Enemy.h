@@ -30,6 +30,7 @@ public:
 	p2DynArray<iPoint> path;
 	int chase_distance;//variable set when creating the enemy, its the vision radius of the enemy
 	int player_distance;//the distance to the player in number of tiles
+	int ground_distance; // used in pathfinding to check range
 
 
 	pugi::xml_document enemiesdoc;

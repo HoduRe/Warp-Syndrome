@@ -42,9 +42,25 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 }
 
 // Utility: returns true is the tile is walkable
-bool j1PathFinding::IsWalkable(const iPoint& pos) const
+bool j1PathFinding::IsWalkable(const iPoint& pos, Enemy* enemy) const
 {
-	if (CheckBoundaries(pos)) { if (App->collision->CheckWalkability((iPoint&)pos)) { return true; } }
+	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos)) {
+		switch (enemy->type) {
+		case E_TYPE_ELEMENTAL:
+		case E_TYPE_HELL_HORSE:
+			if ((pos.y < (enemy->pos.y / App->map->data.tile_height) -3 && enemy->ground_distance == 0) || 
+				(pos.y < (enemy->pos.y / App->map->data.tile_height) - 2 && enemy->ground_distance == 1) || 
+				(pos.y < (enemy->pos.y / App->map->data.tile_height) - 1 && enemy->ground_distance == 2) ||
+				(pos.y < (enemy->pos.y / App->map->data.tile_height) && enemy->ground_distance == 3)) {
+				return false;
+			}
+			return true;
+			break;
+		default:
+			return true;
+			break;
+		}
+	}
 
 	return false;
 }
@@ -106,29 +122,29 @@ PathNode::PathNode(PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent
 // PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
 // ----------------------------------------------------------------------------------
-uint PathNode::FindWalkableAdjacents(PathList& list_to_fill)
+uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, Enemy* enemy)
 {
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, enemy))
 		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, enemy))
 		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, enemy))
 		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell, enemy))
 		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
 
 	return list_to_fill.list.count();
@@ -172,7 +188,7 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 	last_path.Clear();
 	int a = 0;
 
-	if (IsWalkable(origin) == true && IsWalkable(destination_aux) == true) {
+	if (IsWalkable(origin, enemy) == true && IsWalkable(destination_aux, enemy) == true) {
 		aux_path.pos = origin;
 		aux_path.parent.x = 0;
 		aux_path.parent.y = 0;
@@ -208,7 +224,7 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 			}
 
 			aux_list.list.clear();
-			aux_path.FindWalkableAdjacents(aux_list);
+			aux_path.FindWalkableAdjacents(aux_list, enemy);
 			p2List_item<PathNode>* f = aux_list.list.start;
 
 			while (f != NULL) {

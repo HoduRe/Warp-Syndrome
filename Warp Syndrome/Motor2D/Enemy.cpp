@@ -22,6 +22,7 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 	enabled = false;
 	player_distance = -1;
 	chase_distance = -1;
+	ground_distance = 0;
 
 	//Loads the animations and properties
 	filename = "enemies.xml";//TODO load this from config

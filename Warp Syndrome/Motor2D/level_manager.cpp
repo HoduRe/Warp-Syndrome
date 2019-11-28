@@ -69,19 +69,19 @@ bool j1LevelManager::Save(pugi::xml_node& ldata) const
 
 bool j1LevelManager::RestartLevel()
 {
-	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 120);
+	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 2.0f,App->dt);
 	return true;
 }
 bool j1LevelManager::ChangeToNextLevel()
 {
-	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f, App->dt);
 	return true;
 }
 bool j1LevelManager::ChangeToLevel1()
 {
 	if (current_level != level_list.start)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f, App->dt);
 	}
 	return true;
 }
@@ -89,7 +89,7 @@ bool j1LevelManager::ChangeToLevel2()
 {
 	if (current_level != level_list.start->next)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f, App->dt);
 	}
 	return true;
 }

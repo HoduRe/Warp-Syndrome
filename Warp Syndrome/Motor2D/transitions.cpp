@@ -43,7 +43,7 @@ bool j1Transitions::PreUpdate()
 
 bool j1Transitions::Update(float dt)
 {
-
+	deltatime = dt;
 	return true;
 }
 
@@ -60,7 +60,7 @@ bool j1Transitions::PostUpdate()
 			actual_state = TS_FADE_OUT;
 			break;
 		case TS_FADE_OUT:
-			if (Fade_Out(function_frames_length))
+			if (Fade_Out(function_seconds_length,deltatime))
 			{
 				actual_state = TS_BLACK_SCREEN;
 			}
@@ -71,7 +71,7 @@ bool j1Transitions::PostUpdate()
 			actual_state = TS_FADE_IN;
 			break;
 		case TS_FADE_IN:
-			if (Fade_In(function_frames_length))
+			if (Fade_In(function_seconds_length,deltatime))
 			{
 				actual_state = TS_FINISHED;
 			}
@@ -92,26 +92,26 @@ bool j1Transitions::PostUpdate()
 			actual_state = TS_FADE_OUT;
 			break;
 		case TS_FADE_OUT:
-			if (Fade_Out(function_frames_length))
+			if (Fade_Out(function_seconds_length,deltatime))
 			{
 				actual_state = TS_LOADING_START;
 			}
 			break;
 		case TS_LOADING_START:
-			if (LoadingScreen(function_frames_length))
+			if (LoadingScreen(function_seconds_length,deltatime))
 			{
 				actual_state = TS_LOADING_FINISH;
 				App->level_m->Go_To_Next_Lvl();
 			}
 			break;
 		case TS_LOADING_FINISH:
-			if (LoadingScreen(function_frames_length))
+			if (LoadingScreen(function_seconds_length,deltatime))
 			{
 				actual_state = TS_FADE_IN;
 			}
 			break;
 		case TS_FADE_IN:
-			if (Fade_In(function_frames_length))
+			if (Fade_In(function_seconds_length,deltatime))
 			{
 				actual_state = TS_FINISHED;
 			}
@@ -155,30 +155,30 @@ bool j1Transitions::Save(pugi::xml_node& ldata) const
 	return true;
 }
 
-bool j1Transitions::Fade_Out(uint frames_length)
+bool j1Transitions::Fade_Out(float seconds_length, float dt)
 {
 	bool ret = false;
 	SDL_Rect screen = App->render->viewport;
 
-	int alpha = (256 / frames_length) * timer;
+	int alpha = (256 / seconds_length) * timer;
 	App->render->DrawQuad(screen, 0, 0, 0, alpha, true, false);
-	timer++;
-	if (timer >= frames_length) {
-		timer = 0; //reset timer to 0
+	timer+=dt;
+	if (timer >= seconds_length) {
+		timer = 0.0f; //reset timer to 0
 		ret = true;
 	}
 	return ret;
 }
 
-bool j1Transitions::Fade_In(uint frames_length)
+bool j1Transitions::Fade_In(float seconds_length, float dt)
 {
 	bool ret = false;
 	SDL_Rect screen = App->render->viewport;
 
-	int alpha = (256 / frames_length) * timer;
+	int alpha = (256 / seconds_length) * timer;
 	App->render->DrawQuad(screen, 0, 0, 0, 255 - alpha, true, false);
-	timer++;
-	if (timer >= frames_length)
+	timer+=dt;
+	if (timer >= seconds_length)
 	{
 		timer = 0; //reset timer to 0
 		ret = true;
@@ -186,7 +186,7 @@ bool j1Transitions::Fade_In(uint frames_length)
 	return ret;
 }
 
-bool j1Transitions::LoadingScreen(uint frames_length)
+bool j1Transitions::LoadingScreen(float seconds_length, float dt)
 {
 	bool ret = false;
 	//variables
@@ -214,24 +214,24 @@ bool j1Transitions::LoadingScreen(uint frames_length)
 	App->render->Blit(externalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, degrees * 1.5, symbolwidth / 2, symbolheigth / 2);
 	App->render->Blit(internalLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, -degrees, symbolwidth / 2, symbolheigth / 2);
 	App->render->Blit(hexagonLogo, symbolpos.x, symbolpos.y, NULL, NULL, NULL, NULL, 0, 0, degrees, symbolwidth / 2, symbolheigth / 2);
-	degrees++;
+	degrees+=(60*dt);
 
-	if (degrees >= frames_length)
+	if (degrees*0.016f >= seconds_length)//d egrees/60
 	{
-		degrees = 0;
+		degrees = 0.0f;
 		ret = true;
 
 	}
 	return ret;
 }
 
-bool j1Transitions::BlackScreen(uint frames_length)
+bool j1Transitions::BlackScreen(float seconds_length, float dt)
 {
 	bool ret = false;
 	SDL_Rect screen = App->render->viewport;
 	App->render->DrawQuad(screen, 0, 0, 0, 255, true, false);
-	timer++;
-	if (timer >= frames_length)
+	timer+=dt;
+	if (timer >= seconds_length)
 	{
 		timer = 0; //reset timer to 0
 		ret = true;
@@ -247,13 +247,13 @@ bool j1Transitions::BlackScreen()
 	return ret;
 }
 
-void j1Transitions::ChangeTransition(Transition_Mode mode, uint frames_length)
+void j1Transitions::ChangeTransition(Transition_Mode mode, float seconds_length, float dt)
 {
 	if (actual_transition == TM_UNKNOWN)
 	{
 		actual_transition = mode;
 		actual_state = TS_START;
-		function_frames_length = frames_length;
+		function_seconds_length = seconds_length;
 	}
 
 }

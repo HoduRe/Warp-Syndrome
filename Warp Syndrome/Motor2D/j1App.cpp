@@ -273,6 +273,9 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
+
+		if (dt > 1.0f)dt = 0.016f;//caps dt to maximum 1 sec*frame because when loading a new map during the 1st frame the dt is so big that causes issues
+
 		ret = item->data->Update(dt);
 		LOG("Delta Time= %f", dt);
 

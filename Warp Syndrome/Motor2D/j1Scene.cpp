@@ -93,6 +93,12 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		App->level_m->ChangeToNextLevel();
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+		App->ToggleCapping();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) {//I think this does not work TODO remove
+		App->render->ToggleVsync();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {
 		App->audio->AddVolume(-1);

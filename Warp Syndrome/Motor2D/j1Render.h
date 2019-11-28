@@ -46,8 +46,11 @@ public:
 	// Prints both the player and the grenade
 	void PrintPlayerObjects();
 
-public:
+	void ToggleVsync();
 
+
+public:
+	bool vSyncActive = false;
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
 	SDL_Rect		viewport;

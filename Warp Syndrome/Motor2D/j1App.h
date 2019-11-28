@@ -59,7 +59,7 @@ public:
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
-
+	void ToggleCapping();
 private:
 
 	// Load config file
@@ -106,7 +106,8 @@ public:
 
 	float				dt;
 	j1Timer				frame_time;
-
+	bool				capping = false;
+	bool				vSyncActivated = false;
 private:
 
 	p2List<j1Module*>	modules;

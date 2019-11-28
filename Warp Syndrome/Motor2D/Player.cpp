@@ -258,15 +258,15 @@ void Player::CheckInputs(float dt) {
 			current_state = FREE_JUMP;
 			App->audio->PlayFx(App->scene->jump_sfx);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter == 0.333f) { current_state = RUN_FORWARD; }
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter == 0.333f) { current_state = RUN_BACKWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && run_counter >= 0.333f) { current_state = RUN_FORWARD; }
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && run_counter >= 0.333f) { current_state = RUN_BACKWARD; }
 		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_D == KEY_DOWN)) {
 			current_state = WALK_FORWARD;
-			run_counter+=dt;
+			run_counter += dt;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_A == KEY_DOWN)) {
 			current_state = WALK_BACKWARD;
-			run_counter+= dt;
+			run_counter += dt;
 		}
 		else { current_state = IDLE; run_counter = 0.0f; }
 		break;
@@ -456,13 +456,13 @@ void Player::MovePlayer(float dt) {
 	switch (current_state) {
 	case WALK_FORWARD:
 	case RUN_FORWARD:
-		if (current_state == WALK_FORWARD) { pos.x += (speed.x*dt) / 2; }
-		else { pos.x += speed.x*dt; }
+		if (current_state == WALK_FORWARD) { pos.x += (speed.x / 2) * dt; }
+		else { pos.x += speed.x * dt; }
 		break;
 	case WALK_BACKWARD:
 	case RUN_BACKWARD:
-		if (current_state == WALK_BACKWARD) { pos.x += -(speed.x*dt) / 2; }
-		else { pos.x += -speed.x*dt; }
+		if (current_state == WALK_BACKWARD) { pos.x += -(speed.x / 2) * dt; }
+		else { pos.x += -speed.x * dt; }
 		break;
 	case FREE_JUMP:
 	case FREE_FALLING:
@@ -477,7 +477,7 @@ void Player::MovePlayer(float dt) {
 		switch (current_state) {
 		case SLIDING_ON_LEFT_WALL:
 		case SLIDING_ON_RIGHT_WALL:
-			pos.y += (speed.y*dt) / 2.0f;
+			pos.y += (speed.y / 2.0f) * dt;
 			break;
 		}
 
@@ -498,25 +498,27 @@ void Player::JumpMoveX(float dt) {
 	default:
 		switch (current_state) {
 		case WALL_JUMP:
-			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < (speed.x*dt) * (7 / 8)) {
-				pos.x += -speed.x*dt;
+			if (x_jumping_state == JST_GOING_LEFT && wall_jump_timer < 0.35f) {
+				pos.x += -speed.x * dt;
 			}
-			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < (speed.x*dt) * (7 / 8)) {
-				pos.x += speed.x*dt;
+			else if (x_jumping_state == JST_GOING_RIGHT && wall_jump_timer < 0.35f) {
+				pos.x += speed.x * dt;
 			}
 			else if (x_jumping_state == JST_IDLE) {}
+
+
 			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0.0f) {
-				pos.x += -wall_jump_timer;
-				wall_jump_timer -= 6.25f*dt;
+				pos.x += -wall_jump_timer*(speed.x*dt);
+				wall_jump_timer -= dt;
 			}
 			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0.0f) {
-				pos.x += wall_jump_timer;
-				wall_jump_timer -= 6.25f*dt;
+				pos.x += wall_jump_timer*(speed.x*dt);
+				wall_jump_timer -= dt;
 			}
 			break;
 		default:
-			if (x_jumping_state == JST_GOING_LEFT) { pos.x += -speed.x*dt; }
-			else if (x_jumping_state == JST_GOING_RIGHT) { pos.x += speed.x*dt; }
+			if (x_jumping_state == JST_GOING_LEFT) { pos.x += -speed.x * dt; }
+			else if (x_jumping_state == JST_GOING_RIGHT) { pos.x += speed.x * dt; }
 			else if (x_jumping_state == JST_IDLE) {}
 			break;
 		}
@@ -534,18 +536,18 @@ void Player::JumpMoveY(float dt) {
 		}
 		else if (current_state == FREE_FALLING) {
 			y_jumping_state = JST_GOING_DOWN;
-			jump_timer = speed.y*dt;
+			jump_timer = 1.0f;
 		}
 		break;
 	case JST_GOING_UP:
-		if (jump_timer >= 0 && jump_timer < speed.y*dt) {
-			jump_timer += (1.0f / 10.0f)*dt;
-			pos.y += -speed.y*dt + jump_timer;
+		if (jump_timer >= 0.0f && jump_timer < 1.0f) {
+			jump_timer += dt;
+			pos.y += (-speed.y * dt) + jump_timer*(speed.y * dt); //TODO dt wrong
 		}
-		else { jump_timer = speed.y*dt; y_jumping_state = JST_GOING_DOWN; }
+		else { jump_timer = 1.0f; y_jumping_state = JST_GOING_DOWN; }
 		break;
 	case JST_TRANSITION:
-		jump_timer = speed.y*dt;
+		jump_timer = speed.y * dt;
 		y_jumping_state = JST_GOING_DOWN;
 		break;
 	case JST_GOING_DOWN:
@@ -553,10 +555,10 @@ void Player::JumpMoveY(float dt) {
 			y_jumping_state = JST_UNKNOWN_Y;
 			jump_timer = 0.0f;
 		}
-		else if (jump_timer <= speed.y*dt * 100) {
-			if (jump_timer > 0) { jump_timer -= (1.0f / 10.0f)*dt; }
-
-			pos.y += speed.y - jump_timer;
+		else if (jump_timer <=2.0f) {
+			if (jump_timer > 0.0f)
+			{ jump_timer -= dt; }
+			pos.y += (speed.y * dt) - jump_timer * (speed.y * dt);//TODO dt wrong
 		}
 		break;
 	}
@@ -643,8 +645,8 @@ void Player::AvoidShaking() {
 	}
 
 	if (current_state != WALL_JUMP) {
-		wall_jump_timer = speed.x*App->dt;
-		if (current_state != WALL_JUMP) { wall_jump_extra_move = SST_IDLE; }
+		wall_jump_timer = 0.75f; //seconds
+		wall_jump_extra_move = SST_IDLE;
 	}
 }
 
@@ -823,16 +825,16 @@ void Player::SetGodmode(bool state) {
 
 void Player::GodMode(float dt) {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		pos.x += -(speed.x*dt) * 4;
+		pos.x += -(speed.x * dt) * 4;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		pos.x += (speed.x*dt) * 4;
+		pos.x += (speed.x * dt) * 4;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		pos.y += -(speed.y*dt) * 4;
+		pos.y += -(speed.y * dt) * 4;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		pos.y += (speed.y*dt) * 4;
+		pos.y += (speed.y * dt) * 4;
 	}
 }

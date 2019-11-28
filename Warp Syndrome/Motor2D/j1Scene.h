@@ -44,11 +44,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void RepositionCamera();
+	void RepositionCamera(float dt);
 
 	void LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos);
 
-	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
+	float CameraGoToTarget(SDL_Rect camera, fPoint target,float dt);//used inside Repositon Camera Function
 
 	int teleport_sfx;
 	int jump_sfx;

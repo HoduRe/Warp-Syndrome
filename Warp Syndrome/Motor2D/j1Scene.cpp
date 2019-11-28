@@ -103,7 +103,7 @@ bool j1Scene::Update(float dt)
 
 	//End of particle debug keys=======================================
 
-	RepositionCamera();
+	RepositionCamera(dt);
 	//camera boundaries
 	//x coordinate
 	if (-App->render->camera.x < 0)App->render->camera.x = 0;
@@ -166,7 +166,7 @@ bool j1Scene::CleanUp()
 }
 
 //this function moves the camera around
-void j1Scene::RepositionCamera()
+void j1Scene::RepositionCamera(float dt)
 {
 	////variables-------------------------------------------------------------------
 	fPoint playerpos = App->entity_m->player->pos;
@@ -192,7 +192,7 @@ void j1Scene::RepositionCamera()
 
 		target.y = playerpos.y;
 		currentcam.y = -target.y + (camH * 2 / 3);
-		currentcam.x = CameraGoToTarget(App->render->camera, target);
+		currentcam.x = CameraGoToTarget(App->render->camera, target,dt);
 
 
 		distancetoplayer.x = playerpos.x - (-currentcam.x);
@@ -212,11 +212,11 @@ void j1Scene::RepositionCamera()
 }
 
 //returns a float corresponding to the new Camera X position Note it doesn't reset camvel
-float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
+float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target,float dt)
 {
 	float newcamX = camera.x;
 	float playervel = App->entity_m->player->speed.x;
-	float camdisplacementvel = playervel * 3;
+	float camdisplacementvel = playervel * 3*dt;
 
 	if (camaccel.x > 1.0f)camaccel.x = 1.0f;
 
@@ -231,7 +231,8 @@ float j1Scene::CameraGoToTarget(SDL_Rect camera, fPoint target)
 		//LOG("Cam ++, positon: %f", newcamX);
 
 	}
-	camaccel.x += 0.05f;//change this value to change camera accel
+	camaccel.x += 3.125*dt;//change this value to change camera accel
+
 	//TODO take the increment of cam vel (cam accel) and put it in the configuration xml
 
 	if (-camera.x + (camera.w / 2) <= target.x + (camdisplacementvel / 2) + 1 && -camera.x + (camera.w / 2) >= target.x - (camdisplacementvel / 2) - 1)

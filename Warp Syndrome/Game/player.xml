@@ -8,7 +8,7 @@
     <folder>textures</folder>
     <load texturename="Main_Character.png"/>
   </texture>
-  <velocity x="250.0f" y="375.0f"/>
+  <velocity x="250.0f" y="312.5f"/>
   <hitbox w="20" h="30"/>
 
 

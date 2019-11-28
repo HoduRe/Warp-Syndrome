@@ -162,6 +162,7 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 	PathList visited;
 	PathNode aux_path;
 	PathList aux_list;
+	iPoint destination_aux(destination.x, destination.y-1);
 	bool stop = false;	// ends the loop that fills the last_path
 	end = false;	// ends the function
 
@@ -171,19 +172,19 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 	last_path.Clear();
 	int a = 0;
 
-	if (IsWalkable(origin) == true && IsWalkable(destination) == true) {
+	if (IsWalkable(origin) == true && IsWalkable(destination_aux) == true) {
 		aux_path.pos = origin;
 		aux_path.parent.x = 0;
 		aux_path.parent.y = 0;
 		aux_path.g = 0;
-		aux_path.h = aux_path.pos.DistanceTo(destination);
+		aux_path.h = aux_path.pos.DistanceTo(destination_aux);
 		frontier.list.add(aux_path);
 
 		while (frontier.list.start != NULL && end == false) {
 			visited.list.add(frontier.GetNodeLowestScore()->data);
 			aux_path = visited.list.end->data;
 			frontier.list.del(frontier.GetNodeLowestScore());
-			if (visited.list.end->data.pos == destination) {
+			if (visited.list.end->data.pos == destination_aux) {
 				do {	// Take the last tile --> do I have it? --> take its parent --> make parent the last tile
 					last_path.PushBack(aux_path.pos);
 					if (aux_path.pos != origin) {
@@ -212,7 +213,7 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 
 			while (f != NULL) {
 				if (visited.Find(f->data.pos) == NULL) {
-					f->data.CalculateF(aux_path.g, destination);	// THIS ALSO GIVES A VALUE TO G AND H
+					f->data.CalculateF(aux_path.g, destination_aux);	// THIS ALSO GIVES A VALUE TO G AND H
 					if (frontier.Find(f->data.pos) != NULL && frontier.Find(f->data.pos)->data.g > f->data.g) {
 						frontier.list.del(frontier.Find(f->data.pos));
 						frontier.list.add(f->data);

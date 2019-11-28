@@ -299,6 +299,7 @@ void j1Collision::PrintColliders() {
 bool j1Collision::CheckWalkability(iPoint& tile) {
 	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
 	collider_type aux_collider_type;
+	SDL_Rect coll_rect;
 
 	while (itemOG != NULL) {
 		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
@@ -309,8 +310,12 @@ bool j1Collision::CheckWalkability(iPoint& tile) {
 			case regular_collider:
 			case grenade_collider:
 			case under_platform_collider:
-				if (itemO->data->boundingbox.x <= tile.x && itemO->data->boundingbox.x + itemO->data->boundingbox.w - App->map->data.tile_width >= tile.x
-					&& itemO->data->boundingbox.y <= tile.y && itemO->data->boundingbox.y + itemO->data->boundingbox.h - App->map->data.tile_height >= tile.y) {
+				coll_rect.x = itemO->data->boundingbox.x / App->map->data.tile_width;
+				coll_rect.y = itemO->data->boundingbox.y / App->map->data.tile_height;
+				coll_rect.w = itemO->data->boundingbox.w / App->map->data.tile_width - 1;
+				coll_rect.h = itemO->data->boundingbox.h / App->map->data.tile_height - 1;
+				if (coll_rect.x <= tile.x && coll_rect.x + coll_rect.w >= tile.x
+					&& coll_rect.y <= tile.y && coll_rect.y + coll_rect.h >= tile.y) {
 					return false;
 				}
 				break;

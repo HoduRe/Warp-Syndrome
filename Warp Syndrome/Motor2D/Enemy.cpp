@@ -111,7 +111,6 @@ void Enemy::DoEnable()
 		)
 	{
 		enabled = true;
-		DoPathFinding();
 	}
 	else enabled = false;
 }

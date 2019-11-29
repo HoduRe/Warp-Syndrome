@@ -50,6 +50,7 @@ bool Enemy_Elemental::Update(float dt)
 		case E_STATE_CHASING:
 			//TODO do pathfinding here, execute pathfinding once every 1/2 a sec or so
 			//Also move the player in this state, when arrived to the destination tile go to default case
+			DoPathFinding();
 			Move();
 
 			break;

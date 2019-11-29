@@ -140,6 +140,7 @@ bool j1LevelManager::RestartLevelObjects()
 	App->entity_m->player->ResetPlayerToStart();
 	App->entity_m->player->current_state = IDLE;
 	App->entity_m->ClearEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);
 	//TODO reload entites of the map
 	App->render->camera.x = -(App->entity_m->player->pos.x - (App->render->camera.w / 2));
 	App->render->camera.y = -(App->entity_m->player->pos.y - (App->render->camera.h / 2));

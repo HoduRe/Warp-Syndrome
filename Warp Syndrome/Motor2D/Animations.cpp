@@ -81,7 +81,7 @@ FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
 	FrameInfo* ret = currentanimframe->data;
 	if (ret->actualduration >= ret->frameduration)//only executes the code once the duration of the frame is max
 	{
-		ret->actualduration = 0;//restarts the duration
+		ret->actualduration = 0.0f;//restarts the duration
 
 		if (currentanimframe->next != nullptr) {//if the next element exists go to the next element
 			currentanimframe = currentanimframe->next;

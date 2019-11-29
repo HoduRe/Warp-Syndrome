@@ -1,5 +1,6 @@
 #include "j1EntityManager.h"
 #include "Entity.h"
+#include "Elemental.h"
 #include "Player.h"
 #include "Particles.h"
 #include "j1Grenade.h"
@@ -113,7 +114,7 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::E_TYPE_PLAYER:
 		ret = new Player();
 		break;
-		
+
 	case EntityType::E_TYPE_PARTICLE:
 		assert("tried to create a particle from scratch"); //TODO delete this when going to do the release(including the case)
 		break;
@@ -123,17 +124,17 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::E_TYPE_GRENADE:
 		ret = new Grenade();
 		break;
-	/*
-	case EntityType::E_TYPE_ELEMENTAL:
-		ret = new Elemental();
-		break;
-	case EntityType::E_TYPE_FIRE_SKULL:
-		ret = new FireSkull();
-		break;
-	case EntityType::E_TYPE_HELL_HORSE:
-		ret = new HellHorse();
-		break;*/
-		//TODO uncomment this once all the entity types are created
+		/*
+		case EntityType::E_TYPE_ELEMENTAL:
+			ret = new Elemental();
+			break;
+		case EntityType::E_TYPE_FIRE_SKULL:
+			ret = new FireSkull();
+			break;
+		case EntityType::E_TYPE_HELL_HORSE:
+			ret = new HellHorse();
+			break;*/
+			//TODO uncomment this once all the entity types are created
 	}
 
 
@@ -157,9 +158,9 @@ bool j1EntityManager::DestroyEntity(Entity* entity)
 {
 	bool ret = false;
 	p2List_item<Entity*>* item = entity_list.start;
-	while (item!=NULL)
+	while (item != NULL)
 	{
-		if (item->data==entity)
+		if (item->data == entity)
 		{
 			entity_list.del(item);
 			ret = true;
@@ -180,9 +181,46 @@ bool  j1EntityManager::ClearEntitiesOfType(EntityType eType)
 		{
 			entity_list.del(item);
 			ret = true;
-			break;
 		}
 		item = item->next;
 	}
 	return ret;
 }
+
+bool  j1EntityManager::RespawnEntitiesOfType(EntityType eType)
+{
+	p2List_item<ObjectGroup*>* objectgroupitem = App->map->data.objgroups.start;
+
+	while (objectgroupitem != NULL)//double while that iterates between every objectgroup and every object in them
+	{
+		p2List_item<Object*>* objectlistitem = objectgroupitem->data->objlist.start;
+
+		while (objectlistitem != NULL)
+		{
+			if (objectlistitem->data->type == eType)
+			{
+				Enemy* enemy = nullptr;
+				switch (objectlistitem->data->type) 
+				{
+				case 6:
+					enemy = new Enemy_Elemental(objectlistitem->data->boundingbox.x, objectlistitem->data->boundingbox.y);
+					AddEntity(enemy);
+					break;
+				case 7:
+					//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here
+					break;
+				case 8:
+					//App->enemies->AddEnemy(enemy_skull, set->boundingbox.x, set->boundingbox.y);//TODO add enemie skull here
+					break;
+				default:
+					break;
+				}
+			}
+			objectlistitem= objectlistitem->next;
+		}
+
+		objectgroupitem=objectgroupitem->next;
+	}
+	return true;
+}
+

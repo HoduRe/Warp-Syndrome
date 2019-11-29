@@ -33,7 +33,7 @@ public:
 	bool AddEntity(Entity*);
 	bool DestroyEntity(Entity* entity);
 	bool ClearEntitiesOfType(EntityType eType);
-
+	bool RespawnEntitiesOfType(EntityType eType);
 public:
 	Player* player;
 	Grenade* grenade;

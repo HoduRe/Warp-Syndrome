@@ -59,7 +59,7 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 	LoadAnimations(current_enemy_node);
 	pugi::xml_node tmp = enemiesnode.child("texture");
 	const pugi::char_t* folder = tmp.child("folder").text().as_string();
-	const pugi::char_t* texturename= tmp.child("load").append_attribute("texturename").as_string();
+	const pugi::char_t* texturename = tmp.child("load").append_attribute("texturename").as_string();
 	texture = App->tex->Load(PATH(tmp.child("folder").text().as_string(), tmp.child("load").attribute("texturename").as_string()));
 
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
@@ -69,7 +69,7 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 Enemy::~Enemy()
 {}
 
-void Enemy::Move() 
+void Enemy::Move(float dt)
 {
 	//TODO enemy movement logic here
 	int width = App->map->data.tile_width;
@@ -78,32 +78,35 @@ void Enemy::Move()
 
 	if (path.At(count - 1) != nullptr && path.At(count)->x != path.At(count - 1)->x) {
 		if (path.At(count)->x < path.At(count - 1)->x) {
-			(pos.x) -= width / 10;
+			(pos.x) -= (width) * dt;
 		}
 		else if (path.At(count)->x > path.At(count - 1)->x) {
-			(pos.x) += width / 10;
+			(pos.x) += (width) * dt;
 		}
 	}
 	else if (path.At(count - 2) != nullptr && path.At(count)->x != path.At(count - 2)->x) {
 		if (path.At(count)->x < path.At(count - 2)->x) {
-			(pos.x) -= width / 10;
+			(pos.x) -= (width) * dt;
 		}
 		else if (path.At(count)->x > path.At(count - 2)->x) {
-			(pos.x) += width / 10;
+			(pos.x) += (width) * dt;
 		}
 	}	// This second comprovation is done in order to make movement more dynamic, and less rigid
 
 	if (path.At(count - 1) != nullptr && path.At(count)->y != path.At(count - 1)->y) {
 		if (path.At(count)->y < path.At(count - 1)->y) {
-			(pos.y) -= height / 10;
+			(pos.y) -= (height) * dt;
 		}
 		else if (path.At(count)->y > path.At(count - 1)->y) {
-			(pos.y) += height / 10;
+			(pos.y) += (height) * dt;
 		}
 	}
 	else if (path.At(count - 2) != nullptr && path.At(count)->y != path.At(count - 2)->y) {
 		if (path.At(count)->y > path.At(count - 2)->y) {
-			(pos.y) += height / 10;
+			(pos.y) += (height) * dt;
+		}
+		else if (path.At(count)->y > path.At(count - 2)->y) {
+			(pos.y) += (height) * dt;
 		}
 	}	// This second comprovation is done in order to make movement more dynamic, and less rigid
 }

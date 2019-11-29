@@ -58,7 +58,7 @@ bool Enemy_Elemental::Update(float dt)
 				
 			}
 			
-			Move();
+			Move(dt);
 			pathfinding_update_rate += dt;
 			break;
 			//=========================================================================================

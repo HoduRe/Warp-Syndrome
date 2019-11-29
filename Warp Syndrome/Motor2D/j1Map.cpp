@@ -319,7 +319,7 @@ bool j1Map::LoadNew(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);//todo add more when we implement them
 
 	map_loaded = ret;
 	return ret;
@@ -520,22 +520,6 @@ bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
 		set->boundingbox.y = currentobj.attribute("y").as_int();
 		set->boundingbox.h = currentobj.attribute("height").as_int();
 		set->boundingbox.w = currentobj.attribute("width").as_int();
-
-		Enemy* enemy = nullptr;
-		switch (set->type) {
-		case 6:
-			enemy = new Enemy_Elemental(set->boundingbox.x, set->boundingbox.y);
-			App->entity_m->AddEntity(enemy);
-			break;
-		case 7:
-			//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here
-			break;
-		case 8:
-			//App->enemies->AddEnemy(enemy_skull, set->boundingbox.x, set->boundingbox.y);//TODO add enemie skull here
-			break;
-		default:
-			break;
-		}
 
 		group->objlist.add(set);
 	}

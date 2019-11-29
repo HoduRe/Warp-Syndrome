@@ -24,6 +24,7 @@ public:
 	bool PostUpdate();
 	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	void ChangeAnimation(Elemental_Anim_List animations);
+	float pathfinding_update_rate=0.0f;
 };
 
 #endif // __ELEMENTAL_H__

@@ -13,10 +13,19 @@ Character::Character(EntityType atype) :Entity(atype)
 }
 Character::~Character()
 {
+	p2List_item<Animations*>* item = animations_list.start;
+	while (item != NULL)
+	{
+		RELEASE(item->data);
+		animations_list.del(item);
+		item = item->next;
+	}
 	animations_list.clear();
 	currentframe = nullptr;
 	currentAnim = nullptr;
-	App->tex->UnLoad(texture);
+	
+
+
 }
 
 Animation_state Character::StepCurrentAnimation(float dt)

@@ -97,7 +97,8 @@ bool Grenade::PostUpdate()
 
 // Called before quitting
 bool Grenade::CleanUp() {
-	App->tex->UnLoad(texture);//TODO don't know if its a copy of the player texture or a poniter to it, so maybe, when cleaning the player dissapears :p guess we will find out soon
+	//App->tex->UnLoad(texture);//TODO don't know if its a copy of the player texture or a poniter to it, so maybe, when cleaning the player dissapears :p guess we will find out soon
+	//We found out indeed
 	return true;
 }
 

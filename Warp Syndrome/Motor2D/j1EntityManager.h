@@ -34,12 +34,12 @@ public:
 	bool DestroyEntity(Entity* entity);
 	bool ClearEntitiesOfType(EntityType eType);
 	bool RespawnEntitiesOfType(EntityType eType);
+	bool SaveEntity(pugi::xml_node& ldata, Entity* enty) const;
+	bool CleanAllEntites();
 public:
 	Player* player;
 	Grenade* grenade;
-
 	fPoint gravity;
-private:
 	p2List<Entity*> entity_list;
 	
 };

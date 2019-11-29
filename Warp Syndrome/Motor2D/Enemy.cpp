@@ -64,10 +64,20 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
 	currentAnim = defaultanim;
+	enemiesdoc.reset();
 }
 
 Enemy::~Enemy()
-{}
+{
+	CleanUp();
+
+}
+
+bool Enemy::CleanUp()
+{
+	enemiesdoc.reset();
+	return true;
+}
 
 void Enemy::Move(float dt)
 {

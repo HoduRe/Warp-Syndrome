@@ -31,7 +31,7 @@ Player::Player() :Character(E_TYPE_PLAYER)
 
 Player::~Player()
 {
-
+	CleanUp();
 }
 
 
@@ -87,7 +87,7 @@ bool Player::Start()
 	wall_jump = SST_IDLE;
 	x_jumping_state = JST_IDLE;
 	y_jumping_state = JST_UNKNOWN_Y;
-
+	playerdoc.reset();
 	return ret;
 }
 
@@ -182,16 +182,9 @@ bool Player::PostUpdate()
 // Called before quitting
 bool Player::CleanUp()
 {
-	App->tex->UnLoad(texture);
-	p2List_item<Animations*>* item;
-	item = animations_list.start;
-
-	while (item != NULL)
-	{
-		RELEASE(item->data);
-		item = item->next;
-	}
-	animations_list.clear();
+	playerdoc.reset();
+	if (texture != nullptr)
+		App->tex->UnLoad(texture);
 	return true;
 }
 
@@ -206,8 +199,8 @@ bool Player::Load(pugi::xml_node& data)
 bool Player::Save(pugi::xml_node& data) const
 {
 
-	data.append_attribute("x") = pos.x;
-	data.append_attribute("y") = pos.y;
+	data.append_attribute("state") = int(current_state);
+
 	return true;
 }
 

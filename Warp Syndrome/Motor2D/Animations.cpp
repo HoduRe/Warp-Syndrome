@@ -36,6 +36,8 @@ bool Animations::CleanUp()
 	while (item != NULL)
 	{
 		RELEASE(item->data);
+		/*if(item->data!=nullptr)	item->data = nullptr;
+		animationframes.del(item);*/
 		item = item->next;
 	}
 	animationframes.clear();
@@ -96,8 +98,8 @@ FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
 			animationfinished = true;
 			state = AS_FINISHED;
 		}
-		
-		
+
+
 	}
 	ret->actualduration += dt;
 	return ret;

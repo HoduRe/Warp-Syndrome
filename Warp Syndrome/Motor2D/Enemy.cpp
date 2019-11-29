@@ -72,6 +72,40 @@ Enemy::~Enemy()
 void Enemy::Move() 
 {
 	//TODO enemy movement logic here
+	int width = App->map->data.tile_width;
+	int height = App->map->data.tile_height;
+	int count = path.Count() - 1;
+
+	if (path.At(count - 1) != nullptr && path.At(count)->x != path.At(count - 1)->x) {
+		if (path.At(count)->x < path.At(count - 1)->x) {
+			(pos.x) -= width / 10;
+		}
+		else if (path.At(count)->x > path.At(count - 1)->x) {
+			(pos.x) += width / 10;
+		}
+	}
+	else if (path.At(count - 2) != nullptr && path.At(count)->x != path.At(count - 2)->x) {
+		if (path.At(count)->x < path.At(count - 2)->x) {
+			(pos.x) -= width / 10;
+		}
+		else if (path.At(count)->x > path.At(count - 2)->x) {
+			(pos.x) += width / 10;
+		}
+	}	// This second comprovation is done in order to make movement more dynamic, and less rigid
+
+	if (path.At(count - 1) != nullptr && path.At(count)->y != path.At(count - 1)->y) {
+		if (path.At(count)->y < path.At(count - 1)->y) {
+			(pos.y) -= height / 10;
+		}
+		else if (path.At(count)->y > path.At(count - 1)->y) {
+			(pos.y) += height / 10;
+		}
+	}
+	else if (path.At(count - 2) != nullptr && path.At(count)->y != path.At(count - 2)->y) {
+		if (path.At(count)->y > path.At(count - 2)->y) {
+			(pos.y) += height / 10;
+		}
+	}	// This second comprovation is done in order to make movement more dynamic, and less rigid
 }
 
 void Enemy::Draw()

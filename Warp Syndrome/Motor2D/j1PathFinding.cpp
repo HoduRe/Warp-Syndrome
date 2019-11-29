@@ -44,7 +44,7 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1PathFinding::IsWalkable(const iPoint& pos, Enemy* enemy) const
 {
-	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos)) {
+	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos, enemy)) {
 		switch (enemy->type) {
 		case E_TYPE_ELEMENTAL:
 		case E_TYPE_HELL_HORSE:

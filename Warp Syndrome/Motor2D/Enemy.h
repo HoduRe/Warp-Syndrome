@@ -4,12 +4,12 @@
 #include "p2Point.h"
 #include "Animations.h"
 #include "p2DynArray.h"
-#include "j1Collision.h"
 #include "Entity.h"
 #include "Character.h"
 #include "p2DynArray.h"
 
 struct SDL_Texture;
+enum collider_type;
 
 enum enemy_states
 {

@@ -89,10 +89,6 @@ bool Enemy_Elemental::PostUpdate()
 	return true;
 }
 
-void Enemy_Elemental::Move()
-{
-	//TODO move enemy accordingly to path
-}
 
 void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 {

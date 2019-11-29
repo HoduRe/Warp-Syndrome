@@ -24,7 +24,6 @@ public:
 	bool PostUpdate();
 	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	void ChangeAnimation(Elemental_Anim_List animations);
-	void Move();
 };
 
 #endif // __ELEMENTAL_H__

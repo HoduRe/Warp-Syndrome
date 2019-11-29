@@ -40,7 +40,7 @@ public:
 public:
 	Enemy(int x, int y, enemy_states startingstate=E_STATE_DEFAULT, EntityType atype = E_TYPE_ENEMY);
 	virtual ~Enemy();
-	virtual void Move();
+	void Move();
 	void Draw();
 	// Checks if the animation has to be changed
 	virtual void CheckAnimation(enemy_states currentstate, enemy_states laststate);

@@ -69,7 +69,10 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 Enemy::~Enemy()
 {}
 
-void Enemy::Move() {}
+void Enemy::Move() 
+{
+	//TODO enemy movement logic here
+}
 
 void Enemy::Draw()
 {

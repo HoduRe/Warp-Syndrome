@@ -210,8 +210,13 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
-	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu Frame Capping: %i",
-		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count, capping);
+
+	int cappingtext = 0;
+	if (capping)cappingtext = 1;
+
+	
+	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Frame Capping: %i Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, cappingtext, seconds_since_startup, frame_count);
 
 	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
 	//static char newtitle[256];

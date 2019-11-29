@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "j1Map.h"
+#include "Enemy.h"
 #include "PugiXml/src/pugixml.hpp"
 
 struct collider_buffer {
@@ -110,7 +111,7 @@ public:
 	collider_type GetCurrentCollider(int id);
 
 	// Checks collision for pathfinding
-	bool CheckWalkability(iPoint& tile);
+	bool CheckWalkability(iPoint& tile, Enemy* enemy);
 
 public:
 	collision_type current_collision;

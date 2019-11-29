@@ -17,7 +17,7 @@ class Enemy_Elemental : public Enemy
 public:
 
 	Enemy_Elemental(int x, int y);
-	Enemy_Elemental(int x, int y,enemy_states startingstate);
+	Enemy_Elemental(int x, int y,enemy_states startingstate,float aHealth);
 	~Enemy_Elemental();
 	bool PreUpdate();
 	bool Update(float dt);

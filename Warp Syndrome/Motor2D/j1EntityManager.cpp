@@ -169,3 +169,20 @@ bool j1EntityManager::DestroyEntity(Entity* entity)
 	}
 	return ret;
 }
+
+bool  j1EntityManager::ClearEntitiesOfType(EntityType eType)
+{
+	bool ret = false;
+	p2List_item<Entity*>* item = entity_list.start;
+	while (item != NULL)
+	{
+		if (item->data->type == eType)
+		{
+			entity_list.del(item);
+			ret = true;
+			break;
+		}
+		item = item->next;
+	}
+	return ret;
+}

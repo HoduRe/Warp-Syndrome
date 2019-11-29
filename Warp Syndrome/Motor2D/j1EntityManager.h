@@ -32,6 +32,7 @@ public:
 	Entity* CreateEntity(EntityType type);
 	bool AddEntity(Entity*);
 	bool DestroyEntity(Entity* entity);
+	bool ClearEntitiesOfType(EntityType eType);
 
 public:
 	Player* player;

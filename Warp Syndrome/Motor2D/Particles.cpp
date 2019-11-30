@@ -152,7 +152,10 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 }
 AnimatedParticle::~AnimatedParticle()
 {
-	anim.CleanUp();
+	anim.ResetAnimation();
+	Animations* anim_aux=new Animations;
+	anim= *anim_aux;
+	delete anim_aux;
 }
 
 

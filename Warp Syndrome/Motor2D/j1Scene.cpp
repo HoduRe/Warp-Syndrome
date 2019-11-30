@@ -127,7 +127,6 @@ bool j1Scene::Update(float dt)
 	{
 		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, App->entity_m->player->pos,App->entity_m->player->texture,2.0f);
 		App->entity_m->AddEntity(p);
-		delete p;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{

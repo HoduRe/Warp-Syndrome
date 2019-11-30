@@ -147,7 +147,7 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 		case E_TYPE_PLAYER:
 			player->pos.x = node.child("pos").attribute("x").as_float();
 			player->pos.y = node.child("pos").attribute("y").as_float();
-			player->current_state = state_list(node.child("properties").attribute("state").as_int());
+			player->current_state = state_list(enemystartingstate);
 			break;
 		case E_TYPE_ELEMENTAL:
 			enemy = new Enemy_Elemental(enemypos.x,enemypos.y,enemy_states(enemystartingstate),enemyhealth);

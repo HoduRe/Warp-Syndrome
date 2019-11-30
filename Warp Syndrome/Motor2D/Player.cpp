@@ -193,7 +193,6 @@ bool Player::Load(pugi::xml_node& data)
 {
 	pos.x = data.attribute("x").as_float(0);
 	pos.y = data.attribute("y").as_float(0);
-
 	return true;
 }
 bool Player::Save(pugi::xml_node& data) const

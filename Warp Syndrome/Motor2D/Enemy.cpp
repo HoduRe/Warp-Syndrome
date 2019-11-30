@@ -22,7 +22,7 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 	enabled = false;
 	player_distance = -1;
 	chase_distance = -1;
-	ground_distance = 0;
+	ground_distance = App->map->data.height;
 	jump = false;
 
 	//Loads the animations and properties
@@ -89,47 +89,41 @@ void Enemy::Move(float dt)
 	int current_pos = pos.y / height;
 
 	if (path.At(1) != nullptr) {
-		LOG("First %i %i Second %i %i Last %i %i", path.At(0)->x, path.At(0)->y, path.At(1)->x, path.At(1)->y, path.At(path.Count() - 1)->x, path.At(path.Count() - 1)->y);
-	}
-
-	if (path.At(1) != nullptr && path.At(0)->x != path.At(1)->x) {
-		int current_pos = pos.x / App->map->data.tile_width;
-		if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
-			(pos.x) += (width) * dt;
+		if (path.At(0)->x != path.At(1)->x) {
+			int current_pos = pos.x / App->map->data.tile_width;
+			if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
+				(pos.x) += (width)* dt;
+			}
+			else if (path.At(0)->x > path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
+				(pos.x) -= (width)* dt;
+			}
 		}
-		else if (path.At(0)->x > path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
-			(pos.x) -= (width) * dt;
+		else if (path.At(0)->y != path.At(1)->y) {
+			switch (type) {
+			case E_TYPE_ELEMENTAL:
+			case E_TYPE_HELL_HORSE:
+				if (jump == false && ground_distance != path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
+					(pos.y) += (height)* dt;
+				}
+				else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
+					(pos.y) -= (height)* dt;
+					jump = true;
+				}
+				break;
+			default:
+				if (path.At(0)->y < path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
+					(pos.y) += (height)* dt;
+				}
+				else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
+					(pos.y) -= (height)* dt;
+				}
+				break;
+			}
 		}
+		if (pos.y > App->entity_m->player->pos.y && current_pos == ground_distance - 1) { jump = true; }
+		if (ground_distance - 5 == current_pos || (current_pos != ground_distance - 1 && path.At(0)->x != path.At(1)->x)) { jump = false; }
 	}
-	else if (path.At(1) != nullptr && path.At(0)->y != path.At(1)->y) {
-		switch (type) {
-		case E_TYPE_ELEMENTAL:
-		case E_TYPE_HELL_HORSE:
-			if (jump == false && ground_distance != path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-				(pos.y) += (height)* dt;
-			}
-			else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-				(pos.y) -= (height)* dt;
-				jump = true;
-			}
-			if (ground_distance - 5 == pos.y) { jump = false; }
-			break;
-		default:
-			if (path.At(0)->y < path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-				(pos.y) += (height)* dt;
-			}
-			else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-				(pos.y) -= (height)* dt;
-			}
-			break;
-		}
-	}
-	if (pos.y > App->entity_m->player->pos.y && current_pos == ground_distance-1) {
-		jump = true;
-	}
-	if (jump == false && ground_distance-1 != current_pos) {
-		(pos.y) += (height)* dt;
-	}
+	if (jump == false && ground_distance - 1 > current_pos) { (pos.y) += (height)* dt; }
 }
 
 void Enemy::Draw()

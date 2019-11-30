@@ -49,7 +49,8 @@ bool j1PathFinding::IsWalkable(const iPoint& pos, Enemy* enemy) const
 		switch (enemy->type) {
 		case E_TYPE_ELEMENTAL:
 		case E_TYPE_HELL_HORSE:
-			if (enemy->jump == true && enemy->ground_distance-5 <= pos.y) { return true; }
+			if (enemy->ground_distance-1 == pos_aux) { return true; }
+			else if (enemy->jump == true && enemy->ground_distance-5 <= pos.y) { return true; }
 			else if (enemy->jump == false && pos_aux <= pos.y) { return true; }
 			else { return false; }
 			break;

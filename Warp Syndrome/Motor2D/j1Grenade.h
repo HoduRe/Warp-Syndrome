@@ -53,6 +53,8 @@ public:
 	// Moves the grenade outside of the colliders
 	void CorrectCollider(float dt);
 
+	void CheckEnemyPosition(float dt);
+
 public:
 	collision_type grenade_collider_buffer=NONE_COLLISION;
 };

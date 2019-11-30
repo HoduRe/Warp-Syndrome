@@ -73,6 +73,7 @@ bool Grenade::Update(float dt) {
 	bool playercantp = true;
 	Integrate(dt);
 	health -= dt;
+	CheckEnemyPosition(dt);
 	CorrectCollider(dt);
 
 	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
@@ -183,5 +184,25 @@ void Grenade::CorrectCollider(float dt) {
 			pos.y = App->collision->current_collision_buffer.collider2.y;
 		}
 		break;
+	}
+}
+
+void Grenade::CheckEnemyPosition(float dt) {
+	iPoint vectorO(0, 0);
+	iPoint vectorF(speed.x * dt + 15, speed.y * dt - 15);
+	iPoint object;
+	p2List_item<Entity*>* f = App->entity_m->entity_list.start;
+	while (f != nullptr) {
+		if (f->data->type == E_TYPE_ELEMENTAL || f->data->type == E_TYPE_FIRE_SKULL || f->data->type == E_TYPE_HELL_HORSE) {
+			object.x = f->data->pos.x - pos.x;
+			object.y = f->data->pos.y - pos.y;
+			if ((vectorO.x <= object.x && vectorF.x >= object.x &&
+				vectorO.y >= object.y && vectorF.y <= object.y) ||
+				(vectorO.x >= object.x && vectorF.x <= object.x &&
+				vectorO.y <= object.y && vectorF.y >= object.y)) {
+				f->data->destroy = true;
+			}
+		}
+		f = f->next;
 	}
 }

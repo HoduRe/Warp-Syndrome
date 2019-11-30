@@ -38,6 +38,7 @@ bool j1EntityManager::Start(fPoint aGravity)
 bool j1EntityManager::PreUpdate()
 {
 	p2List_item<Entity*>* item;
+	p2List_item<Entity*>* p_item;
 	//deletes all the death entities=================================================
 	if (entity_list.count() > 0)//if there are entities in the list
 	{
@@ -47,12 +48,11 @@ bool j1EntityManager::PreUpdate()
 			if (item->data->destroy == true)
 			{
 				item->data->CleanUp();
-				//RELEASE(item->data);
+				RELEASE(item->data);
 				entity_list.del(item);
 				item = item->prev;
 			}
-
-			item = item->next;
+			else item = item->next;
 		}
 
 	}
@@ -88,12 +88,20 @@ bool j1EntityManager::PostUpdate()
 		item = item->next;
 	}
 	return true;
-	return true;
 }
 bool j1EntityManager::CleanUp()
 {
+	p2List_item<Entity*>* item = entity_list.start;
+	while (item!=NULL)
+	{
+		item->data->CleanUp();
+		RELEASE(item->data);
+		entity_list.del(item);
+		item = item->next;
+	}
 	entity_list.clear();
-
+	player = nullptr;
+	grenade = nullptr;
 	return true;
 }
 bool j1EntityManager::CleanAllEntites()//except for the player
@@ -104,8 +112,7 @@ bool j1EntityManager::CleanAllEntites()//except for the player
 		if (item->data->type != E_TYPE_PLAYER)
 		{
 			item->data->CleanUp();
-			//RELEASE(item->data);
-
+			RELEASE(item->data);
 			entity_list.del(item);
 			item = item->prev;
 		}
@@ -144,7 +151,8 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 			break;
 		case E_TYPE_ELEMENTAL:
 			enemy = new Enemy_Elemental(enemypos.x,enemypos.y,enemy_states(enemystartingstate),enemyhealth);
-			AddEntity(enemy);
+			AddEntity(enemy);//TODO: entity
+			
 			break;
 		case E_TYPE_FIRE_SKULL:
 			//TODO load
@@ -320,7 +328,8 @@ bool  j1EntityManager::RespawnEntitiesOfType(EntityType eType)
 				{
 				case 6:
 					enemy = new Enemy_Elemental(objectlistitem->data->boundingbox.x, objectlistitem->data->boundingbox.y);
-					AddEntity(enemy);
+					AddEntity(enemy); //TODO: entity
+					//delete enemy;
 					break;
 				case 7:
 					//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here

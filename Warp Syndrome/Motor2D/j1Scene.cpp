@@ -98,6 +98,7 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) {//I think this does not work TODO remove
 		App->render->ToggleVsync();
+		App->entity_m->entity_list.end->data->destroy = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {
@@ -126,6 +127,7 @@ bool j1Scene::Update(float dt)
 	{
 		AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, App->entity_m->player->pos,App->entity_m->player->texture,2.0f);
 		App->entity_m->AddEntity(p);
+		delete p;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
 	{
@@ -141,6 +143,7 @@ bool j1Scene::Update(float dt)
 	{
 		Particle* p = new Particle({ App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { 1.0f,0.0f }, 1.0f, App->entity_m->player->texture, 1.60f, { 100.0f,100.0f }, { -100.0f,-100.0f });
 		App->entity_m->AddEntity(p);
+		
 	}
 	//end of debug particles
 	App->map->Draw();

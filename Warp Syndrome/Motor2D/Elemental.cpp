@@ -17,7 +17,10 @@ Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate,float 
 }
 
 
-Enemy_Elemental::~Enemy_Elemental() {}
+Enemy_Elemental::~Enemy_Elemental() 
+{
+	this->CleanUp();
+}
 
 bool Enemy_Elemental::CleanUp()
 {

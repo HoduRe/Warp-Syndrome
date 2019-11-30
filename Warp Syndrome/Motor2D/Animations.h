@@ -67,7 +67,6 @@ private:
 	p2List_item<FrameInfo*>* currentanimframe;//pointer to the current frame of the animation	
 	p2List<FrameInfo*> animationframes; //list containing all the frames of the animation
 	bool animationfinished; 
-   
 };
 
 #endif // !__ANIMATIONS_H__

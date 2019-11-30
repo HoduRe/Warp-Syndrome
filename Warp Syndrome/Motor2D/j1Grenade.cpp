@@ -54,6 +54,7 @@ Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("
 Grenade::~Grenade()
 {
 	App->entity_m->grenade = nullptr;
+	this->CleanUp();
 }
 
 // Called before the first frame

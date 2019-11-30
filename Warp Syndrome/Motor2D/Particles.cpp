@@ -152,6 +152,7 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 }
 AnimatedParticle::~AnimatedParticle()
 {
+	anim.CleanUp();
 }
 
 

@@ -13,7 +13,9 @@ Entity::Entity(EntityType eType) :type(eType)
 	health = 0.0f;
 }
 Entity::~Entity()
-{}
+{
+	this->CleanUp();
+}
 
 bool Entity::Awake()
 {
@@ -37,6 +39,7 @@ bool Entity::Awake()
  }
  bool Entity::CleanUp()
  {
+	 texture = nullptr;
 	 return true;
  }
  bool Entity::Load(pugi::xml_node&)

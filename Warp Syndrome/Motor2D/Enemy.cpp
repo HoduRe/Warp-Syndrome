@@ -69,12 +69,13 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 
 Enemy::~Enemy()
 {
-	CleanUp();
+	this->CleanUp();
 
 }
 
 bool Enemy::CleanUp()
 {
+	App->tex->UnLoad(texture);
 	enemiesdoc.reset();
 	return true;
 }

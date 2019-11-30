@@ -31,7 +31,7 @@ Player::Player() :Character(E_TYPE_PLAYER)
 
 Player::~Player()
 {
-	CleanUp();
+	this->CleanUp();
 }
 
 

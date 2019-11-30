@@ -31,7 +31,7 @@ public:
 	int chase_distance;//variable set when creating the enemy, its the vision radius of the enemy
 	int player_distance;//the distance to the player in number of tiles
 	int ground_distance; // used in pathfinding to check range
-
+	bool jump;	// checks if the enemy is going up (true) or down (false)
 
 	pugi::xml_document enemiesdoc;
 	pugi::xml_node enemiesnode;

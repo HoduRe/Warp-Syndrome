@@ -45,16 +45,13 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 bool j1PathFinding::IsWalkable(const iPoint& pos, Enemy* enemy) const
 {
 	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos, enemy)) {
+		int pos_aux = enemy->pos.y / App->map->data.tile_height;
 		switch (enemy->type) {
 		case E_TYPE_ELEMENTAL:
 		case E_TYPE_HELL_HORSE:
-			if ((pos.y < (enemy->pos.y / App->map->data.tile_height) -3 && enemy->ground_distance == 0) || 
-				(pos.y < (enemy->pos.y / App->map->data.tile_height) - 2 && enemy->ground_distance == 1) || 
-				(pos.y < (enemy->pos.y / App->map->data.tile_height) - 1 && enemy->ground_distance == 2) ||
-				(pos.y < (enemy->pos.y / App->map->data.tile_height) && enemy->ground_distance == 3)) {
-				return false;
-			}
-			return true;
+			if (enemy->jump == true && enemy->ground_distance-5 <= pos.y) { return true; }
+			else if (enemy->jump == false && pos_aux <= pos.y) { return true; }
+			else { return false; }
 			break;
 		default:
 			return true;

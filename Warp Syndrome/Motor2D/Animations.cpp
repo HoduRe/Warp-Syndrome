@@ -8,8 +8,7 @@ Animations::Animations()
 	numberofFrames = 0;
 	animationloop = false;
 	animationname = "";
-	//texture = nullptr;
-	//texture = nullptr;
+	animationframes.clear();
 }
 
 Animations::Animations(p2SString aName, bool aLoop, int aNumberOfFrames)
@@ -19,14 +18,13 @@ Animations::Animations(p2SString aName, bool aLoop, int aNumberOfFrames)
 	numberofFrames = aNumberOfFrames;
 	currentanimframe = nullptr;
 	animationfinished = false;
+	animationframes.clear();
 }
 
 
 Animations::~Animations()
 {
-
 	CleanUp();
-
 }
 
 bool Animations::CleanUp()
@@ -39,7 +37,7 @@ bool Animations::CleanUp()
 		item = item->next;
 	}
 	animationframes.clear();
-	delete currentanimframe;
+	currentanimframe = nullptr;
 	return true;
 }
 
@@ -96,8 +94,8 @@ FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
 			animationfinished = true;
 			state = AS_FINISHED;
 		}
-		
-		
+
+
 	}
 	ret->actualduration += dt;
 	return ret;

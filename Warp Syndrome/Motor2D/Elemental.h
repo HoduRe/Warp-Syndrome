@@ -22,9 +22,12 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+	bool CleanUp();
 	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	void ChangeAnimation(Elemental_Anim_List animations);
 	float pathfinding_update_rate=0.0f;
+	bool Save(pugi::xml_node& data) const;
+
 };
 
 #endif // __ELEMENTAL_H__

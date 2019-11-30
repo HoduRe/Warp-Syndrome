@@ -9,7 +9,7 @@ class Character :public Entity
 {
 public:
 	Character(EntityType atype = E_TYPE_CHARACTER);
-	~Character();
+	virtual ~Character();
 
 	//steps the current animation and returns an Aniamtion state(finished, unfinished, unknown)
 	Animation_state StepCurrentAnimation(float dt);

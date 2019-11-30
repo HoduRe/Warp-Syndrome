@@ -49,6 +49,7 @@ public:
 	void DoEnable();//enables the entity when in vision of the camera and disables it when not
 	void Enemy::DoPathFinding(); // Creates a pathfinding
 	void Enemy::BlitEnemiesLogic();	// Blits pathfinding and enemy collision
+	bool CleanUp();
 };
 
 #endif // __ENEMY_H__

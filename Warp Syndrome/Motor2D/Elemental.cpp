@@ -7,6 +7,7 @@ Enemy_Elemental::Enemy_Elemental(int x, int y) : Enemy(x, y, E_STATE_DEFAULT, E_
 {
 	last_state = E_STATE_UNKNOWN;
 	chase_distance = 15;
+	health = 1.0f;
 }
 Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate,float aHealth) : Enemy(x, y, startingstate, E_TYPE_ELEMENTAL)
 {
@@ -16,8 +17,15 @@ Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate,float 
 }
 
 
-Enemy_Elemental::~Enemy_Elemental() {}
+Enemy_Elemental::~Enemy_Elemental() 
+{
+	this->CleanUp();
+}
 
+bool Enemy_Elemental::CleanUp()
+{
+	return true;
+}
 
 bool Enemy_Elemental::PreUpdate()
 {
@@ -27,6 +35,10 @@ bool Enemy_Elemental::PreUpdate()
 
 bool Enemy_Elemental::Update(float dt)
 {
+	if (health <= 0.0f)
+	{
+		state = enemy_states::E_STATE_DIE;
+	}
 	if (enabled)
 	{
 		fPoint posbuffer= pos;//saves the position before movement
@@ -69,12 +81,10 @@ bool Enemy_Elemental::Update(float dt)
 			//=========================================================================================
 			//=========================================================================================
 		case E_STATE_DIE:
-			if (health <= 0.0f)
-			{
+			
 				//execute die anim
 				//when die anim ends, destroy the entity
 				destroy = true;
-			}
 			break;
 			//=========================================================================================
 			//=========================================================================================
@@ -97,7 +107,11 @@ bool Enemy_Elemental::PostUpdate()
 	return true;
 }
 
-
+bool Enemy_Elemental::Save(pugi::xml_node& data) const
+{
+	data.append_attribute("state") = (int)state;
+	return true;
+}
 void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 {
 	p2List<Animations*>* pAnimList = &animations_list;//pointer to the character's animation list //TODO this is now loaded directly from the class, no need for a pointer

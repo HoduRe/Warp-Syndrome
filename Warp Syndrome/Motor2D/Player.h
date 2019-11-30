@@ -75,7 +75,7 @@ class Player : public Character
 public:
 	Player();
 	// Destructor
-	virtual ~Player();
+	~Player();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);//TODO it not longer works with node

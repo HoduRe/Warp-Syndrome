@@ -266,13 +266,13 @@ bool j1App::DoUpdate()
 	BROFILER_CATEGORY("MainUpdate", Profiler::Color::Yellow);
 
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	p2List_item<j1Module*>* m_item;
+	m_item = modules.start;
 	j1Module* pModule = NULL;
 
-	for (item = modules.start; item != NULL && ret == true; item = item->next)
+	for (m_item = modules.start; m_item != NULL && ret == true; m_item = m_item->next)
 	{
-		pModule = item->data;
+		pModule = m_item->data;
 
 		if (pModule->active == false) {
 			continue;
@@ -281,7 +281,7 @@ bool j1App::DoUpdate()
 
 		if (dt > 1.0f)dt = 0.016f;//caps dt to maximum 1 sec*frame because when loading a new map during the 1st frame the dt is so big that causes issues
 
-		ret = item->data->Update(dt);
+		ret = m_item->data->Update(dt);
 		LOG("Delta Time= %f", dt);
 
 	}

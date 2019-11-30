@@ -5,7 +5,11 @@
 #include "transitions.h"
 #include "j1Render.h"
 
-j1Transitions::j1Transitions() {}
+j1Transitions::j1Transitions() 
+{
+	name.create("transitions");
+
+}
 
 j1Transitions::~j1Transitions() {}
 

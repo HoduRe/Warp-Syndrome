@@ -34,15 +34,16 @@ represented by the eyes over the door that brings the player to the next level)
 	Keypad (+): Increase the volume
 	
 ### Debug Controls:<br>
-	F1: Start the first level
-	F2: Start the second level
+	F1: Start from the first level
+	F2: Start from the second level
 	F3: Starts from the beginning of the level
 	F4: Changes to the next level
 	F5: Saves the current state
 	F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
+	F7: Switches between frame information and map information
 	F9: Show / unshow colliders and pathfinding
 	F10: Activate / deactivate God Mode
-	F11: Disables frame limit
+	F11: Enables / disables frame limit at 30 fps
 
 ### Player 1 Controls: <br>
     Movement (keyboard / gamepad):
@@ -481,6 +482,11 @@ Update 0.6.1.0-debug
 <ul>
 -Cleaned up code a litle bit<br>
 -Added new functionality to F7: it now changes the information displayed in the title bar<br>
+</ul>
+
+Update 0.6.3.0-debug
+<ul>-Ground enemies pathfinding position matches the ground<br>
+-Enemy movement code restructured
 </ul>
 
 ## Credits

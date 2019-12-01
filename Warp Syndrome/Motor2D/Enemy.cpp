@@ -200,13 +200,13 @@ void Enemy::KillPlayer() {
 	if (pos.x >= App->entity_m->player->pos.x && pos.x <= App->entity_m->player->pos.x + App->entity_m->player->hitbox_w_h.x) {
 		x = true;
 	}
+	if (pos.y + 2 * currentAnim->data->GetCurrentFrame()->animationRect.h >= App->entity_m->player->pos.y && pos.y + 2 * currentAnim->data->GetCurrentFrame()->animationRect.h <= App->entity_m->player->pos.y + App->entity_m->player->hitbox_w_h.y) {
+		y = true;
+	}
 	if (pos.y + currentAnim->data->GetCurrentFrame()->animationRect.h >= App->entity_m->player->pos.y && pos.y + currentAnim->data->GetCurrentFrame()->animationRect.h <= App->entity_m->player->pos.y + App->entity_m->player->hitbox_w_h.y) {
 		y = true;
 	}
-	if (pos.y >= App->entity_m->player->pos.y && pos.y <= App->entity_m->player->pos.y + App->entity_m->player->hitbox_w_h.y) {
-		y = true;
-	}
-	if (x && y) {
-		App->entity_m->player->current_state = DYING;
+	if (x && y && App->entity_m->player->current_state != GOD_MODE && App->entity_m->player->current_state != DYING) {
+		App->entity_m->kill = true;
 	}
 }

@@ -22,6 +22,7 @@ bool j1EntityManager::Awake(pugi::xml_node& node)
 {
 	player = (Player*)CreateEntity(EntityType::E_TYPE_PLAYER);
 	grenade = nullptr;
+	kill = false;
 	player->Awake(node);
 	return true;
 }

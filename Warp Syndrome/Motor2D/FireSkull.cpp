@@ -30,6 +30,7 @@ bool Enemy_FireSkull::CleanUp()
 bool Enemy_FireSkull::PreUpdate()
 {
 	DoEnable();
+	if (enabled) { KillPlayer(); }
 	return true;
 }
 
@@ -96,7 +97,6 @@ bool Enemy_FireSkull::Update(float dt)
 		fliped = (FlipCharacter(pos, posbuffer));//flips the player
 		CheckAnimation(state, last_state);
 	}
-	KillPlayer();
 
 	return true;
 }

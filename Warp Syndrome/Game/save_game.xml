@@ -3,7 +3,7 @@
 	<input />
 	<window />
 	<textures />
-	<audio music_vol="0" fx_vol="0" />
+	<audio music_vol="7" fx_vol="7" />
 	<level_m />
 	<map name="second_level.tmx" />
 	<collision />
@@ -11,12 +11,12 @@
 	<pathfinding />
 	<entity_m>
 		<Entity type="1">
-			<pos x="1397.125" y="4646.68848" />
-			<properties health="0" state="7" />
+			<pos x="1273.875" y="4704" />
+			<properties health="0" state="1" />
 		</Entity>
 		<Entity type="8">
-			<pos x="1705.66443" y="4518.72363" />
-			<properties health="1" state="1" last_state="1" />
+			<pos x="1728" y="4480" />
+			<properties health="1" state="0" last_state="0" />
 		</Entity>
 		<Entity type="8">
 			<pos x="128" y="2944" />
@@ -45,6 +45,6 @@
 	</entity_m>
 	<transitions />
 	<renderer>
-		<camera x="-987" y="-4144" />
+		<camera x="-864" y="-4205" />
 	</renderer>
 </game_state>

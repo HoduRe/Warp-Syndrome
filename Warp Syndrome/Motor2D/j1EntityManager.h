@@ -41,6 +41,7 @@ public:
 	Grenade* grenade;
 	fPoint gravity;
 	p2List<Entity*> entity_list;
+	bool kill; // becomes true when an enemy kills the player
 	
 };
 

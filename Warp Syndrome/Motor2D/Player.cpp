@@ -430,11 +430,12 @@ void Player::CheckCollisions() {
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) { current_state = WALK_BACKWARD; }
 		break;
 	}
-	if (current_state != DYING && (App->collision->DeathColliderTouched() == true || pos.y - hitbox_w_h.y > App->map->data.height * App->map->data.tile_height)) {
+	if (current_state != DYING && (App->collision->DeathColliderTouched() == true || pos.y - hitbox_w_h.y > App->map->data.height * App->map->data.tile_height) || App->entity_m->kill == true) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
 	}
 	if (current_state == DYING) {
+		App->entity_m->kill = false;
 		if (currentAnim->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
 			App->level_m->RestartLevel();
 		}

@@ -9,6 +9,7 @@
 #include "j1EntityManager.h"
 #include "j1PathFinding.h"
 #include "Entity.h"
+#include "j1Scene.h"
 #include "j1Map.h"
 
 
@@ -130,7 +131,7 @@ void Enemy::Draw()
 {
 	SDL_Rect rect = currentframe->animationRect;
 	App->render->Blit(texture, pos.x, pos.y, &rect, fliped);
-	if (App->entity_m->player->GetBlitColliders() == true) { BlitEnemiesLogic(); }
+	if (App->scene->blit_colliders == true) { BlitEnemiesLogic(); }
 }
 
 int Enemy::CheckDistance(float x, float y)
@@ -188,5 +189,24 @@ void Enemy::BlitEnemiesLogic() {
 		rect.y = path[j].y * rect.h;
 		App->render->DrawQuad(rect, 175, 175, 175, 60);
 		j++;
+	}
+}
+
+void Enemy::KillPlayer() {
+	bool x = false, y = false;
+	if (pos.x + currentAnim->data->GetCurrentFrame()->animationRect.w >= App->entity_m->player->pos.x && pos.x + currentAnim->data->GetCurrentFrame()->animationRect.w <= App->entity_m->player->pos.x + App->entity_m->player->hitbox_w_h.x) {
+		x = true;
+	}
+	if (pos.x >= App->entity_m->player->pos.x && pos.x <= App->entity_m->player->pos.x + App->entity_m->player->hitbox_w_h.x) {
+		x = true;
+	}
+	if (pos.y + currentAnim->data->GetCurrentFrame()->animationRect.h >= App->entity_m->player->pos.y && pos.y + currentAnim->data->GetCurrentFrame()->animationRect.h <= App->entity_m->player->pos.y + App->entity_m->player->hitbox_w_h.y) {
+		y = true;
+	}
+	if (pos.y >= App->entity_m->player->pos.y && pos.y <= App->entity_m->player->pos.y + App->entity_m->player->hitbox_w_h.y) {
+		y = true;
+	}
+	if (x && y) {
+		App->entity_m->player->current_state = DYING;
 	}
 }

@@ -15,6 +15,7 @@ enum Elemental_Anim_List
 class Enemy_Elemental : public Enemy
 {
 public:
+	float pathfinding_update_rate = 0.0f;
 
 	Enemy_Elemental(int x, int y);
 	Enemy_Elemental(int x, int y,enemy_states startingstate,float aHealth);
@@ -25,7 +26,6 @@ public:
 	bool CleanUp();
 	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	void ChangeAnimation(Elemental_Anim_List animations);
-	float pathfinding_update_rate=0.0f;
 	bool Save(pugi::xml_node& data) const;
 
 };

@@ -42,6 +42,8 @@ public:
 	virtual ~Enemy();
 	void Move(float dt);
 	void Draw();
+	// Checks if the enemy is touching the player
+	void KillPlayer();
 	// Checks if the animation has to be changed
 	virtual void CheckAnimation(enemy_states currentstate, enemy_states laststate);
 	virtual void ChangeAnimation();

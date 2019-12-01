@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1EntityManager.h"
 #include "Player.h"
+#include "j1Scene.h"
 #include "j1Grenade.h"
 
 j1Render::j1Render() : j1Module()
@@ -28,10 +29,11 @@ bool j1Render::Awake(pugi::xml_node& config)
 	bool ret = true;
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
+	App->vSyncActivated = false;
 
 	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
+	flags |= SDL_RENDERER_PRESENTVSYNC;
 	LOG("Using vsync");
 	App->vSyncActivated = true;
 	}
@@ -76,7 +78,7 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
-	if (App->entity_m->player->BlitColliders() == true) {
+	if (App->scene->blit_colliders == true) {
 		App->collision->PrintColliders();
 		PrintPlayerObjects();
 	}
@@ -281,29 +283,4 @@ void j1Render::PrintPlayerObjects() {
 		rect.h = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.h;
 		DrawQuad(rect, 255, 255, 255, alpha);
 	}
-}
-
-void j1Render::ToggleVsync()
-{
-	if (vSyncActive)
-	{
-		if (SDL_SetHint(SDL_HINT_RENDER_VSYNC, "0")==SDL_TRUE)
-		{
-			LOG("Vsync Deactivated");
-			vSyncActive = false;
-		}
-		else LOG("Vsync error!");
-		
-	}
-	else
-	{
-		if (SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1")==SDL_TRUE)
-		{
-			LOG("Vsync Activated");
-			vSyncActive = true;
-		}
-		else LOG("Vsync error!");
-		
-	}
-
 }

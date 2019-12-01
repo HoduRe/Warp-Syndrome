@@ -53,7 +53,7 @@
 </hell_horse>
 
 <fire_skull>
-  <animation name="on_fire" number_of_frames="8" canloop="1">
+  <animation name="moving" number_of_frames="8" canloop="1">
     <frame>
       <rectangle x="1" y="1" w="22" h="28" />
       <pivot x="4" y="0" />
@@ -96,7 +96,7 @@
     </frame>
 
   </animation>
-  <animation name="crouching" number_of_frames="1" canloop="1">
+  <animation name="idle" number_of_frames="1" canloop="1">
     <frame>
       <rectangle x="222" y="8" w="15" h="23" />
       <pivot x="0" y="0" />

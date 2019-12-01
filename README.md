@@ -40,8 +40,9 @@ represented by the eyes over the door that brings the player to the next level)
 	F4: Changes to the next level
 	F5: Saves the current state
 	F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
-	F9: Show / unshow colliders
+	F9: Show / unshow colliders and pathfinding
 	F10: Activate / deactivate God Mode
+	F11: Disables frame limit
 
 ### Player 1 Controls: <br>
     Movement (keyboard / gamepad):
@@ -49,7 +50,8 @@ represented by the eyes over the door that brings the player to the next level)
         A: Move to the left
         D: Move to the right
     Special movement:
-        J/Left Mouse Button: Throws the grenade
+	Press Left Mouse Button: Determines the grenade throwing angle, moved by the mouse 
+        J/ Release Left Mouse Button: Throws the grenade
         K/Right Mouse Button: Teleports to the grenade
         L/Middle Mouse Button: Makes the thrown grenade disappear
         W/Space (while sliding on a wall): wall-jump
@@ -447,14 +449,31 @@ Update 0.2.5.5-debug
 <ul>-Enemies movement implemented
 </ul>
 
+Update 0.6.0.0-debug (this came from the various branches of pathfinding and entity implementation, which had their own commit management)
+<ul>-Entity system implemented<br>
+-Player code introduced in the entity system<br>
+-Particles introduced in the entity system<br>
+-Added grenade as a particle<br>
+-Enemy class introduced in the entity system<br>
+-Grenade's angle can be determined by the player<br>
+-UML added at docs<br>
+-Dt implemented<br>
+-Brofiler implemented<br>
+-Pathfinding implemented<br>
+-Load / save enemies implemented<br>
+-Terrestrial enemies movement limited<br>
+
+-Enemy death added, with particle and sound<br>
+</ul>
+
 
 ## Credits
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, created most of the art used in the levels, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files needed, did scene transitions, loading scene logistic and implemented the camera </ul><br>
+<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, created most of the art used in the levels, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map and entities load /save, made systems to access the various xml files needed, did scene transitions, loading scene logistic, implemented the camera, the brofiler, the entity and enemy system, the grenade renovated system, edited the UML, helped with pathfinding and implemented the dt </ul><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-<ul>Contribution: worked on the assets and music selection,created some of the art used in the levels, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
+<ul>Contribution: worked on the assets and music selection,created some of the art used in the levels, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown, did the drawing for the loading screen, implemented pathfinding, edited UML, made the animations XML and worked on enemy movement and death</ul><br>
 
 Credits to various artists who put their creations at public use:
 <ul>

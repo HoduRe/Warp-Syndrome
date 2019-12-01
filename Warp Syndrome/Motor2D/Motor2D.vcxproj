@@ -81,6 +81,7 @@
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FireSkull.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="FireSkull.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Grenade.h" />

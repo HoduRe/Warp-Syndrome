@@ -320,6 +320,7 @@ bool j1Map::LoadNew(const char* file_name)
 		}
 	}
 	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);//todo add more when we implement them
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_FIRE_SKULL);//todo add more when we implement them
 
 	map_loaded = ret;
 	// Clean up the pugui tree

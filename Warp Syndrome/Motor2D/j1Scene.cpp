@@ -72,7 +72,7 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		App->entity_m->player->SetBlitColliders();
+		blit_colliders = !blit_colliders;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -95,10 +95,6 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
 		App->ToggleCapping();
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F12) == KEY_DOWN) {//I think this does not work TODO remove
-		App->render->ToggleVsync();
-		App->entity_m->entity_list.end->data->destroy = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN) {

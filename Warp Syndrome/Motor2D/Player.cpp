@@ -788,19 +788,6 @@ void Player::CheckAnimation(state_list currentstate, state_list laststate)
 	}
 }
 
-bool Player::BlitColliders() {
-	if (blit_colliders == true) { return true; }
-	else { return false; }
-}
-
-void Player::SetBlitColliders() {
-	blit_colliders = !blit_colliders;
-}
-
-bool Player::GetBlitColliders() {
-	return blit_colliders;
-}
-
 bool Player::GetGodmode() {
 	if (god_mode == true) { return true; }
 	else { return false; }

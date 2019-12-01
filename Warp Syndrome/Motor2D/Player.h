@@ -123,12 +123,6 @@ public:
 	void GodMode(float dt);
 	// Checks if the animation has to be changed
 	void CheckAnimation(state_list currentstate, state_list laststate);
-	// returns true if the player presses F9
-	bool BlitColliders();
-	// activates or deactivates the blit colliders F9
-	void SetBlitColliders();
-	// return true if blit colliders are blitting
-	bool GetBlitColliders();
 	// returns true if the player is in godmode
 	bool GetGodmode();
 	// sets god mode
@@ -144,13 +138,11 @@ public:
 private:
 	pugi::xml_document playerdoc;
 	pugi::xml_node playernode;
-	pugi::xml_node grenadenode;
 	p2SString filename;
 
 	bool grenade=false;
 	bool throwinggrenade = false;
 	bool god_mode= false;
-	bool blit_colliders= false;
 	float run_counter = 0.0f;
 	float wall_jump_timer = 0.0f;
 	float jump_timer=0.0f;

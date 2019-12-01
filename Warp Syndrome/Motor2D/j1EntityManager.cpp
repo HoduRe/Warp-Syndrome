@@ -1,6 +1,7 @@
 #include "j1EntityManager.h"
 #include "Entity.h"
 #include "Elemental.h"
+#include "FireSkull.h"
 #include "Player.h"
 #include "Particles.h"
 #include "j1Grenade.h"
@@ -92,13 +93,24 @@ bool j1EntityManager::PostUpdate()
 bool j1EntityManager::CleanUp()
 {
 	p2List_item<Entity*>* item = entity_list.start;
-	while (item!=NULL)
+	while (item != NULL)
 	{
-		item->data->CleanUp();
-		RELEASE(item->data);
-		entity_list.del(item);
-		item = item->next;
+		if (item->data->type != EntityType::E_TYPE_PLAYER)
+		{
+			item->data->CleanUp();
+			RELEASE(item->data);
+			entity_list.del(item);
+			item = item->prev;
+		}
+		else item = item->next;
+
 	}
+	//deletes the player
+	item = entity_list.start;
+	item->data->CleanUp();
+	RELEASE(item->data);
+	entity_list.del(item);
+
 	entity_list.clear();
 	player = nullptr;
 	grenade = nullptr;
@@ -155,7 +167,9 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 			
 			break;
 		case E_TYPE_FIRE_SKULL:
-			//TODO load
+			enemy = new Enemy_FireSkull(enemypos.x, enemypos.y, enemy_states(enemystartingstate), enemyhealth);
+			enemy->last_state = enemy_states(node.child("properties").attribute("last_state").as_int());
+			AddEntity(enemy);//TODO: entity
 			break;
 		case E_TYPE_HELL_HORSE:
 			//TODO load
@@ -191,36 +205,15 @@ bool j1EntityManager::SaveEntity(pugi::xml_node& ldata, Entity* enty) const//sav
 	pugi::xml_node props_n;
 
 
-	switch (enty->type)
-	{
-	case E_TYPE_PLAYER:
-		entity_n= ldata.append_child("Entity");
-		pos_n = entity_n.append_child("pos");
-		props_n = entity_n.append_child("properties");
+	entity_n = ldata.append_child("Entity");
+	pos_n = entity_n.append_child("pos");
+	props_n = entity_n.append_child("properties");
 
-		entity_n.append_attribute("type") = enty->type; //saves the type
-		pos_n.append_attribute("x") = enty->pos.x; //saves posX
-		pos_n.append_attribute("y") = enty->pos.y; //saves posY
-		props_n.append_attribute("health") = enty->health;
-		enty->Save(props_n);
-		break;
-	case E_TYPE_ELEMENTAL:
-		entity_n = ldata.append_child("Entity");
-		pos_n = entity_n.append_child("pos");
-		props_n = entity_n.append_child("properties");
-
-		entity_n.append_attribute("type") = enty->type; //saves the type
-		pos_n.append_attribute("x") = enty->pos.x; //saves posX
-		pos_n.append_attribute("y") = enty->pos.y; //saves posY
-		props_n.append_attribute("health") =enty->health;
-		enty->Save(props_n);
-
-		break;
-	case E_TYPE_FIRE_SKULL:
-		break;
-	case E_TYPE_HELL_HORSE:
-		break;
-	}
+	entity_n.append_attribute("type") = enty->type; //saves the type
+	pos_n.append_attribute("x") = enty->pos.x; //saves posX
+	pos_n.append_attribute("y") = enty->pos.y; //saves posY
+	props_n.append_attribute("health") = enty->health;
+	enty->Save(props_n);
 	return true;
 }
 
@@ -335,7 +328,8 @@ bool  j1EntityManager::RespawnEntitiesOfType(EntityType eType)
 					//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here
 					break;
 				case 8:
-					//App->enemies->AddEnemy(enemy_skull, set->boundingbox.x, set->boundingbox.y);//TODO add enemie skull here
+					enemy = new Enemy_FireSkull(objectlistitem->data->boundingbox.x, objectlistitem->data->boundingbox.y);
+					AddEntity(enemy); //TODO: entity
 					break;
 				default:
 					break;

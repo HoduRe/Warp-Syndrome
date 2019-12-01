@@ -79,6 +79,9 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Development============\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="FireSkull.cpp">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Development============\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="FireSkull.h">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

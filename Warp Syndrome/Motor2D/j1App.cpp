@@ -33,11 +33,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	collision = new j1Collision();
-	//grenade = new Grenade();
 	level_m = new j1LevelManager();
 	transitions = new j1Transitions();
-	//enemies = new j1EnemyManager();
-	//particle_m = new j1ParticleManager();
 	pathfinding = new j1PathFinding();
 	entity_m = new j1EntityManager();
 
@@ -53,9 +50,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(entity_m);
-	//AddModule(enemies);
-	//AddModule(grenade);
-	//AddModule(particle_m);//has to be always directly before transititions
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
 	AddModule(render);
@@ -215,8 +209,8 @@ void j1App::FinishUpdate()
 	if (capping)cappingtext = 1;
 
 	
-	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Frame Capping: %i Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, cappingtext, seconds_since_startup, frame_count);
+	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Frame Capping: %i Vsync Activated: %i Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, cappingtext, vSyncActivated, seconds_since_startup, frame_count);
 
 	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
 	//static char newtitle[256];

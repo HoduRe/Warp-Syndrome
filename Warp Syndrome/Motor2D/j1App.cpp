@@ -205,12 +205,16 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 
-	int cappingtext = 0;
-	if (capping)cappingtext = 1;
-
 	
-	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Frame Capping: %i Vsync Activated: %i Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, cappingtext, vSyncActivated, seconds_since_startup, frame_count);
+
+	const char* vSynctext;
+	if (vSyncActivated)vSynctext = "ON";
+	else vSynctext = "OFF";
+	const char* cappingText;
+	if (capping)cappingText = "ON";
+	else cappingText = "OFF";
+	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u FPS: %i Cap: %s Vsync: %s Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, cappingText, vSynctext, seconds_since_startup, frame_count);
 
 	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
 	//static char newtitle[256];

@@ -44,15 +44,12 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 // Utility: returns true is the tile is walkable
 bool j1PathFinding::IsWalkable(const iPoint& pos, Enemy* enemy) const
 {
-	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos, enemy)) {
+	if (CheckBoundaries(pos) && App->collision->CheckWalkability((iPoint&)pos)) {
 		int pos_aux = enemy->pos.y / App->map->data.tile_height;
 		switch (enemy->type) {
 		case E_TYPE_ELEMENTAL:
 		case E_TYPE_HELL_HORSE:
-			if (enemy->ground_distance-1 == pos_aux) { return true; }
-			else if (enemy->jump == true && enemy->ground_distance-5 <= pos.y) { return true; }
-			else if (enemy->jump == false && pos_aux <= pos.y) { return true; }
-			else { return false; }
+			if (pos.y >= pos_aux) { return true; }
 			break;
 		default:
 			return true;
@@ -125,16 +122,6 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, Enemy* enemy)
 	iPoint cell;
 	uint before = list_to_fill.list.count();
 
-	// north
-	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell, enemy))
-		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
-
-	// south
-	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell, enemy))
-		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
-
 	// east
 	cell.create(pos.x + 1, pos.y);
 	if (App->pathfinding->IsWalkable(cell, enemy))
@@ -142,6 +129,16 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill, Enemy* enemy)
 
 	// west
 	cell.create(pos.x - 1, pos.y);
+	if (App->pathfinding->IsWalkable(cell, enemy))
+		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
+
+	// north
+	cell.create(pos.x, pos.y + 1);
+	if (App->pathfinding->IsWalkable(cell, enemy))
+		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
+
+	// south
+	cell.create(pos.x, pos.y - 1);
 	if (App->pathfinding->IsWalkable(cell, enemy))
 		list_to_fill.list.add(PathNode(-1, -1, cell, pos));
 

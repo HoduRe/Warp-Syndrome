@@ -471,9 +471,9 @@ Update 0.6.0.0-debug (this came from the various branches of pathfinding and ent
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, created most of the art used in the levels, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map and entities load /save, made systems to access the various xml files needed, did scene transitions, loading scene logistic, implemented the camera, the brofiler, the entity and enemy system, the grenade renovated system, edited the UML, helped with pathfinding and implemented the dt </ul><br>
+<ul>Contribution: implemented the brofiler, the entity and enemy system, the grenade renovated system, edited the UML, helped with pathfinding and implemented the dt </ul><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-<ul>Contribution: worked on the assets and music selection,created some of the art used in the levels, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown, did the drawing for the loading screen, implemented pathfinding, edited UML, made the animations XML and worked on enemy movement and death</ul><br>
+<ul>Contribution: implemented pathfinding, edited UML, made the animations XML, worked on enemy movement and did the code to kill the player</ul><br>
 
 Credits to various artists who put their creations at public use:
 <ul>

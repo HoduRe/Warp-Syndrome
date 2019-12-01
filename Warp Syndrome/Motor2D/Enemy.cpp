@@ -23,8 +23,6 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 	enabled = false;
 	player_distance = -1;
 	chase_distance = -1;
-	ground_distance = App->map->data.height;
-	jump = false;
 
 	//Loads the animations and properties
 	filename = "enemies.xml";//TODO load this from config
@@ -87,9 +85,9 @@ void Enemy::Move(float dt)
 	//TODO enemy movement logic here
 	int width = App->map->data.tile_width;
 	int height = App->map->data.tile_height;
-	int current_pos = pos.y / height;
+	int index = 0;
 
-	if (path.At(1) != nullptr) {
+	if (path.At(0) != nullptr && path.At(1) != nullptr) {
 		if (path.At(0)->x != path.At(1)->x) {
 			int current_pos = pos.x / App->map->data.tile_width;
 			if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
@@ -98,33 +96,34 @@ void Enemy::Move(float dt)
 			else if (path.At(0)->x > path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
 				(pos.x) -= (width)* dt;
 			}
-		}
-		else if (path.At(0)->y != path.At(1)->y) {
-			switch (type) {
-			case E_TYPE_ELEMENTAL:
-			case E_TYPE_HELL_HORSE:
-				if (jump == false && ground_distance != path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-					(pos.y) += (height)* dt;
-				}
-				else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-					(pos.y) -= (height)* dt;
-					jump = true;
-				}
-				break;
-			default:
-				if (path.At(0)->y < path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-					(pos.y) += (height)* dt;
-				}
-				else if (path.At(0)->y > path.At(1)->y && path.At(path.Count() - 1)->y != current_pos) {
-					(pos.y) -= (height)* dt;
-				}
-				break;
+			else if (path.At(0)->y != path.At(1)->y) {
+				(pos.y) += (height)* dt;
 			}
 		}
-		if (pos.y > App->entity_m->player->pos.y && current_pos == ground_distance - 1) { jump = true; }
-		if (ground_distance - 5 == current_pos || (current_pos != ground_distance - 1 && path.At(0)->x != path.At(1)->x)) { jump = false; }
+		while (path.At(index) != nullptr && path.At(index + 1) != nullptr) {
+			if (path.At(index)->y == path.At(index + 1)->y) {
+				iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+				if (App->collision->CheckWalkability(position, this) == true) {	// If there's no ground under tile index+1
+					if (path.At(index + 2) != nullptr) {
+						if (path.At(index + 1)->y == path.At(index + 2)->y) {
+							index = path.Count();
+							path.Clear();
+						}
+					}
+				}
+			}
+			else if (path.At(index + 2) != nullptr) {
+				if (path.At(index)->x == path.At(index + 1)->x && path.At(index + 1)->y == path.At(index + 2)->y) {
+					iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+					if (!App->collision->CheckWalkability(position, this)) {
+						index = path.Count();
+						path.Clear();
+					}
+				}
+			}
+			index++;
+		}
 	}
-	if (jump == false && ground_distance - 1 > current_pos) { (pos.y) += (height)* dt; }
 }
 
 void Enemy::Draw()

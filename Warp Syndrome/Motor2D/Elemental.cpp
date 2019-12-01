@@ -6,13 +6,13 @@
 Enemy_Elemental::Enemy_Elemental(int x, int y) : Enemy(x, y, E_STATE_DEFAULT, E_TYPE_ELEMENTAL)
 {
 	last_state = E_STATE_UNKNOWN;
-	chase_distance = 15;
+	chase_distance = 25;
 	health = 1.0f;
 }
 Enemy_Elemental::Enemy_Elemental(int x, int y, enemy_states startingstate,float aHealth) : Enemy(x, y, startingstate, E_TYPE_ELEMENTAL)
 {
 	last_state = E_STATE_UNKNOWN;
-	chase_distance = 15;
+	chase_distance = 25;
 	health = aHealth;
 }
 

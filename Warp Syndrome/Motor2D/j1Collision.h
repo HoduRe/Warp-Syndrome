@@ -111,7 +111,7 @@ public:
 	collider_type GetCurrentCollider(int id);
 
 	// Checks collision for pathfinding
-	bool CheckWalkability(iPoint& tile, Enemy* enemy);
+	bool CheckWalkability(iPoint& tile);
 
 public:
 	collision_type current_collision;

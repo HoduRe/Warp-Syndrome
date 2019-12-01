@@ -83,13 +83,30 @@ bool Enemy::CleanUp()
 void Enemy::Move(float dt)
 {
 	//TODO enemy movement logic here
-	int width = App->map->data.tile_width;
-	int height = App->map->data.tile_height;
+	int width = App->map->data.tile_width * 2;
+	int height = App->map->data.tile_height * 4;
 	int index = 0;
 
+	while (path.At(index) != nullptr && path.At(index + 1) != nullptr) {
+		iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+		if (App->collision->CheckWalkability(position) && path.At(index + 2) != nullptr) {
+			if (path.At(index + 1)->y == path.At(index + 2)->y) {
+				index = path.Count();
+				path.Clear();
+			}
+			else if (path.At(index)->x == path.At(index + 1)->x && path.At(index + 1)->y == path.At(index + 2)->y) {
+				iPoint position2(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+				if (App->collision->CheckWalkability(position2)) {
+					index = path.Count();
+						path.Clear();
+				}
+			}
+		}
+		index++;
+	}
+
 	if (path.At(0) != nullptr && path.At(1) != nullptr) {
-		if (path.At(0)->x != path.At(1)->x) {
-			int current_pos = pos.x / App->map->data.tile_width;
+		int current_pos = pos.x / App->map->data.tile_width;
 			if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
 				(pos.x) += (width)* dt;
 			}
@@ -99,30 +116,6 @@ void Enemy::Move(float dt)
 			else if (path.At(0)->y != path.At(1)->y) {
 				(pos.y) += (height)* dt;
 			}
-		}
-		while (path.At(index) != nullptr && path.At(index + 1) != nullptr) {
-			if (path.At(index)->y == path.At(index + 1)->y) {
-				iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
-				if (App->collision->CheckWalkability(position, this) == true) {	// If there's no ground under tile index+1
-					if (path.At(index + 2) != nullptr) {
-						if (path.At(index + 1)->y == path.At(index + 2)->y) {
-							index = path.Count();
-							path.Clear();
-						}
-					}
-				}
-			}
-			else if (path.At(index + 2) != nullptr) {
-				if (path.At(index)->x == path.At(index + 1)->x && path.At(index + 1)->y == path.At(index + 2)->y) {
-					iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
-					if (!App->collision->CheckWalkability(position, this)) {
-						index = path.Count();
-						path.Clear();
-					}
-				}
-			}
-			index++;
-		}
 	}
 }
 

@@ -78,7 +78,7 @@ public:
 	~Player();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&);//TODO it not longer works with node
+	bool Awake(pugi::xml_node&);
 
 	// Called before the first frame
 	bool Start();

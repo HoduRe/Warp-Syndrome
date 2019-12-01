@@ -64,6 +64,9 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		App->displayMapInfo = !App->displayMapInfo;
+
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
@@ -116,13 +119,6 @@ bool j1Scene::Update(float dt)
 	if (-App->render->currentcam.y < 0)App->render->currentcam.y = 0;
 	else if (-App->render->currentcam.y + App->render->camera.h > App->map->data.height * App->map->data.tile_height)
 		App->render->currentcam.y = -(App->map->data.height * App->map->data.tile_height - App->render->camera.h);
-
-	
-
-	/*p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count());*/
 
 	return true;
 }

@@ -85,6 +85,8 @@ void Enemy::Move(float dt)
 	//TODO enemy movement logic here
 	int width = App->map->data.tile_width * 2;
 	int height = App->map->data.tile_height * 3;
+	int current_pos = pos.x / App->map->data.tile_width;
+	iPoint position_aux(current_pos, (pos.y + (height)* dt + currentAnim->data->GetCurrentFrame()->animationRect.h) / App->map->data.tile_height);
 	int index = 0;
 
 	switch (type) {
@@ -107,20 +109,25 @@ void Enemy::Move(float dt)
 			}
 			index++;
 		}
+		if (App->collision->CheckWalkability(position_aux)) { (pos.y) += (height)* dt; }
+		break;
+	case E_TYPE_FIRE_SKULL:	// CHANGE THIS BOY TO MOVE BOTH AT THE SAME TIME
+		if (path.At(0) != nullptr && path.At(1) != nullptr) {
+			if (path.At(0)->y < path.At(1)->y) {
+				(pos.y) += (height)* dt;
+			}
+			else if (path.At(0)->y > path.At(1)->y) {
+				(pos.y) -= (height)* dt;
+			}
+		}
 		break;
 	}
 
 	if (path.At(0) != nullptr && path.At(1) != nullptr) {
-		int current_pos = pos.x / App->map->data.tile_width;
-			if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
-				(pos.x) += (width)* dt;
-			}
-			else if (path.At(0)->x > path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
-				(pos.x) -= (width)* dt;
-			}
-			else if (path.At(0)->y != path.At(1)->y) {
-				(pos.y) += (height)* dt;
-			}
+		if (path.At(0)->x < path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) { (pos.x) += (width)* dt; }
+		else if (path.At(0)->x > path.At(1)->x && path.At(path.Count() - 1)->x != current_pos) {
+			(pos.x) -= (width)* dt;
+		}
 	}
 }
 

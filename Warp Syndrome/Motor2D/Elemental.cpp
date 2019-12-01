@@ -61,9 +61,8 @@ bool Enemy_Elemental::Update(float dt)
 			//=========================================================================================
 			//=========================================================================================
 		case E_STATE_CHASING:
-			//TODO do pathfinding here, execute pathfinding once every 1/2 a sec or so
 			//Also move the player in this state, when arrived to the destination tile go to default case
-			if (pathfinding_update_rate>=0.5f)//2 seconds of refresh rate //TODO change the timer accordingly to enemy speed
+			if (pathfinding_update_rate>=0.5f)//0.5 seconds of refresh rate 
 			{
 				DoPathFinding();
 				pathfinding_update_rate = 0.0f;
@@ -123,7 +122,7 @@ void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 	switch (animations)
 	{
 	case EL_ANIM_IDLE:
-		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);//TODO put valid animations here
+		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);
 		break;
 	case EL_ANIM_MOVING:
 		newanim = currentanim->data->GetAnimFromName("moving", pAnimList);

@@ -205,22 +205,34 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 
-	
 
-	const char* vSynctext;
-	if (vSyncActivated)vSynctext = "ON";
-	else vSynctext = "OFF";
-	const char* cappingText;
-	if (capping)cappingText = "ON";
-	else cappingText = "OFF";
-	p2SString title("Av.FPS: %.2f Last Frame Ms: %02u FPS: %i Cap: %s Vsync: %s Time since startup: %.3f Frame Count: %lu ",
-		avg_fps, last_frame_ms, frames_on_last_update, cappingText, vSynctext, seconds_since_startup, frame_count);
+	if (!displayMapInfo)
+	{
+		const char* vSynctext;
+		if (vSyncActivated)vSynctext = "ON";
+		else vSynctext = "OFF";
+		const char* cappingText;
+		if (capping)cappingText = "ON";
+		else cappingText = "OFF";
+		p2SString title("--Warp Syndrome-- FPS: %i Av.FPS: %.2f Last Frame Ms: %02u  Cap: %s Vsync: %s Time since startup: %.3f Frame Count: %lu ",
+			frames_on_last_update, avg_fps, last_frame_ms, cappingText, vSynctext, seconds_since_startup, frame_count);
+		App->win->SetTitle(title.GetString());
 
+	}
+	else
+	{
+
+		p2SString title("--Warp Syndrome-- Map:%dx%d Tiles:%dx%d Tilesets:%d Name: %s",
+			App->map->data.width, App->map->data.height,
+			App->map->data.tile_width, App->map->data.tile_height,
+			App->map->data.tilesets.count(), App->map->data.name.GetString());
+		App->win->SetTitle(title.GetString());
+	}
 	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
 	//static char newtitle[256];
 	//sprintf_s(newtitle, 256,"%s//%s", previoustitle.GetString(), title.GetString());
 	//App->win->SetTitle(newtitle);
-	App->win->SetTitle(title.GetString());
+
 	//Use SDL_Delay to make sure you get your capped framerate
 	uint32 delay = (1000 / new_max_framerate) - last_frame_ms;
 	j1PerfTimer perf;

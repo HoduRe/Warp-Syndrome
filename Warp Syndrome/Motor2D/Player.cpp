@@ -305,7 +305,7 @@ void Player::CheckInputs(float dt) {
 	}
 
 	// TODO move the run_counter to player xml
-	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen
+	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen WIP
 }
 
 void Player::CheckCollisions() {
@@ -436,7 +436,7 @@ void Player::CheckCollisions() {
 	}
 	if (current_state == DYING) {
 		App->entity_m->kill = false;
-		if (currentAnim->data->GetAnimationFinish()) { // TODO put this into an xml? It's the length of the dying animation
+		if (currentAnim->data->GetAnimationFinish()) { 
 			App->level_m->RestartLevel();
 		}
 	}
@@ -535,7 +535,7 @@ void Player::JumpMoveY(float dt) {
 	case JST_GOING_UP:
 		if (jump_timer >= 0.0f && jump_timer < 1.0f) {
 			jump_timer += dt;
-			pos.y += (-speed.y * dt) + jump_timer*(speed.y * dt); //TODO dt wrong
+			pos.y += (-speed.y * dt) + jump_timer*(speed.y * dt);
 		}
 		else { jump_timer = 1.0f; y_jumping_state = JST_GOING_DOWN; }
 		break;
@@ -551,7 +551,7 @@ void Player::JumpMoveY(float dt) {
 		else if (jump_timer <=2.0f) {
 			if (jump_timer > 0.0f)
 			{ jump_timer -= dt; }
-			pos.y += (speed.y * dt) - jump_timer * (speed.y * dt);//TODO dt wrong
+			pos.y += (speed.y * dt) - jump_timer * (speed.y * dt);
 		}
 		break;
 	}

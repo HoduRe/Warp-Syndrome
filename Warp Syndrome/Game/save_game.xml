@@ -11,52 +11,52 @@
 	<pathfinding />
 	<entity_m>
 		<Entity type="1">
-			<pos x="5371.25" y="544" />
-			<properties health="0" state="1" />
+			<pos x="5342.875" y="443.125" />
+			<properties health="0" state="7" />
 		</Entity>
 		<Entity type="6">
-			<pos x="5237.18262" y="512.703857" />
+			<pos x="5216" y="480" />
 			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6176" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6176" y="800.514709" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6272" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6272" y="883.203064" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6336" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6336" y="876.291016" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6400" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6400" y="868.994934" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6464" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6464" y="860.802856" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6528" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6528" y="800.258301" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6592" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6592" y="800.130249" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6656" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6656" y="800.002258" />
+			<properties health="1" state="1" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6720" y="480" />
-			<properties health="1" state="0" />
+			<pos x="6720" y="669.185913" />
+			<properties health="1" state="1" />
 		</Entity>
 	</entity_m>
 	<transitions />
 	<renderer>
-		<camera x="-4961" y="-45" />
+		<camera x="-5096" y="0" />
 	</renderer>
 </game_state>

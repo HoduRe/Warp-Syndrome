@@ -82,7 +82,7 @@ bool Enemy::CleanUp()
 
 void Enemy::Move(float dt)
 {
-	//TODO enemy movement logic here
+	//enemy movement logic here
 	int width = App->map->data.tile_width * 2;
 	int height = App->map->data.tile_height * 3;
 	int index = 0;

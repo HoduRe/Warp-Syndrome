@@ -18,7 +18,6 @@ enum Animation_state
 //stores Info about the current frame of the animation
 struct FrameInfo
 {
-	//TODO frameduration and actualduration have to be modified to work with the game actual framerate instead of loops
 
 	float frameduration;//duration of the current frame in loops
 	float actualduration; //how many units of duration have passed since the first frame

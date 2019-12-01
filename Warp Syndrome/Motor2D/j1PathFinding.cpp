@@ -169,6 +169,8 @@ int PathNode::CalculateF(int originG, const iPoint& destination)
 // ----------------------------------------------------------------------------------
 void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, Enemy* enemy)
 {
+	BROFILER_CATEGORY("CreatePath", Profiler::Color::LightGoldenRodYellow);
+
 	PathList frontier;
 	PathList visited;
 	PathNode aux_path;

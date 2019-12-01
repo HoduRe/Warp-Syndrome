@@ -117,7 +117,7 @@ bool j1Scene::Update(float dt)
 	else if (-App->render->currentcam.y + App->render->camera.h > App->map->data.height * App->map->data.tile_height)
 		App->render->currentcam.y = -(App->map->data.height * App->map->data.tile_height - App->render->camera.h);
 
-	App->map->Draw();
+	
 
 	/*p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		App->map->data.width, App->map->data.height,
@@ -130,6 +130,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+	App->map->Draw();
 	bool ret = true;
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

@@ -171,7 +171,7 @@ bool Player::PostUpdate()
 		x2 -= App->render->camera.x;
 		y2 -= App->render->camera.y;
 
-		if (grenadecooldown > 0.0f)
+		if (App->entity_m->grenade!=nullptr||grenadecooldown>0.0f)
 			App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
 		else App->render->DrawLine(x1, y1, x2, y2, 0, 255, 0, 255);
 	}

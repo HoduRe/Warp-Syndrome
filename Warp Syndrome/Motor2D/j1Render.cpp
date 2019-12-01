@@ -61,6 +61,8 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	App->render->currentcam.x = App->render->camera.x;
+	App->render->currentcam.y = App->render->camera.y;
 	return true;
 }
 
@@ -78,6 +80,8 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
+	App->render->camera.x = App->render->currentcam.x;
+	App->render->camera.y = App->render->currentcam.y;
 	if (App->scene->blit_colliders == true) {
 		App->collision->PrintColliders();
 		PrintPlayerObjects();
@@ -98,8 +102,8 @@ bool j1Render::CleanUp()
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int(0);
-	camera.y = data.child("camera").attribute("y").as_int(0);
+	currentcam.x = data.child("camera").attribute("x").as_int(0);
+	currentcam.y = data.child("camera").attribute("y").as_int(0);
 
 	return true;
 }

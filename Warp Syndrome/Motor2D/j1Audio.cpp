@@ -21,8 +21,8 @@ j1Audio::~j1Audio()
 
 bool j1Audio::Load(pugi::xml_node& data)
 {
-	music_volume=data.attribute("music_vol").as_uint(128);
-	fx_volume=data.attribute("fx_vol").as_uint(128);
+	music_volume=data.attribute("music_vol").as_float(128);
+	fx_volume=data.attribute("fx_vol").as_float(128);
 	SetVolume(fx_volume, FX);
 	SetVolume(music_volume, MUSIC);
 
@@ -70,7 +70,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	uint vol = config.child("volume").attribute("value").as_uint(128);
+	float vol = config.child("volume").attribute("value").as_float(128);
 	
 		music_volume = fx_volume = vol;
 		SetVolume(vol);
@@ -202,9 +202,9 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 }
 
 
-void j1Audio::SetVolume(int volume,int flag)
+void j1Audio::SetVolume(float volume,int flag)
 {
-	int aux_volume = volume;
+	float aux_volume = volume;
 	if (aux_volume > 128)aux_volume = 128;
 	if (aux_volume < 0)aux_volume = 0;
 	switch (flag)
@@ -225,10 +225,10 @@ void j1Audio::SetVolume(int volume,int flag)
 	}
 }
 
-void j1Audio::AddVolume(int volume, int flag)
+void j1Audio::AddVolume(float volume, int flag)
 {
-	int aux_fx=fx_volume;
-	int aux_music=music_volume;
+	float aux_fx=fx_volume;
+	float aux_music=music_volume;
 	aux_fx += volume;
 	aux_music += volume;
 

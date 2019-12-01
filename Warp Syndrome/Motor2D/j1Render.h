@@ -49,6 +49,7 @@ public:
 public:
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;
+	fPoint currentcam;//buffer for the camera movement(otherwise when converting to int behaves wrong)
 	SDL_Rect		viewport;
 	SDL_Color		background;
 };

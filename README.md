@@ -450,8 +450,100 @@ Update 0.2.5.5-debug
 <ul>-Enemies movement implemented
 </ul>
 
-Update 0.6.0.0-debug (this came from the various branches of pathfinding and entity implementation, which had their own commit management)
-<ul>-Entity system implemented<br>
+Update 0.2.6.0-debug
+<ul>
+-Started working on the entity system.<br>
+-Updated Player to hold its state class
+</ul>
+
+Update 0.2.7.0-debug
+<ul>
+-Deleted particle manager class<br>
+-Modified Particle and Animated particle classes<br>
+-Now both Particle and Animated particles are entites
+</ul>
+
+Update 0.2.8.0-debug
+<ul>
+-Player states module is now integrated inside the player class
+</ul>
+
+Update 0.2.9.0-debug
+<ul>
+-Started working on grenade as an entity
+</ul>
+
+Update 0.3.0.0-debug
+<ul>
+-Modified Particle and Animated Particle entities<br>
+-Modified the Flip player function in the player entity<br>
+-Changed variables regarding entites in all the code<br>
+-Further urpgaded the grenade entity
+</ul>
+
+Update 0.3.1.0-debug
+<ul>
+-Added grenade ponter in the entity manager<br>
+-Restored pathfinding class in App<br>
+-Modified some functions and variables
+</ul>
+
+Update 0.4.0.0-debug
+<ul>
+-Created class Character, its parented directly to Entity and its children are Player and Enemies<br>
+-Modified functions on a lot of modules.<br>
+-Changed some functions and variables from player to character
+</ul>
+
+Update 0.4.1.0-debug
+<ul>
+-Some more work has been done in the enemy class and its subclasses
+</ul>
+
+Update 0.4.2.0-debug
+<ul>
+-Updated the entity system<br>
+-Cleaned the entity system code a litle bit
+</ul>
+
+Update 0.4.3.0-debug
+<ul>
+-Made some improvements in the entity system and god mode<br>
+-Also made some improvements on the grenade, it can be thrown at any direction now.
+</ul>
+
+Update 0.4.4.0-debug
+<ul>
+-Added Brofiler Support to the game<br>
+-Added the first UML draft for the entity system<br>
+-Started implementing functionality with delta time
+</ul>
+
+Update 0.5.0.0-debug
+<ul>
+-Now game can be capped at 30 frames per second<br>
+-Solved some dt related bugs<br>
+-First iteration of pathfinding is now functional<br>
+-Started working on enemy load/save and removal
+</ul>
+
+Update 0.5.1.0-debug
+<ul>
+-Fixed a lot of errors related to the parthfinding modules<br>
+-Solved some more dt related bugs<br>
+-Game now displays Vsync and Capping in the window title
+</ul>
+
+Update 0.5.2.0-debug
+<ul>
+-Fixed fatal error with particles<br>
+-Fixed CleanUp in all the entities, reduced MemoryLeaks by a lot when loading entities<br>
+-Enemies can now be destroyed
+</ul>
+
+Update 0.6.0.0-debug (this came from the various branches of pathfinding and entity implementation, which had their own commit management. Starts with 0.2.5.5)
+<ul>
+-Entity system implemented<br>
 -Player code introduced in the entity system<br>
 -Particles introduced in the entity system<br>
 -Added grenade as a particle<br>
@@ -484,7 +576,7 @@ Update 0.6.1.0-debug
 -Added new functionality to F7: it now changes the information displayed in the title bar<br>
 </ul>
 
-Update 0.6.3.0-debug
+Update 0.6.2.0-debug
 <ul>-Ground enemies pathfinding position matches the ground<br>
 -Enemy movement code restructured
 </ul>

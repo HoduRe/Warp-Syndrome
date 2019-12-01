@@ -9,7 +9,7 @@
   </app>
 	
   <renderer>
-    <vsync value="off"/>
+    <vsync value="false"/>
   </renderer>
 
     <audio>

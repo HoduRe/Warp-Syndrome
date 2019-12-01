@@ -84,25 +84,30 @@ void Enemy::Move(float dt)
 {
 	//TODO enemy movement logic here
 	int width = App->map->data.tile_width * 2;
-	int height = App->map->data.tile_height * 4;
+	int height = App->map->data.tile_height * 3;
 	int index = 0;
 
-	while (path.At(index) != nullptr && path.At(index + 1) != nullptr) {
-		iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
-		if (App->collision->CheckWalkability(position) && path.At(index + 2) != nullptr) {
-			if (path.At(index + 1)->y == path.At(index + 2)->y) {
-				index = path.Count();
-				path.Clear();
-			}
-			else if (path.At(index)->x == path.At(index + 1)->x && path.At(index + 1)->y == path.At(index + 2)->y) {
-				iPoint position2(path.At(index + 1)->x, path.At(index + 1)->y + 1);
-				if (App->collision->CheckWalkability(position2)) {
+	switch (type) {
+	case E_TYPE_ELEMENTAL:
+	case E_TYPE_HELL_HORSE:
+		while (path.At(index) != nullptr && path.At(index + 1) != nullptr) {
+			iPoint position(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+			if (App->collision->CheckWalkability(position) && path.At(index + 2) != nullptr) {
+				if (path.At(index + 1)->y == path.At(index + 2)->y) {
 					index = path.Count();
+					path.Clear();
+				}
+				else if (path.At(index)->x == path.At(index + 1)->x && path.At(index + 1)->y == path.At(index + 2)->y) {
+					iPoint position2(path.At(index + 1)->x, path.At(index + 1)->y + 1);
+					if (App->collision->CheckWalkability(position2)) {
+						index = path.Count();
 						path.Clear();
+					}
 				}
 			}
+			index++;
 		}
-		index++;
+		break;
 	}
 
 	if (path.At(0) != nullptr && path.At(1) != nullptr) {

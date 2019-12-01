@@ -462,8 +462,13 @@ Update 0.6.0.0-debug (this came from the various branches of pathfinding and ent
 -Pathfinding implemented<br>
 -Load / save enemies implemented<br>
 -Terrestrial enemies movement limited<br>
-
 -Enemy death added, with particle and sound<br>
+</ul>
+
+Update 0.6.0.1-debug
+<ul>
+-Map remodeled
+-Enemies pathfinding updated
 </ul>
 
 

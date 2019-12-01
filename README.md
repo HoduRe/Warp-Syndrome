@@ -58,7 +58,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.2.5.1-debug:
+Up to version 0.6.1.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -471,6 +471,17 @@ Update 0.6.0.1-debug
 -Enemies pathfinding updated
 </ul>
 
+Update 0.6.0.2-debug
+<ul>
+-Added more brofiler debugging<br>
+-Changed map rendering to happen in post update instead of the update<br>
+</ul>
+
+Update 0.6.1.0-debug
+<ul>
+-Cleaned up code a litle bit<br>
+-Added new functionality to F7: it now changes the information displayed in the title bar<br>
+</ul>
 
 ## Credits
 

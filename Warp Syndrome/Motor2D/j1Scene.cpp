@@ -106,6 +106,10 @@ bool j1Scene::Update(float dt)
 		App->audio->AddVolume(60.0f*dt);
 	}
 
+
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		App->paused = !App->paused;
+	}
 	//End of particle debug keys=======================================
 
 	RepositionCamera(dt);

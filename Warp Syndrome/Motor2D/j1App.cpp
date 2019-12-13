@@ -184,6 +184,7 @@ void j1App::PrepareUpdate()
 
 	//Calculate the dt: differential time since last frame
 	dt = frame_time.ReadSec();
+	if (paused) dt = 0.0f;
 	frame_time.Start();
 }
 

@@ -108,6 +108,7 @@ public:
 	bool				capping = false;
 	bool				vSyncActivated = false;
 	bool				displayMapInfo = false;
+	bool				paused = false;
 private:
 
 	p2List<j1Module*>	modules;

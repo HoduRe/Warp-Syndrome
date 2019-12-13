@@ -39,55 +39,61 @@ bool j1EntityManager::Start(fPoint aGravity)
 }
 bool j1EntityManager::PreUpdate()
 {
-	p2List_item<Entity*>* item;
-	p2List_item<Entity*>* p_item;
-	//deletes all the death entities=================================================
-	if (entity_list.count() > 0)//if there are entities in the list
-	{
-		item = entity_list.start;
-		while (item != nullptr)
+	if (App->dt != 0.0f) {
+		p2List_item<Entity*>* item;
+		p2List_item<Entity*>* p_item;
+		//deletes all the death entities=================================================
+		if (entity_list.count() > 0)//if there are entities in the list
 		{
-			if (item->data->destroy == true)
+			item = entity_list.start;
+			while (item != nullptr)
 			{
-				item->data->CleanUp();
-				RELEASE(item->data);
-				entity_list.del(item);
-				item = item->prev;
+				if (item->data->destroy == true)
+				{
+					item->data->CleanUp();
+					RELEASE(item->data);
+					entity_list.del(item);
+					item = item->prev;
+				}
+				else item = item->next;
 			}
-			else item = item->next;
+
 		}
 
-	}
-
-	//updates all the entities=======================================================
-	item = entity_list.start;
-	while (item != NULL)
-	{
-		item->data->PreUpdate();
-		item = item->next;
+		//updates all the entities=======================================================
+		item = entity_list.start;
+		while (item != NULL)
+		{
+			item->data->PreUpdate();
+			item = item->next;
+		}
 	}
 	return true;
 }
 bool j1EntityManager::Update(float dt)
 {
-	//updates all the entities=======================================================
-	p2List_item<Entity*>* item = entity_list.start;
-	while (item != NULL)
-	{
-		item->data->Update(dt);
-		item = item->next;
+	if (dt != 0.0f) {
+		//updates all the entities=======================================================
+		p2List_item<Entity*>* item = entity_list.start;
+		while (item != NULL)
+		{
+			item->data->Update(dt);
+			item = item->next;
+		}
 	}
 	return true;
 }
 bool j1EntityManager::PostUpdate()
 {
-	//updates all the entities=======================================================
+	if (App->dt != 0.0f) {
+		//updates all the entities=======================================================
 
-	p2List_item<Entity*>* item = entity_list.start;
-	while (item != NULL)
-	{
-		item->data->PostUpdate();
-		item = item->next;
+		p2List_item<Entity*>* item = entity_list.start;
+		while (item != NULL)
+		{
+			item->data->PostUpdate();
+			item = item->next;
+		}
 	}
 	return true;
 }

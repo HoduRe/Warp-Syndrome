@@ -85,7 +85,7 @@ bool j1EntityManager::Update(float dt)
 }
 bool j1EntityManager::PostUpdate()
 {
-	if (App->dt != 0.0f) {
+	
 		//updates all the entities=======================================================
 
 		p2List_item<Entity*>* item = entity_list.start;
@@ -94,7 +94,7 @@ bool j1EntityManager::PostUpdate()
 			item->data->PostUpdate();
 			item = item->next;
 		}
-	}
+	
 	return true;
 }
 bool j1EntityManager::CleanUp()

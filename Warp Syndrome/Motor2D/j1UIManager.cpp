@@ -40,12 +40,7 @@ bool j1UIManager::CleanUp()
 		else item = item->next;
 
 	}
-	//deletes the player
-	item = UI_list.start;
-	item->data->CleanUp();
-	RELEASE(item->data);
-	UI_list.del(item);
-
+	
 	UI_list.clear();
 
 	return true;

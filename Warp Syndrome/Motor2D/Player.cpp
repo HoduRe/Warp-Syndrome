@@ -161,7 +161,7 @@ bool Player::PostUpdate()
 {
 	if (currentframe != NULL)
 		App->render->Blit(texture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
-	if (throwinggrenade)
+	if (throwinggrenade && App->dt!=0.0f)
 	{
 		int x1 = pos.x;
 		int y1 = pos.y - (hitbox_w_h.y / 2);

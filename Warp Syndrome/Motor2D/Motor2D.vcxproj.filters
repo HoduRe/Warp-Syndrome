@@ -86,7 +86,13 @@
       <Filter>Development============\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1UIManager.cpp">
-      <Filter>Development============\UI Elements</Filter>
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -193,7 +199,13 @@
       <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1UIManager.h">
-      <Filter>Development============\UI Elements</Filter>
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,8 +233,11 @@
     <Filter Include="Development============\Entity Sistem\Enemies">
       <UniqueIdentifier>{b10a643a-5b47-4b63-845c-7263c46eca15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development============\UI Elements">
+    <Filter Include="Development============\UI System">
       <UniqueIdentifier>{52cca87d-feae-4196-872c-2fadce72ebfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\UI System\UI Elements">
+      <UniqueIdentifier>{fa48e82e-624f-4598-98f9-0ea9319383c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

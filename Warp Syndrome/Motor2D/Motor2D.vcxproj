@@ -77,6 +77,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -108,6 +110,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />

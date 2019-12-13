@@ -8,15 +8,17 @@ j1UIManager::j1UIManager() : j1Module() { name.create("ui_m"); }
 j1UIManager::~j1UIManager() {}
 
 // Called before render is available
-bool j1UIManager::Awake(pugi::xml_node& config)
-{
-	LOG("Loading UIManager");
-	bool ret = true;
+bool j1UIManager::PreUpdate() {
 
-	return ret;
+	return true;
 }
 
 bool j1UIManager::Update(float dt) {
+
+	return true;
+}
+
+bool j1UIManager::PostUpdate() {
 
 	return true;
 }
@@ -25,6 +27,26 @@ bool j1UIManager::Update(float dt) {
 bool j1UIManager::CleanUp()
 {
 	LOG("Unloading UIManager");
+	p2List_item<UI*>* item = UI_list.start;
+	while (item != NULL)
+	{
+		if (item->data->type != UIType::UI_TYPE_BUTTON)
+		{
+			item->data->CleanUp();
+			RELEASE(item->data);
+			UI_list.del(item);
+			item = item->prev;
+		}
+		else item = item->next;
+
+	}
+	//deletes the player
+	item = UI_list.start;
+	item->data->CleanUp();
+	RELEASE(item->data);
+	UI_list.del(item);
+
+	UI_list.clear();
 
 	return true;
 }

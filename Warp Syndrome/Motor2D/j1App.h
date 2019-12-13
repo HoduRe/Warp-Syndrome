@@ -22,6 +22,8 @@ class j1Transitions;
 class j1ParticleManager;
 class j1PathFinding;
 class j1EntityManager;
+class j1Console;
+class j1UIManager;
 
 class j1App
 {
@@ -93,13 +95,12 @@ public:
 	j1Scene*			scene;
 	j1Map*				map;
 	j1Collision*		collision;
-	//Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
-	//j1EnemyManager*			enemies;
-	//j1ParticleManager*  particle_m;
 	j1PathFinding*		pathfinding;
 	j1EntityManager*	entity_m;
+	j1Console*			console;
+	j1UIManager*		UI_m;
 
 
 	float				dt;

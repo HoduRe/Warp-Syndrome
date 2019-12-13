@@ -14,9 +14,11 @@
 #include "j1Collision.h"
 #include "j1Grenade.h"
 #include "j1PathFinding.h"
+#include "j1Console.h"
 #include "Particles.h"
 #include "transitions.h"
 #include "j1EntityManager.h"
+#include "j1UIManager.h"
 
 
 // Constructor
@@ -37,6 +39,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	transitions = new j1Transitions();
 	pathfinding = new j1PathFinding();
 	entity_m = new j1EntityManager();
+	console = new j1Console();
+	UI_m = new j1UIManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -50,6 +54,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(entity_m);
+	AddModule(UI_m);
+	AddModule(console);
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
 	AddModule(render);

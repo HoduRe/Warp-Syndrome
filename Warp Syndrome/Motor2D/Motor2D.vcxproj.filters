@@ -82,6 +82,12 @@
     <ClCompile Include="FireSkull.cpp">
       <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="j1Console.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1UIManager.cpp">
+      <Filter>Development============\UI Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -183,6 +189,12 @@
     <ClInclude Include="FireSkull.h">
       <Filter>Development============\Entity Sistem\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="j1Console.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1UIManager.h">
+      <Filter>Development============\UI Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Development============">
@@ -208,6 +220,9 @@
     </Filter>
     <Filter Include="Development============\Entity Sistem\Enemies">
       <UniqueIdentifier>{b10a643a-5b47-4b63-845c-7263c46eca15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\UI Elements">
+      <UniqueIdentifier>{52cca87d-feae-4196-872c-2fadce72ebfe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

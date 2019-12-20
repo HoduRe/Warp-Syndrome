@@ -78,7 +78,7 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="button.cpp" />
-    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UI_Element.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -97,7 +97,7 @@
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
-    <ClCompile Include="j1UIManager.cpp" />
+    <ClCompile Include="j1GUI.cpp" />
     <ClCompile Include="level_manager.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
@@ -111,7 +111,7 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="button.h" />
-    <ClInclude Include="UI.h" />
+    <ClInclude Include="UI_Element.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
@@ -126,7 +126,7 @@
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Timer.h" />
-    <ClInclude Include="j1UIManager.h" />
+    <ClInclude Include="j1GUI.h" />
     <ClInclude Include="level_manager.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />

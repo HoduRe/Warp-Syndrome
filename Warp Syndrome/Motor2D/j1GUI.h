@@ -4,18 +4,22 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
-#include "UI.h"
+#include "UI_Element.h"
+#include "button.h"
 #include "SDL/include/SDL.h"
 
 // ----------------------------------------------------
-class j1UIManager : public j1Module
+class j1GUI : public j1Module
 {
 public:
 
-	j1UIManager();
+	j1GUI();
 
 	// Destructor
-	virtual ~j1UIManager();
+	virtual ~j1GUI();
+
+	// Called after initializing module
+	bool Start();
 
 	// Called before render is available
 	bool PreUpdate();

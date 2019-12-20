@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.6.4.1-debug:
+Up to version 0.6.5.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -588,6 +588,17 @@ Update 0.6.4.0-debug
 Update 0.6.4.1-debug
 <ul>-UI manager skeleton added<br>
 -Button class created, but not modified
+</ul>
+
+Update 0.6.5.0-debug
+<ul>-Module Fonts added<br>
+-UI manager cleanup updated
+</ul>
+
+Update 0.6.5.1-debug
+<ul>-UI modules names changed<br>
+-UI update added<br>
+-Button functionality added
 </ul>
     
 ## Credits

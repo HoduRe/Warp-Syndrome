@@ -94,6 +94,9 @@
     <ClCompile Include="UI_Element.cpp">
       <Filter>Development============\UI System</Filter>
     </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="UI_Element.h">
       <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

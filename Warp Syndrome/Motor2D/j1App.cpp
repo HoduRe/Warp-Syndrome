@@ -19,6 +19,7 @@
 #include "transitions.h"
 #include "j1EntityManager.h"
 #include "j1UIManager.h"
+#include "j1Fonts.h"
 
 
 // Constructor
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entity_m = new j1EntityManager();
 	console = new j1Console();
 	UI_m = new j1UIManager();
+	font = new j1Fonts();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,6 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(font);
 	AddModule(level_m);
 	AddModule(map);
 	AddModule(collision);

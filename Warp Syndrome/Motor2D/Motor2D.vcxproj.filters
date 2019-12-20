@@ -94,6 +94,9 @@
     <ClCompile Include="button.cpp">
       <Filter>Development============\UI System\UI Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="button.h">
       <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

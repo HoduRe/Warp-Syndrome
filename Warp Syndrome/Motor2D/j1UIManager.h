@@ -29,6 +29,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	
+
 private:
 	p2List<UI*> UI_list;
 };

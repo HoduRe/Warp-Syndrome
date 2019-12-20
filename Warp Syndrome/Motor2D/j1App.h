@@ -23,6 +23,7 @@ class j1ParticleManager;
 class j1PathFinding;
 class j1EntityManager;
 class j1Console;
+class j1Fonts;
 class j1UIManager;
 
 class j1App
@@ -101,6 +102,7 @@ public:
 	j1EntityManager*	entity_m;
 	j1Console*			console;
 	j1UIManager*		UI_m;
+	j1Fonts*			font;
 
 
 	float				dt;

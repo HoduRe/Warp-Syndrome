@@ -30,15 +30,11 @@ bool j1UIManager::CleanUp()
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != NULL)
 	{
-		if (item->data->type != UIType::UI_TYPE_BUTTON)
-		{
 			item->data->CleanUp();
 			RELEASE(item->data);
 			UI_list.del(item);
-			item = item->prev;
-		}
-		else item = item->next;
-
+			
+			item = item->next;
 	}
 	
 	UI_list.clear();

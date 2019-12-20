@@ -85,14 +85,17 @@
     <ClCompile Include="j1Console.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1UIManager.cpp">
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
     <ClCompile Include="button.cpp">
       <Filter>Development============\UI System\UI Elements</Filter>
     </ClCompile>
-    <ClCompile Include="j1GUI.cpp">
-      <Filter>Development============\UI System</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Element.cpp">
-      <Filter>Development============\UI System</Filter>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Development============\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,14 +201,17 @@
     <ClInclude Include="j1Console.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1UIManager.h">
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
     <ClInclude Include="button.h">
       <Filter>Development============\UI System\UI Elements</Filter>
     </ClInclude>
-    <ClInclude Include="j1GUI.h">
-      <Filter>Development============\UI System</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Element.h">
-      <Filter>Development============\UI System</Filter>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Development============\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

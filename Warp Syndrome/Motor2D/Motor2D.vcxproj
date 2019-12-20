@@ -14,21 +14,21 @@
     <ProjectGuid>{2AF9969B-F202-497B-AF30-7BEF9CE8005E}</ProjectGuid>
     <RootNamespace>programacio_2</RootNamespace>
     <ProjectName>Warp Syndrome</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -78,7 +78,8 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="button.cpp" />
-    <ClCompile Include="UI_Element.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -97,7 +98,7 @@
     <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Scene.cpp" />
     <ClCompile Include="j1Timer.cpp" />
-    <ClCompile Include="j1GUI.cpp" />
+    <ClCompile Include="j1UIManager.cpp" />
     <ClCompile Include="level_manager.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
@@ -111,7 +112,8 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="button.h" />
-    <ClInclude Include="UI_Element.h" />
+    <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
@@ -126,7 +128,7 @@
     <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
     <ClInclude Include="j1Timer.h" />
-    <ClInclude Include="j1GUI.h" />
+    <ClInclude Include="j1UIManager.h" />
     <ClInclude Include="level_manager.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />

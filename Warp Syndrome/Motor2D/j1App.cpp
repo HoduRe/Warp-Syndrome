@@ -18,7 +18,8 @@
 #include "Particles.h"
 #include "transitions.h"
 #include "j1EntityManager.h"
-#include "j1GUI.h"
+#include "j1UIManager.h"
+#include "j1Fonts.h"
 
 
 // Constructor
@@ -40,7 +41,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new j1PathFinding();
 	entity_m = new j1EntityManager();
 	console = new j1Console();
-	gui = new j1GUI();
+	UI_m = new j1UIManager();
+	font = new j1Fonts();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,13 +50,14 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(font);
 	AddModule(level_m);
 	AddModule(map);
 	AddModule(collision);
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(entity_m);
-	AddModule(gui);
+	AddModule(UI_m);
 	AddModule(console);
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer

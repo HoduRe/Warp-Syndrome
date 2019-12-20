@@ -589,6 +589,17 @@ Update 0.6.4.1-debug
 <ul>-UI manager skeleton added<br>
 -Button class created, but not modified
 </ul>
+
+Update 0.6.4.2-debug
+<ul>-Button functionality added<br>
+-UI manager names changed
+-UI Update call
+</ul>
+
+Update 0.6.4.3-debug
+<ul>-Fonts module added<br>
+-UI cleanup updated<br>
+</ul>
     
 ## Credits
 

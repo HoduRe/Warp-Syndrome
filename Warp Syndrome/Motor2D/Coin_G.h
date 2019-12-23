@@ -8,11 +8,16 @@ class Coin_G :public Character
 public:
 	Coin_G(fPoint Pos);
 	~Coin_G();
-	bool Update(float dt);
-	bool OnCollision();
-	bool CleanUp();
+
+	bool PreUpdate();
+	bool Update(float dt);	
 	bool PostUpdate();
 
+	bool OnCollision();
+	bool CleanUp();
+	
+	//enables coin animation, rendering and collision detection if its inside the camera boundaries
+	bool DoEnable();
 private:
 
 };

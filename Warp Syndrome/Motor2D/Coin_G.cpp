@@ -27,21 +27,33 @@ Coin_G::~Coin_G()
 {
 	this->CleanUp();
 }
-bool Coin_G::Update(float dt)
-{//TODO disable collision check and blit when not in screen
-	animations_list.start->data->StepAnimation(dt);
 
-	if (App->entity_m->player != nullptr)
+bool Coin_G::PreUpdate()
+{
+	DoEnable();
+	return true;
+}
+bool Coin_G::Update(float dt)
+{
+	if (enabled)
 	{
-		if(!App->entity_m->player->GetGodmode())//if there is a player and he isn't in god mode detect collision
-		OnCollision();
+		animations_list.start->data->StepAnimation(dt);
+
+		if (App->entity_m->player != nullptr)
+		{
+			if (!App->entity_m->player->GetGodmode())//if there is a player and he isn't in god mode detect collision
+				OnCollision();
+		}
 	}
 	return true;
 }
 
 bool Coin_G::PostUpdate()
 {
-	App->render->Blit(texture, pos.x, pos.y, &currentAnim->data->GetCurrentFrame()->animationRect, fliped);
+	if (enabled)
+	{
+		App->render->Blit(texture, pos.x, pos.y, &currentAnim->data->GetCurrentFrame()->animationRect, fliped);
+	}
 	return true;
 }
 bool Coin_G::OnCollision()
@@ -57,14 +69,14 @@ bool Coin_G::OnCollision()
 
 	SDL_Rect r2 =
 	{
-		App->entity_m->player->pos.x-App->entity_m->player->hitbox_w_h.x*0.5f,
+		App->entity_m->player->pos.x - App->entity_m->player->hitbox_w_h.x * 0.5f,
 		App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.y * 0.5f,
 		App->entity_m->player->hitbox_w_h.x,
 		App->entity_m->player->hitbox_w_h.y
 
 	};
 
-	if (App->collision->CheckCollisionSimplified(&r1,&r2))//if collision detected
+	if (App->collision->CheckCollisionSimplified(&r1, &r2))//if collision detected
 	{
 		destroy = true;
 		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { pos.x,pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { 0.0f,0.0f });
@@ -78,5 +90,30 @@ bool Coin_G::OnCollision()
 bool Coin_G::CleanUp()
 {
 	App->tex->UnLoad(texture);
+	return true;
+}
+
+//enables coin animation, rendering and collision detection if its inside the camera boundaries
+bool Coin_G::DoEnable()
+{
+	SDL_Rect cameraR = App->render->camera;
+	cameraR.x *= -1;
+	cameraR.y *= -1;
+	iPoint tile_measures;
+	tile_measures.x = App->map->data.tile_width;
+	tile_measures.y = App->map->data.tile_height;
+
+
+
+	if (pos.x >= cameraR.x - tile_measures.x &&//one tile margin for now
+		pos.x <= cameraR.x + cameraR.w + tile_measures.x &&
+		pos.y >= cameraR.y - tile_measures.y &&
+		pos.y <= cameraR.y + cameraR.h + tile_measures.y
+		)
+	{
+		enabled = true;
+	}
+	else enabled = false;
+
 	return true;
 }

@@ -19,5 +19,4 @@ el portal de entrada, para salir en el mismo punto (habrá un time-limit o elemen
 Mejoras:
 Cambiar el sliding por el sliding horizontal girado 90º
 Better rewards to other dimension
-Añadir partículas
 El porcentaje de distorsión espacial se llena cuantas más granadas tires, y hay un objeto para reducir el porcentaje

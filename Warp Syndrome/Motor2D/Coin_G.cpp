@@ -27,11 +27,15 @@ Coin_G::~Coin_G()
 {
 	this->CleanUp();
 }
-
 bool Coin_G::Update(float dt)
-{
+{//TODO disable collision check and blit when not in screen
 	animations_list.start->data->StepAnimation(dt);
-	OnCollision();
+
+	if (App->entity_m->player != nullptr)
+	{
+		if(!App->entity_m->player->GetGodmode())//if there is a player and he isn't in god mode detect collision
+		OnCollision();
+	}
 	return true;
 }
 

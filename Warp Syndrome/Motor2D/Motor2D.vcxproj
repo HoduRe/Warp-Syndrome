@@ -78,7 +78,12 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="editable_text.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1SceneIntro.cpp" />
+    <ClCompile Include="scrollbar.cpp" />
+    <ClCompile Include="static_image.cpp" />
+    <ClCompile Include="Static_text.cpp" />
     <ClCompile Include="UI_Elements.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Elemental.cpp" />
@@ -112,7 +117,12 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="button.h" />
+    <ClInclude Include="editable_text.h" />
     <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1SceneIntro.h" />
+    <ClInclude Include="scrollbar.h" />
+    <ClInclude Include="static_image.h" />
+    <ClInclude Include="Static_text.h" />
     <ClInclude Include="UI_Elements.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Elemental.h" />

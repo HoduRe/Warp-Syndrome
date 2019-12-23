@@ -97,6 +97,21 @@
     <ClCompile Include="j1GUI.cpp">
       <Filter>Development============\UI System</Filter>
     </ClCompile>
+    <ClCompile Include="j1SceneIntro.cpp">
+      <Filter>Development============\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="static_image.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Static_text.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="editable_text.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollbar.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -212,6 +227,21 @@
     </ClInclude>
     <ClInclude Include="j1GUI.h">
       <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneIntro.h">
+      <Filter>Development============\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="static_image.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Static_text.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="editable_text.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollbar.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

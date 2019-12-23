@@ -33,8 +33,11 @@
   <map>
     <folder>maps/</folder>
   </map>
-<entity_m>
-  <load docname="player.xml"/>
-</entity_m>
+  <entity_m>
+    <load docname="player.xml"/>
+  </entity_m>
+  <gui>
+    <atlas file="textures/atlas.png"/>
+  </gui>
 
 </config>

@@ -5,9 +5,10 @@
 #include "j1Input.h"
 #include "j1Render.h"
 
-Button::Button(UIType atype) :UI(atype) {
-	texture = nullptr;
+Button::Button(float x, float y) : UI(x, y) {
 	pushed = false;
+	type = UI_TYPE_BUTTON;
+	texture_section = { 416, 172, 218, 58};
 }
 
 Button::~Button() {
@@ -21,19 +22,19 @@ bool Button::PreUpdate() {
 
 bool Button::Update(float dt) {
 
-	if (Pushed() == false) {
-		// texture_section.x = 647;
-		App->render->Blit(texture, position.x, position.y, &texture_section);
-	}
-	else {
-		// texture_section.x = 647;
-		App->render->Blit(texture, position.x, position.y, &texture_section);
-	}
-
 	return true;
 }
 
 bool Button::PostUpdate() {
+
+	if (Pushed() == false) {
+		texture_section.x = 416;
+		App->render->Blit(texture, position.x, position.y, &texture_section);
+	}
+	else {
+		texture_section.x = 647;
+		App->render->Blit(texture, position.x, position.y, &texture_section);
+	}
 
 	return true;
 }

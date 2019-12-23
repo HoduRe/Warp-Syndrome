@@ -17,6 +17,10 @@ public:
 	// Destructor
 	virtual ~j1GUI();
 
+	bool Awake(pugi::xml_node& conf);
+
+	bool Start();
+
 	// Called before render is available
 	bool PreUpdate();
 
@@ -29,10 +33,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Adds a UI element to the list
+	void AddUIElement(UI* UIElement);
 	
+	// Returns a pointer to atlas
+	SDL_Texture* GetAtlas() const;
 
 private:
 	p2List<UI*> UI_list;
+	p2SString atlas_file_name;
+	SDL_Texture* atlas;
+
 };
 
 #endif // __j1GUI_H__

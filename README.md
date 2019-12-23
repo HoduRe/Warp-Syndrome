@@ -600,6 +600,11 @@ Update 0.6.5.1-debug
 -UI update added<br>
 -Button functionality added
 </ul>
+
+Update 0.6.5.2-debug
+<ul>-UI elements modules added<br>
+-Scrollbar interactivity implemented<br>
+</ul>
     
 ## Credits
 

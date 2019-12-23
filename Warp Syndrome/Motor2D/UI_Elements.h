@@ -20,7 +20,7 @@ enum UIType
 class UI
 {
 public:
-	UI(UIType eType);
+	UI(float x, float y);
 	virtual ~UI();
 
 	virtual bool Awake();
@@ -36,6 +36,5 @@ public:
 	UIType type;
 	SDL_Texture* texture;
 	SDL_Rect texture_section; //rectangle which will be displayed from the texture
-	p2SString atlas_file_name;
 };
 #endif // __UI_H__

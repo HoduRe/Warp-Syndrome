@@ -2,10 +2,20 @@
 #include "j1GUI.h"
 #include "p2Log.h"
 
-j1GUI::j1GUI() : j1Module() { name.create("ui_m"); }
+j1GUI::j1GUI() : j1Module() { name.create("gui"); }
 
 // Destructor
 j1GUI::~j1GUI() {}
+
+bool j1GUI::Awake(pugi::xml_node& config) {
+	atlas_file_name = config.child("atlas").attribute("file").as_string("");
+	return true;
+}
+
+bool j1GUI::Start() {
+	atlas = App->tex->Load(atlas_file_name.GetString());
+	return true;
+}
 
 // Called before render is available
 bool j1GUI::PreUpdate() {
@@ -57,4 +67,12 @@ bool j1GUI::CleanUp()
 	UI_list.clear();
 
 	return true;
+}
+
+void j1GUI::AddUIElement(UI* UIElement) {
+	UI_list.add(UIElement);
+}
+
+SDL_Texture* j1GUI::GetAtlas() const {
+	return atlas;
 }

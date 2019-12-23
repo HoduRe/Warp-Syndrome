@@ -1,9 +1,0 @@
-Evitar que pugi quan està caient
-On ground: move around
-On air: save first tile (how to jump to high places without doing full parabolic move)
-
--Fer canvi d'estat quan mori
--Programar què fa que mori
--Fer diferents patrons de moviment (a x distància un, a y distància un altre)
-
-

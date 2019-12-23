@@ -1,11 +1,13 @@
 #include "j1App.h"
 #include "Static_text.h"
 #include "j1Textures.h"
+#include "j1Fonts.h"
 #include "j1Render.h"
 
-Static_Text::Static_Text(float x, float y, p2SString* text_input) : UI(x, y) {
-	text = *text_input;
-//	texture_section = *rect;	TODO: make this based on the amount of letters / if the module fonts already return it
+Static_Text::Static_Text(float x, float y, const char* text_input) : UI(x, y) {
+	font = App->font->fonts.start->data;
+	texture = App->font->Print(text_input, {}, font);
+	App->font->CalcSize(text_input, texture_section.w, texture_section.h);
 }
 
 Static_Text::~Static_Text() {

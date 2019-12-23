@@ -2,11 +2,12 @@
 #define __STATIC_TEXT_H__
 #include "SDL/include/SDL.h"
 #include "UI_Elements.h"
+#include "j1Fonts.h"
 
 class Static_Text :public UI
 {
 public:
-	Static_Text(float x, float y, p2SString* text_input);
+	Static_Text(float x, float y, const char* text_input);
 	virtual ~Static_Text();
 
 	bool PreUpdate();
@@ -15,8 +16,7 @@ public:
 	bool CleanUp();
 
 private:
-	p2SString text;
-	int font;
+	_TTF_Font* font;
 	int textscale;
 };
 

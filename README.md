@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.6.5.1-debug:
+Up to version 0.6.5.3-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -605,7 +605,11 @@ Update 0.6.5.2-debug
 <ul>-UI elements modules added<br>
 -Scrollbar interactivity implemented<br>
 </ul>
-    
+
+Update 0.6.5.3-debug
+<ul>-Static text and fonts updated to print text on screen
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>

@@ -10,6 +10,7 @@
 #include "j1GUI.h"
 #include "button.h"
 #include "scrollbar.h"
+#include "Static_text.h"
 #include "j1SceneIntro.h"
 #include "level_manager.h"
 
@@ -27,6 +28,8 @@ bool j1SceneIntro::Start()
 {
 	App->gui->AddUIElement(new Button(150, 50));
 	App->gui->AddUIElement(new Scrollbar(200, 250, 50));
+	App->gui->AddUIElement(new Static_Text(200, 200, "Hola Mundo"));
+
 	return true;
 }
 

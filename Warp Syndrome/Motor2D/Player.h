@@ -134,6 +134,7 @@ public:
 	state_list current_state;
 	iPoint throwgrenade_vec;
 	float grenadecooldown = 0.0f;
+	int coins = 0;
 
 private:
 	pugi::xml_document playerdoc;

@@ -14,6 +14,7 @@
 #include "j1PathFinding.h"
 #include "j1EntityManager.h"
 #include "Player.h"
+#include "Coin_G.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -109,6 +110,24 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
 		App->paused = !App->paused;
+	}
+
+	//TODO delete debug coin key
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
+		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });
+		App->entity_m->AddEntity(p);
+		
+	}
+	//TODO delete debug coin key
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) 
+	{
+		AnimatedParticle* q = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });
+		App->entity_m->AddEntity(q);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		Coin_G* coin = new Coin_G({ App->entity_m->player->pos.x + 200,App->entity_m->player->pos.y });
+		App->entity_m->AddEntity(coin);
 	}
 	//End of particle debug keys=======================================
 

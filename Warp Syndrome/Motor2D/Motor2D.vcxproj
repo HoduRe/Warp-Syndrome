@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="Coin_G.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="UI_Elements.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -112,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="button.h" />
+    <ClInclude Include="Coin_G.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="UI_Elements.h" />
     <ClInclude Include="Character.h" />

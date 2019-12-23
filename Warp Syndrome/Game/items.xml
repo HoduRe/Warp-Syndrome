@@ -1,0 +1,42 @@
+<!-- File containing all the information for teh items in the game -->
+
+<items>
+  <Coin_G>
+    <texture>
+      <folder>textures</folder>
+      <load texturename="Coin_G.png"/>
+    </texture>
+
+    <animation name="Coin_G" number_of_frames="5" canloop="1">
+      <frame>
+        <rectangle x="0" y="0" w="16" h="16" />
+        <pivot x="8" y="8" />
+        <duration value="0.1f" />
+      </frame>
+      <frame>
+        <rectangle x="16" y="0" w="16" h="16" />
+        <pivot x="8" y="8" />
+        <duration value="0.1f" />
+      </frame>
+      <frame>
+        <rectangle x="32" y="0" w="16" h="16" />
+        <pivot x="8" y="8" />
+        <duration value="0.1f" />
+      </frame>
+      <frame>
+        <rectangle x="48" y="0" w="16" h="16" />
+        <pivot x="8" y="8" />
+        <duration value="0.1f" />
+      </frame>
+      <frame>
+        <rectangle x="64" y="0" w="16" h="16" />
+        <pivot x="8" y="8" />
+        <duration value="0.1f" />
+      </frame>
+    </animation>
+
+      
+  </Coin_G>
+  
+  
+</items>

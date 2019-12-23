@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Particles.h"
 #include "j1Grenade.h"
+#include "Coin_G.h"
 
 //Entity Manager=============================================
 
@@ -85,16 +86,16 @@ bool j1EntityManager::Update(float dt)
 }
 bool j1EntityManager::PostUpdate()
 {
-	
-		//updates all the entities=======================================================
 
-		p2List_item<Entity*>* item = entity_list.start;
-		while (item != NULL)
-		{
-			item->data->PostUpdate();
-			item = item->next;
-		}
-	
+	//updates all the entities=======================================================
+
+	p2List_item<Entity*>* item = entity_list.start;
+	while (item != NULL)
+	{
+		item->data->PostUpdate();
+		item = item->next;
+	}
+
 	return true;
 }
 bool j1EntityManager::CleanUp()
@@ -126,7 +127,7 @@ bool j1EntityManager::CleanUp()
 bool j1EntityManager::CleanAllEntites()//except for the player
 {
 	p2List_item<Entity*>* item = entity_list.start;
-	while (item!=nullptr)
+	while (item != nullptr)
 	{
 		if (item->data->type != E_TYPE_PLAYER)
 		{
@@ -145,18 +146,18 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 	CleanAllEntites();
 
 	pugi::xml_node node = ldata.child("Entity");
-	while(node!=NULL)
+	while (node != NULL)
 	{
 		//constructing an enemy from the xml
-		Enemy* enemy = nullptr;
-		iPoint enemypos;
-		float enemyhealth = 0.0f;
-		int enemystartingstate=E_STATE_UNKNOWN;
+		Entity* entity = nullptr;
+		iPoint entitypos;
+		float entityhealth = 0.0f;
+		int entitystartingstate = E_STATE_UNKNOWN;
 
-		enemypos.x = node.child("pos").attribute("x").as_float();
-		enemypos.y = node.child("pos").attribute("y").as_float();
-		enemyhealth = node.child("properties").attribute("health").as_float();
-		enemystartingstate = node.child("properties").attribute("state").as_int();
+		entitypos.x = node.child("pos").attribute("x").as_float();
+		entitypos.y = node.child("pos").attribute("y").as_float();
+		entityhealth = node.child("properties").attribute("health").as_float();
+		entitystartingstate = node.child("properties").attribute("state").as_int();
 
 		//------------------------------------------
 		//adding the enemy
@@ -166,20 +167,26 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 		case E_TYPE_PLAYER:
 			player->pos.x = node.child("pos").attribute("x").as_float();
 			player->pos.y = node.child("pos").attribute("y").as_float();
-			player->current_state = state_list(enemystartingstate);
+			player->current_state = state_list(entitystartingstate);
+			player->Load(node.child("properties"));
 			break;
 		case E_TYPE_ELEMENTAL:
-			enemy = new Enemy_Elemental(enemypos.x,enemypos.y,enemy_states(enemystartingstate),enemyhealth);
-			AddEntity(enemy);//TODO: entity
-			
+			entity = new Enemy_Elemental(entitypos.x, entitypos.y, enemy_states(entitystartingstate), entityhealth);
+			AddEntity(entity);//TODO: entity
+
 			break;
 		case E_TYPE_FIRE_SKULL:
-			enemy = new Enemy_FireSkull(enemypos.x, enemypos.y, enemy_states(enemystartingstate), enemyhealth);
-			enemy->last_state = enemy_states(node.child("properties").attribute("last_state").as_int());
-			AddEntity(enemy);//TODO: entity
+			entity = new Enemy_FireSkull(entitypos.x, entitypos.y, enemy_states(entitystartingstate), entityhealth);
+			//entity.last_state = enemy_states(node.child("properties").attribute("last_state").as_int()); //TODO ??
+			AddEntity(entity);//TODO: entity
 			break;
 		case E_TYPE_HELL_HORSE:
 			//TODO load
+			break;
+
+		case E_TYPE_COIN_G:
+			entity = new Coin_G({ (float)entitypos.x, (float)entitypos.y });
+			AddEntity(entity);
 			break;
 		}
 		node = node.next_sibling("Entity");
@@ -189,7 +196,7 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 
 bool j1EntityManager::Save(pugi::xml_node& ldata) const //saves all the entities to the saves doc
 {
-	for (pugi::xml_node n= ldata.first_child(); n; n.next_sibling())//removes all the saved entites before oerwritting them
+	for (pugi::xml_node n = ldata.first_child(); n; n.next_sibling())//removes all the saved entites before oerwritting them
 	{
 		ldata.remove_child("Entity");
 	}
@@ -228,7 +235,7 @@ bool j1EntityManager::SaveEntity(pugi::xml_node& ldata, Entity* enty) const//sav
 //to add a particle to the entity list create the particle and use the entity manager method AddEntity().
 Entity* j1EntityManager::CreateEntity(EntityType type)
 {
-	static_assert(EntityType::E_TYPE_UNKNOWN == 9, "code needs update");
+	static_assert(EntityType::E_TYPE_UNKNOWN == 10, "code needs update");
 	Entity* ret = nullptr;
 
 
@@ -271,7 +278,7 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 bool j1EntityManager::AddEntity(Entity* newEntity)
 {
 	bool ret = false;
-	static_assert(EntityType::E_TYPE_UNKNOWN == 9, "code needs update");
+	static_assert(EntityType::E_TYPE_UNKNOWN == 10, "code needs update");
 	entity_list.add(newEntity);
 	return ret;
 }
@@ -323,29 +330,34 @@ bool  j1EntityManager::RespawnEntitiesOfType(EntityType eType)
 		{
 			if (objectlistitem->data->type == eType)
 			{
-				Enemy* enemy = nullptr;
+				Entity* entity = nullptr;
+				SDL_Rect rect = objectlistitem->data->boundingbox;
 				switch (objectlistitem->data->type)
 				{
 				case 6:
-					enemy = new Enemy_Elemental(objectlistitem->data->boundingbox.x, objectlistitem->data->boundingbox.y);
-					AddEntity(enemy); //TODO: entity
+					entity = new Enemy_Elemental(rect.x + (rect.w * 0.5f), rect.y + (rect.h * 0.5f));
+					AddEntity(entity); //TODO: entity
 					//delete enemy;
 					break;
 				case 7:
 					//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here
 					break;
 				case 8:
-					enemy = new Enemy_FireSkull(objectlistitem->data->boundingbox.x, objectlistitem->data->boundingbox.y);
-					AddEntity(enemy); //TODO: entity
+					entity = new Enemy_FireSkull(rect.x + (rect.w * 0.5f), rect.y + (rect.h * 0.5f));
+					AddEntity(entity); //TODO: entity
+					break;
+				case 9:
+					entity = new Coin_G({ (float)rect.x + (rect.w * 0.5f), (float)rect.y + (rect.h * 0.5f) });
+					AddEntity(entity);
 					break;
 				default:
 					break;
 				}
 			}
-			objectlistitem= objectlistitem->next;
+			objectlistitem = objectlistitem->next;
 		}
 
-		objectgroupitem=objectgroupitem->next;
+		objectgroupitem = objectgroupitem->next;
 	}
 	return true;
 }

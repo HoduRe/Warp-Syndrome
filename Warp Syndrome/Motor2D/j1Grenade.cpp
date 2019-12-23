@@ -31,7 +31,7 @@ Grenade::Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
 	dieOnEndAnim = false;
 }
 //constructor
-Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, texture, aHealth)
+Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, texture, aHealth, { 0.0f,0.0f }, {0.0f,0.0f}, EntityType::E_TYPE_GRENADE)
 {
 	pos = aPos;
 	speed = aSpeed;

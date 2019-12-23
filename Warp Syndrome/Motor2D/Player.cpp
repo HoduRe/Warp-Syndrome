@@ -54,7 +54,7 @@ bool Player::Start()
 
 	if (result == NULL)
 	{
-		LOG("Could not load player documant. pugi error: %s", result.description());
+		LOG("Could not load player document. pugi error: %s", result.description());
 		ret = false;
 	}
 
@@ -188,18 +188,17 @@ bool Player::CleanUp()
 	return true;
 }
 
-// Load / Save
+// Load / Save properties
 bool Player::Load(pugi::xml_node& data)
 {
-	pos.x = data.attribute("x").as_float(0);
-	pos.y = data.attribute("y").as_float(0);
+	coins = data.attribute("coins").as_int(0);
 	return true;
 }
 bool Player::Save(pugi::xml_node& data) const
 {
 
 	data.append_attribute("state") = int(current_state);
-
+	data.append_attribute("coins") = coins;
 	return true;
 }
 

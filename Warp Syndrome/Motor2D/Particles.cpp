@@ -119,9 +119,9 @@ AnimatedParticle::AnimatedParticle(p2SString aAnimName, bool aDieOnEndAnim, fPoi
 
 	p2List<Animations*>* list = &App->entity_m->player->animations_list;
 	p2List_item<Animations*>* item = list->start;
-	item = item->data->GetAnimFromName(aAnimName, list);
-	anim = *item->data;
-
+			item = item->data->GetAnimFromName(aAnimName, list);
+		anim = *item->data;
+	
 	dieOnEndAnim = aDieOnEndAnim;
 	if (dieOnEndAnim)
 	{

@@ -154,6 +154,21 @@ collision_type j1Collision::CheckCollision(p2List_item<Object*>* currentobj, flo
 	else { return NONE_COLLISION; }
 }
 
+//returns true if the two rectangles are overlapping
+bool j1Collision::CheckCollisionSimplified(SDL_Rect* r1, SDL_Rect* r2)
+{
+	bool ret = false;
+	if (r1 != NULL && r2 != NULL)
+	{
+		if (r1->x < r2->x + r2->w &&
+			r1->x + r1->w > r2->x &&
+			r1->y < r2->y + r2->h &&
+			r1->h + r1->y > r2->y)
+			ret= true;
+	}
+	return ret;
+}
+
 collision_type j1Collision::CalculateFinalCollision(collision_type collision_array[], collision_type current_collision) {
 	int collision_count = 0;
 

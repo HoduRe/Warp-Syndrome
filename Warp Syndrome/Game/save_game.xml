@@ -4,6 +4,7 @@
 	<window />
 	<textures />
 	<audio music_vol="10" fx_vol="10" />
+	<fonts />
 	<level_m />
 	<map name="first_level.tmx" />
 	<collision />
@@ -11,52 +12,58 @@
 	<pathfinding />
 	<entity_m>
 		<Entity type="1">
-			<pos x="5342.875" y="443.125" />
-			<properties health="0" state="7" />
+			<pos x="1920.375" y="1734.10266" />
+			<properties health="0" state="6" coins="3" />
 		</Entity>
 		<Entity type="6">
-			<pos x="5216" y="480" />
-			<properties health="1" state="1" />
+			<pos x="5232" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6176" y="800.514709" />
-			<properties health="1" state="1" />
+			<pos x="6192" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6272" y="883.203064" />
-			<properties health="1" state="1" />
+			<pos x="6288" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6336" y="876.291016" />
-			<properties health="1" state="1" />
+			<pos x="6352" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6400" y="868.994934" />
-			<properties health="1" state="1" />
+			<pos x="6416" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6464" y="860.802856" />
-			<properties health="1" state="1" />
+			<pos x="6480" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6528" y="800.258301" />
-			<properties health="1" state="1" />
+			<pos x="6544" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6592" y="800.130249" />
-			<properties health="1" state="1" />
+			<pos x="6608" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6656" y="800.002258" />
-			<properties health="1" state="1" />
+			<pos x="6672" y="496" />
+			<properties health="1" state="0" />
 		</Entity>
 		<Entity type="6">
-			<pos x="6720" y="669.185913" />
-			<properties health="1" state="1" />
+			<pos x="6736" y="496" />
+			<properties health="1" state="0" />
+		</Entity>
+		<Entity type="3">
+			<pos x="1665.64294" y="1877.25647" />
+			<properties health="0.792995751" />
 		</Entity>
 	</entity_m>
+	<ui_m />
+	<console />
 	<transitions />
 	<renderer>
-		<camera x="-5096" y="0" />
+		<camera x="-1510" y="-1223" />
 	</renderer>
 </game_state>

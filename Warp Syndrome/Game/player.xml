@@ -449,5 +449,59 @@
     </frame>
   </animation>
 
+  <animation name="Coin_G" number_of_frames="5" canloop="1">
+    <frame>
+      <rectangle x="0" y="496" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="16" y="496" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="32" y="496" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="48" y="496" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="64" y="496" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+  </animation>
 
+  <animation name="Coin_G_Picked" number_of_frames="5" canloop="1">
+    <frame>
+      <rectangle x="0" y="479" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="16" y="479" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="32" y="479" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="48" y="479" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+    <frame>
+      <rectangle x="64" y="479" w="16" h="16" />
+      <pivot x="8" y="8" />
+      <duration value="0.1f" />
+    </frame>
+  </animation>
 </player>

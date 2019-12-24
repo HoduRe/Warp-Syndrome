@@ -82,7 +82,7 @@ j1App::~j1App()
 	modules.clear();
 }
 
-void j1App::AddModule(j1Module* module)
+void j1App::AddModule(j1Module* module,bool enabled)
 {
 	module->Init();
 	modules.add(module);

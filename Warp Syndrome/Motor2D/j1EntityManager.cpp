@@ -36,6 +36,8 @@ bool j1EntityManager::Start()
 bool j1EntityManager::Start(fPoint aGravity)
 {
 	gravity = aGravity;
+	player->Start();
+
 	return true;
 }
 bool j1EntityManager::PreUpdate()

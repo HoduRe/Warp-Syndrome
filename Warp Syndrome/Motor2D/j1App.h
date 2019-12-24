@@ -49,8 +49,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
-	void AddModule(j1Module* module);
+	// Add a new module to handle //put enabled to false if you want to initialize a module later
+	void AddModule(j1Module* module, bool enabled=true);
 
 	// Exposing some properties for reading
 	int GetArgc() const;

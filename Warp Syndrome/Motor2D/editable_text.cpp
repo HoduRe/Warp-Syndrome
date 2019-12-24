@@ -46,6 +46,8 @@ bool Editable_Text::PostUpdate() {
 	App->render->Blit(texture, position.x - 5, position.y - 5, &texture_section);
 	App->render->Blit(text_texture, position.x, position.y, &rect);
 	App->render->DrawQuad(cursor, 255, 255, 255);
+	
+	App->tex->UnLoad(text_texture);
 
 	return true;
 }

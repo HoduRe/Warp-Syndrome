@@ -65,6 +65,7 @@ bool j1GUI::CleanUp()
 	}
 	
 	UI_list.clear();
+	App->tex->UnLoad(atlas);
 
 	return true;
 }

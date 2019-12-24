@@ -93,6 +93,14 @@ bool Coin_G::OnCollision()
 
 bool Coin_G::CleanUp()
 {
+	p2List_item<Animations*>* item = animations_list.start;
+	while (item!=NULL)
+	{
+		RELEASE(item->data);
+		animations_list.del(item);
+		item = item->next;
+	}
+	animations_list.clear();
 	App->tex->UnLoad(texture);
 	return true;
 }

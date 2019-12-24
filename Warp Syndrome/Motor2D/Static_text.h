@@ -17,7 +17,6 @@ public:
 
 private:
 	_TTF_Font* font;
-	int textscale;
 };
 
 #endif // !__STATIC_TEXT_H__

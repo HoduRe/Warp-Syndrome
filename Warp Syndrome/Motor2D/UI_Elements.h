@@ -30,6 +30,9 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp();
 
+	// Returns true if the player presses on that UI element
+	bool Pressed();
+
 public:
 
 	fPoint position;

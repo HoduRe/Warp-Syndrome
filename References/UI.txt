@@ -7,6 +7,8 @@ Music for screen and audio feedback
 
 WE NEED:
 BUTTON; STATIC_TEXT; EDITABLE_TEXT; STATIC_IMAGE; SCROLL_BAR;
+Buttons responsive to hover and click
+Make focus a pointer that has the current UI element you are in (only execute that?)
 
 In game:
 -player lifes: until they are none left, game cycles out of menus

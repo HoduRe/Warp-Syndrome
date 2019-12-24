@@ -610,6 +610,35 @@ Update 0.6.5.3-debug
 <ul>-Static text and fonts updated to print text on screen
 </ul>
 
+Update 0.7.0.0-debug
+<ul>-Added coins to the game/ Added Coin module + items.xml (this last xml is not being currently used)<br>
+-Coins can be saved and loaded from xml as well as from the map<br>
+-Added temporal debug keys: V to spawn a coin, C to spawn a coin particle, X to spawn a picked coin particle<br>
+-Updated Grenade constructor<br>
+-Updated entity manager to work with coins, also changed some variable names to be more intuitive<br>
+-Added a new simplified boolean collision detection in the collision module<br>
+-For debugging purposes the number of coins that the player currently has is displayed in the title, in the map info section<br>
+</ul>
+
+Update 0.7.0.1-debug
+<ul>-Fixed coin error: they don't detect collisions with the player if he is in god mode<br>
+</ul>
+
+Update 0.7.1.0-debug
+<ul>-Added 2 new functions to the coin module: PreUpdate() and DoEnable()<br>
+-Now coins can enable/disable themselves when are not in the camera frame. When disabled they not longer render, also they don't step their animation anymore nor detect collisions with the player<br>
+</ul>
+
+Update 0.7.1.1-debug
+<ul>-Added Sound effect for coin pickup
+</ul>
+
+Update 0.7.2.0-debug
+<ul>-First map coins added<br>
+-Editable text updated (now it has functionality and is visible, but not editable yet)<br>
+-General functionality has been moved to UI_Elements to make all daugther classes interactable when clicked<br>
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>

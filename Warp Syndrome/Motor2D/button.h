@@ -14,9 +14,6 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	// Returns true if the button is being pushed
-	bool Pushed();
-
 public:
 	bool pushed;
 };

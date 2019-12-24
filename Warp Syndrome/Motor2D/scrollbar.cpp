@@ -23,6 +23,11 @@ Scrollbar::~Scrollbar() {
 bool Scrollbar::Update(float dt) {
 
 	if (Pressed() == true) {
+		if (initial_mouse_pos == -1) {
+			iPoint posi;
+			App->input->GetMousePosition(posi.x, posi.y);
+			initial_mouse_pos = posi.y;
+		}
 		Move();
 	} else { initial_mouse_pos = -1; }
 
@@ -40,16 +45,6 @@ bool Scrollbar::PostUpdate() {
 bool Scrollbar::CleanUp() {
 
 	return true;
-}
-
-bool Scrollbar::Pressed() {
-	iPoint posi;
-	App->input->GetMousePosition(posi.x, posi.y);
-	if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
-		if (initial_mouse_pos == -1) { initial_mouse_pos = posi.y; }
-		return true;
-	}
-	return false;
 }
 
 bool Scrollbar::Move() {

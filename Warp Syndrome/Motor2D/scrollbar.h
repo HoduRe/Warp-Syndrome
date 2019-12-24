@@ -13,9 +13,6 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	// Returns true if the scrollbar is being pressed
-	bool Pressed();
-
 	// Moves the scrollbar
 	bool Move();
 

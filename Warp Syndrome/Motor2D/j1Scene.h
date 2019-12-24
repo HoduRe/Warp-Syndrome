@@ -53,6 +53,7 @@ public:
 	int teleport_sfx;
 	int jump_sfx;
 	int death_sfx;
+	int coin_sfx;
 	bool blit_colliders = false;
 
 private:

@@ -43,7 +43,7 @@ bool j1Scene::Start()
 	teleport_sfx = App->audio->LoadFx("audio/fx/casting_charge_matter_grow_04.wav");
 	jump_sfx = App->audio->LoadFx("audio/fx/ferba_says_huh.wav");
 	death_sfx = App->audio->LoadFx("audio/fx/mud_splat_heavy_03.wav");
-
+	coin_sfx = App->audio->LoadFx("audio/fx/coin_pickup.wav");
 	camaccel = { 0.0f,0.0f };
 	arrivedtoline = false;
 	distancetoplayer = { 0,0 };
@@ -161,7 +161,6 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
 	return true;
 }
 

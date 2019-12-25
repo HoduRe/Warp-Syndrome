@@ -82,8 +82,9 @@ bool j1GUI::CleanUp()
 	return true;
 }
 
-void j1GUI::AddUIElement(UI* UIElement) {
+UI* j1GUI::AddUIElement(UI* UIElement) {
 	UI_list.add(UIElement);
+	return UIElement;
 }
 
 SDL_Texture* j1GUI::GetAtlas() const {

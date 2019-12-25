@@ -15,6 +15,7 @@
 #include "j1EntityManager.h"
 #include "Player.h"
 #include "Coin_G.h"
+#include "UI_Elements.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -237,6 +238,12 @@ float j1Scene::CameraGoToTarget(fPoint campos,iPoint cammeasures, fPoint target,
 
 
 	return newcamX;
+}
+bool j1Scene::OnListen(UI* element, UICallbackState cstate)
+{
+	if (cstate == UICallbackState::UI_CALLBACK_CLICKED)
+		element->position.x += 50;
+	return true;
 }
 
 

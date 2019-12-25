@@ -10,6 +10,8 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
+class UI;
+enum UICallbackState;
 
 class j1Module
 {
@@ -69,6 +71,12 @@ public:
 	}
 
 	virtual bool Save(pugi::xml_node&) const
+	{
+		return true;
+	}
+
+	//listens for a UI
+	virtual bool OnListen(UI* element, UICallbackState state)
 	{
 		return true;
 	}

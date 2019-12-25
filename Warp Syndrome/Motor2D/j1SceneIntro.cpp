@@ -1,6 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "j1Module.h"
 #include "j1Input.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
@@ -14,6 +15,8 @@
 #include "editable_text.h"
 #include "j1SceneIntro.h"
 #include "level_manager.h"
+#include "j1Scene.h"
+#include "UI_Elements.h"
 
 j1SceneIntro::j1SceneIntro() : j1Module()
 {
@@ -27,10 +30,15 @@ j1SceneIntro::~j1SceneIntro()
 // Called before the first frame
 bool j1SceneIntro::Start()
 {
-	App->gui->AddUIElement(new Button(150, 50, nullptr));
-	App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
-	App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
-	App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
+	UI* element;
+	element = App->gui->AddUIElement(new Button(150, 50, nullptr));
+	element->listeners.PushBack(App->scene);
+	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
+	element->listeners.PushBack(App->scene);
+	element = App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
+	element->listeners.PushBack(App->scene);
+	element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
+	element->listeners.PushBack(App->scene);
 
 	return true;
 }

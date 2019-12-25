@@ -35,7 +35,7 @@ bool Button::PostUpdate() {
 	}
 	else {
 		texture_section.x = 647;
-		App->render->Blit(texture, position.x, position.y, &texture_section);
+		App->render->Blit(texture, position.x, position.y, &texture_section,false,0.0f,0.0f,0.0f,0.0f);
 	}
 
 	return true;

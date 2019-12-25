@@ -24,6 +24,8 @@ enum Transition_Mode
 {
 	TM_RESTART_LEVEL,
 	TM_CHANGE_TO_NEXT_LEVEL,
+	TM_CHANGE_TO_MENU,
+	TM_CHANGE_TO_GAME,
 	TM_UNKNOWN
 };
 
@@ -67,7 +69,7 @@ public:
 	
 	bool BlackScreen();
 
-	void ChangeTransition(Transition_Mode mode, float seconds_length, float dt);
+	void ChangeTransition(Transition_Mode mode, float seconds_length);
 
 public:
 

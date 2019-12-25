@@ -108,11 +108,6 @@ bool j1Scene::Update(float dt)
 		App->audio->AddVolume(60.0f*dt);
 	}
 
-
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
-		App->paused = !App->paused;
-	}
-
 	//TODO delete debug coin key
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
 		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });
@@ -152,9 +147,7 @@ bool j1Scene::PostUpdate()
 {
 	App->map->Draw();
 	bool ret = true;
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
+	
 	return ret;
 }
 
@@ -239,11 +232,6 @@ float j1Scene::CameraGoToTarget(fPoint campos,iPoint cammeasures, fPoint target,
 
 	return newcamX;
 }
-bool j1Scene::OnListen(UI* element, UICallbackState cstate)
-{
-	if (cstate == UICallbackState::UI_CALLBACK_CLICKED)
-		element->position.x += 50;
-	return true;
-}
+
 
 

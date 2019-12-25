@@ -30,6 +30,7 @@ bool Button::PostUpdate() {
 	if (Pressed() == true) {
 		texture_section.x = 416;
 		App->render->Blit(texture, position.x, position.y, &texture_section);
+		CallListeners(UI_CALLBACK_CLICKED);
 	}
 	else {
 		texture_section.x = 647;

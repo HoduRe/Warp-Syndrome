@@ -5,6 +5,7 @@
 #include "p2Point.h"
 #include "p2SString.h"
 #include "j1Textures.h"
+#include "p2DynArray.h"
 
 enum UIType
 {
@@ -16,6 +17,12 @@ enum UIType
 	UI_TYPE_UNKNOWN
 };
 
+enum UICallbackState
+{
+	UI_CALLBACK_CLICKED,
+	UI_CALLBACK_HOVER,
+	UI_CALLBACK_UNKNOWN
+};
 
 class UI
 {
@@ -32,12 +39,13 @@ public:
 
 	// Returns true when the element is pressed
 	bool Pressed();
-
+	bool CallListeners(UICallbackState state= UI_CALLBACK_UNKNOWN);
 public:
 
 	fPoint position;
 	UIType type;
 	SDL_Texture* texture;
 	SDL_Rect texture_section; //rectangle which will be displayed from the texture
+	p2DynArray<j1Module*> listeners;
 };
 #endif // __UI_H__

@@ -25,6 +25,7 @@ bool UI::PostUpdate() { return true; }
 
 bool UI::CleanUp() {
 	texture = nullptr;
+	listeners.Clear();
 	return true;
 }
 
@@ -37,4 +38,14 @@ bool UI::Pressed() {
 		}
 	}
 	return false;
+}
+
+//calls all the listeners with information of this Ui element
+bool UI::CallListeners(UICallbackState state)
+{
+	for (int i = 0; i <= listeners.Count()-1; i++)
+	{
+		if (listeners[i] != NULL)listeners[i]->OnListen(this, state);
+	}
+	return true;
 }

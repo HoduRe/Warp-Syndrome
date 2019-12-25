@@ -34,7 +34,7 @@ public:
 	bool CleanUp();
 
 	// Adds a UI element to the list
-	void AddUIElement(UI* UIElement);
+	UI* AddUIElement(UI* UIElement);
 	
 	// Returns a pointer to atlas
 	SDL_Texture* GetAtlas() const;

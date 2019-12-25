@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.6.5.3-debug:
+Up to version 0.7.3.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -650,6 +650,10 @@ Update 0.7.2.2-debug
 -Editable text reads and shows the text input<br>
 </ul>
 
+Update 0.7.3.0-debug
+<ul>-Focus system based on clicks added<br>
+-Hierarchy between objects added<br>
+</ul>
 
 ## Credits
 

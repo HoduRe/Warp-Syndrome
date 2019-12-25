@@ -6,6 +6,7 @@
 j1GUI::j1GUI() : j1Module() {
 	name.create("gui");
 	focus = nullptr;
+	last_parent = nullptr;
 }
 
 // Destructor
@@ -26,10 +27,10 @@ bool j1GUI::PreUpdate() {
 
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != NULL) {
-		if (item->data->Pressed() == true) { focus = item; }
-		else if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) { focus = focus->next; }
+		if (item->data->Pressed() == true && item->data->parent == last_parent) { focus = item; }
 		item = item->next;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) { focus = focus->next; }
 
 	item = UI_list.start;
 	while (item != NULL) {

@@ -6,7 +6,7 @@
 class Static_Image :public UI
 {
 public:
-	Static_Image(float x, float y, SDL_Texture* texture_pointer, SDL_Rect* rect);
+	Static_Image(float x, float y, UI* node, SDL_Texture* texture_pointer, SDL_Rect* rect);
 	virtual ~Static_Image();
 
 	bool PreUpdate();

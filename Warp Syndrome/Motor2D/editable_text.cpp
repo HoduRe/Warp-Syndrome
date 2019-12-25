@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 
-Editable_Text::Editable_Text(float x, float y, float width, bool focus) : UI(x, y) {
+Editable_Text::Editable_Text(float x, float y, UI* node, float width, bool focus) : UI(x, y, parent) {
 	texture_section = { 494, 577, (int)width + 10, 45} ;
 	rect = { 0, 0, 0, 0};
 	cursor = { (int)x, (int)y, 1, 5};

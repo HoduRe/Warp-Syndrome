@@ -4,11 +4,13 @@
 #include "j1Input.h"
 
 //UI=====================================================
-UI::UI(float x, float y) {
+UI::UI(float x, float y, UI* node = nullptr) {
 	position.x = x;
 	position.y = y;
 	texture_section = { 0, 0, 0, 0 };
 	texture = App->gui->GetAtlas();
+	parent = node;
+	if (parent != nullptr) { App->gui->focus = nullptr; }
 }
 
 UI::~UI() { this->CleanUp(); }

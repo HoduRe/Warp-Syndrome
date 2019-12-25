@@ -7,7 +7,7 @@
 class Static_Text :public UI
 {
 public:
-	Static_Text(float x, float y, const char* text_input);
+	Static_Text(float x, float y, UI* node, const char* text_input);
 	virtual ~Static_Text();
 
 	bool PreUpdate();

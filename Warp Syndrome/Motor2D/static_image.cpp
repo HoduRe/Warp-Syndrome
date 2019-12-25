@@ -3,7 +3,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 
-Static_Image::Static_Image(float x, float y, SDL_Texture* texture_pointer, SDL_Rect* rect) : UI(x, y) {
+Static_Image::Static_Image(float x, float y, UI* node, SDL_Texture* texture_pointer, SDL_Rect* rect) : UI(x, y, parent) {
 	texture = texture_pointer;
 	texture_section = *rect;
 	type = UI_TYPE_STATIC_IMAGE;

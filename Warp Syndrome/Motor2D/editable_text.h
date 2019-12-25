@@ -8,7 +8,7 @@
 class Editable_Text :public UI
 {
 public:
-	Editable_Text(float x, float y, float width, bool focus = true);
+	Editable_Text(float x, float y, UI* node, float width, bool focus = true);
 	virtual ~Editable_Text();
 
 	bool PreUpdate();

@@ -20,7 +20,7 @@ enum UIType
 class UI
 {
 public:
-	UI(float x, float y);
+	UI(float x, float y, UI* node);
 	virtual ~UI();
 
 	virtual bool Awake();
@@ -37,6 +37,7 @@ public:
 
 	fPoint position;
 	UIType type;
+	UI* parent;
 	SDL_Texture* texture;
 	SDL_Rect texture_section; //rectangle which will be displayed from the texture
 };

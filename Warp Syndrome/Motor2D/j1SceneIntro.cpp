@@ -27,10 +27,10 @@ j1SceneIntro::~j1SceneIntro()
 // Called before the first frame
 bool j1SceneIntro::Start()
 {
-	App->gui->AddUIElement(new Button(150, 50));
-	App->gui->AddUIElement(new Scrollbar(200, 250, 50));
-	App->gui->AddUIElement(new Static_Text(200, 200, "Hola Mundo"));
-	App->gui->AddUIElement(new Editable_Text(400, 200, 200));
+	App->gui->AddUIElement(new Button(150, 50, nullptr));
+	App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
+	App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
+	App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
 
 	return true;
 }

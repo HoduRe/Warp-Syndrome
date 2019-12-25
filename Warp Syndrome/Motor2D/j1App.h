@@ -25,7 +25,7 @@ class j1EntityManager;
 class j1Console;
 class j1Fonts;
 class j1GUI;
-class j1SceneIntro;
+class j1SceneManager;
 
 class j1App
 {
@@ -104,10 +104,11 @@ public:
 	j1Console*			console;
 	j1GUI*				gui;
 	j1Fonts*			font;
-	j1SceneIntro*		scene_intro;
+	j1SceneManager*		scene_manager;
 
 
 	float				dt;
+	float				original_dt;
 	j1Timer				frame_time;
 	bool				capping = false;
 	bool				vSyncActivated = false;

@@ -49,7 +49,6 @@ public:
 	void LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos);
 
 	float CameraGoToTarget(fPoint campos, iPoint cammeasures, fPoint target,float dt);//used inside Repositon Camera Function
-	bool OnListen(UI* element, UICallbackState state);
 
 	int teleport_sfx;
 	int jump_sfx;

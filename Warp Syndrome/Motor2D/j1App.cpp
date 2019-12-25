@@ -20,7 +20,7 @@
 #include "j1EntityManager.h"
 #include "j1GUI.h"
 #include "j1Fonts.h"
-#include "j1SceneIntro.h"
+#include "j1SceneManager.h"
 
 
 // Constructor
@@ -44,7 +44,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new j1Console();
 	gui = new j1GUI();
 	font = new j1Fonts();
-	scene_intro = new j1SceneIntro();
+	scene_manager = new j1SceneManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -57,10 +57,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(collision);
 	AddModule(scene);
-	AddModule(gui);
-	AddModule(scene_intro);
 	AddModule(pathfinding);
 	AddModule(entity_m);
+	AddModule(gui);
+	AddModule(scene_manager);
 	AddModule(console);
 	AddModule(transitions);//has to be always directly before render
 	// render last to swap buffer
@@ -189,7 +189,7 @@ void j1App::PrepareUpdate()
 	last_sec_frame_count++;
 
 	//Calculate the dt: differential time since last frame
-	dt = frame_time.ReadSec();
+	original_dt=dt = frame_time.ReadSec();
 	if (paused) dt = 0.0f;
 	frame_time.Start();
 }

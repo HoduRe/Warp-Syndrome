@@ -81,7 +81,7 @@
     <ClCompile Include="Coin_G.cpp" />
     <ClCompile Include="editable_text.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
-    <ClCompile Include="j1SceneIntro.cpp" />
+    <ClCompile Include="j1SceneManager.cpp" />
     <ClCompile Include="scrollbar.cpp" />
     <ClCompile Include="static_image.cpp" />
     <ClCompile Include="Static_text.cpp" />
@@ -121,7 +121,7 @@
     <ClInclude Include="Coin_G.h" />
     <ClInclude Include="editable_text.h" />
     <ClInclude Include="j1Fonts.h" />
-    <ClInclude Include="j1SceneIntro.h" />
+    <ClInclude Include="j1SceneManager.h" />
     <ClInclude Include="scrollbar.h" />
     <ClInclude Include="static_image.h" />
     <ClInclude Include="Static_text.h" />

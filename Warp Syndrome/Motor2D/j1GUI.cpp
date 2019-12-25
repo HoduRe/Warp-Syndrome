@@ -67,16 +67,7 @@ bool j1GUI::PostUpdate() {
 bool j1GUI::CleanUp()
 {
 	LOG("Unloading UIManager");
-	p2List_item<UI*>* item = UI_list.start;
-	while (item != NULL) {
-			item->data->CleanUp();
-			RELEASE(item->data);
-			UI_list.del(item);
-			
-			item = item->next;
-	}
-	
-	UI_list.clear();
+	CleanAllElements();
 	App->tex->UnLoad(atlas);
 
 	return true;
@@ -89,4 +80,19 @@ UI* j1GUI::AddUIElement(UI* UIElement) {
 
 SDL_Texture* j1GUI::GetAtlas() const {
 	return atlas;
+}
+
+bool j1GUI::CleanAllElements()
+{
+	p2List_item<UI*>* item = UI_list.start;
+	while (item != NULL) {
+		item->data->CleanUp();
+		RELEASE(item->data);
+		UI_list.del(item);
+
+		item = item->next;
+	}
+
+	UI_list.clear();
+	return true;
 }

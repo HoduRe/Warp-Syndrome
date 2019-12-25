@@ -97,9 +97,6 @@
     <ClCompile Include="j1GUI.cpp">
       <Filter>Development============\UI System</Filter>
     </ClCompile>
-    <ClCompile Include="j1SceneIntro.cpp">
-      <Filter>Development============\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="static_image.cpp">
       <Filter>Development============\UI System\UI Elements</Filter>
     </ClCompile>
@@ -114,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="Coin_G.cpp">
       <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneManager.cpp">
+      <Filter>Development============\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,9 +231,6 @@
     <ClInclude Include="j1GUI.h">
       <Filter>Development============\UI System</Filter>
     </ClInclude>
-    <ClInclude Include="j1SceneIntro.h">
-      <Filter>Development============\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="static_image.h">
       <Filter>Development============\UI System\UI Elements</Filter>
     </ClInclude>
@@ -248,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Coin_G.h">
       <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneManager.h">
+      <Filter>Development============\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

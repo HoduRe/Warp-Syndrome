@@ -2,6 +2,7 @@
 #include "j1Window.h"
 #include "j1Textures.h"
 #include "level_manager.h"
+#include "j1SceneManager.h"
 #include "transitions.h"
 #include "j1Render.h"
 
@@ -47,7 +48,9 @@ bool j1Transitions::PreUpdate()
 
 bool j1Transitions::Update(float dt)
 {
-	deltatime = dt;
+	if (dt != 0.0f)
+		deltatime = dt;
+	else deltatime = App->original_dt;//uses the original dt when the game is paused, to be able to make transitions
 	return true;
 }
 
@@ -129,6 +132,79 @@ bool j1Transitions::PostUpdate()
 		default:
 			break;
 		}
+		break;
+	case TM_CHANGE_TO_MENU:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_seconds_length, deltatime))
+			{
+				actual_state = TS_BLACK_SCREEN;
+			}
+			break;
+		case TS_BLACK_SCREEN:
+			BlackScreen();
+			//TODO CHANGE TO MENU HERE
+			App->paused = true;
+			App->scene_manager->UnloadPauseMenu();//TODO just unload all the UI
+			App->scene_manager->LoadMainMenu();
+			App->scene_manager->doingaction = false;
+			actual_state = TS_FADE_IN;
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_seconds_length, deltatime))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+		case TS_FINISHED:
+			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		}
+		break;
+	case TM_CHANGE_TO_GAME:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_seconds_length, deltatime))
+			{
+				actual_state = TS_BLACK_SCREEN;
+			}
+			break;
+		case TS_BLACK_SCREEN:
+			BlackScreen();
+
+			//TODO CHANGE TO GAME HERE
+			App->scene_manager->UnloadMainMenu();
+			App->scene_manager->LoadHUD();
+			App->paused = false;
+			App->scene_manager->doingaction = false;
+
+			actual_state = TS_FADE_IN;
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_seconds_length, deltatime))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+		case TS_FINISHED:
+			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		}
+		
 		break;
 	case TM_UNKNOWN:
 		break;
@@ -251,7 +327,7 @@ bool j1Transitions::BlackScreen()
 	return ret;
 }
 
-void j1Transitions::ChangeTransition(Transition_Mode mode, float seconds_length, float dt)
+void j1Transitions::ChangeTransition(Transition_Mode mode, float seconds_length)
 {
 	if (actual_transition == TM_UNKNOWN)
 	{

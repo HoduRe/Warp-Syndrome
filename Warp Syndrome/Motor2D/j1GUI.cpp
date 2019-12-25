@@ -80,7 +80,7 @@ bool j1GUI::PostUpdate() {
 bool j1GUI::CleanUp()
 {
 	LOG("Unloading UIManager");
-	CleanAllElements();
+	DeleteAll();
 	App->tex->UnLoad(atlas);
 
 	return true;

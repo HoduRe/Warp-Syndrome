@@ -138,7 +138,7 @@ bool j1SceneManager::LoadMainMenu()
 {
 	//placeholder UI
 	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr));
+	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
 	element->listeners.PushBack(this);
@@ -152,7 +152,7 @@ bool j1SceneManager::LoadMainMenu()
 
 bool j1SceneManager::UnloadMainMenu()
 {
-	App->gui->CleanAllElements();
+	App->gui->DeleteAll();
 	return true;
 }
 
@@ -161,7 +161,7 @@ bool j1SceneManager::LoadPauseMenu()
 {
 	//placeholder UI
 	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr));
+	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
 	element->listeners.PushBack(this);
@@ -175,8 +175,8 @@ bool j1SceneManager::LoadPauseMenu()
 
 bool j1SceneManager::UnloadPauseMenu()
 {
-	App->gui->CleanAllElements();
-
+	App->gui->DeleteAll();
+	
 	return true;
 }
 
@@ -185,7 +185,7 @@ bool j1SceneManager::LoadHUD()
 {
 	//placeholder UI
 	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr));
+	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
 	element->listeners.PushBack(this);
@@ -198,7 +198,7 @@ bool j1SceneManager::LoadHUD()
 
 bool j1SceneManager::UnloadHUD()
 {
-	App->gui->CleanAllElements();
+	App->gui->DeleteAll();
 	return true;
 }
 

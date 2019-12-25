@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.7.5.1-debug:
+Up to version 0.7.5.2-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -674,6 +674,12 @@ Update 0.7.5.0-debug
 Update 0.7.5.1-debug
 <ul>-Minor cleanup merge problem solved<br>
 </ul>
+
+Update 0.7.5.2-debug
+<ul>
+-Now the main scene isn't drawn when not needed.<br>
+-Started working on menus loop with button callbacks.
+<ul>
 
 ## Credits
 

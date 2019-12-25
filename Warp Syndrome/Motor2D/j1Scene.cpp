@@ -145,7 +145,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	App->map->Draw();
+	if(draw)App->map->Draw();
 	bool ret = true;
 	
 	return ret;

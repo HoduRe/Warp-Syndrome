@@ -55,6 +55,7 @@ public:
 	int death_sfx;
 	int coin_sfx;
 	bool blit_colliders = false;
+	bool draw = true;
 
 private:
 	bool start;
@@ -65,7 +66,7 @@ private:
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
 	fPoint distancetoplayer;//camera distance to player
-
+	
 
 };
 

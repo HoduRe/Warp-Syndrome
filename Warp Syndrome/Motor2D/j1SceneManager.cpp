@@ -32,7 +32,7 @@ j1SceneManager::~j1SceneManager()
 bool j1SceneManager::Start()
 {
 	currentloop = G_C_START;//TODO change this to start in the main menu
-
+	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
 	return true;
 }
 
@@ -50,16 +50,17 @@ bool j1SceneManager::PreUpdate()
 			LoadMainMenu();
 			App->paused = true;
 			currentloop = G_C_MAIN_MENU;
+			App->scene->draw = false;
 			break;
 		case G_C_MAIN_MENU:
-			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN/*button play pressed*/)
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||ui_type==UI_Purpose::BUTTON_GAME_LOOP/*button play pressed*/)
 			{
 				//this transition unloads and loads the corresponding ui automatically
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_GAME, 2.0f);
 				doingaction = true;
 				currentloop = G_C_INGAME;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN/*button quit pressed*/)
+			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_CLOSE_MENU/*button quit pressed*/)
 			{
 				ret = false; //this will now quit the game
 			}
@@ -67,17 +68,18 @@ bool j1SceneManager::PreUpdate()
 			{
 				//TODO will cause trouble due to the game loop structure
 			}
+			App->scene->blit_colliders = false;
 			break;
 		case G_C_PAUSE_MENU:
 			//when the game unpauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
 				App->paused = false;
 				currentloop = G_C_INGAME;
 				UnloadPauseMenu();
 				LoadHUD();//reloads the hud due to ui cleanup
 			}
 			//when the game goes to the menu
-			else if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+			else if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP)
 			{
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_MENU, 2.0f);
 				doingaction = true;
@@ -88,7 +90,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_INGAME:
 			//when the game pauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
 				App->paused = true;
 				currentloop = G_C_PAUSE_MENU;
 				LoadPauseMenu();
@@ -102,6 +104,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		}
 	}
+	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
 	return ret;
 }
 
@@ -129,7 +132,10 @@ bool j1SceneManager::CleanUp()
 bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 {
 	if (cstate == UICallbackState::UI_CALLBACK_CLICKED)
+	{
+		ui_type = element->purpose_type;
 		element->position.x += 50;
+	}
 	return true;
 }
 
@@ -144,8 +150,8 @@ bool j1SceneManager::LoadMainMenu()
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
-	element->listeners.PushBack(this);
+	//element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
+	//element->listeners.PushBack(this);
 
 	return true;
 }

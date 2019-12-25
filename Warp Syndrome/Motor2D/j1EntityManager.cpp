@@ -6,6 +6,7 @@
 #include "Particles.h"
 #include "j1Grenade.h"
 #include "Coin_G.h"
+#include "j1Scene.h"
 
 //Entity Manager=============================================
 
@@ -94,7 +95,7 @@ bool j1EntityManager::PostUpdate()
 	p2List_item<Entity*>* item = entity_list.start;
 	while (item != NULL)
 	{
-		item->data->PostUpdate();
+		if(App->scene->draw)item->data->PostUpdate();
 		item = item->next;
 	}
 

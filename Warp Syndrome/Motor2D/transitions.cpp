@@ -3,6 +3,7 @@
 #include "j1Textures.h"
 #include "level_manager.h"
 #include "j1SceneManager.h"
+#include "j1Scene.h"
 #include "transitions.h"
 #include "j1Render.h"
 
@@ -152,6 +153,7 @@ bool j1Transitions::PostUpdate()
 			App->scene_manager->UnloadPauseMenu();//TODO just unload all the UI
 			App->scene_manager->LoadMainMenu();
 			App->scene_manager->doingaction = false;
+			App->scene->draw = false;
 			actual_state = TS_FADE_IN;
 			break;
 		case TS_FADE_IN:
@@ -188,6 +190,7 @@ bool j1Transitions::PostUpdate()
 			App->scene_manager->LoadHUD();
 			App->paused = false;
 			App->scene_manager->doingaction = false;
+			App->scene->draw = true;
 
 			actual_state = TS_FADE_IN;
 			break;

@@ -90,6 +90,7 @@ bool j1Input::PreUpdate()
 		}
 		else if (last_focus != App->gui->UI_list.find(i->data)) {
 			SDL_StopTextInput();
+			last_focus = App->gui->UI_list.find(i->data);
 		}
 	}
 

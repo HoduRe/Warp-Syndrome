@@ -17,6 +17,14 @@ enum UIType
 	UI_TYPE_UNKNOWN
 };
 
+enum UI_Purpose {
+	PURPOSE_UNSPECIFIED,
+	BUTTON_GAME_LOOP,
+	BUTTON_OPEN_MENU,
+	BUTTON_CLOSE_MENU,
+	BUTTON_OPTION_SELECTION
+};
+
 enum UICallbackState
 {
 	UI_CALLBACK_CLICKED,
@@ -44,6 +52,7 @@ public:
 
 	fPoint position;
 	UIType type;
+	UI_Purpose purpose_type;
 	UI* parent;
 	SDL_Texture* texture;
 	SDL_Rect texture_section; //rectangle which will be displayed from the texture

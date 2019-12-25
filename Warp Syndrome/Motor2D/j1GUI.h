@@ -39,6 +39,12 @@ public:
 	// Returns a pointer to atlas
 	SDL_Texture* GetAtlas() const;
 
+	// Deletes all elements that have as parent the given pointer
+	void DeleteOnParent(UI* deleteparent);
+
+	// Deletes all elements on reverse order
+	void DeleteAll();
+
 	p2List<UI*> UI_list;
 	p2List_item<UI*>* focus;
 	UI* last_parent;

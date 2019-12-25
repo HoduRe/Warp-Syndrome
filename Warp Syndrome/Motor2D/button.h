@@ -6,7 +6,7 @@
 class Button :public UI
 {
 public:
-	Button(float x, float y, UI* node);
+	Button(float x, float y, UI* node, UI_Purpose secondary_type);
 	virtual ~Button();
 
 	bool PreUpdate();

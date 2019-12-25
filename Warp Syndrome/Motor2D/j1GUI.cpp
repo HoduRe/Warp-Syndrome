@@ -30,7 +30,12 @@ bool j1GUI::PreUpdate() {
 		if (item->data->Pressed() == true && item->data->parent == last_parent) { focus = item; }
 		item = item->next;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) { focus = focus->next; }
+
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+		if (focus != nullptr && focus->next != nullptr) { focus = focus->next; }
+		else if (UI_list.start == nullptr) { focus = nullptr; }
+		else { focus = UI_list.start; }
+	}
 
 	item = UI_list.start;
 	while (item != NULL) {
@@ -55,6 +60,14 @@ bool j1GUI::Update(float dt) {
 bool j1GUI::PostUpdate() {
 
 	p2List_item<UI*>* item = UI_list.start;
+	while (item != NULL) {
+		if (item->data->Pressed() == true && item->data->purpose_type == BUTTON_CLOSE_MENU) {
+			DeleteOnParent(item->data->parent);
+		}
+		item = item->next;
+	}
+
+	item = UI_list.start;
 	while (item != NULL) {
 		item->data->PostUpdate();
 		item = item->next;
@@ -87,6 +100,32 @@ UI* j1GUI::AddUIElement(UI* UIElement) {
 	return UIElement;
 }
 
-SDL_Texture* j1GUI::GetAtlas() const {
-	return atlas;
+SDL_Texture* j1GUI::GetAtlas() const { return atlas; }
+
+void j1GUI::DeleteOnParent(UI* deleteparent) {
+	p2List_item<UI*>* item = UI_list.start;
+	while (item != NULL) {
+		if (item->data->parent == deleteparent) {
+			UI_list.del(UI_list.At(UI_list.find(item->data)));
+			if (UI_list.start == nullptr) { item = nullptr; }
+			else { item = UI_list.start; }
+		}
+		if (item != nullptr && item->next != nullptr) { item = item->next; }
+	}
+}
+
+void j1GUI::DeleteAll() {
+	p2List_item<UI*>* item = UI_list.start;
+	while (last_parent != nullptr) {
+		while (item != NULL) {
+			if (item->data->parent == last_parent) {
+				UI_list.del(UI_list.At(UI_list.find(item->data)));
+				if (UI_list.start == nullptr) { item = nullptr; }
+				else { item = UI_list.start; }
+			}
+			if (item != nullptr && item->next != nullptr) { item = item->next; }
+		}
+		last_parent = last_parent->parent;
+	}
+	UI_list.clear();
 }

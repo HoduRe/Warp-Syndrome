@@ -31,7 +31,7 @@ j1SceneIntro::~j1SceneIntro()
 bool j1SceneIntro::Start()
 {
 	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr));
+	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(App->scene);
 	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
 	element->listeners.PushBack(App->scene);
@@ -52,6 +52,7 @@ bool j1SceneIntro::PreUpdate()
 
 // Called each loop iteration
 bool j1SceneIntro::Update(float dt) {
+
 	return true;
 }
 

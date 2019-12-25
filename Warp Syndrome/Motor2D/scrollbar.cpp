@@ -14,6 +14,7 @@ Scrollbar::Scrollbar(float x, float y, float length) : UI(x, y) {
 	texture_section.h = length + 20;	// max length of 138 + 20 in the atlas (the +20 is the bar height)
 	bar_measures = { 1001, 880, 20, 20 };
 	initial_mouse_pos = -1;
+	type = UI_TYPE_SLIDER;
 }
 
 Scrollbar::~Scrollbar() {

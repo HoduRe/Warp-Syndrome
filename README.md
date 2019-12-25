@@ -639,6 +639,18 @@ Update 0.7.2.0-debug
 -General functionality has been moved to UI_Elements to make all daugther classes interactable when clicked<br>
 </ul>
 
+Update 0.7.2.1-debug
+<ul>-Detected and solved 2 major memory leaks regarding constant texture load in memory and animations: Cleaned up the animations of each coin when its destroyed. Cleaned up a text texture taht got lost in memory each frame<br>
+-Started working on the wireframe for the diferent scenes<br>
+</ul>
+
+Update 0.7.2.2-debug
+<ul>-Second map coins added<br>
+-Focus added to elements as a pointer<br>
+-Editable text reads and shows the text input<br>
+</ul>
+
+
 ## Credits
 
 Credits go to the team members: <br>

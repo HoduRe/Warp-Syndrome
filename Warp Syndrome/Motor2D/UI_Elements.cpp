@@ -24,7 +24,6 @@ bool UI::Update(float dt) { return true; }
 bool UI::PostUpdate() { return true; }
 
 bool UI::CleanUp() {
-	App->tex->UnLoad(texture);
 	texture = nullptr;
 	return true;
 }
@@ -32,8 +31,10 @@ bool UI::CleanUp() {
 bool UI::Pressed() {
 	iPoint posi;
 	App->input->GetMousePosition(posi.x, posi.y);
-	if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
-		return true;
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
+		if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+			return true;
+		}
 	}
 	return false;
 }

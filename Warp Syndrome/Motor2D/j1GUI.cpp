@@ -1,8 +1,12 @@
 #include "j1App.h"
 #include "j1GUI.h"
+#include "j1Input.h"
 #include "p2Log.h"
 
-j1GUI::j1GUI() : j1Module() { name.create("gui"); }
+j1GUI::j1GUI() : j1Module() {
+	name.create("gui");
+	focus = nullptr;
+}
 
 // Destructor
 j1GUI::~j1GUI() {}
@@ -21,6 +25,13 @@ bool j1GUI::Start() {
 bool j1GUI::PreUpdate() {
 
 	p2List_item<UI*>* item = UI_list.start;
+	while (item != NULL) {
+		if (item->data->Pressed() == true) { focus = item; }
+		else if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) { focus = focus->next; }
+		item = item->next;
+	}
+
+	item = UI_list.start;
 	while (item != NULL) {
 		item->data->PreUpdate();
 		item = item->next;

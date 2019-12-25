@@ -1,8 +1,8 @@
 #include "j1App.h"
 #include "editable_text.h"
+#include "j1GUI.h"
 #include "j1Textures.h"
 #include "j1Render.h"
-#include "j1Input.h"
 
 Editable_Text::Editable_Text(float x, float y, float width, bool focus) : UI(x, y) {
 	texture_section = { 494, 577, (int)width + 10, 45} ;
@@ -10,12 +10,10 @@ Editable_Text::Editable_Text(float x, float y, float width, bool focus) : UI(x, 
 	cursor = { (int)x, (int)y, 1, 5};
 	font = App->font->fonts.start->data;
 	max_width = width;
-	text = "Adios Mundo";	// Take this off Jesus
+	type = UI_TYPE_EDITABLE_TEXT;
 }
 
-Editable_Text::~Editable_Text() {
-	text = nullptr;
-}
+Editable_Text::~Editable_Text() {}
 
 bool Editable_Text::PreUpdate() {
 
@@ -24,11 +22,10 @@ bool Editable_Text::PreUpdate() {
 
 bool Editable_Text::Update(float dt) {
 
-	focus = Pressed();
-	if (focus == true) {
-		// Write text
-		// Move cursor
+	for (int i = 0; i < CHAR_ARRAY; i++) {
+		text[i] = App->input->text[i];
 	}
+	// Move cursor
 
 	return true;
 }

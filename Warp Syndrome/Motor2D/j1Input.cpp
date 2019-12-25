@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1GUI.h"
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -14,6 +15,8 @@ j1Input::j1Input() : j1Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	last_focus = 0;
+	for (int i = 0; i < CHAR_ARRAY; i++) { text[i] = NULL; }
 }
 
 // Destructor
@@ -79,6 +82,17 @@ bool j1Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
+	if (App->gui->focus != nullptr) {
+		p2List_item<UI*>* i = App->gui->focus;
+		if (i->data->type == UI_TYPE_EDITABLE_TEXT && i->data != App->gui->UI_list.At(last_focus)->data) {
+			SDL_StartTextInput();
+			last_focus = App->gui->UI_list.find(i->data);
+		}
+		else if (last_focus != App->gui->UI_list.find(i->data)) {
+			SDL_StopTextInput();
+		}
+	}
+
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -86,6 +100,19 @@ bool j1Input::PreUpdate()
 			case SDL_QUIT:
 				windowEvents[WE_QUIT] = true;
 			break;
+
+			case SDL_TEXTINPUT:
+				if (event.text.text != nullptr) {
+					int i = 0, j = 0;
+					while (event.text.text[i] != NULL) {
+						if (text[j] == NULL) {
+							text[j] = event.text.text[i];
+							i++;
+						}
+						j++;
+					}
+				}
+				break;
 
 			case SDL_WINDOWEVENT:
 				switch(event.window.event)

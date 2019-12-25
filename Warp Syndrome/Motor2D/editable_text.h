@@ -3,6 +3,7 @@
 #include "SDL/include/SDL.h"
 #include "UI_Elements.h"
 #include "j1Fonts.h"
+#include "j1Input.h"
 
 class Editable_Text :public UI
 {
@@ -20,8 +21,7 @@ private:
 	SDL_Rect rect;
 	SDL_Rect cursor;
 	_TTF_Font* font;
-	const char* text;
-	bool focus;
+	char text[CHAR_ARRAY];
 	int max_width;
 };
 

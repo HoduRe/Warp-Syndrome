@@ -8,6 +8,7 @@ Static_Text::Static_Text(float x, float y, const char* text_input) : UI(x, y) {
 	font = App->font->fonts.start->data;
 	texture = App->font->Print(text_input, {}, font);
 	App->font->CalcSize(text_input, texture_section.w, texture_section.h);
+	type = UI_TYPE_STATIC_TEXT;
 }
 
 Static_Text::~Static_Text() {

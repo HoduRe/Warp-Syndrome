@@ -7,8 +7,8 @@
 
 Button::Button(float x, float y) : UI(x, y) {
 	pushed = false;
-	type = UI_TYPE_BUTTON;
 	texture_section = { 416, 172, 218, 58};
+	type = UI_TYPE_BUTTON;
 }
 
 Button::~Button() {
@@ -27,7 +27,7 @@ bool Button::Update(float dt) {
 
 bool Button::PostUpdate() {
 
-	if (Pressed() == false) {
+	if (Pressed() == true) {
 		texture_section.x = 416;
 		App->render->Blit(texture, position.x, position.y, &texture_section);
 	}

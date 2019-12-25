@@ -6,6 +6,7 @@
 Static_Image::Static_Image(float x, float y, SDL_Texture* texture_pointer, SDL_Rect* rect) : UI(x, y) {
 	texture = texture_pointer;
 	texture_section = *rect;
+	type = UI_TYPE_STATIC_IMAGE;
 }
 
 Static_Image::~Static_Image() {

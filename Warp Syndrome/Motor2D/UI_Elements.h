@@ -30,7 +30,7 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp();
 
-	// Returns true if the player presses on that UI element
+	// Returns true when the element is pressed
 	bool Pressed();
 
 public:

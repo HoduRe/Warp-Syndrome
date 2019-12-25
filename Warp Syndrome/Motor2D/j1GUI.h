@@ -39,8 +39,10 @@ public:
 	// Returns a pointer to atlas
 	SDL_Texture* GetAtlas() const;
 
-private:
 	p2List<UI*> UI_list;
+	p2List_item<UI*>* focus;
+
+private:
 	p2SString atlas_file_name;
 	SDL_Texture* atlas;
 

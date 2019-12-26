@@ -108,6 +108,34 @@ void j1GUI::DeleteOnParent(UI* deleteparent) {
 	focus = nullptr;
 }
 
+bool j1GUI::DeleteWithParent(UI* deleteparent) {
+	bool ret = true;
+	p2List_item<UI*>* item = UI_list.start;
+	while (item != nullptr) {
+		if (item->data->parent == deleteparent) {
+			item->data->CleanUp();
+			RELEASE(item->data);
+			UI_list.del(UI_list.At(UI_list.find(item->data)));
+			if (UI_list.start == nullptr) { item = nullptr; }
+			else { item = UI_list.start; }
+		}
+		if (item != nullptr) { item = item->next; }
+	}
+
+	int findparent = UI_list.find(deleteparent);
+	if (findparent != -1)
+	{
+		item = UI_list.At(UI_list.find(deleteparent));//takes the parent
+		item->data->CleanUp();
+		RELEASE(item->data);
+		UI_list.del(item);
+	}
+	else ret = false;
+
+	focus = nullptr;
+	return ret;
+}
+
 void j1GUI::DeleteAll() {
 	p2List_item<UI*>* item = UI_list.start;
 	while (last_parent != nullptr) {

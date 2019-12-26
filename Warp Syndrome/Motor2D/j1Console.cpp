@@ -37,6 +37,7 @@ bool j1Console::Awake(pugi::xml_node& config)
 bool j1Console::Start()
 {
 	output_text.Clear();
+	output_text = "pruebas";
 	return true;
 }
 bool j1Console::PreUpdate()
@@ -92,7 +93,7 @@ bool j1Console::OpenConsole()
 }
 bool j1Console::CloseConsole()
 {
-	App->gui->DeleteOnParent(console_parent);
+	App->gui->DeleteWithParent(console_parent);
 	console_opened = false;
 	return true;
 }

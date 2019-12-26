@@ -41,6 +41,9 @@ public:
 
 	// Deletes all elements that have as parent the given pointer
 	void DeleteOnParent(UI* deleteparent);
+	
+	// Deletes all elements that have as parent the given pointer + the parent itself
+	bool DeleteWithParent(UI* deleteparent);
 
 	// Deletes all elements on reverse order
 	void DeleteAll();

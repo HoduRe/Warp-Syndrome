@@ -32,7 +32,6 @@ bool UI::CleanUp() {
 	if (parent != nullptr) { App->gui->last_parent = parent->parent; }
 	else { App->gui->last_parent = nullptr; }
 	parent = nullptr;
-	App->gui->focus = nullptr;
 	listeners.Clear();
 	return true;
 }
@@ -44,6 +43,21 @@ bool UI::Pressed() {
 		if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
 			return true;
 		}
+	}
+	else if (App->gui->focus != nullptr && App->gui->focus->data == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		return true;
+	}
+	return false;
+}
+
+bool UI::Hover() {
+	iPoint posi;
+	App->input->GetMousePosition(posi.x, posi.y);
+	if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+		return true;
+	}
+	else if (App->gui->focus != nullptr && App->gui->focus->data == this) {
+		return true;
 	}
 	return false;
 }

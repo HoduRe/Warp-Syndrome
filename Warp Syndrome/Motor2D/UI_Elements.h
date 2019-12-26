@@ -48,6 +48,9 @@ public:
 
 	// Returns true when the element is pressed
 	bool Pressed();
+	// Returns true when the element has the mouse on it (or the focus)
+	bool Hover();
+
 	bool CallListeners(UICallbackState state= UI_CALLBACK_UNKNOWN);
 public:
 

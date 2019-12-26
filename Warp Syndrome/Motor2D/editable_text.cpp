@@ -22,8 +22,10 @@ bool Editable_Text::PreUpdate() {
 
 bool Editable_Text::Update(float dt) {
 
-	for (int i = 0; i < CHAR_ARRAY; i++) {
-		text[i] = App->input->text[i];
+	if (App->gui->focus != nullptr && App->gui->focus->data == this) {
+		for (int i = 0; i < CHAR_ARRAY - 1; i++) {
+			text[i] = App->input->text[i];
+		}
 	}
 	// Move cursor
 

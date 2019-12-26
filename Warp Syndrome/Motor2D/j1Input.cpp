@@ -84,11 +84,13 @@ bool j1Input::PreUpdate()
 
 	if (App->gui->focus != nullptr) {
 		p2List_item<UI*>* i = App->gui->focus;
-		if (i->data->type == UI_TYPE_EDITABLE_TEXT && i->data != App->gui->UI_list.At(last_focus)->data) {
+		if (text[CHAR_ARRAY-1] != NULL) { SDL_StopTextInput(); }
+		else if (i->data->type == UI_TYPE_EDITABLE_TEXT && i->data != App->gui->UI_list.At(last_focus)->data) {
+			for (int i = 0; i < CHAR_ARRAY; i++) { text[i] = NULL; }
 			SDL_StartTextInput();
 			last_focus = App->gui->UI_list.find(i->data);
 		}
-		else if (last_focus != App->gui->UI_list.find(i->data)) {
+		else if (i->data->type == UI_TYPE_EDITABLE_TEXT && last_focus != App->gui->UI_list.find(i->data)) {
 			SDL_StopTextInput();
 			last_focus = App->gui->UI_list.find(i->data);
 		}

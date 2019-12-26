@@ -95,7 +95,7 @@ SDL_Texture* j1GUI::GetAtlas() const { return atlas; }
 
 void j1GUI::DeleteOnParent(UI* deleteparent) {
 	p2List_item<UI*>* item = UI_list.start;
-	while (item != NULL) {
+	while (item != nullptr) {
 		if (item->data->parent == deleteparent) {
 			item->data->CleanUp();
 			RELEASE(item->data);
@@ -103,8 +103,9 @@ void j1GUI::DeleteOnParent(UI* deleteparent) {
 			if (UI_list.start == nullptr) { item = nullptr; }
 			else { item = UI_list.start; }
 		}
-		if (item != nullptr && item->next != nullptr) { item = item->next; }
+		if (item != nullptr) { item = item->next; }
 	}
+	focus = nullptr;
 }
 
 void j1GUI::DeleteAll() {
@@ -118,9 +119,10 @@ void j1GUI::DeleteAll() {
 				if (UI_list.start == nullptr) { item = nullptr; }
 				else { item = UI_list.start; }
 			}
-			if (item != nullptr && item->next != nullptr) { item = item->next; }
+			if (item != nullptr) { item = item->next; }
 		}
 		last_parent = last_parent->parent;
 	}
 	UI_list.clear();
+	focus = nullptr;
 }

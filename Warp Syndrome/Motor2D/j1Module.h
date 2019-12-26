@@ -11,7 +11,9 @@
 
 class j1App;
 class UI;
+class Command;
 enum UICallbackState;
+
 
 class j1Module
 {
@@ -80,6 +82,11 @@ public:
 	{
 		return true;
 	}
+	virtual bool OnCommand(Command* command)
+	{
+		return true;
+	}
+
 
 public:
 

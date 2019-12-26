@@ -234,4 +234,3 @@ float j1Scene::CameraGoToTarget(fPoint campos,iPoint cammeasures, fPoint target,
 }
 
 
-

@@ -135,15 +135,13 @@ bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 	if (cstate == UICallbackState::UI_CALLBACK_CLICKED)
 	{
 		ui_type = element->purpose_type;
-		element->position.x += 50;
 	}
 	return true;
 }
 
 //Loads all the UI for the main menu
-bool j1SceneManager::LoadMainMenu()
-{
-	//placeholder UI
+bool j1SceneManager::LoadMainMenu() {
+
 	UI* element;
 	uint width, height;
 	SDL_Rect texture_rec = { 0, 0, 640, 62 };
@@ -160,6 +158,13 @@ bool j1SceneManager::LoadMainMenu()
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Button(width / 3, (2 * height + height / 3) / 3, nullptr, PURPOSE_UNSPECIFIED));
 	element->listeners.PushBack(this);
+	float t_width = (width / 3) + (width / 12);
+	float t_height = height / 35;
+	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play"));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue"));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings"));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits"));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit"));
 
 	return true;
 }

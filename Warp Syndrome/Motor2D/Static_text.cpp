@@ -4,9 +4,9 @@
 #include "j1Fonts.h"
 #include "j1Render.h"
 
-Static_Text::Static_Text(float x, float y, UI* node, const char* text_input) : UI(x, y, node) {
+Static_Text::Static_Text(float x, float y, UI* node, const char* text_input, int r, int g, int b, int a) : UI(x, y, node) {
 	font = App->font->fonts.start->data;
-	texture = App->font->Print(text_input, {}, font);
+	texture = App->font->Print(text_input, { (Uint8)r, (Uint8)g, (Uint8)b, (Uint8)a }, font);
 	App->font->CalcSize(text_input, texture_section.w, texture_section.h);
 	type = UI_TYPE_STATIC_TEXT;
 }

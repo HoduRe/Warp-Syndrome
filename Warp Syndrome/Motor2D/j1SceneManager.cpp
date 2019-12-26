@@ -14,10 +14,11 @@
 #include "scrollbar.h"
 #include "Static_text.h"
 #include "editable_text.h"
+#include "static_image.h"
 #include "j1SceneManager.h"
 #include "level_manager.h"
 #include "j1Scene.h"
-
+#include "j1Window.h"
 
 j1SceneManager::j1SceneManager() : j1Module()
 {
@@ -144,14 +145,21 @@ bool j1SceneManager::LoadMainMenu()
 {
 	//placeholder UI
 	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
+	uint width, height;
+	SDL_Rect texture_rec = { 0, 0, 640, 62 };
+	App->win->GetWindowSize(width, height);
+	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec, true));
+	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec));
+	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
+	element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
+	element = App->gui->AddUIElement(new Button(width / 3, (height + 2 * height / 3) / 3, nullptr, BUTTON_OPEN_MENU));
 	element->listeners.PushBack(this);
-	//element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
-	//element->listeners.PushBack(this);
+	element = App->gui->AddUIElement(new Button(width / 3, (2 * height) / 3, nullptr, BUTTON_OPEN_MENU));
+	element->listeners.PushBack(this);
+	element = App->gui->AddUIElement(new Button(width / 3, (2 * height + height / 3) / 3, nullptr, PURPOSE_UNSPECIFIED));
+	element->listeners.PushBack(this);
 
 	return true;
 }

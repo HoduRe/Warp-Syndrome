@@ -12,8 +12,8 @@
 	<pathfinding />
 	<entity_m>
 		<Entity type="1">
-			<pos x="1920.375" y="1734.10266" />
-			<properties health="0" state="6" coins="3" />
+			<pos x="2003.54395" y="1568" />
+			<properties health="0" state="1" coins="4" />
 		</Entity>
 		<Entity type="6">
 			<pos x="5232" y="496" />
@@ -55,15 +55,268 @@
 			<pos x="6736" y="496" />
 			<properties health="1" state="0" />
 		</Entity>
-		<Entity type="3">
-			<pos x="1665.64294" y="1877.25647" />
-			<properties health="0.792995751" />
+		<Entity type="9">
+			<pos x="2128" y="1520" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2352" y="1424" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2896" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2896" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2960" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2960" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2896" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2960" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2768" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2768" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2832" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2832" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2768" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2832" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2640" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2640" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2704" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2704" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2640" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2704" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2512" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2512" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2576" y="1200" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2576" y="1264" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2512" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="2576" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="1712" y="336" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="1360" y="336" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="912" y="336" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="336" y="240" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="336" y="208" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="336" y="176" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="3216" y="2096" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="3216" y="2384" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="3728" y="2448" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4304" y="2384" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4304" y="2480" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4400" y="2384" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4400" y="2480" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="1520" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="1616" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="1328" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="1424" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="1136" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="1232" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="944" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="1040" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="752" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="848" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4560" y="528" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="4656" y="656" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6192" y="400" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6288" y="400" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6384" y="400" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6480" y="400" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6576" y="400" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6064" y="2000" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6160" y="2000" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6224" y="2000" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6320" y="2000" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6480" y="1872" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6576" y="1872" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6640" y="1872" />
+			<properties health="0" />
+		</Entity>
+		<Entity type="9">
+			<pos x="6736" y="1872" />
+			<properties health="0" />
 		</Entity>
 	</entity_m>
-	<ui_m />
+	<gui />
+	<scene_manager />
 	<console />
 	<transitions />
 	<renderer>
-		<camera x="-1510" y="-1223" />
+		<camera x="-1389" y="-1069" />
 	</renderer>
 </game_state>

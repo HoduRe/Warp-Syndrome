@@ -28,6 +28,7 @@ bool UI::Update(float dt) { return true; }
 bool UI::PostUpdate() { return true; }
 
 bool UI::CleanUp() {
+	App->tex->UnLoad(texture);
 	texture = nullptr;
 	if (parent != nullptr) { App->gui->last_parent = parent->parent; }
 	else { App->gui->last_parent = nullptr; }

@@ -5,7 +5,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 
-Button::Button(float x, float y, UI* node, UI_Purpose secondary_type) : UI(x, y, parent) {
+Button::Button(float x, float y, UI* node, UI_Purpose secondary_type) : UI(x, y, node) {
 	pushed = false;
 	texture_section = { 416, 172, 218, 58};
 	type = UI_TYPE_BUTTON;

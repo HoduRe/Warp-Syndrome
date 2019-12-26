@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 
-Scrollbar::Scrollbar(float x, float y, UI* node, float length) : UI(x, y, parent) {
+Scrollbar::Scrollbar(float x, float y, UI* node, float length) : UI(x, y, node) {
 	initial_point = y;
 	max_point = initial_point + length;
 	current_point = y;

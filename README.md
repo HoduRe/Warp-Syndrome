@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.7.8.0-debug:
+Up to version 0.7.8.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -710,6 +710,10 @@ Update 0.7.7.0-debug
 Update 0.7.8.0-debug
 <ul>-Button animation functional again<br>
 -Game loop from the main menu to game workable and usable
+</ul>
+
+Update 0.7.8.1-debug
+<ul>-Minor enum name change<br>
 </ul>
 
 ## Credits

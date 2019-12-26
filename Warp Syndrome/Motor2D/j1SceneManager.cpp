@@ -61,9 +61,14 @@ bool j1SceneManager::PreUpdate()
 				doingaction = true;
 				currentloop = G_C_INGAME;
 			}
-			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_CLOSE_MENU/*button quit pressed*/)
-			{
+			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_EXIT/*button quit pressed*/) {
 				ret = false; //this will now quit the game
+			}
+			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings / credit are pressed*/) {
+
+			}
+			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
+
 			}
 			else if (false/*button continue pressed*/)
 			{
@@ -152,11 +157,11 @@ bool j1SceneManager::LoadMainMenu() {
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Button(width / 3, (height + 2 * height / 3) / 3, nullptr, BUTTON_OPEN_MENU));
+	element = App->gui->AddUIElement(new Button(width / 3, (height + 2 * height / 3) / 3, nullptr, BUTTON_SETTINGS));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Button(width / 3, (2 * height) / 3, nullptr, BUTTON_OPEN_MENU));
+	element = App->gui->AddUIElement(new Button(width / 3, (2 * height) / 3, nullptr, BUTTON_CREDITS));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Button(width / 3, (2 * height + height / 3) / 3, nullptr, PURPOSE_UNSPECIFIED));
+	element = App->gui->AddUIElement(new Button(width / 3, (2 * height + height / 3) / 3, nullptr, BUTTON_EXIT));
 	element->listeners.PushBack(this);
 	float t_width = (width / 3) + (width / 12);
 	float t_height = height / 35;

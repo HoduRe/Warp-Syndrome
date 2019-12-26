@@ -37,8 +37,8 @@ bool Scrollbar::Update(float dt) {
 
 bool Scrollbar::PostUpdate() {
 
-	App->render->Blit(texture, position.x, position.y, &texture_section);
-	App->render->Blit(texture, position.x, current_point, &bar_measures);
+	App->render->Blit(texture, position.x, position.y, &texture_section,false,0.0f,0.0f,0.0f,0.0f);
+	App->render->Blit(texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);
 
 	return true;
 }

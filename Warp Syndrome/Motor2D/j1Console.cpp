@@ -141,13 +141,16 @@ bool j1Console::OpenConsole()
 	w *= escale;
 	h *= escale;
 	UI* element;
+	UI* focus_element;
 	SDL_Rect rect = { 0,0,(int)w,(int)h };
 	console_parent = App->gui->AddUIElement(new Static_Text(0, 0, nullptr, output_text.GetString()));
 	console_parent->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Editable_Text(50, 80, console_parent, w));
-	element->listeners.PushBack(this);
+	focus_element = App->gui->AddUIElement(new Editable_Text(50, 80, console_parent, w));
+	focus_element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, console_parent, texture, &rect));
 	element->listeners.PushBack(this);
+
+	App->gui->focus = App->gui->UI_list.At(App->gui->UI_list.find(focus_element));;
 	console_opened = true;
 	return true;
 }

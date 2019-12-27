@@ -33,7 +33,10 @@ j1SceneManager::~j1SceneManager()
 bool j1SceneManager::Start()
 {
 	element = nullptr;
+	uint scale = App->win->GetScale();
 	App->win->GetWindowSize(width, height);
+	width *= scale;
+	height *= scale;
 	currentloop = G_C_START;//TODO change this to start in the main menu
 	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
 	return true;

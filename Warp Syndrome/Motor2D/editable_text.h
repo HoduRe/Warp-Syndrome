@@ -16,12 +16,16 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	// Returns the text in p2SString format
+	p2SString ReturnText();
+
 private:
 	SDL_Texture* text_texture;
 	SDL_Rect rect;
 	SDL_Rect cursor;
 	_TTF_Font* font;
 	char text[CHAR_ARRAY];
+	p2SString text_save;
 	int max_width;
 };
 

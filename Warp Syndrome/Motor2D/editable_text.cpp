@@ -23,9 +23,13 @@ bool Editable_Text::PreUpdate() {
 bool Editable_Text::Update(float dt) {
 
 	if (App->gui->focus != nullptr && App->gui->focus->data == this) {
-		for (int i = 0; i < CHAR_ARRAY - 1; i++) {
-			text[i] = App->input->text[i];
-		}
+		for (int i = 0; i < CHAR_ARRAY - 1; i++) { text[i] = App->input->text[i]; }
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		text_save = ReturnText();
+		for (int i = 0; i < CHAR_ARRAY - 1; i++) { text[i] = NULL; }
+		App->gui->focus = nullptr;
 	}
 	// Move cursor
 
@@ -56,3 +60,5 @@ bool Editable_Text::CleanUp() {
 	text_texture = nullptr;
 	return true;
 }
+
+p2SString Editable_Text::ReturnText() { return text; }

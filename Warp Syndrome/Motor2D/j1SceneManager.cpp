@@ -57,6 +57,7 @@ bool j1SceneManager::PreUpdate()
 			App->paused = true;
 			currentloop = G_C_MAIN_MENU;
 			App->scene->draw = false;
+			App->audio->PlayMusic("audio/music/menu_music.ogg");//TODO load this from somewhere
 			break;
 		case G_C_MAIN_MENU:
 			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP/*button play pressed*/)

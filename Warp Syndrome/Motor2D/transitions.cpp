@@ -1,7 +1,10 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Textures.h"
+#include "j1Audio.h"
+#include "j1Map.h"
 #include "level_manager.h"
+#include "j1GUI.h"
 #include "j1SceneManager.h"
 #include "j1Scene.h"
 #include "transitions.h"
@@ -150,11 +153,12 @@ bool j1Transitions::PostUpdate()
 			BlackScreen();
 			//TODO CHANGE TO MENU HERE
 			App->paused = true;
-			App->scene_manager->UnloadPauseMenu();//TODO just unload all the UI
+			App->gui->DeleteAll();//TODO just unload all the UI
 			App->scene_manager->LoadMainMenu();
 			App->scene_manager->doingaction = false;
 			App->scene->draw = false;
 			actual_state = TS_FADE_IN;
+			App->audio->PlayMusic("audio/music/menu_music.ogg");//TODO load this from somewhere
 			break;
 		case TS_FADE_IN:
 			if (Fade_In(function_seconds_length, deltatime))
@@ -186,11 +190,12 @@ bool j1Transitions::PostUpdate()
 			BlackScreen();
 
 			//TODO CHANGE TO GAME HERE
-			App->scene_manager->UnloadMainMenu();
+			App->gui->DeleteAll();
 			App->scene_manager->LoadHUD();
 			App->paused = false;
 			App->scene_manager->doingaction = false;
 			App->scene->draw = true;
+			App->audio->PlayMusic(App->map->data.music_path.GetString());
 
 			actual_state = TS_FADE_IN;
 			break;

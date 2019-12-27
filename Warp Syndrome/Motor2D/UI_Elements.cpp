@@ -28,6 +28,10 @@ bool UI::Update(float dt) { return true; }
 bool UI::PostUpdate() { return true; }
 
 bool UI::CleanUp() {
+	if (texture != App->gui->GetAtlas()) {
+		App->tex->UnLoad(texture);
+	}
+	texture = nullptr;
 	if (parent != nullptr) { App->gui->last_parent = parent->parent; }
 	else { App->gui->last_parent = nullptr; }
 	parent = nullptr;
@@ -36,27 +40,31 @@ bool UI::CleanUp() {
 }
 
 bool UI::Pressed() {
-	iPoint posi;
-	App->input->GetMousePosition(posi.x, posi.y);
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
-		if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+	if (parent == App->gui->last_parent) {
+		iPoint posi;
+		App->input->GetMousePosition(posi.x, posi.y);
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
+			if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+				return true;
+			}
+		}
+		else if (App->gui->focus != nullptr && App->gui->focus->data == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			return true;
 		}
-	}
-	else if (App->gui->focus != nullptr && App->gui->focus->data == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		return true;
 	}
 	return false;
 }
 
 bool UI::Hover() {
-	iPoint posi;
-	App->input->GetMousePosition(posi.x, posi.y);
-	if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
-		return true;
-	}
-	else if (App->gui->focus != nullptr && App->gui->focus->data == this) {
-		return true;
+	if (parent == App->gui->last_parent) {
+		iPoint posi;
+		App->input->GetMousePosition(posi.x, posi.y);
+		if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+			return true;
+		}
+		else if (App->gui->focus != nullptr && App->gui->focus->data == this) {
+			return true;
+		}
 	}
 	return false;
 }

@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.7.8.2-debug:
+Up to version 0.7.8.4-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -723,6 +723,11 @@ Update 0.7.8.2-debug:
 Update 0.7.8.3-debug:
 <ul>-Minor delete function improvement (yes, again)<br>
 -Credits section started
+</ul>
+
+Update 0.7.8.4-debug:
+<ul>-Minor delete function improvement (yes, again, this is not a joke)<br>
+-Credits and settings updated
 </ul>
 
 ## Credits

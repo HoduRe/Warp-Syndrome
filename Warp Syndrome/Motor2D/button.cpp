@@ -42,6 +42,5 @@ bool Button::PostUpdate() {
 }
 
 bool Button::CleanUp() {
-	texture = nullptr;
 	return true;
 }

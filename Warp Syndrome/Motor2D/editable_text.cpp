@@ -3,6 +3,7 @@
 #include "j1GUI.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Console.h"
 
 Editable_Text::Editable_Text(float x, float y, UI* node, float width, bool focus) : UI(x, y, node) {
 	texture_section = { 494, 577, (int)width + 10, 45} ;
@@ -27,8 +28,9 @@ bool Editable_Text::Update(float dt) {
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		text_save = ReturnText();
-		for (int i = 0; i < CHAR_ARRAY - 1; i++) { text[i] = NULL; }
+		App->console->ReceiveText(text);
+		memset(text, NULL, sizeof(text));
+		memset(App->input->text, NULL, sizeof(App->input->text));
 		App->gui->focus = nullptr;
 	}
 	// Move cursor

@@ -62,9 +62,12 @@ bool j1SceneManager::PreUpdate()
 			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP/*button play pressed*/)
 			{
 				//this transition unloads and loads the corresponding ui automatically
-				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_GAME, 2.0f);
-				doingaction = true;
-				currentloop = G_C_INGAME;
+				if (App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+				{
+					App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_GAME, 2.0f);
+					doingaction = true;
+					currentloop = G_C_INGAME;
+				}
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_EXIT/*button quit pressed*/) {
 				ret = false; //this will now quit the game
@@ -120,7 +123,7 @@ bool j1SceneManager::PreUpdate()
 				LoadHUD();//reloads the hud due to ui cleanup
 			}
 			//when the game goes to the menu
-			else if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP)
+			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP)&& App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
 			{
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_MENU, 2.0f);
 				doingaction = true;

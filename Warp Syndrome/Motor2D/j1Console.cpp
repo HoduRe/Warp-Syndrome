@@ -234,7 +234,7 @@ bool j1Console::ReceiveText(const char* text)
 
 	//tries to find a command that matches the input
 	p2List_item<Command*>* item = commands.start;
-	while (item != NULL && !command_sent)
+	while (item != NULL && !command_sent &&separated_words->Count()>0)
 	{
 
 		if (item->data->name == *separated_words->At(0))//command found!
@@ -299,7 +299,7 @@ p2DynArray<p2SString>* j1Console::ReturnWords(const char* text)
 		}
 		else
 		{
-			if (aux.length() > 1)//we do this in case that there are 2 spaces together
+			if (aux.length() > 0)//we do this in case that there are 2 spaces together
 			{
 				p2SString s = (aux.data());
 				list->PushBack(s);

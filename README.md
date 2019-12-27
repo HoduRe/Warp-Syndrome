@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.0.2-debug:
+Up to version 0.8.0.3-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -740,10 +740,16 @@ Update 0.8.0.1-debug
 <ul>-Functionality and volume images added
 </ul>
 
-Update 0.8.0.1-debug
+Update 0.8.0.2-debug
 <ul>-Functionality of editable text added<br>
 -Console creation updated
 </ul>
+
+Update 0.8.0.3-debug
+<ul>-Simplified some function calls on edit text and imput modules<br>
+-Fixed a critical bug that caused the game loop to stall.
+</ul>
+
 
 ## Credits
 

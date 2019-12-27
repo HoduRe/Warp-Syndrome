@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.7.8.4-debug:
+Up to version 0.8.0.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -728,6 +728,12 @@ Update 0.7.8.3-debug:
 Update 0.7.8.4-debug:
 <ul>-Minor delete function improvement (yes, again, this is not a joke)<br>
 -Credits and settings updated
+</ul>
+
+Update 0.8.0.0-debug
+<ul>-Now commands are fully functional, but don't work with editable text imput yet.<br>
+-Major changes on the console module have been made.<br>
+-Added a new function to the App module: NewCap(), changes the capping of the game
 </ul>
 
 ## Credits

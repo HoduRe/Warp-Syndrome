@@ -51,6 +51,8 @@ public:
 
 	
 public:
+	UI* element;
+	uint width, height;
 	GameCycle currentloop;
 	UI_Purpose ui_type;
 	bool doingaction = false;//bool active means the loop is already performing an action/transition

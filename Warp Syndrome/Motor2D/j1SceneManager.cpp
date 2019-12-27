@@ -32,6 +32,8 @@ j1SceneManager::~j1SceneManager()
 // Called before the first frame
 bool j1SceneManager::Start()
 {
+	element = nullptr;
+	App->win->GetWindowSize(width, height);
 	currentloop = G_C_START;//TODO change this to start in the main menu
 	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
 	return true;
@@ -65,11 +67,46 @@ bool j1SceneManager::PreUpdate()
 				ret = false; //this will now quit the game
 			}
 			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings / credit are pressed*/) {
-
+				p2List_item<UI*>* item = App->gui->UI_list.start;
+				while (item != nullptr) {
+					if (item->data->purpose_type == BUTTON_CREDITS) {
+						SDL_Rect measures = { 31, 540, 422, 454 };
+						App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+						element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+						element->listeners.PushBack(this);
+						App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
+					}
+					if (item != nullptr) { item = item->next; }
+				}
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
+				p2List_item<UI*>* item = App->gui->UI_list.start;
+				while (item != nullptr) {
+					if (item->data->purpose_type == BUTTON_CREDITS) {
+						SDL_Rect measures = { 31, 540, 422, 454};
+						App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+						element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+						element->listeners.PushBack(this);
+						App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
+							"Credit goes to Oscar Perez and Ferran-Roger Basart."));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
+							"We know this UI is lame. Just note we are trying."));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
+							"Still, it must be nice."));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
+							"It must be nice."));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
+							"To have the president on our side."));
+						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
+							"If you got that, you are the real cool."));
+						item = nullptr;
+					}
+					if (item != nullptr) { item = item->next; }
+				}
 
 			}
+			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (false/*button continue pressed*/)
 			{
 				//TODO will cause trouble due to the game loop structure
@@ -129,6 +166,8 @@ bool j1SceneManager::PostUpdate() {
 // Called before quitting
 bool j1SceneManager::CleanUp()
 {
+	element = nullptr;
+
 	LOG("Freeing scene");
 
 	return true;
@@ -147,10 +186,7 @@ bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 //Loads all the UI for the main menu
 bool j1SceneManager::LoadMainMenu() {
 
-	UI* element;
-	uint width, height;
 	SDL_Rect texture_rec = { 0, 0, 640, 62 };
-	App->win->GetWindowSize(width, height);
 	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec, true));
 	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec));
 	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));

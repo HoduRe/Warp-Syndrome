@@ -44,7 +44,6 @@ bool Scrollbar::PostUpdate() {
 }
 
 bool Scrollbar::CleanUp() {
-
 	return true;
 }
 

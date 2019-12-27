@@ -153,8 +153,7 @@ bool j1Console::OpenConsole()
 }
 bool j1Console::CloseConsole()
 {
-	App->gui->DeleteWithParent(console_parent);
-	//App->tex->UnLoad(texture);
+	App->gui->DeleteWithParent();
 	console_opened = false;
 	return true;
 }

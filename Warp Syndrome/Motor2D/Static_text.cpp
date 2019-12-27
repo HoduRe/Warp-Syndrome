@@ -33,6 +33,5 @@ bool Static_Text::PostUpdate() {
 }
 
 bool Static_Text::CleanUp() {
-
 	return true;
 }

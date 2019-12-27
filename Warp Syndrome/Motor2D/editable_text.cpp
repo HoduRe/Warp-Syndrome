@@ -53,5 +53,6 @@ bool Editable_Text::PostUpdate() {
 
 bool Editable_Text::CleanUp() {
 	App->tex->UnLoad(text_texture);
+	text_texture = nullptr;
 	return true;
 }

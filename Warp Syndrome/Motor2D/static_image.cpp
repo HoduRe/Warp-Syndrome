@@ -33,6 +33,5 @@ bool Static_Image::PostUpdate() {
 }
 
 bool Static_Image::CleanUp() {
-
 	return true;
 }

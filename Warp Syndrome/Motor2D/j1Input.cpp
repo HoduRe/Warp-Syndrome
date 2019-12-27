@@ -16,7 +16,7 @@ j1Input::j1Input() : j1Module()
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
 	last_focus = 0;
-	for (int i = 0; i < CHAR_ARRAY; i++) { text[i] = NULL; }
+	memset(text,NULL,sizeof(text));
 }
 
 // Destructor
@@ -86,7 +86,7 @@ bool j1Input::PreUpdate()
 		p2List_item<UI*>* i = App->gui->focus;
 		if (text[CHAR_ARRAY-1] != NULL) { SDL_StopTextInput(); }
 		else if (i->data->type == UI_TYPE_EDITABLE_TEXT && i->data != App->gui->UI_list.At(last_focus)->data) {
-			for (int i = 0; i < CHAR_ARRAY; i++) { text[i] = NULL; }
+			memset(text, NULL, sizeof(text));
 			SDL_StartTextInput();
 			last_focus = App->gui->UI_list.find(i->data);
 		}

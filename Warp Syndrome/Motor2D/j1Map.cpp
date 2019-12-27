@@ -291,17 +291,17 @@ bool j1Map::LoadNew(const char* file_name)
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+		//LOG("width: %d height: %d", data.width, data.height); //TODO delete LOG
+		//LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height); //TODO delete LOG
 
 		p2List_item<TileSet*>* item = data.tilesets.start;
 		while (item != NULL)
 		{
 			TileSet* s = item->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
+			//LOG("Tileset ----");//TODO delete LOG
+			//LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);//TODO delete LOG
+			//LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);//TODO delete LOG
+			//LOG("spacing: %d margin: %d", s->spacing, s->margin);//TODO delete LOG
 			item = item->next;
 		}
 
@@ -311,12 +311,12 @@ bool j1Map::LoadNew(const char* file_name)
 		while (item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
+			//LOG("Layer ----"); //TODO delete LOG
+			//LOG("name: %s", l->name.GetString()); //TODO delete LOG
+			//LOG("tile width: %d tile height: %d", l->width, l->height); //TODO delete LOG
 			for (int i = 0; i < l->width * l->height; i++)
 			{
-				LOG("gid(%i): %u", i, l->gid[i]);
+				//LOG("gid(%i): %u", i, l->gid[i]); //TODO deleted LOG
 			}
 			item_layer = item_layer->next;
 		}

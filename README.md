@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.1.2-debug:
+Up to version 0.8.1.3-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -758,6 +758,11 @@ Update 0.8.1.0-debug
 Update 0.8.1.2-debug
 <ul>-Music functions improvement<br>
 -In-game menu functional
+</ul>
+
+Update 0.8.1.3-debug
+<ul>-Removed some unused LOGs to improve performance during debugging.<br>
+-Adjusted maximum capping due to overperformance when deleted the LOGs.
 </ul>
 
 ## Credits

@@ -118,10 +118,10 @@ bool j1GUI::DeleteWithParent() {
 	}
 
 	if (last_parent != nullptr) {
-		int findparent = UI_list.find(last_parent);
+		int findparent = UI_list.find(aux_parent);
 		if (findparent != -1)
 		{
-			item = UI_list.At(UI_list.find(last_parent));//takes the parent
+			item = UI_list.At(UI_list.find(aux_parent));//takes the parent
 			item->data->CleanUp();
 			RELEASE(item->data);
 			UI_list.del(item);

@@ -6,7 +6,7 @@
 class Scrollbar :public UI
 {
 public:
-	Scrollbar(float x, float y, UI* node, float length);
+	Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type);
 	virtual ~Scrollbar();
 
 	bool Update(float dt);

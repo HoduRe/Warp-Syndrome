@@ -48,7 +48,8 @@ public:
 	bool UnloadPauseMenu();
 	bool LoadHUD();
 	bool UnloadHUD();
-
+	// Returns the UI element based on it's purpose_type
+	p2List_item<UI*>* j1SceneManager::GetListElement(UI_Purpose purpose);
 	
 public:
 	UI* element;

@@ -56,7 +56,7 @@ bool j1SceneManager::PreUpdate()
 			App->scene->draw = false;
 			break;
 		case G_C_MAIN_MENU:
-			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||ui_type==UI_Purpose::BUTTON_GAME_LOOP/*button play pressed*/)
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP/*button play pressed*/)
 			{
 				//this transition unloads and loads the corresponding ui automatically
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_GAME, 2.0f);
@@ -67,44 +67,39 @@ bool j1SceneManager::PreUpdate()
 				ret = false; //this will now quit the game
 			}
 			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings / credit are pressed*/) {
-				p2List_item<UI*>* item = App->gui->UI_list.start;
-				while (item != nullptr) {
-					if (item->data->purpose_type == BUTTON_CREDITS) {
-						SDL_Rect measures = { 31, 540, 422, 454 };
-						App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
-						element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
-						element->listeners.PushBack(this);
-						App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
-					}
-					if (item != nullptr) { item = item->next; }
-				}
+				p2List_item<UI*>* item = GetListElement(BUTTON_SETTINGS);
+				SDL_Rect measures = { 31, 540, 422, 454 };
+				App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+				element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+				element->listeners.PushBack(this);
+				App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
+				measures = { 0, 0, 50, 40 };
+				App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures));
+				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_VOLUME));
+				element->listeners.PushBack(this);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
-				p2List_item<UI*>* item = App->gui->UI_list.start;
-				while (item != nullptr) {
-					if (item->data->purpose_type == BUTTON_CREDITS) {
-						SDL_Rect measures = { 31, 540, 422, 454};
-						App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
-						element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
-						element->listeners.PushBack(this);
-						App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
-							"Credit goes to Oscar Perez and Ferran-Roger Basart."));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
-							"We know this UI is lame. Just note we are trying."));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
-							"Still, it must be nice."));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
-							"It must be nice."));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
-							"To have the president on our side."));
-						App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
-							"If you got that, you are the real cool."));
-						item = nullptr;
-					}
-					if (item != nullptr) { item = item->next; }
-				}
-
+				p2List_item<UI*>* item = GetListElement(BUTTON_CREDITS);
+				SDL_Rect measures = { 31, 540, 422, 454 };
+				App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+				element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+				element->listeners.PushBack(this);
+				App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
+					"Credit goes to Oscar Perez and Ferran-Roger Basart."));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
+					"We know this UI is lame. Just note we are trying."));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
+					"Still, it must be nice."));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
+					"It must be nice."));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
+					"To have the president on our side."));
+				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
+					"If you got that, you are the real cool."));
+			}
+			else if (ui_type == UI_Purpose::SCROLLBAR_VOLUME) {
+				p2List_item<UI*>* item = GetListElement(SCROLLBAR_VOLUME);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (false/*button continue pressed*/)
@@ -219,16 +214,6 @@ bool j1SceneManager::UnloadMainMenu()
 //Loads all the UI for the pause menu
 bool j1SceneManager::LoadPauseMenu()
 {
-	//placeholder UI
-	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
-	element->listeners.PushBack(this);
 
 	return true;
 }
@@ -243,16 +228,6 @@ bool j1SceneManager::UnloadPauseMenu()
 //Loads all the UI for the HUD
 bool j1SceneManager::LoadHUD()
 {
-	//placeholder UI
-	UI* element;
-	element = App->gui->AddUIElement(new Button(150, 50, nullptr, BUTTON_GAME_LOOP));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Scrollbar(200, 250, nullptr, 50));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Static_Text(200, 200, nullptr, "Hola Mundo"));
-	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Editable_Text(400, 200, nullptr, 200));
-	element->listeners.PushBack(this);
 	return true;
 }
 
@@ -262,3 +237,12 @@ bool j1SceneManager::UnloadHUD()
 	return true;
 }
 
+p2List_item<UI*>* j1SceneManager::GetListElement(UI_Purpose purpose) {
+	p2List_item<UI*>* item = App->gui->UI_list.start;
+	p2List_item<UI*>* true_item = nullptr;
+	while (item != nullptr) {
+		if (item->data->purpose_type == purpose) { true_item = item; item = nullptr; }
+		if (item != nullptr) { item = item->next; }
+	}
+	return true_item;
+}

@@ -736,6 +736,10 @@ Update 0.8.0.0-debug
 -Added a new function to the App module: NewCap(), changes the capping of the game
 </ul>
 
+Update 0.8.0.1-debug
+<ul>-Functionality and volume images added
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>

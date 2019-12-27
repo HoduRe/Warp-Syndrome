@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 
-Scrollbar::Scrollbar(float x, float y, UI* node, float length) : UI(x, y, node) {
+Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type) : UI(x, y, node) {
 	initial_point = y;
 	max_point = initial_point + length;
 	current_point = y;
@@ -14,6 +14,7 @@ Scrollbar::Scrollbar(float x, float y, UI* node, float length) : UI(x, y, node) 
 	texture_section.h = length + 20;	// max length of 138 + 20 in the atlas (the +20 is the bar height)
 	bar_measures = { 1001, 880, 20, 20 };
 	initial_mouse_pos = -1;
+	purpose_type = secondary_type;
 	type = UI_TYPE_SLIDER;
 }
 

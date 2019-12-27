@@ -32,6 +32,8 @@ j1SceneManager::~j1SceneManager()
 // Called before the first frame
 bool j1SceneManager::Start()
 {
+	element = nullptr;
+	App->win->GetWindowSize(width, height);
 	currentloop = G_C_START;//TODO change this to start in the main menu
 	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
 	return true;
@@ -68,8 +70,19 @@ bool j1SceneManager::PreUpdate()
 
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
+				p2List_item<UI*>* item = App->gui->UI_list.start;
+				while (item != nullptr) {
+					if (item->data->purpose_type == BUTTON_CREDITS) {
+						element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+						element->listeners.PushBack(this);
+						App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
+						item = nullptr;
+					}
+					if (item != nullptr) { item = item->next; }
+				}
 
 			}
+			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (false/*button continue pressed*/)
 			{
 				//TODO will cause trouble due to the game loop structure
@@ -129,6 +142,8 @@ bool j1SceneManager::PostUpdate() {
 // Called before quitting
 bool j1SceneManager::CleanUp()
 {
+	element = nullptr;
+
 	LOG("Freeing scene");
 
 	return true;
@@ -147,10 +162,7 @@ bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 //Loads all the UI for the main menu
 bool j1SceneManager::LoadMainMenu() {
 
-	UI* element;
-	uint width, height;
 	SDL_Rect texture_rec = { 0, 0, 640, 62 };
-	App->win->GetWindowSize(width, height);
 	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec, true));
 	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec));
 	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));

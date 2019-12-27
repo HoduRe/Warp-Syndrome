@@ -44,7 +44,7 @@ bool Scrollbar::PostUpdate() {
 }
 
 bool Scrollbar::CleanUp() {
-
+	texture = nullptr;
 	return true;
 }
 

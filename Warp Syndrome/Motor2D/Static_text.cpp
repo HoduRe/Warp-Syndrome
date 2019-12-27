@@ -33,6 +33,7 @@ bool Static_Text::PostUpdate() {
 }
 
 bool Static_Text::CleanUp() {
-
+	App->tex->UnLoad(texture);
+	texture = nullptr;
 	return true;
 }

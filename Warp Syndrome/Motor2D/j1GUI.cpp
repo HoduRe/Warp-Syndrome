@@ -60,14 +60,7 @@ bool j1GUI::Update(float dt) {
 bool j1GUI::PostUpdate() {
 
 	p2List_item<UI*>* item = UI_list.start;
-	while (item != NULL) {
-		if (item->data->Pressed() == true && item->data->purpose_type == BUTTON_CLOSE_MENU) {
-			DeleteOnParent();
-		}
-		item = item->next;
-	}
 
-	item = UI_list.start;
 	while (item != NULL) {
 		item->data->PostUpdate();
 		item = item->next;
@@ -94,9 +87,10 @@ UI* j1GUI::AddUIElement(UI* UIElement) {
 SDL_Texture* j1GUI::GetAtlas() const { return atlas; }
 
 void j1GUI::DeleteOnParent() {
+	UI* aux_parent = last_parent;
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != nullptr) {
-		if (item->data->parent == last_parent) {
+		if (item->data->parent == aux_parent) {
 			item->data->CleanUp();
 			RELEASE(item->data);
 			UI_list.del(UI_list.At(UI_list.find(item->data)));
@@ -110,9 +104,10 @@ void j1GUI::DeleteOnParent() {
 
 bool j1GUI::DeleteWithParent() {
 	bool ret = true;
+	UI* aux_parent = last_parent;
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != nullptr) {
-		if (item->data->parent == last_parent) {
+		if (item->data->parent == aux_parent) {
 			item->data->CleanUp();
 			RELEASE(item->data);
 			UI_list.del(UI_list.At(UI_list.find(item->data)));
@@ -140,8 +135,9 @@ bool j1GUI::DeleteWithParent() {
 void j1GUI::DeleteAll() {
 	p2List_item<UI*>* item = UI_list.start;
 	while (last_parent != nullptr) {
+		UI* aux_parent = last_parent;
 		while (item != NULL) {
-			if (item->data->parent == last_parent) {
+			if (item->data->parent == aux_parent) {
 				item->data->CleanUp();
 				RELEASE(item->data);
 				UI_list.del(UI_list.At(UI_list.find(item->data)));
@@ -150,7 +146,7 @@ void j1GUI::DeleteAll() {
 			}
 			if (item != nullptr) { item = item->next; }
 		}
-		last_parent = last_parent->parent;
+		if (last_parent != nullptr) { last_parent = last_parent->parent; }
 	}
 	UI_list.clear();
 	focus = nullptr;

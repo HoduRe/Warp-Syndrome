@@ -720,6 +720,11 @@ Update 0.7.8.2-debug:
 <ul>-Minor delete function improvement<br>
 </ul>
 
+Update 0.7.8.3-debug:
+<ul>-Minor delete function improvement (yes, again)<br>
+-Credits section started
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>

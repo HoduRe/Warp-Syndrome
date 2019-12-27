@@ -62,6 +62,8 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 	void ToggleCapping();
+	//changes capping
+	bool NewCap(int cap);
 private:
 
 	// Load config file
@@ -85,6 +87,7 @@ private:
 	// Load / Save
 	bool LoadGameNow();
 	bool SavegameNow() const;
+
 
 public:
 

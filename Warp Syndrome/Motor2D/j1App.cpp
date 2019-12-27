@@ -480,3 +480,34 @@ void j1App::ToggleCapping()
 	if (capping)capping = false;
 	else capping = true;
 }
+
+bool j1App::NewCap(int cap)
+{
+	bool ret = false;
+	if (cap >= 30 && cap <= 120)
+	{
+		new_max_framerate = cap;
+
+		pugi::xml_document	config_file;
+		pugi::xml_node		config;
+		pugi::xml_node		app_config;
+
+		config = LoadConfig(config_file);
+
+		if (config.empty() == false)
+		{
+			app_config = config.child("app");
+			app_config.child("framerate_cap").attribute("value") = cap;
+			ret = true;
+			config_file.save_file("config.xml");
+			config_file.reset();
+		}
+		
+	}
+	else
+	{
+		LOG("ERROR! FPS Capping to %i is out of safe range.", cap);
+		ret = true;
+	}
+	return ret;
+}

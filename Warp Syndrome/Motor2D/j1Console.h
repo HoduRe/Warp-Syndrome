@@ -12,12 +12,15 @@
 class Command
 {
 public:
-	Command(const char* name, j1Module* callback, uint n_arguments);
+	Command(const char* name, j1Module* callback, uint min_n_arguments,uint max_n_arguments);
 	~Command();
+	void CommandCallback(p2DynArray<p2SString>* arguments);
 
-private:
+public:
 	p2SString name;
-	uint n_arguments;
+	uint min_n_arguments;
+	uint max_n_arguments;
+private:
 	j1Module* callback;
 
 };
@@ -44,10 +47,16 @@ public:
 
 	bool OpenConsole();
 	bool CloseConsole();
-	bool CreateCommand(const char* command, j1Module* callback, uint n_arguments);
+	bool CreateCommand(const char* command, j1Module* callback, uint min_n_arguments, uint max_n_arguments);
 
 	bool OnListen(UI* element, UICallbackState state);
-	bool OnCommand(Command* command);
+	bool OnCommand(Command* command, p2DynArray<p2SString>* arguments);
+	bool ReceiveText(const char* text);
+
+	//transforms the letters of a string to their lowercase version
+	p2SString TransformToLower(const char* text);
+	//given a string returns the list of words in that command
+	p2DynArray<p2SString>* ReturnWords(const char* text);
 
 
 private:
@@ -55,6 +64,8 @@ private:
 	p2SString output_text;
 	bool console_opened;
 	UI* console_parent;
+	SDL_Texture* texture;
+	bool quit = false;
 };
 
 #endif // __j1CONSOLE_H__

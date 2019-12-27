@@ -7,6 +7,7 @@
 #define __j1MODULE_H__
 
 #include "p2SString.h"
+#include "p2DynArray.h"
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
@@ -82,7 +83,7 @@ public:
 	{
 		return true;
 	}
-	virtual bool OnCommand(Command* command)
+	virtual bool OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 	{
 		return true;
 	}

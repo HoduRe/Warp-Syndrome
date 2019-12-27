@@ -55,15 +55,15 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	float music_volume = 0.0f;
+	float fx_volume = 0.0f;
+
 private:
 	//--------AUDIO---------//
 	//Pointer to the level's track
 	_Mix_Music* music;
 	//List to all sound effects
 	p2List<Mix_Chunk*>	fx;
-
-	float music_volume=0.0f;
-	float fx_volume=0.0f;
 };
 
 #endif // __j1AUDIO_H__

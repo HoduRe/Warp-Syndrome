@@ -82,8 +82,13 @@ bool j1SceneManager::PreUpdate()
 				App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
 				measures = { 0, 0, 50, 40 };
 				App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures));
-				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_VOLUME));
+				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_MUSIC));
 				element->listeners.PushBack(this);
+				App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), item->data, App->tex->Load("textures/volume_high.png"), &measures));
+				App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), item->data, App->tex->Load("textures/sfx.png"), &measures));
+				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), item->data, 138, SCROLLBAR_SFX));
+				element->listeners.PushBack(this);
+				App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), item->data, App->tex->Load("textures/sfx_high.png"), &measures));
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
 				p2List_item<UI*>* item = GetListElement(BUTTON_CREDITS);
@@ -104,9 +109,6 @@ bool j1SceneManager::PreUpdate()
 					"To have the president on our side."));
 				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
 					"If you got that, you are the real cool."));
-			}
-			else if (ui_type == UI_Purpose::SCROLLBAR_VOLUME) {
-				p2List_item<UI*>* item = GetListElement(SCROLLBAR_VOLUME);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (false/*button continue pressed*/)

@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 
 Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type) : UI(x, y, node) {
 	initial_point = y;
@@ -16,6 +17,8 @@ Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose second
 	initial_mouse_pos = -1;
 	purpose_type = secondary_type;
 	type = UI_TYPE_SLIDER;
+	if (secondary_type == SCROLLBAR_MUSIC) { current_point = (App->audio->music_volume * max_point / 100) + initial_point; }
+	else if (secondary_type == SCROLLBAR_SFX) { current_point = (App->audio->fx_volume * max_point / 100) + initial_point; }
 }
 
 Scrollbar::~Scrollbar() {
@@ -37,6 +40,18 @@ bool Scrollbar::Update(float dt) {
 }
 
 bool Scrollbar::PostUpdate() {
+
+	if (purpose_type == SCROLLBAR_MUSIC) {
+		int volume = (current_point - initial_point) * 100 / (max_point - initial_point);
+		App->audio->music_volume = volume;
+		App->audio->SetVolume(volume, 0);
+	}
+	else if (purpose_type == SCROLLBAR_SFX) {
+		int volume = (current_point - initial_point) * 100 / (max_point - initial_point);
+		App->audio->fx_volume = volume;
+		App->audio->SetVolume(volume, 1);
+	}
+
 
 	App->render->Blit(texture, position.x, position.y, &texture_section,false,0.0f,0.0f,0.0f,0.0f);
 	App->render->Blit(texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);

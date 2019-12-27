@@ -210,9 +210,11 @@ void j1Audio::SetVolume(float volume,int flag)
 	switch (flag)
 	{
 	case MUSIC:
+		music_volume = aux_volume;
 		Mix_VolumeMusic(aux_volume);
 		break;
 	case FX:
+		fx_volume = aux_volume;
 		Mix_Volume(-1, aux_volume);
 		break;
 	case MUSIC_AND_FX:
@@ -257,3 +259,7 @@ void j1Audio::AddVolume(float volume, int flag)
 	}
 
 }
+
+float j1Audio::GetMusic() { return music_volume; }
+
+float j1Audio::GetFX() { return fx_volume; }

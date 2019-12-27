@@ -17,8 +17,8 @@ Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose second
 	initial_mouse_pos = -1;
 	purpose_type = secondary_type;
 	type = UI_TYPE_SLIDER;
-	if (secondary_type == SCROLLBAR_MUSIC) { current_point = (App->audio->music_volume * max_point / 100) + initial_point; }
-	else if (secondary_type == SCROLLBAR_SFX) { current_point = (App->audio->fx_volume * max_point / 100) + initial_point; }
+	if (secondary_type == SCROLLBAR_MUSIC) { current_point = (App->audio->GetMusic() * max_point / 100) + initial_point; }
+	else if (secondary_type == SCROLLBAR_SFX) { current_point = (App->audio->GetFX() * max_point / 100) + initial_point; }
 }
 
 Scrollbar::~Scrollbar() {
@@ -43,12 +43,10 @@ bool Scrollbar::PostUpdate() {
 
 	if (purpose_type == SCROLLBAR_MUSIC) {
 		int volume = (current_point - initial_point) * 100 / (max_point - initial_point);
-		App->audio->music_volume = volume;
 		App->audio->SetVolume(volume, 0);
 	}
 	else if (purpose_type == SCROLLBAR_SFX) {
 		int volume = (current_point - initial_point) * 100 / (max_point - initial_point);
-		App->audio->fx_volume = volume;
 		App->audio->SetVolume(volume, 1);
 	}
 

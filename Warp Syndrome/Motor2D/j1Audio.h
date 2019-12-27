@@ -41,6 +41,10 @@ public:
 	//For the flags use -1 for both channels, 0 for just music and 1 for just FX, or use the "Audio_Flags" enum as a value.
 	void SetVolume(float volume,int flag=-1);
 
+	float GetMusic();
+
+	float GetFX();
+
 	//Adds a volume to the current volume value. 
 	//For the flags use -1 for both channels, 0 for just music and 1 for just FX, or use the "Audio_Flags" enum as a value.
 	void AddVolume(float volume, int flag = -1);
@@ -55,15 +59,14 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
-	float music_volume = 0.0f;
-	float fx_volume = 0.0f;
-
 private:
 	//--------AUDIO---------//
 	//Pointer to the level's track
 	_Mix_Music* music;
 	//List to all sound effects
 	p2List<Mix_Chunk*>	fx;
+	float music_volume = 0.0f;
+	float fx_volume = 0.0f;
 };
 
 #endif // __j1AUDIO_H__

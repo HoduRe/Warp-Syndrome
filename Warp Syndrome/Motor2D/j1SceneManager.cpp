@@ -222,6 +222,20 @@ bool j1SceneManager::UnloadMainMenu()
 //Loads all the UI for the pause menu
 bool j1SceneManager::LoadPauseMenu()
 {
+	SDL_Rect measures = { 31, 540, 422, 454 };
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures));
+	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, nullptr, BUTTON_CLOSE_MENU));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, nullptr, "Go Back"));
+	measures = { 0, 0, 50, 40 };
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures));
+	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), nullptr, 138, SCROLLBAR_MUSIC));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), nullptr, App->tex->Load("textures/volume_high.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), nullptr, App->tex->Load("textures/sfx.png"), &measures));
+	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), nullptr, 138, SCROLLBAR_SFX));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), nullptr, App->tex->Load("textures/sfx_high.png"), &measures));
 
 	return true;
 }

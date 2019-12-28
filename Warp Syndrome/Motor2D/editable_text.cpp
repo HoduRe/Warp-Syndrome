@@ -41,17 +41,25 @@ bool Editable_Text::Update(float dt) {
 bool Editable_Text::PostUpdate() {
 
 	// Measurements
-	text_texture = App->font->Print(text,max_width, {255,255,255,255}, font);
-	App->font->CalcSize(text, rect.w, rect.h,max_width);
-	texture_section.h = rect.h + 10;
-//	cursor.x	Calculate the new x
-	cursor.h = rect.h;
+	text_texture = App->font->Print(text, max_width, {255,255,255,255}, font);
+	App->font->CalcSize(text, rect.w, rect.h, max_width);
+//	texture_section.h = rect.h + 10;
+	char cursor_distance[CHAR_ARRAY];
+	memset(cursor_distance, NULL, sizeof(cursor_distance));
+	int i = 0, cursor_aux = App->input->GetCursor();
+	while (i < cursor_aux+1) {
+		cursor_distance[i] = App->input->text[i];
+		i++;
+	}
+	App->font->CalcSize(text, cursor.x, cursor.h, max_width);
+
+	cursor.x += position.x;
 
 	// Blits
 	/*if (Hover()) { App->render->Blit(hover_texture, position.x - 5, position.y - 5, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }
 	else { App->render->Blit(texture, position.x - 5, position.y - 5, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }*/
 	App->render->Blit(text_texture, position.x, position.y, &rect,false,0.0f,0.0f,0.0f,0.0f);
-	App->render->DrawQuad(cursor, 255, 255, 255);
+	App->render->DrawQuad(cursor, 255, 255, 255, 255, true, false);
 	
 	App->tex->UnLoad(text_texture);
 

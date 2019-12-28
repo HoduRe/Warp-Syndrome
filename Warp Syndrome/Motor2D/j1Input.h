@@ -26,6 +26,13 @@ enum j1KeyState
 	KEY_UP
 };
 
+enum InputReadingState {
+	READING_NONE,
+	READING_START,
+	READING_ONGOING,
+	READING_STOP
+};
+
 class j1Input : public j1Module
 {
 
@@ -69,17 +76,24 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
+	// Adds a letter wherever the cursor is
+	void AddLetter(char newchar);
+
+	// Returns the cursor
+	int GetCursor();
+
 	char text[CHAR_ARRAY];
 
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	InputReadingState state;
+	int			cursor;
 	int			mouse_motion_x;
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
-	int			last_focus;
 };
 
 #endif // __j1INPUT_H__

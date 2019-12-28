@@ -15,7 +15,6 @@ j1Input::j1Input() : j1Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
-	last_focus = 0;
 	memset(text,NULL,sizeof(text));
 }
 
@@ -45,6 +44,8 @@ bool j1Input::Awake(pugi::xml_node& config)
 bool j1Input::Start()
 {
 	SDL_StopTextInput();
+	cursor = -1;
+	state = READING_NONE;
 	return true;
 }
 
@@ -82,20 +83,62 @@ bool j1Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
-	if (App->gui->focus != nullptr) {
-		p2List_item<UI*>* i = App->gui->focus;
-		if (text[CHAR_ARRAY-1] != NULL) { SDL_StopTextInput(); }
-		else if (i->data->type == UI_TYPE_EDITABLE_TEXT && i->data != App->gui->UI_list.At(last_focus)->data) {
-			memset(text, NULL, sizeof(text));
-			SDL_StartTextInput();
-			last_focus = App->gui->UI_list.find(i->data);
+	if (text[CHAR_ARRAY - 2] != NULL) { state = READING_STOP; }
+	switch (state) {
+	case READING_NONE:
+		if (App->gui->focus != nullptr) {
+			if (App->gui->focus->data->type == UI_TYPE_EDITABLE_TEXT && state == READING_NONE) {
+				state = READING_START;
+				cursor = -1;
+			}
 		}
-		else if (i->data->type == UI_TYPE_EDITABLE_TEXT && last_focus != App->gui->UI_list.find(i->data)) {
-			SDL_StopTextInput();
-			last_focus = App->gui->UI_list.find(i->data);
+		break;
+	case READING_START:
+		memset(text, NULL, sizeof(text));
+		SDL_StartTextInput();
+		state = READING_ONGOING;
+		if (App->gui->focus != nullptr) {
+			if (App->gui->focus->data->type != UI_TYPE_EDITABLE_TEXT) { state = READING_STOP; }
+		} else { state = READING_STOP; }
+		break;
+	case READING_ONGOING:
+		if (GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) { state = READING_STOP; }
+		else if (GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && cursor != -1) {
+			cursor--;
 		}
+		else if (GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && cursor != CHAR_ARRAY-2 && text[cursor+1] != NULL) {
+			cursor++;
+		}
+		else if (GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && cursor != -1) {
+			int i = cursor;
+			text[cursor] = NULL;
+			while (text[i + 1] != NULL) {
+				text[i] = text[i + 1];
+				i++;
+			}
+			text[i] = NULL;
+			cursor--;
+		}
+		else if (GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN && text[cursor+1] != NULL) {
+			int i = cursor+1;
+			text[i] = NULL;
+			while (text[i + 1] != NULL) {
+				text[i] = text[i + 1];
+				i++;
+			}
+			text[i] = NULL;
+		}
+		if (App->gui->focus != nullptr) {
+			if (App->gui->focus->data->type != UI_TYPE_EDITABLE_TEXT) { state = READING_STOP; }
+		} else { state = READING_STOP; }
+		break;
+	case READING_STOP:
+		SDL_StopTextInput();
+		state = READING_NONE;
+		break;
 	}
 
+	int i = 0;
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -105,16 +148,10 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_TEXTINPUT:
-				if (event.text.text != nullptr) {
-					int i = 0, j = 0;
-					while (event.text.text[i] != NULL) {
-						if (text[j] == NULL) {
-							text[j] = event.text.text[i];
-							i++;
-						}
-						j++;
-					}
+				while (event.text.text[i] != NULL) {
+					i++;
 				}
+				AddLetter(event.text.text[i - 1]);
 				break;
 
 			case SDL_WINDOWEVENT:
@@ -186,3 +223,20 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	x = mouse_motion_x;
 	y = mouse_motion_y;
 }
+
+void j1Input::AddLetter(char newchar) {
+	if (text[cursor+1] == NULL) {
+		text[cursor+1] = newchar;
+	}
+	else{
+		int length = CHAR_ARRAY-1;
+		while (length != cursor) {
+			text[length] = text[length-1];
+			length--;
+		}
+		text[cursor+1] = newchar;
+	}
+	cursor++;
+}
+
+int j1Input::GetCursor() { return cursor; }

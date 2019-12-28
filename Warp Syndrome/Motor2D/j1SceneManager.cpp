@@ -88,7 +88,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_PAUSE_MENU:
 			//when the game unpauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
 				App->paused = false;
 				currentloop = G_C_INGAME;
 				UnloadPauseMenu();
@@ -106,7 +106,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_INGAME:
 			//when the game pauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
 				App->paused = true;
 				currentloop = G_C_PAUSE_MENU;
 				LoadPauseMenu();
@@ -260,11 +260,38 @@ bool j1SceneManager::LoadCredits()
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
 		"Credit goes to Oscar Perez and Ferran-Roger Basart.\n"
-		"We know this UI is lame. Just note we are trying.\n"
-		"Still, it must be nice.\n"
-		"It must be nice.\n"
-		"To have the president on our side.\n"
-		"If you got that, you are the real cool.\n"
+		"License:\n"
+		"SDL license :\n"
+		"Simple DirectMedia Layer\n"
+		"Copyright(C) 1997 - 2016 Sam Lantinga <slouken@libsdl.org>\n"
+		"SDL_image : An example image loading library for use with SDL\n"
+		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
+		"SDL_mixer : An audio mixer library based on the SDL library\n"
+		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
+
+		"This software is provided 'as-is', without any express or implied\n"
+		"warranty.In no event will the authors be held liable for any damages\n"
+		"arising from the use of this software.\n"
+
+		"Permission is granted to anyone to use this software for any purpose,\n"
+		"including commercial applications, and to alter it and redistribute it\n"
+		"freely, subject to the following restrictions :\n"
+
+		"1. The origin of this software must not be misrepresented; you must not\n"
+		"claim that you wrote the original software.If you use this software\n"
+		"in a product, an acknowledgment in the product documentation would be\n"
+		"appreciated but is not required.\n"
+		"2. Altered source versions must be plainly marked as such, and must not be\n"
+		"misrepresented as being the original software.\n"
+		"3. This notice may not be removed or altered from any source distribution.\n"
+
+		"Now that all of this is out of the way, real talk.\n"
+		"Our UI might no be the best, alas I disgress, at least it feels fun and fresh\n"
+		"The game, the UI a is mess\n"
+		"We have the honor to be your obedient developers.\n"
+		"O-dot-P\n"
+		"F-dot-B\n"
+		"Now for real, if you got this one, you're the real cool.\n"
 		, 800));
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
 	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,

@@ -21,8 +21,8 @@ public:
 
 private:
 	SDL_Texture* text_texture;
-	SDL_Rect rect;
 	SDL_Rect cursor;
+	SDL_Rect rect;
 	_TTF_Font* font;
 	char text[CHAR_ARRAY];
 	p2SString text_save;

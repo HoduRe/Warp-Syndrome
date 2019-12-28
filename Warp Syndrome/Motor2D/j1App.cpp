@@ -235,13 +235,18 @@ void j1App::FinishUpdate()
 	else
 	{
 		int coins = -1;
-		if (App->entity_m->player != nullptr)coins = App->entity_m->player->coins;//TODO delete these 2 lines of code, they are made for debugging purposes
+		int lives = -1;
+		if (App->entity_m->player != nullptr)
+		{
+			coins = App->entity_m->player->coins;//TODO delete these 2 lines of code, they are made for debugging purposes
+			lives = App->entity_m->player->lives;
+		}
 
-		p2SString title("--Warp Syndrome-- Map:%dx%d Tiles:%dx%d Tilesets:%d Name: %s Coins: %i",
+		p2SString title("--Warp Syndrome-- Map:%dx%d Tiles:%dx%d Tilesets:%d Name: %s Coins: %i Lives: %i",
 			App->map->data.width, App->map->data.height,
 			App->map->data.tile_width, App->map->data.tile_height,
 			App->map->data.tilesets.count(), App->map->data.name.GetString(),
-			coins);
+			coins,lives);
 		App->win->SetTitle(title.GetString());
 	}
 	//p2SString previoustitle = SDL_GetWindowTitle(win->window);

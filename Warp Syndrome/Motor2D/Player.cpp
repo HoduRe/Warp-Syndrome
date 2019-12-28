@@ -80,19 +80,15 @@ bool Player::Start()
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
 	currentAnim = defaultanim;
 
-	current_state = IDLE;
-	run_counter = 0.0f;
-	jump_timer = 0.0f;
-	wall_jump_timer = 0.0f;
-	wall_jump = SST_IDLE;
-	x_jumping_state = JST_IDLE;
-	y_jumping_state = JST_UNKNOWN_Y;
+	ResetStates();
 	playerdoc.reset();
 	return ret;
 }
 
 bool Player::PreUpdate()
 {
+	if(lives<=0)
+	App->level_m->RestartGame();
 
 	//Logic to spawn the grenade
 	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
@@ -432,11 +428,16 @@ void Player::CheckCollisions() {
 	if (current_state != DYING && (App->collision->DeathColliderTouched() == true || pos.y - hitbox_w_h.y > App->map->data.height * App->map->data.tile_height) || App->entity_m->kill == true) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
+		lives--;
 	}
 	if (current_state == DYING) {
 		App->entity_m->kill = false;
 		if (currentAnim->data->GetAnimationFinish()) { 
-			App->level_m->RestartLevel();
+			
+			if (lives > 0)
+				App->level_m->RestartLevel();
+			else
+				App->level_m->RestartGame();
 		}
 	}
 	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
@@ -817,3 +818,21 @@ void Player::GodMode(float dt) {
 		pos.y += (speed.y * dt) * 4;
 	}
 }
+void Player::ResetStates()
+{
+	coins = 0;
+	lives = 3;
+	score = 0;
+	grenadecooldown = 0.0f;
+	run_counter = 0.0f;
+	jump_timer = 0.0f;
+	wall_jump_timer = 0.0f;
+	wall_jump = SST_IDLE;
+	x_jumping_state = JST_IDLE;
+	y_jumping_state = JST_UNKNOWN_Y;
+	grenade = false;
+	throwinggrenade = false;
+	current_state = IDLE;
+	bufferlaststate = NONE;
+}
+

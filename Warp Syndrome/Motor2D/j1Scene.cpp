@@ -108,6 +108,9 @@ bool j1Scene::Update(float dt)
 		App->audio->AddVolume(60.0f*dt);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_KP_7) == KEY_DOWN)
+		App->entity_m->player->lives--;
+
 	//TODO delete debug coin key
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
 		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });

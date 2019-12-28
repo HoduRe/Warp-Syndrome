@@ -60,12 +60,12 @@ public:
 	//given a string returns the list of words in that command
 	p2DynArray<p2SString>* ReturnWords(const char* text);
 
-
+public:
+	bool console_opened;
 private:
 	p2List<Command*> commands;
 	p2SString output_text;
 	Static_Text* outputbox;
-	bool console_opened;
 	UI* console_parent;
 	SDL_Texture* texture;
 	SDL_Rect outputrect;

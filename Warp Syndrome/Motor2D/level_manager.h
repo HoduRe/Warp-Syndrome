@@ -32,10 +32,12 @@ public:
 	bool CleanUp();
 
 	bool RestartLevel();
+	bool RestartGame();
 	bool ChangeToNextLevel();
 	bool ChangeToLevel1();
 	bool ChangeToLevel2();
 	bool RestartLevelObjects();
+	bool RestartGameObjects();
 	bool Go_To_Next_Lvl();
 
 	//Save/Load

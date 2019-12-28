@@ -55,7 +55,6 @@ public:
 	p2List_item<UI*>* j1SceneManager::GetListElement(UI_Purpose purpose);
 	
 public:
-	j1Timer ingame_time;//TODO implement this
 	UI* element;
 	uint width, height;
 	GameCycle currentloop;

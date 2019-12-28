@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.6.1-debug:
+Up to version 0.8.6.2-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -807,6 +807,12 @@ Update 0.8.6.0-debug
 
 Update 0.8.6.1-debug
 <ul>-Added score to the player. Adds +150 when collecting a coin, +300 when killing an enemy and +1000 when finishing the level
+</ul>
+
+Update 0.8.6.2-debug
+<ul>-Now the score, lives, coins and time are saved into saves.xml<br>
+-Now images can make callbacks when clicked.<br>
+-Added a new image in the menu
 </ul>
 
 ## Credits

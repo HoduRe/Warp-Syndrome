@@ -77,9 +77,13 @@ bool UI::Hover() {
 //calls all the listeners with information of this Ui element
 bool UI::CallListeners(UICallbackState state)
 {
-	for (int i = 0; i <= listeners.Count()-1; i++)
+	if (listeners.Count() > 0) 
 	{
-		if (listeners[i] != NULL)listeners[i]->OnListen(this, state);
+		for (int i = 0; i <= listeners.Count() - 1; i++)
+		{
+			if (listeners[i] != NULL)
+				listeners[i]->OnListen(this, state);
+		}
 	}
 	return true;
 }

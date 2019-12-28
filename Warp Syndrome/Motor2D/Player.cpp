@@ -80,6 +80,7 @@ bool Player::Start()
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
 	currentAnim = defaultanim;
 
+	ingame_time = 0.0f;
 	ResetStates();
 	playerdoc.reset();
 	return ret;
@@ -133,6 +134,7 @@ bool Player::PreUpdate()
 }
 bool Player::Update(float dt)
 {
+	ingame_time += dt;
 	if (grenadecooldown > 0.0f)
 		grenadecooldown -= dt;
 
@@ -188,6 +190,10 @@ bool Player::CleanUp()
 bool Player::Load(pugi::xml_node& data)
 {
 	coins = data.attribute("coins").as_int(0);
+	score = data.attribute("score").as_int(0);
+	lives = data.attribute("lives").as_int(3);
+	ingame_time= data.attribute("ingame_time").as_float(0.0f);
+
 	return true;
 }
 bool Player::Save(pugi::xml_node& data) const
@@ -195,6 +201,10 @@ bool Player::Save(pugi::xml_node& data) const
 
 	data.append_attribute("state") = int(current_state);
 	data.append_attribute("coins") = coins;
+	data.append_attribute("score") = score;
+	data.append_attribute("lives") = lives;
+	data.append_attribute("ingame_time") = ingame_time;
+
 	return true;
 }
 

@@ -80,19 +80,16 @@ bool Player::Start()
 	p2List_item<Animations*>* defaultanim = animations_list.start->data->GetAnimFromName("idle", &animations_list);
 	currentAnim = defaultanim;
 
-	current_state = IDLE;
-	run_counter = 0.0f;
-	jump_timer = 0.0f;
-	wall_jump_timer = 0.0f;
-	wall_jump = SST_IDLE;
-	x_jumping_state = JST_IDLE;
-	y_jumping_state = JST_UNKNOWN_Y;
+	ingame_time = 0.0f;
+	ResetStates();
 	playerdoc.reset();
 	return ret;
 }
 
 bool Player::PreUpdate()
 {
+	if (lives <= 0)
+		App->level_m->RestartGame();
 
 	//Logic to spawn the grenade
 	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
@@ -137,6 +134,7 @@ bool Player::PreUpdate()
 }
 bool Player::Update(float dt)
 {
+	ingame_time += dt;
 	if (grenadecooldown > 0.0f)
 		grenadecooldown -= dt;
 
@@ -161,7 +159,7 @@ bool Player::PostUpdate()
 {
 	if (currentframe != NULL)
 		App->render->Blit(texture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
-	if (throwinggrenade && App->dt!=0.0f)
+	if (throwinggrenade && App->dt != 0.0f)
 	{
 		int x1 = pos.x;
 		int y1 = pos.y - (hitbox_w_h.y / 2);
@@ -171,7 +169,7 @@ bool Player::PostUpdate()
 		x2 -= App->render->camera.x;
 		y2 -= App->render->camera.y;
 
-		if (App->entity_m->grenade!=nullptr||grenadecooldown>0.0f)
+		if (App->entity_m->grenade != nullptr || grenadecooldown > 0.0f)
 			App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
 		else App->render->DrawLine(x1, y1, x2, y2, 0, 255, 0, 255);
 	}
@@ -192,6 +190,10 @@ bool Player::CleanUp()
 bool Player::Load(pugi::xml_node& data)
 {
 	coins = data.attribute("coins").as_int(0);
+	score = data.attribute("score").as_int(0);
+	lives = data.attribute("lives").as_int(3);
+	ingame_time= data.attribute("ingame_time").as_float(0.0f);
+
 	return true;
 }
 bool Player::Save(pugi::xml_node& data) const
@@ -199,6 +201,10 @@ bool Player::Save(pugi::xml_node& data) const
 
 	data.append_attribute("state") = int(current_state);
 	data.append_attribute("coins") = coins;
+	data.append_attribute("score") = score;
+	data.append_attribute("lives") = lives;
+	data.append_attribute("ingame_time") = ingame_time;
+
 	return true;
 }
 
@@ -432,14 +438,25 @@ void Player::CheckCollisions() {
 	if (current_state != DYING && (App->collision->DeathColliderTouched() == true || pos.y - hitbox_w_h.y > App->map->data.height * App->map->data.tile_height) || App->entity_m->kill == true) {
 		current_state = DYING;
 		App->audio->PlayFx(App->scene->death_sfx, 0);
+		lives--;
 	}
 	if (current_state == DYING) {
 		App->entity_m->kill = false;
-		if (currentAnim->data->GetAnimationFinish()) { 
-			App->level_m->RestartLevel();
+		if (currentAnim->data->GetAnimationFinish()) {
+
+			if (lives > 0)
+				App->level_m->RestartLevel();
+			else
+				App->level_m->RestartGame();
 		}
 	}
-	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
+	if (App->collision->DoorColliderTouched() == true)
+	{
+		if (App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			score += 1000;
+		App->level_m->ChangeToNextLevel();
+		
+	}
 }
 
 void Player::MovePlayer(float dt) {
@@ -500,11 +517,11 @@ void Player::JumpMoveX(float dt) {
 
 
 			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0.0f) {
-				pos.x += -wall_jump_timer*(speed.x*dt);
+				pos.x += -wall_jump_timer * (speed.x * dt);
 				wall_jump_timer -= dt;
 			}
 			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0.0f) {
-				pos.x += wall_jump_timer*(speed.x*dt);
+				pos.x += wall_jump_timer * (speed.x * dt);
 				wall_jump_timer -= dt;
 			}
 			break;
@@ -534,7 +551,7 @@ void Player::JumpMoveY(float dt) {
 	case JST_GOING_UP:
 		if (jump_timer >= 0.0f && jump_timer < 1.0f) {
 			jump_timer += dt;
-			pos.y += (-speed.y * dt) + jump_timer*(speed.y * dt);
+			pos.y += (-speed.y * dt) + jump_timer * (speed.y * dt);
 		}
 		else { jump_timer = 1.0f; y_jumping_state = JST_GOING_DOWN; }
 		break;
@@ -547,9 +564,11 @@ void Player::JumpMoveY(float dt) {
 			y_jumping_state = JST_UNKNOWN_Y;
 			jump_timer = 0.0f;
 		}
-		else if (jump_timer <=2.0f) {
+		else if (jump_timer <= 2.0f) {
 			if (jump_timer > 0.0f)
-			{ jump_timer -= dt; }
+			{
+				jump_timer -= dt;
+			}
 			pos.y += (speed.y * dt) - jump_timer * (speed.y * dt);
 		}
 		break;
@@ -817,3 +836,21 @@ void Player::GodMode(float dt) {
 		pos.y += (speed.y * dt) * 4;
 	}
 }
+void Player::ResetStates()
+{
+	coins = 0;
+	lives = 3;
+	score = 0;
+	grenadecooldown = 0.0f;
+	run_counter = 0.0f;
+	jump_timer = 0.0f;
+	wall_jump_timer = 0.0f;
+	wall_jump = SST_IDLE;
+	x_jumping_state = JST_IDLE;
+	y_jumping_state = JST_UNKNOWN_Y;
+	grenade = false;
+	throwinggrenade = false;
+	current_state = IDLE;
+	bufferlaststate = NONE;
+}
+

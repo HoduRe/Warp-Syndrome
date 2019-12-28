@@ -80,6 +80,8 @@ bool j1SceneManager::PreUpdate()
 				LoadCredits();
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
+			else if(ui_type==UI_Purpose::PURPOSE_UNSPECIFIED)
+			{ShellExecuteA(NULL, "open", "https://www.youtube.com/watch?v=7QSfebF5dRQ", NULL , NULL , SW_SHOWNORMAL);}
 			else if (false/*button continue pressed*/)
 			{
 				//TODO will cause trouble due to the game loop structure
@@ -179,7 +181,10 @@ bool j1SceneManager::LoadMainMenu() {
 	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings",800));
 	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits",800));
 	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit",800));
-
+	texture_rec = {0,0,131,128};
+	element = App->gui->AddUIElement(new Static_Image(100, 600, nullptr, App->tex->Load("textures/github_logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
+	element->listeners.PushBack(this);
+	
 	return true;
 }
 

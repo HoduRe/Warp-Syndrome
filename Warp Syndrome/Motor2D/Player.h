@@ -130,11 +130,17 @@ public:
 	// changes godmode based on what is being requested
 	void SetGodmode(bool state);
 
+	void ResetStates();
+
 public:
 	state_list current_state;
 	iPoint throwgrenade_vec;
 	float grenadecooldown = 0.0f;
 	int coins = 0;
+	int lives = 3;
+	int score = 0;
+	float ingame_time=0.0f;//TODO implement this
+
 
 private:
 	pugi::xml_document playerdoc;
@@ -156,4 +162,3 @@ private:
 
 
 #endif // !__PLAYER_H__
-

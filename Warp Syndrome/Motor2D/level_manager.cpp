@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
+#include "j1SceneManager.h"
 #include "Player.h"
 
 
@@ -70,6 +71,12 @@ bool j1LevelManager::Save(pugi::xml_node& ldata) const
 bool j1LevelManager::RestartLevel()
 {
 	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 2.0f);
+	return true;
+}
+bool j1LevelManager::RestartGame()
+{
+	App->transitions->ChangeTransition(TM_RESTART_GAME, 2.0f);
+	App->scene_manager->doingaction = true;
 	return true;
 }
 bool j1LevelManager::ChangeToNextLevel()
@@ -146,6 +153,16 @@ bool j1LevelManager::RestartLevelObjects()
 	//TODO reload entites of the map
 	App->render->camera.x = -(App->entity_m->player->pos.x - (App->render->camera.w / 2));
 	App->render->camera.y = -(App->entity_m->player->pos.y - (App->render->camera.h / 2));
+	return true;
+}
+
+bool j1LevelManager::RestartGameObjects()
+{
+	current_level = level_list.start;
+	App->map->ReloadMap(current_level->data->overworld.GetString());
+	RestartLevelObjects();
+	App->entity_m->player->ResetStates();
+	
 	return true;
 }
 

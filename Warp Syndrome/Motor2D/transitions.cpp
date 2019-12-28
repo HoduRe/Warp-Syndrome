@@ -9,6 +9,7 @@
 #include "j1Scene.h"
 #include "transitions.h"
 #include "j1Render.h"
+#include "j1Console.h"
 
 j1Transitions::j1Transitions() 
 {
@@ -212,7 +213,50 @@ bool j1Transitions::PostUpdate()
 		case TS_UNKNOWN:
 			break;
 		}
-		
+		break;
+	case TM_RESTART_GAME:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_seconds_length, deltatime))
+			{
+				actual_state = TS_BLACK_SCREEN;
+			}
+			break;
+		case TS_BLACK_SCREEN:
+			BlackScreen();
+			App->paused = true;	
+			App->level_m->RestartGameObjects();
+			if (App->console->console_opened)
+				App->console->CloseConsole();
+
+			App->gui->DeleteAll();//TODO just unload all the UI
+			App->scene_manager->LoadMainMenu();
+			App->scene_manager->currentloop = GameCycle::G_C_MAIN_MENU;
+			App->scene_manager->doingaction = false;
+			App->scene->draw = false;
+			actual_state = TS_FADE_IN;
+			App->audio->PlayMusic("audio/music/menu_music.ogg");//TODO load this from somewhere
+
+			actual_state = TS_FADE_IN;
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_seconds_length, deltatime))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+
+		case TS_FINISHED:
+			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		}
 		break;
 	case TM_UNKNOWN:
 		break;

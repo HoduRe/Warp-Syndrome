@@ -28,7 +28,8 @@ bool Static_Image::Update(float dt) {
 }
 
 bool Static_Image::PostUpdate() {
-
+	if (Pressed())
+		CallListeners(UI_CALLBACK_CLICKED);
 	if (render_print == true) { SDL_RenderCopy(App->render->renderer, texture, NULL, NULL); }
 	else if (!renderasrect) { App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }
 	else App->render->DrawQuad(texture_section, rect_color.r, rect_color.g, rect_color.b, rect_color.a, true, false);

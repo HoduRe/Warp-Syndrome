@@ -12,8 +12,8 @@
 	<pathfinding />
 	<entity_m>
 		<Entity type="1">
-			<pos x="2003.54395" y="1568" />
-			<properties health="0" state="1" coins="4" />
+			<pos x="1334.75" y="1760" />
+			<properties health="0" state="2" coins="4" score="600" lives="2" ingame_time="20.8545036" />
 		</Entity>
 		<Entity type="6">
 			<pos x="5232" y="496" />
@@ -317,6 +317,6 @@
 	<console />
 	<transitions />
 	<renderer>
-		<camera x="-1389" y="-1069" />
+		<camera x="-916" y="-1248" />
 	</renderer>
 </game_state>

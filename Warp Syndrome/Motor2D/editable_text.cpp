@@ -41,8 +41,8 @@ bool Editable_Text::Update(float dt) {
 bool Editable_Text::PostUpdate() {
 
 	// Measurements
-	text_texture = App->font->Print(text, {}, font);
-	App->font->CalcSize(text, rect.w, rect.h);
+	text_texture = App->font->Print(text,max_width, {}, font);
+	App->font->CalcSize(text, rect.w, rect.h,max_width);
 	texture_section.h = rect.h + 10;
 //	cursor.x	Calculate the new x
 	cursor.h = rect.h;

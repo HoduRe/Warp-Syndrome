@@ -143,14 +143,15 @@ bool j1Console::OpenConsole()
 	UI* element;
 	UI* focus_element;
 	SDL_Rect rect = { 0,0,(int)w,(int)h };
-	console_parent = App->gui->AddUIElement(new Static_Text(0, 0, nullptr, output_text.GetString()));
+	outputbox = new Static_Text(0, 0, nullptr, output_text.GetString(),w);
+	console_parent = App->gui->AddUIElement(outputbox);
 	console_parent->listeners.PushBack(this);
 	focus_element = App->gui->AddUIElement(new Editable_Text(50, 80, console_parent, w));
 	focus_element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, console_parent, texture, &rect));
 	element->listeners.PushBack(this);
 
-	App->gui->focus = App->gui->UI_list.At(App->gui->UI_list.find(focus_element));;
+	App->gui->focus = App->gui->UI_list.At(App->gui->UI_list.find(focus_element));
 	console_opened = true;
 	return true;
 }
@@ -158,8 +159,10 @@ bool j1Console::CloseConsole()
 {
 	App->gui->DeleteWithParent();
 	console_opened = false;
+	outputbox = nullptr;
 	return true;
 }
+
 bool j1Console::CreateCommand(const char* command, j1Module* callback, uint min_n_arguments, uint max_n_arguments)
 {
 	Command* comm = new Command(command, callback, min_n_arguments, max_n_arguments);
@@ -182,6 +185,17 @@ bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 {
 	if (command->name == "list")
 	{
+		LOG("List of commands currently avaliable: ");
+		p2SString str;
+		p2List_item<Command*>*com_item= commands.start;
+		while (com_item!=NULL)
+		{
+			str += "|";
+			str += com_item->data->name;
+			str += "|";
+			com_item = com_item->next;
+		}
+		LOG("%s", str.GetString());
 		//display all the command names on console
 	}
 	else if (command->name == "map")
@@ -193,21 +207,27 @@ bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 		if (arguments->Count() == 0)//toggles god mode
 		{
 			App->entity_m->player->SetGodmode();
+			LOG("Toggled God Mode");
 		}
 		else//sets god mode from an argument
 		{
-			if (*arguments->At(0) == "on")
+			if (*arguments->At(0) == "on") {
 				App->entity_m->player->SetGodmode(true);
+				LOG("God Mode set to True");
+			}
 
 			if (*arguments->At(0) == "off")
+			{
 				App->entity_m->player->SetGodmode(false);
+				LOG("God Mode set to True");
+			}
 		}
 	}
 	else if (command->name == "fps")
 	{
 		if (arguments->Count() == 0)//no arguments
 		{
-			//display fps info
+			LOG("Current FPS cap: %i",App->new_max_framerate);
 		}
 		else
 		{
@@ -228,6 +248,9 @@ bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 bool j1Console::ReceiveText(const char* text)
 {
 	bool command_sent = false;
+	bool command_found = false;
+	bool right_arguments = false;
+
 	p2SString c = TransformToLower(text);//transforms the text to lowercase
 	const char* input_text = c.GetString();
 	p2DynArray<p2SString>* separated_words = ReturnWords(input_text);//returns the words in separated in an array
@@ -239,6 +262,7 @@ bool j1Console::ReceiveText(const char* text)
 
 		if (item->data->name == *separated_words->At(0))//command found!
 		{
+			command_found = true;
 			separated_words->Pop(*separated_words->At(0));//deletes the first word (its the command and we not longer need it)
 
 
@@ -247,24 +271,16 @@ bool j1Console::ReceiveText(const char* text)
 				//right number of arguments
 				item->data->CommandCallback(separated_words);
 				command_sent = true;
-			}
-			else
-			{
-				//ERROR! Wrong number of arguments
-				//Display error
+				right_arguments = true;
 			}
 
-
 		}
-		else
-		{
-			//ERROR! Command not found
-			//Display error
-
-		}
+		
 
 		item = item->next;
 	}
+	if(!command_found)LOG("ERROR! Command not found.");
+	else if(!right_arguments)LOG("ERROR! Wrong number of arguments.");
 
 	separated_words->Clear();
 	delete separated_words;
@@ -311,4 +327,14 @@ p2DynArray<p2SString>* j1Console::ReturnWords(const char* text)
 
 	return list;
 
+}
+
+bool j1Console::AddTextToOutput(const char* text)
+{
+	output_text += text;
+	output_text += "\n";
+	if(outputbox!=nullptr)
+	outputbox->NewText(output_text.GetString());
+
+	return true;
 }

@@ -7,6 +7,7 @@
 #include "SDL/include/SDL.h"
 #include "j1GUI.h"
 #include "UI_Elements.h"
+#include "Static_text.h"
 
 // ----------------------------------------------------
 class Command
@@ -52,6 +53,7 @@ public:
 	bool OnListen(UI* element, UICallbackState state);
 	bool OnCommand(Command* command, p2DynArray<p2SString>* arguments);
 	bool ReceiveText(const char* text);
+	bool AddTextToOutput(const char* text);
 
 	//transforms the letters of a string to their lowercase version
 	p2SString TransformToLower(const char* text);
@@ -62,6 +64,7 @@ public:
 private:
 	p2List<Command*> commands;
 	p2SString output_text;
+	Static_Text* outputbox;
 	bool console_opened;
 	UI* console_parent;
 	SDL_Texture* texture;

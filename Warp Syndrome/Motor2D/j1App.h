@@ -117,6 +117,8 @@ public:
 	bool				vSyncActivated = false;
 	bool				displayMapInfo = false;
 	bool				paused = false;
+	uint32				new_max_framerate;
+
 private:
 
 	p2List<j1Module*>	modules;
@@ -131,7 +133,6 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
-	uint32				new_max_framerate;
 	uint32				prev_last_sec_frame_count = 0;
 	uint32				last_sec_frame_count = 0;
 	uint64				frame_count = 0;

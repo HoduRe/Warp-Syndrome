@@ -74,41 +74,10 @@ bool j1SceneManager::PreUpdate()
 				ret = false; //this will now quit the game
 			}
 			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings / credit are pressed*/) {
-				p2List_item<UI*>* item = GetListElement(BUTTON_SETTINGS);
-				SDL_Rect measures = { 31, 540, 422, 454 };
-				App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
-				element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
-				element->listeners.PushBack(this);
-				App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
-				measures = { 0, 0, 50, 40 };
-				App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures));
-				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_MUSIC));
-				element->listeners.PushBack(this);
-				App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), item->data, App->tex->Load("textures/volume_high.png"), &measures));
-				App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), item->data, App->tex->Load("textures/sfx.png"), &measures));
-				element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), item->data, 138, SCROLLBAR_SFX));
-				element->listeners.PushBack(this);
-				App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), item->data, App->tex->Load("textures/sfx_high.png"), &measures));
+				LoadSettings();
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
-				p2List_item<UI*>* item = GetListElement(BUTTON_CREDITS);
-				SDL_Rect measures = { 31, 540, 422, 454 };
-				App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
-				element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
-				element->listeners.PushBack(this);
-				App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back"));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
-					"Credit goes to Oscar Perez and Ferran-Roger Basart."));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
-					"We know this UI is lame. Just note we are trying."));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
-					"Still, it must be nice."));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
-					"It must be nice."));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
-					"To have the president on our side."));
-				App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
-					"If you got that, you are the real cool."));
+				LoadCredits();
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (false/*button continue pressed*/)
@@ -205,11 +174,11 @@ bool j1SceneManager::LoadMainMenu() {
 	element->listeners.PushBack(this);
 	float t_width = (width / 3) + (width / 12);
 	float t_height = height / 35;
-	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play"));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue"));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings"));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits"));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit"));
+	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play",800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue",800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings",800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits",800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit",800));
 
 	return true;
 }
@@ -227,7 +196,7 @@ bool j1SceneManager::LoadPauseMenu()
 	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, nullptr, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, nullptr, "Go Back"));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, nullptr, "Go Back",800));
 	measures = { 0, 0, 50, 40 };
 	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), nullptr, 138, SCROLLBAR_MUSIC));
@@ -257,6 +226,57 @@ bool j1SceneManager::LoadHUD()
 bool j1SceneManager::UnloadHUD()
 {
 	App->gui->DeleteAll();
+	return true;
+}
+
+bool j1SceneManager::LoadSettings()
+{
+	p2List_item<UI*>* item = GetListElement(BUTTON_SETTINGS);
+	SDL_Rect measures = { 31, 540, 422, 454 };
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
+	measures = { 0, 0, 50, 40 };
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures));
+	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_MUSIC));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), item->data, App->tex->Load("textures/volume_high.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), item->data, App->tex->Load("textures/sfx.png"), &measures));
+	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), item->data, 138, SCROLLBAR_SFX));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), item->data, App->tex->Load("textures/sfx_high.png"), &measures));
+
+	return true;
+}
+bool j1SceneManager::LoadCredits()
+{
+	p2List_item<UI*>* item = GetListElement(BUTTON_CREDITS);
+	SDL_Rect measures = { 31, 540, 422, 454 };
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
+		"Credit goes to Oscar Perez and Ferran-Roger Basart.\n"
+		"We know this UI is lame. Just note we are trying.\n"
+		"Still, it must be nice.\n"
+		"It must be nice.\n"
+		"To have the president on our side.\n"
+		"If you got that, you are the real cool.\n"
+		, 800));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
+	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
+		"Credit goes to Oscar Perez and Ferran-Roger Basart."));
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
+		"We know this UI is lame. Just note we are trying."));
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
+		"Still, it must be nice."));
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
+		"It must be nice."));
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
+		"To have the president on our side."));
+	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
+		"If you got that, you are the real cool.",));*/
 	return true;
 }
 

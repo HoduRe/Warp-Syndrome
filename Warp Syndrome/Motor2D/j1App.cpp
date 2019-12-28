@@ -500,12 +500,15 @@ bool j1App::NewCap(int cap)
 			ret = true;
 			config_file.save_file("config.xml");
 			config_file.reset();
+			LOG("Succesfully changed frame capping to %i", cap);
 		}
 		
 	}
 	else
 	{
 		LOG("ERROR! FPS Capping to %i is out of safe range.", cap);
+		LOG("Safe rage goes bewteen 30 & 120");
+
 		ret = true;
 	}
 	return ret;

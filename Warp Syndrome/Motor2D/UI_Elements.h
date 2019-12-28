@@ -65,6 +65,7 @@ public:
 	UI_Purpose purpose_type;
 	UI* parent;
 	SDL_Texture* texture;
+	SDL_Texture* hover_texture;
 	SDL_Rect texture_section; //rectangle which will be displayed from the texture
 	p2DynArray<j1Module*> listeners;
 };

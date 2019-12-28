@@ -2,6 +2,7 @@
 #include "j1GUI.h"
 #include "j1Input.h"
 #include "j1Audio.h"
+#include "j1Render.h"
 #include "p2Log.h"
 
 j1GUI::j1GUI() : j1Module() {
@@ -20,6 +21,8 @@ bool j1GUI::Awake(pugi::xml_node& config) {
 
 bool j1GUI::Start() {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+	hover_atlas = App->tex->Load(atlas_file_name.GetString());;
+	SDL_SetTextureAlphaMod(hover_atlas, 220);
 	button_click = App->audio->LoadFx("audio/fx/button_zap.wav");
 	return true;
 }
@@ -77,6 +80,9 @@ bool j1GUI::CleanUp()
 	LOG("Unloading UIManager");
 	DeleteAll();
 	App->tex->UnLoad(atlas);
+	atlas = nullptr;
+	App->tex->UnLoad(hover_atlas);
+	hover_atlas = nullptr;
 
 	return true;
 }
@@ -87,6 +93,8 @@ UI* j1GUI::AddUIElement(UI* UIElement) {
 }
 
 SDL_Texture* j1GUI::GetAtlas() const { return atlas; }
+
+SDL_Texture* j1GUI::GetHoverAtlas() const { return hover_atlas; }
 
 void j1GUI::DeleteOnParent() {
 	UI* aux_parent = last_parent;

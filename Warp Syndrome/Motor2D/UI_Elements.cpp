@@ -10,6 +10,7 @@ UI::UI(float x, float y, UI* node) {
 	position.y = y;
 	texture_section = { 0, 0, 0, 0 };
 	texture = App->gui->GetAtlas();
+	hover_texture = App->gui->GetHoverAtlas();
 	purpose_type = PURPOSE_UNSPECIFIED;
 	parent = node;
 	App->gui->last_parent = parent;
@@ -33,6 +34,7 @@ bool UI::CleanUp() {
 		App->tex->UnLoad(texture);
 	}
 	texture = nullptr;
+	hover_texture = nullptr;
 	if (parent != nullptr) { App->gui->last_parent = parent->parent; }
 	else { App->gui->last_parent = nullptr; }
 	parent = nullptr;

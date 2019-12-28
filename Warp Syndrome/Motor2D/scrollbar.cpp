@@ -50,9 +50,14 @@ bool Scrollbar::PostUpdate() {
 		App->audio->SetVolume(volume, 1);
 	}
 
-
-	App->render->Blit(texture, position.x, position.y, &texture_section,false,0.0f,0.0f,0.0f,0.0f);
-	App->render->Blit(texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	if (Hover()) {
+		App->render->Blit(hover_texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
+		App->render->Blit(hover_texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	else {
+		App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
+		App->render->Blit(texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	}
 
 	return true;
 }

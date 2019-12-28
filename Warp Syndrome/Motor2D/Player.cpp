@@ -87,8 +87,8 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	if(lives<=0)
-	App->level_m->RestartGame();
+	if (lives <= 0)
+		App->level_m->RestartGame();
 
 	//Logic to spawn the grenade
 	if ((App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN || App->input->GetMouseButtonDown(1) == KEY_DOWN))
@@ -157,7 +157,7 @@ bool Player::PostUpdate()
 {
 	if (currentframe != NULL)
 		App->render->Blit(texture, pos.x, pos.y - currentframe->animationRect.h - currentframe->textureoffset.y, &currentframe->animationRect, fliped, currentframe->textureoffset.x);
-	if (throwinggrenade && App->dt!=0.0f)
+	if (throwinggrenade && App->dt != 0.0f)
 	{
 		int x1 = pos.x;
 		int y1 = pos.y - (hitbox_w_h.y / 2);
@@ -167,7 +167,7 @@ bool Player::PostUpdate()
 		x2 -= App->render->camera.x;
 		y2 -= App->render->camera.y;
 
-		if (App->entity_m->grenade!=nullptr||grenadecooldown>0.0f)
+		if (App->entity_m->grenade != nullptr || grenadecooldown > 0.0f)
 			App->render->DrawLine(x1, y1, x2, y2, 255, 0, 0, 255);
 		else App->render->DrawLine(x1, y1, x2, y2, 0, 255, 0, 255);
 	}
@@ -432,15 +432,21 @@ void Player::CheckCollisions() {
 	}
 	if (current_state == DYING) {
 		App->entity_m->kill = false;
-		if (currentAnim->data->GetAnimationFinish()) { 
-			
+		if (currentAnim->data->GetAnimationFinish()) {
+
 			if (lives > 0)
 				App->level_m->RestartLevel();
 			else
 				App->level_m->RestartGame();
 		}
 	}
-	if (App->collision->DoorColliderTouched() == true) { App->level_m->ChangeToNextLevel(); }
+	if (App->collision->DoorColliderTouched() == true)
+	{
+		if (App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			score += 1000;
+		App->level_m->ChangeToNextLevel();
+		
+	}
 }
 
 void Player::MovePlayer(float dt) {
@@ -501,11 +507,11 @@ void Player::JumpMoveX(float dt) {
 
 
 			if (wall_jump_extra_move == SST_JUMPING_LEFT && wall_jump_timer > 0.0f) {
-				pos.x += -wall_jump_timer*(speed.x*dt);
+				pos.x += -wall_jump_timer * (speed.x * dt);
 				wall_jump_timer -= dt;
 			}
 			else if (wall_jump_extra_move == SST_JUMPING_RIGHT && wall_jump_timer > 0.0f) {
-				pos.x += wall_jump_timer*(speed.x*dt);
+				pos.x += wall_jump_timer * (speed.x * dt);
 				wall_jump_timer -= dt;
 			}
 			break;
@@ -535,7 +541,7 @@ void Player::JumpMoveY(float dt) {
 	case JST_GOING_UP:
 		if (jump_timer >= 0.0f && jump_timer < 1.0f) {
 			jump_timer += dt;
-			pos.y += (-speed.y * dt) + jump_timer*(speed.y * dt);
+			pos.y += (-speed.y * dt) + jump_timer * (speed.y * dt);
 		}
 		else { jump_timer = 1.0f; y_jumping_state = JST_GOING_DOWN; }
 		break;
@@ -548,9 +554,11 @@ void Player::JumpMoveY(float dt) {
 			y_jumping_state = JST_UNKNOWN_Y;
 			jump_timer = 0.0f;
 		}
-		else if (jump_timer <=2.0f) {
+		else if (jump_timer <= 2.0f) {
 			if (jump_timer > 0.0f)
-			{ jump_timer -= dt; }
+			{
+				jump_timer -= dt;
+			}
 			pos.y += (speed.y * dt) - jump_timer * (speed.y * dt);
 		}
 		break;

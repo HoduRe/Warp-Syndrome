@@ -85,6 +85,7 @@ bool Coin_G::OnCollision()
 		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { pos.x,pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { 0.0f,0.0f });
 		App->entity_m->AddEntity(p);
 		App->entity_m->player->coins += 1;
+		App->entity_m->player->score += 150;
 		App->audio->PlayFx(App->scene->coin_sfx);
 	}
 

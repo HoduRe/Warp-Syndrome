@@ -202,6 +202,7 @@ void Grenade::CheckEnemyPosition(float dt) {
 				vectorO.y <= object.y && vectorF.y >= object.y)) {
 				f->data->destroy = true;
 				health = 0.0f;
+				App->entity_m->player->score += 300;
 				App->audio->PlayFx(App->scene->teleport_sfx);
 				AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { f->data->pos.x, f->data->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
 				App->entity_m->AddEntity(p);

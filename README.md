@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.6.0-debug:
+Up to version 0.8.6.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -805,6 +805,9 @@ Update 0.8.6.0-debug
 -Added keypad 7 as a new debug key that lets the player lose lives. Added also lives to the tile info in the map category.
 </ul>
 
+Update 0.8.6.1-debug
+<ul>-Added score to the player. Adds +150 when collecting a coin, +300 when killing an enemy and +1000 when finishing the level
+</ul>
 
 ## Credits
 

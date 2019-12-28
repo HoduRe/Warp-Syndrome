@@ -160,8 +160,8 @@ bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 bool j1SceneManager::LoadMainMenu() {
 
 	SDL_Rect texture_rec = { 0, 0, 640, 62 };
-	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec, true));
-	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec));
+	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec,false,NULL,NULL,NULL,NULL, true));
+	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_GAME_LOOP));
@@ -193,21 +193,21 @@ bool j1SceneManager::UnloadMainMenu()
 bool j1SceneManager::LoadPauseMenu()
 {
 	SDL_Rect measures = { 31, 540, 422, 454 };
-	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures));
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, nullptr, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 10) + height / 30, nullptr, "Go Back",800));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 5, nullptr, BUTTON_MAIN_MENU));
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 5) + height / 30, nullptr, "Go to Main Menu",800)); measures = { 0, 0, 50, 40 };
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures,false, NULL, NULL, NULL,NULL,false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), nullptr, 138, SCROLLBAR_MUSIC));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), nullptr, App->tex->Load("textures/volume_high.png"), &measures));
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), nullptr, App->tex->Load("textures/sfx.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), nullptr, App->tex->Load("textures/volume_high.png"), &measures, false, NULL, false));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), nullptr, App->tex->Load("textures/sfx.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), nullptr, 138, SCROLLBAR_SFX));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), nullptr, App->tex->Load("textures/sfx_high.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), nullptr, App->tex->Load("textures/sfx_high.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 
 	return true;
 }
@@ -235,19 +235,19 @@ bool j1SceneManager::LoadSettings()
 {
 	p2List_item<UI*>* item = GetListElement(BUTTON_SETTINGS);
 	SDL_Rect measures = { 31, 540, 422, 454 };
-	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
 	measures = { 0, 0, 50, 40 };
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_MUSIC));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), item->data, App->tex->Load("textures/volume_high.png"), &measures));
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), item->data, App->tex->Load("textures/sfx.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), item->data, App->tex->Load("textures/volume_high.png"), &measures, false, NULL, NULL, NULL, NULL, false));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), 1.25 * (height / 8), item->data, App->tex->Load("textures/sfx.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 3), 2 * (height / 8), item->data, 138, SCROLLBAR_SFX));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), item->data, App->tex->Load("textures/sfx_high.png"), &measures));
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), item->data, App->tex->Load("textures/sfx_high.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 
 	return true;
 }
@@ -255,7 +255,7 @@ bool j1SceneManager::LoadCredits()
 {
 	p2List_item<UI*>* item = GetListElement(BUTTON_CREDITS);
 	SDL_Rect measures = { 31, 540, 422, 454 };
-	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures));
+	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,

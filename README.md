@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.4.1-debug:
+Up to version 0.8.5.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -789,6 +789,12 @@ Update 0.8.4.0-debug
 
 Update 0.8.4.1-debug
 <ul>-Fixed DeleteAll() function, it now deletes items properly
+</ul>
+
+Update 0.8.5.0-debug
+<ul>-Modified Static image, it can now also display rectangles instead of textures.<br>
+-Added consloe layout and adjusted texts<br>
+-Detected memory leak on editable text! starting to search for a way to solve it.
 </ul>
 
 ## Credits

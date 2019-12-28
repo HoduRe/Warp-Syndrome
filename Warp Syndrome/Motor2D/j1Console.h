@@ -68,6 +68,7 @@ private:
 	bool console_opened;
 	UI* console_parent;
 	SDL_Texture* texture;
+	SDL_Rect outputrect;
 	bool quit = false;
 };
 

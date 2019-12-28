@@ -39,6 +39,9 @@ public:
 	// Returns a pointer to atlas
 	SDL_Texture* GetAtlas() const;
 
+	// Returns a pointer to hover atlas
+	SDL_Texture* GetHoverAtlas() const;
+
 	// Deletes all elements that have as parent the given pointer
 	void DeleteOnParent();
 	
@@ -51,10 +54,12 @@ public:
 	p2List<UI*> UI_list;
 	p2List_item<UI*>* focus;
 	UI* last_parent;
+	int button_click;
 
 private:
 	p2SString atlas_file_name;
 	SDL_Texture* atlas;
+	SDL_Texture* hover_atlas;
 
 };
 

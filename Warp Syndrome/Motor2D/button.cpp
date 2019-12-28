@@ -33,6 +33,10 @@ bool Button::PostUpdate() {
 		App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
 		CallListeners(UI_CALLBACK_CLICKED);
 	}
+	else if (Hover()) {
+		texture_section.x = 416;
+		App->render->Blit(hover_texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	}
 	else {
 		texture_section.x = 647;
 		App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);

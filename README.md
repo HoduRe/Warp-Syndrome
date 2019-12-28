@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.8.1.3-debug:
+Up to version 0.8.3.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -770,6 +770,14 @@ Update 0.8.2.0-debug
 -Volume regulation bug fixed
 </ul>
 
+Update 0.8.3.0-debug
+<ul>-Now console output works fine, rerouted Log's to be displayed there.<br>
+-Cleaned some code in the scene manager, spliting it into functions.<br>
+-Cleaned some logs, commented them at least for the moment.<br>
+-Modified some fonts functions to work with diferent lines of text.<br>
+-Changed static text and editable text classes to work with the new fonts functions.<br>
+-Adjusted player spawnpoint in the first level.
+</ul>
 
 ## Credits
 

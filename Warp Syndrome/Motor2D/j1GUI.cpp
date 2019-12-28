@@ -146,6 +146,14 @@ void j1GUI::DeleteAll() {
 		}
 		if (last_parent != nullptr) { last_parent = last_parent->parent; }
 	}
+	item = UI_list.start;
+	while(item!=NULL)
+	{
+		item->data->CleanUp();
+		RELEASE(item->data);
+		UI_list.del(UI_list.At(UI_list.find(item->data)));
+		item = item->next;
+	}
 	UI_list.clear();
 	focus = nullptr;
 }

@@ -94,7 +94,7 @@ SDL_Texture* j1Fonts::Print(const char* text, Uint32 p_width, SDL_Color color, T
 }
 
 // calculate size of a text
-bool j1Fonts::CalcSize(const char* text, int& width, int& height,Uint32 p_width, _TTF_Font* font) const
+bool j1Fonts::CalcSize(const char* text, int& width, int& height, Uint32 p_width, _TTF_Font* font) const
 {
 	bool ret = false;
 	SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped((font) ? font : default, text, {255,255,255,255},p_width);

@@ -90,7 +90,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_PAUSE_MENU:
 			//when the game unpauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
 				App->paused = false;
 				currentloop = G_C_INGAME;
 				UnloadPauseMenu();
@@ -108,7 +108,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_INGAME:
 			//when the game pauses
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
+			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
 				App->paused = true;
 				currentloop = G_C_PAUSE_MENU;
 				LoadPauseMenu();

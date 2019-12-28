@@ -17,6 +17,7 @@
 #include "static_image.h"
 #include "j1SceneManager.h"
 #include "level_manager.h"
+#include "j1Console.h"
 #include "j1Scene.h"
 #include "j1Window.h"
 
@@ -90,7 +91,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_PAUSE_MENU:
 			//when the game unpauses
-			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) {
+			if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) && App->console->console_opened == false) {
 				App->paused = false;
 				currentloop = G_C_INGAME;
 				UnloadPauseMenu();
@@ -108,7 +109,7 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_INGAME:
 			//when the game pauses
-			if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) {
+			if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_OPEN_MENU) && App->console->console_opened == false) {
 				App->paused = true;
 				currentloop = G_C_PAUSE_MENU;
 				LoadPauseMenu();
@@ -264,9 +265,9 @@ bool j1SceneManager::LoadCredits()
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
 
-	App->gui->AddUIElement(new Static_Text((width / 8)+15 , height / 8 + (height / 16), item->data,
+	element = App->gui->AddUIElement(new Static_Text((width / 8)+15 , height / 8 + (height / 16), item->data,
 		"Credit go to the team members:\n"
-		"Oscar Pérez (oscarpm5 in github) and Ferran-Roger Basart (ferba 93 in github).\n\n"
+		"Oscar Perez (oscarpm5 in github) and Ferran-Roger Basart (ferba 93 in github).\n\n"
 		"Also credits to the various artists who put their creations at public use:\n"
 		"Bart for 'The adventure begins'\n"
 		"Phillip Miller for 'battle_music_01 - loop' \n"
@@ -280,30 +281,31 @@ bool j1SceneManager::LoadCredits()
 		"Thanks to the user KorgMS2000B at freesound.org for providing the button click sound\n\n"
 		"Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. \n\n\n"
 		"License:\n"
-		"SDL license:"
-		"Simple DirectMedia Layer"
-		"Copyright(C) 1997 - 2016 Sam Lantinga <slouken@libsdl.org>"
+		"SDL license: "
+		"Simple DirectMedia Layer\n"
+		"Copyright(C) 1997 - 2016 Sam Lantinga <slouken@libsdl.org>\n"
 		"SDL_image:  An example image loading library for use with SDL\n"
 		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
 		"SDL_mixer : An audio mixer library based on the SDL library\n"
 		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
 
-		"This software is provided 'as-is', without any express or implied"
-		"warranty.In no event will the authors be held liable for any damages"
+		"This software is provided 'as-is', without any express or implied "
+		"warranty.In no event will the authors be held liable for any damages "
 		"arising from the use of this software.\n\n"
 
-		"Permission is granted to anyone to use this software for any purpose,"
-		"including commercial applications, and to alter it and redistribute it"
+		"Permission is granted to anyone to use this software for any purpose, "
+		"including commercial applications, and to alter it and redistribute it "
 		"freely, subject to the following restrictions: \n\n"
 
-	"1. The origin of this software must not be misrepresented; you must not"
-		"claim that you wrote the original software.If you use this software"
-		"in a product, an acknowledgment in the product documentation would be"
+	"1. The origin of this software must not be misrepresented; you must not "
+		"claim that you wrote the original software.If you use this software "
+		"in a product, an acknowledgment in the product documentation would be "
 		"appreciated but is not required.\n"
-		"2. Altered source versions must be plainly marked as such, and must not be"
-		"misrepresented as being the original software."
+		"2. Altered source versions must be plainly marked as such, and must not be "
+		"misrepresented as being the original software.\n"
 		"3. This notice may not be removed or altered from any source distribution."
-		, measures.w-30));
+		, measures.w-30, STATIC_TEXT_MASK));
+	App->gui->AddUIElement(new Scrollbar(3 * width / 4, height / 3, item->data, 138, SCROLLBAR_MASK, element));
 
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
 	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,

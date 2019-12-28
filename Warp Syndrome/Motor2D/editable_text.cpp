@@ -51,7 +51,7 @@ bool Editable_Text::PostUpdate() {
 		cursor_distance[i] = App->input->text[i];
 		i++;
 	}
-	App->font->CalcSize(text, cursor.x, cursor.h, max_width);
+	App->font->CalcSize(cursor_distance, cursor.x, cursor.h, max_width);
 
 	cursor.x += position.x;
 

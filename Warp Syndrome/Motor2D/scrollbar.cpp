@@ -5,7 +5,7 @@
 #include "j1Render.h"
 #include "j1Audio.h"
 
-Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type) : UI(x, y, node) {
+Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type, UI* element) : UI(x, y, node) {
 	initial_point = y;
 	max_point = initial_point + length;
 	current_point = y;
@@ -17,8 +17,10 @@ Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose second
 	initial_mouse_pos = -1;
 	purpose_type = secondary_type;
 	type = UI_TYPE_SLIDER;
+	reference_element = element;
 	if (secondary_type == SCROLLBAR_MUSIC) { current_point = (App->audio->GetMusic() * (max_point - initial_point) / 128) + initial_point; }
 	else if (secondary_type == SCROLLBAR_SFX) { current_point = (App->audio->GetFX() * (max_point - initial_point) / 128) + initial_point; }
+	else if (secondary_type == SCROLLBAR_MASK) { texture_section.h = length - 50; }
 }
 
 Scrollbar::~Scrollbar() {
@@ -35,6 +37,14 @@ bool Scrollbar::Update(float dt) {
 		}
 		Move();
 	} else { initial_mouse_pos = -1; }
+
+	if (purpose_type == SCROLLBAR_MASK && reference_element != nullptr) {
+		if (current_point > 70 + initial_point) { current_point = 70 + initial_point; }
+		uint width, height;
+		App->tex->GetSize(reference_element->texture, width, height);
+		int c_height = (current_point - initial_point) * height / (max_point - initial_point);
+		reference_element->texture_section.y = c_height;
+	}
 
 	return true;
 }
@@ -63,6 +73,7 @@ bool Scrollbar::PostUpdate() {
 }
 
 bool Scrollbar::CleanUp() {
+	reference_element = nullptr;
 	return true;
 }
 

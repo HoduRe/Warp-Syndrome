@@ -263,14 +263,48 @@ bool j1SceneManager::LoadCredits()
 	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
-		"Credit goes to Oscar Perez and Ferran-Roger Basart.\n"
-		"We know this UI is lame. Just note we are trying.\n"
-		"Still, it must be nice.\n"
-		"It must be nice.\n"
-		"To have the president on our side.\n"
-		"If you got that, you are the real cool.\n"
-		, 800));
+
+	App->gui->AddUIElement(new Static_Text((width / 8)+15 , height / 8 + (height / 16), item->data,
+		"Credit go to the team members:\n"
+		"Oscar Pérez (oscarpm5 in github) and Ferran-Roger Basart (ferba 93 in github).\n\n"
+		"Also credits to the various artists who put their creations at public use:\n"
+		"Bart for 'The adventure begins'\n"
+		"Phillip Miller for 'battle_music_01 - loop' \n"
+		"Matriax for the inca-themed tileset \n"
+		"ansimuz for his background used in parallax and his living tissue tileset and also for his gothicvania sprites \n"
+		"Jetrel for his stone tilesets \n"
+		"rvros for his character animations\n"
+		"Gamemaseter audio for the grenade teleport sound\n"
+		"Soundrangers for the death sound\n"
+		"Elthen for his elemental pixelart sprites\n"
+		"Thanks to the user KorgMS2000B at freesound.org for providing the button click sound\n\n"
+		"Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. \n\n\n"
+		"License:\n"
+		"SDL license:"
+		"Simple DirectMedia Layer"
+		"Copyright(C) 1997 - 2016 Sam Lantinga <slouken@libsdl.org>"
+		"SDL_image:  An example image loading library for use with SDL\n"
+		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
+		"SDL_mixer : An audio mixer library based on the SDL library\n"
+		"Copyright(C) 1997 - 2013 Sam Lantinga <slouken@libsdl.org>\n"
+
+		"This software is provided 'as-is', without any express or implied"
+		"warranty.In no event will the authors be held liable for any damages"
+		"arising from the use of this software.\n\n"
+
+		"Permission is granted to anyone to use this software for any purpose,"
+		"including commercial applications, and to alter it and redistribute it"
+		"freely, subject to the following restrictions: \n\n"
+
+	"1. The origin of this software must not be misrepresented; you must not"
+		"claim that you wrote the original software.If you use this software"
+		"in a product, an acknowledgment in the product documentation would be"
+		"appreciated but is not required.\n"
+		"2. Altered source versions must be plainly marked as such, and must not be"
+		"misrepresented as being the original software."
+		"3. This notice may not be removed or altered from any source distribution."
+		, measures.w-30));
+
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
 	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
 		"Credit goes to Oscar Perez and Ferran-Roger Basart."));

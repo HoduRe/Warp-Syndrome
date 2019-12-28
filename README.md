@@ -779,6 +779,10 @@ Update 0.8.3.0-debug
 -Adjusted player spawnpoint in the first level.
 </ul>
 
+Update 0.8.3.1-debug
+<ul>-Button click makes sound<br>
+</ul>
+
 ## Credits
 
 Credits go to the team members: <br>
@@ -799,6 +803,7 @@ rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <b
 Gamemaseter audio for the grenade teleport sound: https://sonniss.com/sound-effects/magic-spell-sounds/ <br>
 Soundrangers for the death sound: https://sonniss.com/sound-effects/hydrology-bubbles-splashes/ <br>
 Elthen for his elemental pixelart sprites: https://elthen.itch.io/ice-elemental <br>
+Thanks to the user KorgMS2000B at freesound.org for providing the button click sound: https://freesound.org/people/KorgMS2000B/sounds/54405/<br>
 <br>
 <br>
 Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 

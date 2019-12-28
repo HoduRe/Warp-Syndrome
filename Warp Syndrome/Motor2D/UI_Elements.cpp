@@ -2,6 +2,7 @@
 #include "UI_Elements.h"
 #include "j1GUI.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 
 //UI=====================================================
 UI::UI(float x, float y, UI* node) {
@@ -43,12 +44,14 @@ bool UI::Pressed() {
 	if (parent == App->gui->last_parent) {
 		iPoint posi;
 		App->input->GetMousePosition(posi.x, posi.y);
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2) {
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 1) {
 			if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
+				App->audio->PlayFx(App->gui->button_click);
 				return true;
 			}
 		}
 		else if (App->gui->focus != nullptr && App->gui->focus->data == this && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			App->audio->PlayFx(App->gui->button_click);
 			return true;
 		}
 	}

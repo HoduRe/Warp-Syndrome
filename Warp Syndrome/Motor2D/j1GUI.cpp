@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1GUI.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 #include "p2Log.h"
 
 j1GUI::j1GUI() : j1Module() {
@@ -19,6 +20,7 @@ bool j1GUI::Awake(pugi::xml_node& config) {
 
 bool j1GUI::Start() {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+	button_click = App->audio->LoadFx("audio/fx/button_zap.wav");
 	return true;
 }
 

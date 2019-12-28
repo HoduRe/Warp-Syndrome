@@ -51,6 +51,7 @@ public:
 	p2List<UI*> UI_list;
 	p2List_item<UI*>* focus;
 	UI* last_parent;
+	int button_click;
 
 private:
 	p2SString atlas_file_name;

@@ -95,7 +95,7 @@ bool j1SceneManager::PreUpdate()
 				LoadHUD();//reloads the hud due to ui cleanup
 			}
 			//when the game goes to the menu
-			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_GAME_LOOP)&& App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_MAIN_MENU)&& App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
 			{
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_MENU, 2.0f);
 				doingaction = true;
@@ -196,8 +196,10 @@ bool j1SceneManager::LoadPauseMenu()
 	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, nullptr, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, nullptr, "Go Back",800));
-	measures = { 0, 0, 50, 40 };
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 10) + height / 30, nullptr, "Go Back",800));
+	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 5, nullptr, BUTTON_MAIN_MENU));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 5) + height / 30, nullptr, "Go to Main Menu",800)); measures = { 0, 0, 50, 40 };
 	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), nullptr, 138, SCROLLBAR_MUSIC));
 	element->listeners.PushBack(this);

@@ -765,6 +765,12 @@ Update 0.8.1.3-debug
 -Adjusted maximum capping due to overperformance when deleted the LOGs.
 </ul>
 
+Update 0.8.2.0-debug
+<ul>-Button to go back to main menu implemented<br>
+-Volume regulation bug fixed
+</ul>
+
+
 ## Credits
 
 Credits go to the team members: <br>

@@ -5,6 +5,7 @@ A platform game ambiented in a medieval-fantasy setting based on the mechanic of
 rad tricks and fun exploration of the map.
 
 ### The project can be found at: https://github.com/ferba93/Warp-Syndrome
+### Link to the Game's Webpage: https://ferba93.github.io/Warp-Syndrome/
 
 ## Installation
 
@@ -28,6 +29,7 @@ conveying how it was born, grew uncontrollably, and was sealed by four figures. 
 represented by the eyes over the door that brings the player to the next level)<br>
 -The game console remembers previous sent commands and those can be summoned by the up and down arrows when in the console.<br>
 -The requiered commands have been expanded accepting diferent number of arguments, and we have added some more which you can see by typing “list" in the console.
+-There are also save and load buttons on the pause menu. The load one is only avaliable when there is content saved.
 </ul>
 
 
@@ -62,6 +64,25 @@ represented by the eyes over the door that brings the player to the next level)<
         K/Right Mouse Button: Teleports to the grenade
         L/Middle Mouse Button: Makes the thrown grenade disappear
         W/Space (while sliding on a wall): wall-jump
+
+### Console Commands
+	
+	"quit": quits the game
+	"list": displays a list of all the avaliable commands
+	"map" <map_name>: loads the map with the given name
+	"fps": shows the current fps cap
+	"fps" <n_fps>: changes the cap of fps of the game to the given amount with a range between 30-120 fps
+	"god_mode": toggles god mode
+	"god_mode" <"on">: activates god mode
+	"god_mode" <"off">: disables god mode
+	"save": saves the current state of the game
+	"load":loads the current state of the game
+	
+	
+	
+	
+	
+	
 
 ## History
 

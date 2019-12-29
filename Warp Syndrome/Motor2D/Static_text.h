@@ -7,7 +7,7 @@
 class Static_Text :public UI
 {
 public:
-	Static_Text(float x, float y, UI* node, const char* text_input,Uint32 p_width, UI_Purpose second_type = PURPOSE_UNSPECIFIED, int r = 255, int g = 255, int b = 255, int a = 255);
+	Static_Text(float x, float y, UI* node, const char* text_input, Uint32 p_width, UI_Purpose second_type = PURPOSE_UNSPECIFIED, int* counter = nullptr, int r = 255, int g = 255, int b = 255, int a = 255);
 	virtual ~Static_Text();
 
 	bool PreUpdate();
@@ -19,6 +19,7 @@ public:
 private:
 	_TTF_Font* font;
 	Uint32 row_w;
+	int* counter_path;
 };
 
 #endif // !__STATIC_TEXT_H__

@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "j1Scene.h"
 
 Button::Button(float x, float y, UI* node, UI_Purpose secondary_type) : UI(x, y, node) {
 	pushed = false;
@@ -40,6 +41,10 @@ bool Button::PostUpdate() {
 	else {
 		texture_section.x = 647;
 		App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	if (App->scene->blit_UI == true) {
+		SDL_Rect rectangle = { position.x, position.y, texture_section.w, texture_section.h };
+		App->render->DrawQuad(rectangle, 255, 255, 255, 80, true, false);
 	}
 
 	return true;

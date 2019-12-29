@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Audio.h"
+#include "j1Scene.h"
 
 Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose secondary_type, UI* element) : UI(x, y, node) {
 	initial_point = y;
@@ -67,6 +68,10 @@ bool Scrollbar::PostUpdate() {
 	else {
 		App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f);
 		App->render->Blit(texture, position.x, current_point, &bar_measures, false, 0.0f, 0.0f, 0.0f, 0.0f);
+	}
+	if (App->scene->blit_UI == true) {
+		SDL_Rect rectangle = { position.x, position.y, texture_section.w, texture_section.h };
+		App->render->DrawQuad(rectangle, 255, 255, 255, 80, true, false);
 	}
 
 	return true;

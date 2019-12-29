@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.9.4.3-debug:
+Up to version 0.9.5.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -861,6 +861,10 @@ Update 0.9.4.3-debug
 -Added sound to the grenade icon when the grenade is avaliable again
 </ul>
 
+Update 0.9.5.1-debug
+<ul>-UI debug added<br>
+-Console bug somwhat fixed
+</ul>
 
 ## Credits
 

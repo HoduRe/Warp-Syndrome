@@ -3,6 +3,7 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Render.h"
+#include "j1Scene.h"
 
 Static_Text::Static_Text(float x, float y, UI* node, const char* text_input,Uint32 p_width, UI_Purpose second_type, int* counter, int mask_height, int r, int g, int b, int a) : UI(x, y, node) {
 	font = App->font->fonts.start->data;
@@ -42,6 +43,10 @@ bool Static_Text::PostUpdate() {
 	if (purpose_type == STATIC_TEXT_MASK && texture_section.h > max_height) { texture_section.h = max_height; }
 
 	App->render->Blit(texture, position.x, position.y, &texture_section,false,0.0f,0.0f,0.0f,0.0f);
+	if (App->scene->blit_UI == true) {
+		SDL_Rect rectangle = { position.x, position.y, texture_section.w, texture_section.h };
+		App->render->DrawQuad(rectangle, 255, 255, 255, 80, true, false);
+	}
 
 	return true;
 }

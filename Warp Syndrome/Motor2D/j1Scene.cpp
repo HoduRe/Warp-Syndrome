@@ -75,6 +75,10 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+		blit_UI = !blit_UI;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		blit_colliders = !blit_colliders;
 	}

@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Console.h"
+#include "j1Scene.h"
 
 Editable_Text::Editable_Text(float x, float y, UI* node, float width, bool focus) : UI(x, y, node) {
 	texture_section = { 494, 577, (int)width + 10, 45 };
@@ -75,6 +76,11 @@ bool Editable_Text::PostUpdate() {
 	App->render->DrawQuad(cursor, 255, 255, 255, 255, true, false);
 
 	App->tex->UnLoad(text_texture);
+
+	if (App->scene->blit_UI == true) {
+		SDL_Rect rectangle = { position.x, position.y, texture_section.w, texture_section.h };
+		App->render->DrawQuad(rectangle, 255, 255, 255, 80, true, false);
+	}
 
 	return true;
 }

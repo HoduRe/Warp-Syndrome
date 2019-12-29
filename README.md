@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.9.2.0-debug:
+Up to version 0.9.3.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -833,6 +833,12 @@ Update 0.9.1.1-debug
 
 Update 0.9.2.0-debug
 <ul>-Functional HUD elements added
+</ul>
+
+Update 0.9.3.0-debug
+<ul>-Now the menu detects if there is a saved game and shows the continue button accordingly.<br>
+-Fixed bug that made the lives, score and coins to not reset when acessing the main menu from the pause menu.<br>
+-Added Brofiler support for the GUI.
 </ul>
 
 

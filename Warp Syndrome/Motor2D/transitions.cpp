@@ -258,6 +258,46 @@ bool j1Transitions::PostUpdate()
 			break;
 		}
 		break;
+	case TM_CHANGE_TO_SAVED:
+		switch (actual_state)
+		{
+		case TS_START:
+			actual_state = TS_FADE_OUT;
+			break;
+		case TS_FADE_OUT:
+			if (Fade_Out(function_seconds_length, deltatime))
+			{
+				actual_state = TS_BLACK_SCREEN;
+			}
+			break;
+		case TS_BLACK_SCREEN:
+			BlackScreen();
+
+			//TODO CHANGE TO GAME HERE
+			App->gui->DeleteAll();
+			App->scene_manager->LoadHUD();
+			App->paused = false;
+			App->scene_manager->doingaction = false;
+			App->scene->draw = true;
+			App->LoadGame();
+			App->audio->PlayMusic(App->map->data.music_path.GetString());
+
+			actual_state = TS_FADE_IN;
+			break;
+		case TS_FADE_IN:
+			if (Fade_In(function_seconds_length, deltatime))
+			{
+				actual_state = TS_FINISHED;
+			}
+			break;
+		case TS_FINISHED:
+			actual_state = TS_UNKNOWN;
+			actual_transition = TM_UNKNOWN;
+			break;
+		case TS_UNKNOWN:
+			break;
+		}
+		break;
 	case TM_UNKNOWN:
 		break;
 	default:

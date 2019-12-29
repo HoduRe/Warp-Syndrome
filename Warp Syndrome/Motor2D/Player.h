@@ -140,7 +140,7 @@ public:
 	int lives = 3;
 	int score = 0;
 	float ingame_time=0.0f;//TODO implement this
-
+	int ingame_int;
 
 private:
 	pugi::xml_document playerdoc;

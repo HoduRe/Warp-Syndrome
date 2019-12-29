@@ -278,6 +278,11 @@ bool j1SceneManager::LoadHUD()
 	App->gui->AddUIElement(new Static_Text(width / 10, height / 20, nullptr, "x001", 40, STATIC_TEXT_VARIABLE, &App->entity_m->player->lives));	// Life text
 	rect = { 687, 499, 30, 30 };			// Grenade icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 7, nullptr, App->gui->GetAtlas(), &rect, false, NULL, NULL, NULL, NULL, false, STATIC_IMAGE_GRENADE));
+	rect = { 232, 436, 100, 20 };
+	App->gui->AddUIElement(new Static_Image(7 * width / 8 - 5, height / 10, nullptr, App->gui->GetAtlas(), &rect));	// Score background
+	App->gui->AddUIElement(new Static_Image(7 * width / 8 - 5, height / 20, nullptr, App->gui->GetAtlas(), &rect));	// Time background
+	App->gui->AddUIElement(new Static_Text(7 * width / 8, height / 10, nullptr, "Score: 000000", 100, STATIC_TEXT_SCORE, &App->entity_m->player->score));	// Score
+	App->gui->AddUIElement(new Static_Text(7 * width / 8, height / 20, nullptr, "Time: 000000", 100, STATIC_TEXT_TIME, &App->entity_m->player->ingame_int));	// Time
 
 	return true;
 }

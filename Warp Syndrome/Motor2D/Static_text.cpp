@@ -34,6 +34,28 @@ bool Static_Text::Update(float dt) {
 		text[3] = ((char)* counter_path % 100) % 10 + '0';
 		NewText(text);
 	}
+	else if (purpose_type == STATIC_TEXT_TIME) {
+		char text[15] = "Time:         ";
+		int aux_path = *counter_path;
+		int divisor = 100000;
+		for (int i = 7; i < 13; i++) {
+			text[i] = (char)(aux_path / divisor + '0');
+			aux_path = aux_path % divisor;
+			divisor = divisor / 10;
+		}
+		NewText(text);
+	}
+	else if (purpose_type == STATIC_TEXT_SCORE) {
+		char text[15] = "Score:       ";
+		int aux_path = *counter_path;
+		int divisor = 100000;
+		for (int i = 8; i < 14; i++) {
+			text[i] = (char) (aux_path / divisor + '0');
+			aux_path = aux_path % divisor;
+			divisor = divisor / 10;
+		}
+		NewText(text);
+	}
 
 	return true;
 }

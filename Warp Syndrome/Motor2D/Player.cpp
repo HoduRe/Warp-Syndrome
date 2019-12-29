@@ -81,6 +81,7 @@ bool Player::Start()
 	currentAnim = defaultanim;
 
 	ingame_time = 0.0f;
+	ingame_int = 0;
 	ResetStates();
 	playerdoc.reset();
 	return ret;
@@ -88,6 +89,8 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	ingame_int = (int)ingame_time;
+
 	if (lives <= 0)
 		App->level_m->RestartGame();
 

@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.9.6.0-debug:
+Up to version 0.9.7.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -868,6 +868,10 @@ Update 0.9.5.1-debug
 
 Update 0.9.6.0-debug
 <ul>-Now the console remembers imputed comands. The user can cycle between them with arrow up and arrow down
+</ul>
+
+Update 0.9.7.0-debug
+<ul>-Time and Score visually added
 </ul>
 
 ## Credits

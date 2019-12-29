@@ -55,4 +55,5 @@ void Static_Text::NewText(const char* text)
 		App->tex->UnLoad(texture);
 		texture = App->font->Print(text,row_w, {255,255,255,255}, font);
 		App->font->CalcSize(text, texture_section.w, texture_section.h,row_w);
+
 }

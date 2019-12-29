@@ -49,8 +49,6 @@ bool j1Console::Awake(pugi::xml_node& config)
 bool j1Console::Start()
 {
 	output_text.Clear();
-	output_text = "PRUEBAS";
-
 	//Creates commands------------------------------------------------------------------------
 	CreateCommand("list", this, 0, 0); //displays a list of commands
 	CreateCommand("map", this, 1, 1); //tries to load the map with the imput name
@@ -323,10 +321,12 @@ p2DynArray<p2SString>* j1Console::ReturnWords(const char* text)
 
 bool j1Console::AddTextToOutput(const char* text)
 {
+	output_text += ">> ";
 	output_text += text;
 	output_text += "\n";
 	if (outputbox != nullptr)
 		outputbox->NewText(output_text.GetString());
 
+	outputbox->position;
 	return true;
 }

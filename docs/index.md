@@ -6,6 +6,9 @@ It has been made over the course of 4 months as a project for a university subje
 
 
 ## Our team
+Our team, the Warp Syndrome Dev. Team, consists of 2 members, both of them students at CITM 
+coursing 2nd year of the Videogame Design and Development university degree. 
+
 <table style="width:100%">
   <tr>
     <th>Member</th>

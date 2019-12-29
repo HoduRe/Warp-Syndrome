@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="160" height="400" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="329">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="160" height="400" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="355">
  <properties>
   <property name="Music" value="audio/music/battle_music_01-loop.ogg"/>
  </properties>
@@ -192215,5 +192215,30 @@
   <object id="326" type="8" x="96" y="1664" width="32" height="32"/>
   <object id="327" type="8" x="320" y="1376" width="32" height="32"/>
   <object id="328" type="8" x="864" y="1376" width="32" height="32"/>
+  <object id="329" type="9" x="1056" y="8288" width="32" height="32"/>
+  <object id="330" type="9" x="1184" y="8288" width="32" height="32"/>
+  <object id="331" type="9" x="1312" y="8288" width="32" height="32"/>
+  <object id="332" type="9" x="1440" y="8288" width="32" height="32"/>
+  <object id="333" type="9" x="1568" y="8288" width="32" height="32"/>
+  <object id="334" type="9" x="2048" y="8448" width="32" height="32"/>
+  <object id="335" type="9" x="2080" y="8448" width="32" height="32"/>
+  <object id="336" type="9" x="928" y="5344" width="32" height="32"/>
+  <object id="337" type="9" x="928" y="5056" width="32" height="32"/>
+  <object id="338" type="9" x="928" y="4768" width="32" height="32"/>
+  <object id="339" type="9" x="1184" y="4672" width="32" height="32"/>
+  <object id="340" type="9" x="1536" y="4672" width="32" height="32"/>
+  <object id="341" type="9" x="1920" y="4672" width="32" height="32"/>
+  <object id="342" type="9" x="2208" y="4736" width="32" height="32"/>
+  <object id="343" type="9" x="2272" y="5024" width="32" height="32"/>
+  <object id="344" type="9" x="2272" y="4960" width="32" height="32"/>
+  <object id="345" type="9" x="2272" y="4896" width="32" height="32"/>
+  <object id="346" type="9" x="2272" y="5088" width="32" height="32"/>
+  <object id="347" type="9" x="2272" y="5152" width="32" height="32"/>
+  <object id="348" type="9" x="2208" y="5248" width="32" height="32"/>
+  <object id="349" type="9" x="2208" y="5472" width="32" height="32"/>
+  <object id="351" type="9" x="2016" y="6464" width="32" height="32"/>
+  <object id="352" type="9" x="2016" y="6560" width="32" height="32"/>
+  <object id="353" type="9" x="1760" y="7264" width="32" height="32"/>
+  <object id="354" type="9" x="1888" y="7264" width="32" height="32"/>
  </objectgroup>
 </map>

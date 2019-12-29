@@ -3,9 +3,10 @@
 
 #include "p2List.h"
 #include "j1Module.h"
+#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 #include "brofiler/Brofiler/Brofiler.h"
-
 
 // Modules
 class j1Window;
@@ -15,15 +16,16 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class j1Player;
 class j1Collision;
-class j1State;
-class j1Grenade;
 class j1LevelManager;
 class j1Transitions;
-class j1EnemyManager;
 class j1ParticleManager;
 class j1PathFinding;
+class j1EntityManager;
+class j1Console;
+class j1Fonts;
+class j1GUI;
+class j1SceneManager;
 
 class j1App
 {
@@ -47,8 +49,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
-	void AddModule(j1Module* module);
+	// Add a new module to handle //put enabled to false if you want to initialize a module later
+	void AddModule(j1Module* module, bool enabled=true);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -59,7 +61,10 @@ public:
 	void LoadGame();
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
-
+	void ToggleCapping();
+	//changes capping
+	bool NewCap(int cap);
+	p2SString GetLoadGameString();
 private:
 
 	// Load config file
@@ -84,6 +89,7 @@ private:
 	bool LoadGameNow();
 	bool SavegameNow() const;
 
+
 public:
 
 	// Modules
@@ -94,21 +100,30 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Player*			player;
 	j1Collision*		collision;
-	j1State*			state;
-	j1Grenade*			grenade;
 	j1LevelManager*		level_m;
 	j1Transitions*		transitions;
-	j1EnemyManager*			enemies;
-	j1ParticleManager*  particle_m;
 	j1PathFinding*		pathfinding;
+	j1EntityManager*	entity_m;
+	j1Console*			console;
+	j1GUI*				gui;
+	j1Fonts*			font;
+	j1SceneManager*		scene_manager;
+
+
+	float				dt;
+	float				original_dt;
+	j1Timer				frame_time;
+	bool				capping = false;
+	bool				vSyncActivated = false;
+	bool				displayMapInfo = false;
+	bool				paused = false;
+	uint32				new_max_framerate;
 
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	float				dt;
 	int					argc;
 	char**				args;
 
@@ -119,6 +134,13 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+	uint32				prev_last_sec_frame_count = 0;
+	uint32				last_sec_frame_count = 0;
+	uint64				frame_count = 0;
+	j1Timer				startup_time;
+	j1Timer				last_sec_frame_time;
+
+
 };
 
 extern j1App* App; 

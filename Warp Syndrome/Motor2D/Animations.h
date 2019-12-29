@@ -8,13 +8,19 @@
 #include "p2SString.h"
 #include "p2List.h"
 
+enum Animation_state
+{
+	AS_UNFINISHED,
+	AS_FINISHED,
+	AS_UNKNOWN
+};
+
 //stores Info about the current frame of the animation
 struct FrameInfo
 {
-	//TODO frameduration and actualduration have to be modified to work with the game actual framerate instead of loops
 
-	int frameduration;//duration of the current frame in loops
-	int actualduration; //how many units of duration have passed since the first frame
+	float frameduration;//duration of the current frame in loops
+	float actualduration; //how many units of duration have passed since the first frame
 	SDL_Rect animationRect; //rectangle with the location of the frame in the spritesheet
 	iPoint textureoffset;//texture offset from the source position
 };
@@ -29,10 +35,12 @@ public:
 
 
 	//adds a new frame to the animation
-	void AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffset);
+	void AddFrame(float duration, SDL_Rect texturerect, iPoint textureoffset);
 	
 	//returns the current frame of the animation and steps to the net one
-	FrameInfo* StepAnimation();
+	FrameInfo* StepAnimation(float dt);
+	//returns the current frame of the animation and steps to the net one
+	FrameInfo* StepAnimation(Animation_state& state,float dt);
 	
 	//returns true if the animation has finished
 	bool GetAnimationFinish();
@@ -58,7 +66,6 @@ private:
 	p2List_item<FrameInfo*>* currentanimframe;//pointer to the current frame of the animation	
 	p2List<FrameInfo*> animationframes; //list containing all the frames of the animation
 	bool animationfinished; 
-   
 };
 
 #endif // !__ANIMATIONS_H__

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2List.h"
 #include "j1Map.h"
+#include "Enemy.h"
 #include "PugiXml/src/pugixml.hpp"
 
 struct collider_buffer {
@@ -76,6 +77,9 @@ public:
 	// checks if the collider recieved is in contact with the object
 	collision_type CheckCollision(p2List_item<Object*>* currentobj, float *x, float *y, float *w, float *h);
 
+	//returns true if the two rectangles are overlapping
+	bool CheckCollisionSimplified(SDL_Rect* r1, SDL_Rect* r2);
+
 	// checks all collisions to return collisions in both axis, if they exist
 	collision_type CalculateFinalCollision(collision_type collision_array[], collision_type current_collision);
 
@@ -108,6 +112,9 @@ public:
 	
 	// gets the type of the current collider
 	collider_type GetCurrentCollider(int id);
+
+	// Checks collision for pathfinding
+	bool CheckWalkability(iPoint& tile);
 
 public:
 	collision_type current_collision;

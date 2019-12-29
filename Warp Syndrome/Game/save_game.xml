@@ -1,21 +1,3 @@
 <?xml version="1.0"?>
 <game_state>
-	<input />
-	<window />
-	<textures />
-	<audio music_vol="10" fx_vol="10" />
-	<level_m />
-	<map name="second_level.tmx" />
-	<collision />
-	<state />
-	<scene />
-	<pathfinding />
-	<player x="2176" y="7296" />
-	<:anonymous />
-	<grenade />
-	<:anonymous />
-	<:anonymous />
-	<renderer>
-		<camera x="-1766" y="-6797" />
-	</renderer>
 </game_state>

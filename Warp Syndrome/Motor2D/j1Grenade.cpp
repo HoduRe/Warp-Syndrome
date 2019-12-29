@@ -1,279 +1,213 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "j1State.h"
-#include "j1Collision.h"
-#include "j1Player.h"
-#include "j1Input.h"
 #include "j1Grenade.h"
+#include "j1Collision.h"
+#include "j1Input.h"
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
 #include "j1Textures.h"
 #include "j1App.h"
+#include "j1EntityManager.h"
 #include "Particles.h"
+#include "Player.h"
 
-j1Grenade::j1Grenade() {
-	name.create("grenade");
+//default constructor
+Grenade::Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
+{
+	pos = { 0.0f,0.0f };
+	speed = { 0.0f,0.0f };
+	health = 0.0f,
+	fliped = false;
+	texture = nullptr;
+	texture_section = { 0,0,0,0 };
+	destroy = false;
+	enabled = true;
+
+	offset = { 0.0f,0.0f };
+	forces = { 0.0f,0.0f };
+	mass = 1.0f;
+
+	dieOnEndAnim = false;
+}
+//constructor
+Grenade::Grenade(fPoint aPos, fPoint aSpeed, float aHealth) : AnimatedParticle("grenade", false, aPos, aSpeed, 1.0f, texture, aHealth, { 0.0f,0.0f }, {0.0f,0.0f}, EntityType::E_TYPE_GRENADE)
+{
+	pos = aPos;
+	speed = aSpeed;
+	health = aHealth;
+	fliped = false;
+	texture = App->entity_m->player->texture;
+	texture_section = { 0,0,0,0 };
+	destroy = false;
+	enabled = true;
+
+	offset = { 0.0f,0.0f };
+	forces = { 0.0f,0.0f };
+	mass = 1.0f;
+
+	App->entity_m->grenade = this;
+
 }
 
 // Destructor
-j1Grenade::~j1Grenade() {}
-
-// Called before render is available
-bool j1Grenade::Awake(pugi::xml_node& ) {
-
-	return true;
+Grenade::~Grenade()
+{
+	App->entity_m->grenade = nullptr;
+	this->CleanUp();
 }
 
 // Called before the first frame
-bool j1Grenade::Start() {
-
-	anim_list = App->player->GetAnimationList();
-	grenade_animation = anim_list->start->data->GetAnimFromName("grenade", anim_list);
-	grenade_texture = App->player->GetTexture();
-	grenade_vel.x = App->player->playervel.x * 3 / 2;
-	grenade_vel.y = App->player->playervel.y;
-
+bool Grenade::Start()
+{
 	return true;
 }
 
 // Called each loop iteration
-bool j1Grenade::Update(float dt) {
+bool Grenade::PreUpdate()
+{
+	return true;
+}
+bool Grenade::Update(float dt) {
 
-	if (App->state->GetGrenadeState() == true) {
-		GrenadeCollisions();
-		CheckMapBorder();
-		GrenadeState();
-		App->render->Blit(grenade_texture, grenade_position.x, grenade_position.y, &grenade_animation->data->StepAnimation()->animationRect);
+	bool playercantp = true;
+	Integrate(dt);
+	health -= dt;
+	CheckEnemyPosition(dt);
+	CorrectCollider(dt);
+
+	if (App->collision->GrenadeColliderTouched()) { playercantp = false; }
+
+	if (health <= 0.0f || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetMouseButtonDown(2) == KEY_DOWN)
+	{//explode the granade
+		destroy = true;
+		App->entity_m->grenade = nullptr;
+		App->entity_m->player->grenadecooldown = 2.5f;
 	}
-	else StepGrenadeCooldown();
+	else if ((App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN) && App->entity_m->player->current_state != DYING && playercantp == true) //if the player is not dying, and the grenade hasn't been destroyed can tp
+		Teleport();
+
+	anim.StepAnimation(dt);
+	return true;
+}
+bool Grenade::PostUpdate()
+{
+
+	App->render->Blit(texture, pos.x, pos.y, &anim.GetCurrentFrame()->animationRect);
 	return true;
 }
 
 // Called before quitting
-bool j1Grenade::CleanUp() {
-	App->tex->UnLoad(grenade_texture);
-	anim_list->clear();
+bool Grenade::CleanUp() {
+	//App->tex->UnLoad(texture);//TODO don't know if its a copy of the player texture or a poniter to it, so maybe, when cleaning the player dissapears :p guess we will find out soon
+	//We found out indeed
 	return true;
 }
 
-void j1Grenade::GrenadeCollisions() {
-	App->collision->CheckLoop(&grenade_position, &grenade_measures, OBJECT_GRENADE);
-	switch (App->collision->current_collision) {
-	case GROUND_COLLISION:
-		switch(grenade_state){
-		case GST_MOVING_LEFT_DOWN:
-			grenade_state = GST_MOVING_LEFT_UP;
-			break;
-		case GST_MOVING_RIGHT_DOWN:
-			grenade_state = GST_MOVING_RIGHT_UP;
-			break;
-		case GST_MOVING_DOWN:
-			grenade_state = GST_MOVING_UP;
-			break;
-		}
-		break;
-	case UPPER_COLLISION:
-		switch (grenade_state) {
-		case GST_MOVING_LEFT_UP:
-			grenade_state = GST_MOVING_LEFT_DOWN;
-			break;
-		case GST_MOVING_RIGHT_UP:
-			grenade_state = GST_MOVING_RIGHT_DOWN;
-			break;
-		case GST_MOVING_UP:
-			grenade_state = GST_MOVING_DOWN;
-			break;
-		}
-		break;
-	case LEFT_COLLISION:
-		switch (grenade_state) {
-		case GST_MOVING_LEFT_DOWN:
-			grenade_state = GST_MOVING_RIGHT_DOWN;
-			break;
-		case GST_MOVING_LEFT_UP:
-			grenade_state = GST_MOVING_RIGHT_UP;
-			break;
-		}
-		break;
-	case RIGHT_COLLISION:
-		switch (grenade_state) {
-		case GST_MOVING_RIGHT_DOWN:
-			grenade_state = GST_MOVING_LEFT_DOWN;
-			break;
-		case GST_MOVING_RIGHT_UP:
-			grenade_state = GST_MOVING_LEFT_UP;
+void Grenade::Teleport()
+{
+	App->audio->PlayFx(App->scene->teleport_sfx);
+	//generate a particle on the player then move the player and generate the other when TPed
+	AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
+	App->entity_m->AddEntity(p);
+	App->entity_m->player->pos = pos;
+	AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
+	App->entity_m->AddEntity(q);
+
+	destroy = true;
+	App->entity_m->grenade = nullptr;
+	App->entity_m->player->grenadecooldown = 2.5f;
+}
+
+void Grenade::GrenadeCollisions()
+{
+
+	fPoint measures;
+	measures.x = anim.GetCurrentFrame()->animationRect.x;
+	measures.x = anim.GetCurrentFrame()->animationRect.x;
+
+	App->collision->CheckLoop(&pos, &measures, OBJECT_GRENADE);
+
+	if (grenade_collider_buffer != App->collision->current_collision) //if the last collision was different from the one happening now enter the switch//bad things can happen with this method, better remake the function
+	{
+
+		switch (App->collision->current_collision)
+		{
+		case GROUND_COLLISION:
+
+		case UPPER_COLLISION:
+
+		case LEFT_COLLISION:
+
+		case RIGHT_COLLISION:
+
+		case RIGHT_UPPER_COLLISION:
+
+		case LEFT_UPPER_COLLISION:
+
+		case RIGHT_GROUND_COLLISION:
+
+		case LEFT_GROUND_COLLISION:
 			break;
 		}
-		break;
-	case RIGHT_UPPER_COLLISION:
-		grenade_state = GST_MOVING_LEFT_DOWN;
-		break;
-	case LEFT_UPPER_COLLISION:
-		grenade_state = GST_MOVING_RIGHT_DOWN;
-		break;
-	case RIGHT_GROUND_COLLISION:
-		grenade_state = GST_MOVING_LEFT_UP;
-		break;
-	case LEFT_GROUND_COLLISION:
-		grenade_state = GST_MOVING_RIGHT_UP;
-		break;
+
 	}
 	grenade_collider_buffer = App->collision->current_collision;
 }
 
-void j1Grenade::GrenadeState() {
-	
-	if ((grenade_state != GST_UNKNOWN && App->collision->GrenadeColliderTouched() != true && 
-		(App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN || App->input->GetMouseButtonDown(3) == KEY_DOWN))) {
-		grenade_state = GST_EXPLODING;
-	}
-	if (grenade_state != GST_UNKNOWN && grenade_state != GST_EXPLODING) {
-		grenade_time_to_explode += 0.1;
-	}
-	if (App->state->current_state == DYING) {
-		grenade_state = GST_UNUSABLE;
-	}
-
-	switch (grenade_state) {
-	case GST_UNKNOWN:
-		grenade_position.x = App->player->GetPosition().x;
-		grenade_position.y = App->player->GetPosition().y - App->player->GetWidthHeight().x;
-		grenade_timer.x = grenade_vel.x;
-		switch (App->player->fliped) {
-		case true:
-			grenade_state = GST_MOVING_LEFT_UP;
-			break;
-		case false:
-			grenade_state = GST_MOVING_RIGHT_UP;
-			break;
+void Grenade::CorrectCollider(float dt) {
+	fPoint measures(6, 6);
+	App->collision->CheckLoop(&pos, &measures, OBJECT_GRENADE);
+	switch (App->collision->current_collision) {
+	case GROUND_COLLISION:
+	case UPPER_COLLISION:
+		speed.y = speed.y * -0.9;
+		pos.y = App->collision->current_collision_buffer.collider1.y;
+		break;
+	case LEFT_COLLISION:
+	case RIGHT_COLLISION:
+		speed.x = speed.x * -0.9;
+		pos.x = App->collision->current_collision_buffer.collider1.x;
+		break;
+	case LEFT_GROUND_COLLISION:
+	case RIGHT_GROUND_COLLISION:
+	case LEFT_UPPER_COLLISION:
+	case RIGHT_UPPER_COLLISION:
+		speed.x = speed.x * -0.9;
+		speed.y = speed.y * -0.9;
+		if (App->collision->current_collision_buffer.is_first_collider_horizontal == true) {
+			pos.y = App->collision->current_collision_buffer.collider1.y;
+			pos.x = App->collision->current_collision_buffer.collider2.x;
 		}
-		grenade_timer.y = grenade_vel.y;
-		break;
-	case GST_MOVING_UP:	// NOT BEING USED
-		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(0.0f, -grenade_vel.y + grenade_timer.y);
-		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_DOWN; }
-		break;
-	case GST_MOVING_DOWN: // NOT BEING USED
-		if(grenade_timer.y >= 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(0.0f, grenade_vel.y - grenade_timer.y);
-		break;
-	case GST_MOVING_LEFT_UP:
-		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(-grenade_vel.x, -grenade_vel.y + grenade_timer.y);
-		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_LEFT_DOWN; }
-		break;
-	case GST_MOVING_LEFT_DOWN:
-		if (grenade_timer.y > 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(-grenade_vel.x, -grenade_timer.y + grenade_vel.y);
-		break;
-	case GST_MOVING_RIGHT_UP:
-		grenade_timer.y += (1.0f / 10.0f);
-		AddPosition(grenade_vel.x, -grenade_vel.y + grenade_timer.y);
-		if (grenade_timer.y >= grenade_vel.y) { grenade_state = GST_MOVING_RIGHT_DOWN; }
-		break;
-	case GST_MOVING_RIGHT_DOWN:
-		if (grenade_timer.y > 0) { grenade_timer.y -= (1.0f / 10.0f); }
-		AddPosition(grenade_vel.x, -grenade_timer.y + grenade_vel.y);
-		break;
-	case GST_EXPLODING:
-		grenade_state = GST_UNKNOWN;
-		grenade_timer.y = 0.0f;
-		grenade_time_to_explode = 0;
-		App->audio->PlayFx(App->scene->teleport_sfx);
-		App->state->SetGrenadeState(false);
-		fPoint position;
-		fPoint measures;
-		App->state->current_state = TELEPORT;
-		if (App->state->current_state == TELEPORT) 
-		{ 
-			//generate a particle on the player then move the player and generate the other when TPed
-			AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200, {0.0f,0.0f}, { -50.0f,-43.0f });
-			App->particle_m->AddParticle(p);
-			App->player->SetPosition(App->grenade->GetPosition()); 
-			AnimatedParticle* q = new AnimatedParticle("pulsar_out", true, { App->player->GetPosition().x,App->player->GetPosition().y }, App->player->GetTexture(), 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
-			App->particle_m->AddParticle(q);
-
+		else {
+			pos.x = App->collision->current_collision_buffer.collider1.x;
+			pos.y = App->collision->current_collision_buffer.collider2.y;
 		}
-		position.x = App->player->GetPosition().x;
-		position.y = App->player->GetPosition().y;
-		measures.x = App->player->GetWidthHeight().x;
-		measures.y = App->player->GetWidthHeight().y;
-		App->collision->CheckLoop(&position, &measures, OBJECT_PLAYER);
-		App->state->MovePlayer();
 		break;
 	}
+}
 
-	if ((grenade_time_to_explode >= 40 || App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN||App->input->GetMouseButtonDown(2) == KEY_DOWN)
-		|| grenade_state == GST_UNUSABLE) {
-		grenade_state = GST_UNKNOWN;
-		grenade_timer.y = 0.0f;
-		grenade_time_to_explode = 0;
-		App->state->SetGrenadeState(false);
+void Grenade::CheckEnemyPosition(float dt) {
+	iPoint vectorO(0, 0);
+	iPoint vectorF(speed.x * dt + 15, speed.y * dt - 15);
+	iPoint object;
+	p2List_item<Entity*>* f = App->entity_m->entity_list.start;
+	while (f != nullptr) {
+		if (f->data->type == E_TYPE_ELEMENTAL || f->data->type == E_TYPE_FIRE_SKULL || f->data->type == E_TYPE_HELL_HORSE) {
+			object.x = f->data->pos.x - pos.x;
+			object.y = f->data->pos.y - pos.y;
+			if ((vectorO.x <= object.x && vectorF.x >= object.x &&
+				vectorO.y >= object.y && vectorF.y <= object.y) ||
+				(vectorO.x >= object.x && vectorF.x <= object.x &&
+				vectorO.y <= object.y && vectorF.y >= object.y)) {
+				f->data->destroy = true;
+				health = 0.0f;
+				App->entity_m->player->score += 300;
+				App->audio->PlayFx(App->scene->teleport_sfx);
+				AnimatedParticle* p = new AnimatedParticle("pulsar_in", true, { f->data->pos.x, f->data->pos.y }, App->entity_m->player->texture, 200, { 0.0f,0.0f }, { -50.0f,-43.0f });
+				App->entity_m->AddEntity(p);
+			}
+		}
+		f = f->next;
 	}
-
-}
-
-void j1Grenade::CheckMapBorder() {
-	if (grenade_position.x <= 0 + grenade_measures.x + 1) {
-		if (grenade_state == GST_MOVING_LEFT_DOWN) { grenade_state = GST_MOVING_RIGHT_DOWN; }
-		else if (grenade_state == GST_MOVING_LEFT_UP) { grenade_state = GST_MOVING_RIGHT_UP; }
-	}
-}
-
-void j1Grenade::AddPosition(float x, float y) {
-	grenade_position.x += x;
-	grenade_position.y += y;
-}
-
-bool j1Grenade::DoesGrenadeExist() {
-	if (grenade_state == GST_UNKNOWN) { return false; }
-	else { return true; }
-}
-
-bool j1Grenade::IsGrenadeExploding() {
-	if (grenade_state == GST_EXPLODING) { return true; }
-	else { return false; }
-}
-
-fPoint j1Grenade::GetPosition() {
-	return grenade_position;
-}
-
-fPoint j1Grenade::GetMeasures() {
-	return grenade_measures;
-}
-
-collision_type j1Grenade::ColliderBuffer() {
-	return grenade_collider_buffer;
-}
-
-bool j1Grenade::GetGrenadeCooldown()
-{
-	if (cooldown_timer < 120)
-	{
-		return true;
-	}
-	return false;
-}
-
-void j1Grenade::StepGrenadeCooldown()
-{
-	if (cooldown_timer < 120)
-	{
-		cooldown_timer++;
-	}
-}
-
-void j1Grenade::GrenadeCooldownReset()
-{
-	cooldown_timer = 0;
-}
-
-void j1Grenade::SetMeasures(pugi::xml_node root)
-{
-	grenade_measures.x= root.child("measures").attribute("w").as_uint(6);
-	grenade_measures.y = root.child("measures").attribute("h").as_uint(6);
-
 }

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
+#include "Enemy.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -33,7 +34,7 @@ public:
 	void SetMap(uint width, uint height, uchar* data);
 
 	// Main function to request a path from A to B
-	p2DynArray<iPoint> CreatePath(const iPoint& origin, const iPoint& destination);
+	void CreatePath(const iPoint& origin, const iPoint& destination, Enemy* enemy);
 
 	// To request all tiles involved in the last generated path
 	const p2DynArray<iPoint>* GetLastPath() const;
@@ -42,28 +43,17 @@ public:
 	bool CheckBoundaries(const iPoint& pos) const;
 
 	// Utility: returns true is the tile is walkable
-	bool IsWalkable(const iPoint& pos) const;
-
-	// Utility: return the walkability value of a tile
-	uchar GetTileAt(const iPoint& pos) const;
-
-	// Sets the blit bool
-	void SetBlitPathfinding();
-	// Returns the bool variable to print on scene
-	bool GetBlitPathfinding();
-	// Blits the path
-	void BlitPathfinding();
+	bool IsWalkable(const iPoint& pos, Enemy* enemy) const;
 
 private:
 
 	// size of the map
 	uint width;
 	uint height;
-	// all map walkability values [0..255]
-	uchar* map;
 	// we store the created path here
 	p2DynArray<iPoint> last_path;
 	bool blit;
+	bool end;
 };
 
 
@@ -78,7 +68,7 @@ struct PathNode
 	PathNode(PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill);
+	uint FindWalkableAdjacents(PathList& list_to_fill, Enemy* enemy);
 	// Calculates this tile score
 	int Score() const;
 	// Calculate the F for a specific destination tile

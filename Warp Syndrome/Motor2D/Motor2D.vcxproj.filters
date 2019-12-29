@@ -34,19 +34,10 @@
     <ClCompile Include="j1Map.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Player.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Animations.cpp">
       <Filter>Programming %28p2%29=========</Filter>
     </ClCompile>
     <ClCompile Include="j1Collision.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1State.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Grenade.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
     <ClCompile Include="level_manager.cpp">
@@ -55,26 +46,74 @@
     <ClCompile Include="transitions.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Particles.cpp">
-      <Filter>Development============\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1PathFinding.cpp">
       <Filter>Development============\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Hell_horse.cpp">
-      <Filter>Development============\Modules\Enemies</Filter>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
-    <ClCompile Include="Fire_skull.cpp">
-      <Filter>Development============\Modules\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Development============\Modules\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="j1EnemyManager.cpp">
-      <Filter>Development============\Modules</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
     </ClCompile>
     <ClCompile Include="Elemental.cpp">
-      <Filter>Development============\Modules\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Grenade.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Development============\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Development============\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="FireSkull.cpp">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Console.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Development============\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Elements.cpp">
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
+    <ClCompile Include="j1GUI.cpp">
+      <Filter>Development============\UI System</Filter>
+    </ClCompile>
+    <ClCompile Include="static_image.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Static_text.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="editable_text.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollbar.cpp">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin_G.cpp">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneManager.cpp">
+      <Filter>Development============\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,19 +168,10 @@
     <ClInclude Include="j1Map.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Player.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Animations.h">
       <Filter>Programming %28p2%29=========</Filter>
     </ClInclude>
     <ClInclude Include="j1Collision.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1State.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Grenade.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
     <ClInclude Include="level_manager.h">
@@ -150,26 +180,74 @@
     <ClInclude Include="transitions.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Particles.h">
-      <Filter>Development============\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1PathFinding.h">
       <Filter>Development============\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Hell_horse.h">
-      <Filter>Development============\Modules\Enemies</Filter>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
-    <ClInclude Include="Fire_skull.h">
-      <Filter>Development============\Modules\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Development============\Modules\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="j1EnemyManager.h">
-      <Filter>Development============\Modules</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Development============\Entity Sistem</Filter>
     </ClInclude>
     <ClInclude Include="Elemental.h">
-      <Filter>Development============\Modules\Enemies</Filter>
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Grenade.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Development============\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Development============\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="FireSkull.h">
+      <Filter>Development============\Entity Sistem\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Console.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Development============\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Elements.h">
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="j1GUI.h">
+      <Filter>Development============\UI System</Filter>
+    </ClInclude>
+    <ClInclude Include="static_image.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Static_text.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="editable_text.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollbar.h">
+      <Filter>Development============\UI System\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin_G.h">
+      <Filter>Development============\Entity Sistem</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneManager.h">
+      <Filter>Development============\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,8 +269,17 @@
     <Filter Include="Programming %28p2%29=========">
       <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Development============\Modules\Enemies">
-      <UniqueIdentifier>{e34267b6-1706-427c-b37f-fe4ae6ead85e}</UniqueIdentifier>
+    <Filter Include="Development============\Entity Sistem">
+      <UniqueIdentifier>{493f0520-6e99-483a-a4bd-725f3658e610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\Entity Sistem\Enemies">
+      <UniqueIdentifier>{b10a643a-5b47-4b63-845c-7263c46eca15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\UI System">
+      <UniqueIdentifier>{52cca87d-feae-4196-872c-2fadce72ebfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Development============\UI System\UI Elements">
+      <UniqueIdentifier>{fa48e82e-624f-4598-98f9-0ea9319383c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

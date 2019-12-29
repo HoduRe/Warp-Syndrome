@@ -13,22 +13,22 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2AF9969B-F202-497B-AF30-7BEF9CE8005E}</ProjectGuid>
     <RootNamespace>programacio_2</RootNamespace>
-    <ProjectName>Motor 2D</ProjectName>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Warp Syndrome</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -77,12 +77,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="button.cpp" />
+    <ClCompile Include="Coin_G.cpp" />
+    <ClCompile Include="editable_text.cpp" />
+    <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1SceneManager.cpp" />
+    <ClCompile Include="scrollbar.cpp" />
+    <ClCompile Include="static_image.cpp" />
+    <ClCompile Include="Static_text.cpp" />
+    <ClCompile Include="UI_Elements.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Elemental.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Fire_skull.cpp" />
-    <ClCompile Include="Hell_horse.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="FireSkull.cpp" />
     <ClCompile Include="j1Collision.cpp" />
-    <ClCompile Include="j1EnemyManager.cpp" />
+    <ClCompile Include="j1Console.cpp" />
+    <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1Grenade.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -90,31 +101,46 @@
     <ClCompile Include="j1Input.cpp" />
     <ClCompile Include="j1Map.cpp" />
     <ClCompile Include="j1PathFinding.cpp" />
-    <ClCompile Include="j1Player.cpp" />
+    <ClCompile Include="j1PerfTimer.cpp" />
     <ClCompile Include="j1Scene.cpp" />
+    <ClCompile Include="j1Timer.cpp" />
+    <ClCompile Include="j1GUI.cpp" />
     <ClCompile Include="level_manager.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="Particles.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
-    <ClCompile Include="j1State.cpp" />
     <ClCompile Include="transitions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="button.h" />
+    <ClInclude Include="Coin_G.h" />
+    <ClInclude Include="editable_text.h" />
+    <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1SceneManager.h" />
+    <ClInclude Include="scrollbar.h" />
+    <ClInclude Include="static_image.h" />
+    <ClInclude Include="Static_text.h" />
+    <ClInclude Include="UI_Elements.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Elemental.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Fire_skull.h" />
-    <ClInclude Include="Hell_horse.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="FireSkull.h" />
     <ClInclude Include="j1Collision.h" />
-    <ClInclude Include="j1EnemyManager.h" />
+    <ClInclude Include="j1Console.h" />
+    <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1Grenade.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1PathFinding.h" />
-    <ClInclude Include="j1Player.h" />
+    <ClInclude Include="j1PerfTimer.h" />
     <ClInclude Include="j1Scene.h" />
+    <ClInclude Include="j1Timer.h" />
+    <ClInclude Include="j1GUI.h" />
     <ClInclude Include="level_manager.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="j1Audio.h" />
@@ -130,9 +156,9 @@
     <ClInclude Include="j1Window.h" />
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="Particles.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
-    <ClInclude Include="j1State.h" />
     <ClInclude Include="transitions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,39 +1,37 @@
-<!-- Config file for the game -->
-
+<?xml version="1.0"?>
 <config>
-  <app>
-    <title>Warp Syndrome</title>
-    <organization>UPC</organization>
-    <saves>save_game.xml</saves>
-  </app>
-	
-  <renderer>
-    <vsync value="true"/>
-  </renderer>
-
-    <audio>
-     <volume value="10"/>
-    </audio>
-
-  <window>
-    <resolution width="1024" height="768" scale="1"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
-  <level_m>
-    <load docname="levels.xml"/>
-  </level_m>
-  <map>
-    <folder>maps/</folder>
-  </map>
-<player>
-  <load docname="player.xml"/>
-</player>
-
+	<app>
+		<framerate_cap value="30" />
+		<title>Warp Syndrome</title>
+		<organization>UPC</organization>
+		<saves>save_game.xml</saves>
+	</app>
+	<renderer>
+		<vsync value="false" />
+	</renderer>
+	<audio>
+		<volume value="10" />
+	</audio>
+	<window>
+		<resolution width="1024" height="768" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<file_system>
+		<path>data.zip</path>
+	</file_system>
+	<level_m>
+		<load docname="levels.xml" />
+	</level_m>
+	<map>
+		<folder>maps/</folder>
+	</map>
+	<entity_m>
+		<load docname="player.xml" />
+	</entity_m>
+	<gui>
+		<atlas file="textures/atlas.png" />
+	</gui>
 </config>

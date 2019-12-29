@@ -7,9 +7,14 @@
 #define __j1MODULE_H__
 
 #include "p2SString.h"
+#include "p2DynArray.h"
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
+class UI;
+class Command;
+enum UICallbackState;
+
 
 class j1Module
 {
@@ -21,6 +26,10 @@ public:
 	void Init()
 	{
 		active = true;
+	}
+	void Disable()
+	{
+		active = false;
 	}
 
 	// Called before render is available
@@ -68,6 +77,17 @@ public:
 	{
 		return true;
 	}
+
+	//listens for a UI
+	virtual bool OnListen(UI* element, UICallbackState state)
+	{
+		return true;
+	}
+	virtual bool OnCommand(Command* command, p2DynArray<p2SString>* arguments)
+	{
+		return true;
+	}
+
 
 public:
 

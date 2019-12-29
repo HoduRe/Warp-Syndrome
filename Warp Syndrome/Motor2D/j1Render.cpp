@@ -1,11 +1,12 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
-#include "j1State.h"
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Render.h"
-#include "j1Player.h"
+#include "j1EntityManager.h"
+#include "Player.h"
+#include "j1Scene.h"
 #include "j1Grenade.h"
 
 j1Render::j1Render() : j1Module()
@@ -28,15 +29,16 @@ bool j1Render::Awake(pugi::xml_node& config)
 	bool ret = true;
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
+	App->vSyncActivated = false;
 
 	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
-		LOG("Using vsync");
+	flags |= SDL_RENDERER_PRESENTVSYNC;
+	LOG("Using vsync");
+	App->vSyncActivated = true;
 	}
 
 	renderer = SDL_CreateRenderer(App->win->window, -1, flags);
-
 	if (renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
@@ -59,6 +61,8 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	App->render->currentcam.x = App->render->camera.x;
+	App->render->currentcam.y = App->render->camera.y;
 	return true;
 }
 
@@ -76,7 +80,9 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
-	if (App->state->BlitColliders() == true) {
+	App->render->camera.x = App->render->currentcam.x;
+	App->render->camera.y = App->render->currentcam.y;
+	if (App->scene->blit_colliders == true) {
 		App->collision->PrintColliders();
 		PrintPlayerObjects();
 	}
@@ -96,8 +102,8 @@ bool j1Render::CleanUp()
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int(0);
-	camera.y = data.child("camera").attribute("y").as_int(0);
+	currentcam.x = data.child("camera").attribute("x").as_int(0);
+	currentcam.y = data.child("camera").attribute("y").as_int(0);
 
 	return true;
 }
@@ -175,7 +181,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		rect.x = rect.x - pivotX;
 		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
 		{
-			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			//LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError()); //TODO solve this
 			ret = false;
 		}
 	}
@@ -268,17 +274,17 @@ void j1Render::PrintPlayerObjects() {
 	SDL_Rect rect;
 	uint alpha = 80;
 // Blits player
-	rect.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
-	rect.y = App->player->GetPosition().y - App->player->GetWidthHeight().y;
-	rect.w = App->player->GetWidthHeight().x;
-	rect.h = App->player->GetWidthHeight().y;
+	rect.x = App->entity_m->player->pos.x - App->entity_m->player->hitbox_w_h.x / 2;
+	rect.y = App->entity_m->player->pos.y - App->entity_m->player->hitbox_w_h.y;
+	rect.w = App->entity_m->player->hitbox_w_h.x;
+	rect.h = App->entity_m->player->hitbox_w_h.y;
 	DrawQuad(rect, 255, 255, 0, alpha);
 // Blits grenade
-	if (App->grenade->DoesGrenadeExist() == true) {
-		rect.x = App->grenade->GetPosition().x;
-		rect.y = App->grenade->GetPosition().y;
-		rect.w = App->grenade->GetMeasures().x;
-		rect.h = App->grenade->GetMeasures().y;
+	if (App->entity_m->grenade!=nullptr) {
+		rect.x = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.x;
+		rect.y = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.y;
+		rect.w = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.w;
+		rect.h = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect.h;
 		DrawQuad(rect, 255, 255, 255, alpha);
 	}
 }

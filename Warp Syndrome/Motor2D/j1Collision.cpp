@@ -2,13 +2,13 @@
 #include "p2Log.h"
 #include "j1Map.h"
 #include "j1Collision.h"
-#include "j1Player.h"
-#include "j1State.h"
 #include "j1Grenade.h"
 #include "j1Render.h"
 #include "p2List.h"
 #include "p2SString.h"
+#include "j1EntityManager.h"
 #include "j1App.h"
+#include "Player.h"
 
 j1Collision::j1Collision() : j1Module() 
 {
@@ -36,16 +36,16 @@ bool j1Collision::Update(float dt) {
 	door_collider_touched = false;
 	grenade_collider_touched = false;
 
-	if(GroundCollision() == true){ y_player_buffer = App->player->GetPosition().y; }
+	if(GroundCollision() == true){ y_player_buffer = App->entity_m->player->pos.y; }
 	//player variables
-	position.x = App->player->GetPosition().x - App->player->GetWidthHeight().x / 2;
-	position.y = App->player->GetPosition().y;
-	measures.x = App->player->GetWidthHeight().x;
-	measures.y = App->player->GetWidthHeight().y;
-	if(App->state->GetGodmode() == false){
+	position.x = App->entity_m->player->pos.x - App->entity_m->player->hitbox_w_h.x / 2;
+	position.y = App->entity_m->player->pos.y;
+	measures.x = App->entity_m->player->hitbox_w_h.x;
+	measures.y = App->entity_m->player->hitbox_w_h.y;
+	if(App->entity_m->player->GetGodmode() == false){
 		CheckLoop(&position, &measures, OBJECT_PLAYER);
-	}
-	y_player_buffer = App->player->GetPosition().y;
+	} else { current_collision = NONE_COLLISION; }
+	y_player_buffer = App->entity_m->player->pos.y;
 
 	return ret;
 }
@@ -154,6 +154,21 @@ collision_type j1Collision::CheckCollision(p2List_item<Object*>* currentobj, flo
 	else { return NONE_COLLISION; }
 }
 
+//returns true if the two rectangles are overlapping
+bool j1Collision::CheckCollisionSimplified(SDL_Rect* r1, SDL_Rect* r2)
+{
+	bool ret = false;
+	if (r1 != NULL && r2 != NULL)
+	{
+		if (r1->x < r2->x + r2->w &&
+			r1->x + r1->w > r2->x &&
+			r1->y < r2->y + r2->h &&
+			r1->h + r1->y > r2->y)
+			ret= true;
+	}
+	return ret;
+}
+
 collision_type j1Collision::CalculateFinalCollision(collision_type collision_array[], collision_type current_collision) {
 	int collision_count = 0;
 
@@ -213,7 +228,8 @@ bool j1Collision::InsideCollider(p2List_item<Object*>* currentobj, float* x, flo
 	float collider_y = (float)currentobj->data->boundingbox.y;
 	float collider_w = (float)currentobj->data->boundingbox.w;
 	float collider_h = (float)currentobj->data->boundingbox.h;
-	if (*x >= collider_x - App->grenade->GetMeasures().x && *x + *w <= collider_x + collider_w + App->grenade->GetMeasures().x && *y >= collider_y - App->grenade->GetMeasures().y && *y + *h <= collider_y + collider_h + App->grenade->GetMeasures().y) {
+	SDL_Rect rect = App->entity_m->grenade->anim.GetCurrentFrame()->animationRect;
+	if (*x >= collider_x - rect.w && *x + *w <= collider_x + collider_w + rect.w && *y >= collider_y - rect.h && *y + *h <= collider_y + collider_h + rect.h) {
 		return true;
 	}
 	else { return false; }
@@ -293,4 +309,32 @@ void j1Collision::PrintColliders() {
 		}
 		itemOG = itemOG->next;
 	}
+}
+
+bool j1Collision::CheckWalkability(iPoint& tile) {
+	p2List_item<ObjectGroup*>* itemOG = pObjGroupList.start;
+	collider_type aux_collider_type;
+	SDL_Rect coll_rect;
+
+	while (itemOG != NULL) {
+		p2List_item<Object*>* itemO = itemOG->data->objlist.start;
+		while (itemO != NULL) {
+			aux_collider_type = App->collision->GetCurrentCollider(itemO->data->type);
+			switch (aux_collider_type) {
+			case death_collider:
+			case regular_collider:
+			case grenade_collider:
+			case under_platform_collider:
+				coll_rect.x = itemO->data->boundingbox.x / App->map->data.tile_width;
+				coll_rect.y = itemO->data->boundingbox.y / App->map->data.tile_height;
+				coll_rect.w = itemO->data->boundingbox.w / App->map->data.tile_width - 1;
+				coll_rect.h = itemO->data->boundingbox.h / App->map->data.tile_height - 1;
+				if (coll_rect.x <= tile.x && coll_rect.x + coll_rect.w >= tile.x
+					&& coll_rect.y <= tile.y && coll_rect.y + coll_rect.h >= tile.y) {
+					return false;
+				}
+				break;
+			} itemO = itemO->next;
+		} itemOG = itemOG->next;
+	} return true;
 }

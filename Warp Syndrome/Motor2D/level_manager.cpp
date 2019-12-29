@@ -2,11 +2,12 @@
 #include "j1App.h"
 #include "j1Map.h"
 #include "p2Log.h"
-#include "j1Player.h"
-#include "j1State.h"
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Audio.h"
+#include "j1EntityManager.h"
+#include "j1SceneManager.h"
+#include "Player.h"
 
 
 
@@ -69,19 +70,25 @@ bool j1LevelManager::Save(pugi::xml_node& ldata) const
 
 bool j1LevelManager::RestartLevel()
 {
-	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 120);
+	App->transitions->ChangeTransition(TM_RESTART_LEVEL, 2.0f);
+	return true;
+}
+bool j1LevelManager::RestartGame()
+{
+	App->transitions->ChangeTransition(TM_RESTART_GAME, 2.0f);
+	App->scene_manager->doingaction = true;
 	return true;
 }
 bool j1LevelManager::ChangeToNextLevel()
 {
-	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+	App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f);
 	return true;
 }
 bool j1LevelManager::ChangeToLevel1()
 {
 	if (current_level != level_list.start)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f);
 	}
 	return true;
 }
@@ -89,7 +96,7 @@ bool j1LevelManager::ChangeToLevel2()
 {
 	if (current_level != level_list.start->next)
 	{
-		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL, 60);
+		App->transitions->ChangeTransition(TM_CHANGE_TO_NEXT_LEVEL,1.0f);
 	}
 	return true;
 }
@@ -137,10 +144,25 @@ bool j1LevelManager::LoadLevelList(pugi::xml_node& root)
 
 bool j1LevelManager::RestartLevelObjects()
 {
-	App->player->ResetPlayerToStart();
-	App->state->current_state = IDLE;
-	App->render->camera.x = -(App->player->GetPosition().x - (App->render->camera.w / 2));
-	App->render->camera.y = -(App->player->GetPosition().y - (App->render->camera.h / 2));
+	App->entity_m->player->ResetPlayerToStart();
+	App->entity_m->player->current_state = IDLE;
+	App->entity_m->CleanAllEntites();
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_FIRE_SKULL);
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_COIN_G);
+	//TODO reload entites of the map
+	App->render->camera.x = -(App->entity_m->player->pos.x - (App->render->camera.w / 2));
+	App->render->camera.y = -(App->entity_m->player->pos.y - (App->render->camera.h / 2));
+	return true;
+}
+
+bool j1LevelManager::RestartGameObjects()
+{
+	current_level = level_list.start;
+	App->map->ReloadMap(current_level->data->overworld.GetString());
+	RestartLevelObjects();
+	App->entity_m->player->ResetStates();
+	
 	return true;
 }
 

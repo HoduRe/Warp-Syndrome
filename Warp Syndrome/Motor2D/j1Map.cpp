@@ -6,8 +6,10 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1Collision.h"
-#include "j1EnemyManager.h"
 #include "j1Scene.h"
+#include "j1EntityManager.h"
+#include "Enemy.h"
+#include "Elemental.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -33,6 +35,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("DrawMap", Profiler::Color::Blue);
+
 	if (map_loaded == false)
 		return;
 
@@ -64,8 +68,8 @@ void j1Map::Draw()
 
 		iPoint up_left_cam_corner = WorldToMap(App->render->camera.x * -1, App->render->camera.y * -1, data);
 		iPoint down_right_cam_corner = WorldToMap((App->render->camera.x * -1) + window_w, (App->render->camera.y * -1) + window_h, data);
-		iPoint up_left_cam_cornerparallax = WorldToMap((App->render->camera.x * -1)*parallaxvalue, App->render->camera.y * -1, data);
-		iPoint down_right_cam_cornerparallax = WorldToMap((App->render->camera.x * -1)*parallaxvalue + window_w, (App->render->camera.y * -1) + window_h, data);
+		iPoint up_left_cam_cornerparallax = WorldToMap((App->render->camera.x * -1) * parallaxvalue, App->render->camera.y * -1, data);
+		iPoint down_right_cam_cornerparallax = WorldToMap((App->render->camera.x * -1) * parallaxvalue + window_w, (App->render->camera.y * -1) + window_h, data);
 
 		for (int i = 0; i < item_layer->data->height; i++)//number of rows
 		{
@@ -75,18 +79,18 @@ void j1Map::Draw()
 				{
 
 					int xpositionleft = (int)(-App->render->camera.x * parallaxvalue) + MapToWorldCoordinates(j, data) * scale;
-					
+
 
 					if (i<down_right_cam_corner.y + 1 && i>up_left_cam_corner.y - 1)//camera culling in y coords
 					{
-						if (j<down_right_cam_cornerparallax.x +1 && j>up_left_cam_cornerparallax.x -1 )
+						if (j<down_right_cam_cornerparallax.x + 1 && j>up_left_cam_cornerparallax.x - 1)
 						{
 
 
 							int id = item_layer->data->gid[Get(j, i, *item_layer)];
 							if (id > 0)
 							{
-								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)),NULL,NULL,NULL, parallaxvalue);
+								App->render->Blit(GetTilesetFromTileId(id)->texture, MapToWorldCoordinates(j, data), MapToWorldCoordinates(i, data), &RectFromTileId(id, GetTilesetFromTileId(id)), NULL, NULL, NULL, parallaxvalue);
 							}
 						}
 					}
@@ -228,7 +232,7 @@ bool j1Map::LoadNew(const char* file_name)
 	// Load general info ----------------------------------------------
 	if (ret == true)
 	{
-		ret = LoadMap(tmp.GetString(),file_name);
+		ret = LoadMap(tmp.GetString(), file_name);
 	}
 
 	// Load music ----------------------------------------------------------
@@ -287,17 +291,17 @@ bool j1Map::LoadNew(const char* file_name)
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		LOG("width: %d height: %d", data.width, data.height);
-		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+		//LOG("width: %d height: %d", data.width, data.height); //TODO delete LOG
+		//LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height); //TODO delete LOG
 
 		p2List_item<TileSet*>* item = data.tilesets.start;
 		while (item != NULL)
 		{
 			TileSet* s = item->data;
-			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
+			//LOG("Tileset ----");//TODO delete LOG
+			//LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);//TODO delete LOG
+			//LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);//TODO delete LOG
+			//LOG("spacing: %d margin: %d", s->spacing, s->margin);//TODO delete LOG
 			item = item->next;
 		}
 
@@ -307,24 +311,27 @@ bool j1Map::LoadNew(const char* file_name)
 		while (item_layer != NULL)
 		{
 			MapLayer* l = item_layer->data;
-			LOG("Layer ----");
-			LOG("name: %s", l->name.GetString());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
+			//LOG("Layer ----"); //TODO delete LOG
+			//LOG("name: %s", l->name.GetString()); //TODO delete LOG
+			//LOG("tile width: %d tile height: %d", l->width, l->height); //TODO delete LOG
 			for (int i = 0; i < l->width * l->height; i++)
 			{
-				LOG("gid(%i): %u", i, l->gid[i]);
+				//LOG("gid(%i): %u", i, l->gid[i]); //TODO deleted LOG
 			}
 			item_layer = item_layer->next;
 		}
 	}
-
-
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);//todo add more when we implement them
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_FIRE_SKULL);//todo add more when we implement them
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_COIN_G);
 	map_loaded = ret;
+	// Clean up the pugui tree
+	map_file.reset();
 	return ret;
 }
 
 // Load map general properties
-bool j1Map::LoadMap(p2SString path,p2SString name)
+bool j1Map::LoadMap(p2SString path, p2SString name)
 {
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
@@ -519,20 +526,6 @@ bool j1Map::LoadObjGroup(pugi::xml_node& objgroupnode, ObjectGroup* group)
 		set->boundingbox.h = currentobj.attribute("height").as_int();
 		set->boundingbox.w = currentobj.attribute("width").as_int();
 
-		switch (set->type) {
-		case 6:
-			App->enemies->AddEnemy(enemy_elemental, set->boundingbox.x, set->boundingbox.y);
-			break;
-		case 7:
-			App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);
-			break;
-		case 8:
-			App->enemies->AddEnemy(enemy_skull, set->boundingbox.x, set->boundingbox.y);
-			break;
-		default:
-			break;
-		}
-
 		group->objlist.add(set);
 	}
 
@@ -638,7 +631,7 @@ MapData::~MapData()
 bool j1Map::Load(pugi::xml_node& ldata)
 {
 	p2SString newmapname = ldata.attribute("name").as_string("first_level.tmx");//loads the map name from the saves doc, if gets errror, replaces it with "first_level.tmx"
-	if (newmapname!=data.name)//if the map that you request to load isn't the same as the one you are currently in, load it, else do nothing 
+	if (newmapname != data.name)//if the map that you request to load isn't the same as the one you are currently in, load it, else do nothing 
 	{
 		ReloadMap(newmapname);
 	}

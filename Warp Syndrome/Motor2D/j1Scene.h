@@ -44,15 +44,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void RepositionCamera();
+	void RepositionCamera(float dt);
 
 	void LoadNewLevel(iPoint textcenterpos, iPoint symbolcenterpos);
 
-	float CameraGoToTarget(SDL_Rect camera, fPoint target);//used inside Repositon Camera Function
+	float CameraGoToTarget(fPoint campos, iPoint cammeasures, fPoint target,float dt);//used inside Repositon Camera Function
 
 	int teleport_sfx;
 	int jump_sfx;
 	int death_sfx;
+	int coin_sfx;
+	bool blit_colliders = false;
+	bool blit_UI = false;
+	bool draw = true;
 
 private:
 	bool start;
@@ -63,7 +67,7 @@ private:
 	bool arrivedtoline;//true if the camera has arrived to its desired position, false if else
 	bool snapping;//true if its currently snapping false if else 
 	fPoint distancetoplayer;//camera distance to player
-
+	
 
 };
 

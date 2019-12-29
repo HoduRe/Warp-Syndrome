@@ -8,8 +8,7 @@ Animations::Animations()
 	numberofFrames = 0;
 	animationloop = false;
 	animationname = "";
-	//texture = nullptr;
-	//texture = nullptr;
+	animationframes.clear();
 }
 
 Animations::Animations(p2SString aName, bool aLoop, int aNumberOfFrames)
@@ -19,14 +18,13 @@ Animations::Animations(p2SString aName, bool aLoop, int aNumberOfFrames)
 	numberofFrames = aNumberOfFrames;
 	currentanimframe = nullptr;
 	animationfinished = false;
+	animationframes.clear();
 }
 
 
 Animations::~Animations()
 {
-
 	CleanUp();
-
 }
 
 bool Animations::CleanUp()
@@ -39,12 +37,12 @@ bool Animations::CleanUp()
 		item = item->next;
 	}
 	animationframes.clear();
-	delete currentanimframe;
+	currentanimframe = nullptr;
 	return true;
 }
 
 
-void Animations::AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffset)
+void Animations::AddFrame(float duration, SDL_Rect texturerect, iPoint textureoffset)
 {
 	FrameInfo* newframe = new FrameInfo;
 
@@ -57,10 +55,10 @@ void Animations::AddFrame(int duration, SDL_Rect texturerect, iPoint textureoffs
 	currentanimframe = animationframes.start;
 }
 
-FrameInfo* Animations::StepAnimation()
+FrameInfo* Animations::StepAnimation(float dt)
 {
 	FrameInfo* ret = currentanimframe->data;
-	if (ret->actualduration++ >= ret->frameduration)//only executes the code once the duration of the frame is max
+	if (ret->actualduration>= ret->frameduration)//only executes the code once the duration of the frame is max
 	{
 		ret->actualduration = 0;//restarts the duration
 
@@ -69,12 +67,37 @@ FrameInfo* Animations::StepAnimation()
 		else if (animationloop)//if the animation can loop return to the start
 			currentanimframe = animationframes.start;
 		else animationfinished = true;
-		
-		
+
+
 	}
+	ret->actualduration += dt;
+	return ret;
+}
+FrameInfo* Animations::StepAnimation(Animation_state&state,float dt)
+{
+	state = AS_UNKNOWN;
+	FrameInfo* ret = currentanimframe->data;
+	if (ret->actualduration >= ret->frameduration)//only executes the code once the duration of the frame is max
+	{
+		ret->actualduration = 0.0f;//restarts the duration
+
+		if (currentanimframe->next != nullptr) {//if the next element exists go to the next element
+			currentanimframe = currentanimframe->next;
+			state = AS_UNFINISHED;
+		}
+		else if (animationloop) {//if the animation can loop return to the start
+			currentanimframe = animationframes.start;
+			state = AS_UNFINISHED;
+		}
+		else
+		{
+			animationfinished = true;
+			state = AS_FINISHED;
+		}
 
 
-
+	}
+	ret->actualduration += dt;
 	return ret;
 }
 
@@ -105,7 +128,7 @@ bool Animations::LoadAnim(pugi::xml_node& animationnode)
 	animationloop = animationnode.attribute("canloop").as_bool();
 	for (framenode = animationnode.child("frame"); framenode; framenode = framenode.next_sibling("frame"))
 	{
-		int duration = framenode.child("duration").attribute("value").as_int();
+		float duration = framenode.child("duration").attribute("value").as_float();
 
 		SDL_Rect rect;
 		rect.x = framenode.child("rectangle").attribute("x").as_int();

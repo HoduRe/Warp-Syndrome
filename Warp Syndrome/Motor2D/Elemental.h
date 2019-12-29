@@ -3,18 +3,31 @@
 
 #include "Enemy.h"
 
+enum Elemental_Anim_List
+{
+	EL_ANIM_IDLE,
+	EL_ANIM_MOVING,
+	EL_ANIM_ATTACKING,
+	EL_ANIM_DIE,
+	EL_ANIM_UNKNOWN
+};
+
 class Enemy_Elemental : public Enemy
 {
-private:
-	int original_y = 0;
-	Animations move;
-
 public:
+	float pathfinding_update_rate = 0.0f;
 
 	Enemy_Elemental(int x, int y);
+	Enemy_Elemental(int x, int y,enemy_states startingstate,float aHealth);
 	~Enemy_Elemental();
+	bool PreUpdate();
+	bool Update(float dt);
+	bool PostUpdate();
+	bool CleanUp();
+	void CheckAnimation(enemy_states currentstate, enemy_states laststate);
+	void ChangeAnimation(Elemental_Anim_List animations);
+	bool Save(pugi::xml_node& data) const;
 
-	void Move();
 };
 
 #endif // __ELEMENTAL_H__

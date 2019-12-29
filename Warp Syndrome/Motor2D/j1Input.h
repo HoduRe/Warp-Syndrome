@@ -5,6 +5,7 @@
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define CHAR_ARRAY 60
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -23,6 +24,13 @@ enum j1KeyState
 	KEY_DOWN,
 	KEY_REPEAT,
 	KEY_UP
+};
+
+enum InputReadingState {
+	READING_NONE,
+	READING_START,
+	READING_ONGOING,
+	READING_STOP
 };
 
 class j1Input : public j1Module
@@ -68,10 +76,21 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
+	// Adds a letter wherever the cursor is
+	void AddLetter(char newchar);
+
+	// Returns the cursor
+	int GetCursor();
+	void SetCursor(int i);
+
+	char text[CHAR_ARRAY];
+	InputReadingState state;
+
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	int			cursor;
 	int			mouse_motion_x;
 	int			mouse_motion_y;
 	int			mouse_x;

@@ -34,14 +34,16 @@ represented by the eyes over the door that brings the player to the next level)
 	Keypad (+): Increase the volume
 	
 ### Debug Controls:<br>
-	F1: Start the first level
-	F2: Start the second level
+	F1: Start from the first level
+	F2: Start from the second level
 	F3: Starts from the beginning of the level
 	F4: Changes to the next level
 	F5: Saves the current state
 	F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
-	F9: Show / unshow colliders
+	F7: Switches between frame information and map information
+	F9: Show / unshow colliders and pathfinding
 	F10: Activate / deactivate God Mode
+	F11: Enables / disables frame limit at 30 fps
 
 ### Player 1 Controls: <br>
     Movement (keyboard / gamepad):
@@ -49,14 +51,15 @@ represented by the eyes over the door that brings the player to the next level)
         A: Move to the left
         D: Move to the right
     Special movement:
-        J/Left Mouse Button: Throws the grenade
+	Press Left Mouse Button: Determines the grenade throwing angle, moved by the mouse 
+        J/ Release Left Mouse Button: Throws the grenade
         K/Right Mouse Button: Teleports to the grenade
         L/Middle Mouse Button: Makes the thrown grenade disappear
         W/Space (while sliding on a wall): wall-jump
 
 ## History
 
-Up to version 0.3.0.0-debug:
+Up to version 0.9.7.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -447,22 +450,437 @@ Update 0.2.5.5-debug
 <ul>-Enemies movement implemented
 </ul>
 
-Update 0.2.5.6-debug
-<ul>-Pathfinding values adjusted
+Update 0.2.6.0-debug
+<ul>
+-Started working on the entity system.<br>
+-Updated Player to hold its state class
+</ul>
+
+Update 0.2.7.0-debug
+<ul>
+-Deleted particle manager class<br>
+-Modified Particle and Animated particle classes<br>
+-Now both Particle and Animated particles are entites
+</ul>
+
+Update 0.2.8.0-debug
+<ul>
+-Player states module is now integrated inside the player class
+</ul>
+
+Update 0.2.9.0-debug
+<ul>
+-Started working on grenade as an entity
 </ul>
 
 Update 0.3.0.0-debug
-<ul>-Added Brofiler Support
+<ul>
+-Modified Particle and Animated Particle entities<br>
+-Modified the Flip player function in the player entity<br>
+-Changed variables regarding entites in all the code<br>
+-Further urpgaded the grenade entity
 </ul>
 
+Update 0.3.1.0-debug
+<ul>
+-Added grenade ponter in the entity manager<br>
+-Restored pathfinding class in App<br>
+-Modified some functions and variables
+</ul>
+
+Update 0.4.0.0-debug
+<ul>
+-Created class Character, its parented directly to Entity and its children are Player and Enemies<br>
+-Modified functions on a lot of modules.<br>
+-Changed some functions and variables from player to character
+</ul>
+
+Update 0.4.1.0-debug
+<ul>
+-Some more work has been done in the enemy class and its subclasses
+</ul>
+
+Update 0.4.2.0-debug
+<ul>
+-Updated the entity system<br>
+-Cleaned the entity system code a litle bit
+</ul>
+
+Update 0.4.3.0-debug
+<ul>
+-Made some improvements in the entity system and god mode<br>
+-Also made some improvements on the grenade, it can be thrown at any direction now.
+</ul>
+
+Update 0.4.4.0-debug
+<ul>
+-Added Brofiler Support to the game<br>
+-Added the first UML draft for the entity system<br>
+-Started implementing functionality with delta time
+</ul>
+
+Update 0.5.0.0-debug
+<ul>
+-Now game can be capped at 30 frames per second<br>
+-Solved some dt related bugs<br>
+-First iteration of pathfinding is now functional<br>
+-Started working on enemy load/save and removal
+</ul>
+
+Update 0.5.1.0-debug
+<ul>
+-Fixed a lot of errors related to the parthfinding modules<br>
+-Solved some more dt related bugs<br>
+-Game now displays Vsync and Capping in the window title
+</ul>
+
+Update 0.5.2.0-debug
+<ul>
+-Fixed fatal error with particles<br>
+-Fixed CleanUp in all the entities, reduced MemoryLeaks by a lot when loading entities<br>
+-Enemies can now be destroyed
+</ul>
+
+Update 0.6.0.0-debug (this came from the various branches of pathfinding and entity implementation, which had their own commit management. Starts with 0.2.5.5)
+<ul>
+-Entity system implemented<br>
+-Player code introduced in the entity system<br>
+-Particles introduced in the entity system<br>
+-Added grenade as a particle<br>
+-Enemy class introduced in the entity system<br>
+-Grenade's angle can be determined by the player<br>
+-UML added at docs<br>
+-Dt implemented<br>
+-Brofiler implemented<br>
+-Pathfinding implemented<br>
+-Load / save enemies implemented<br>
+-Terrestrial enemies movement limited<br>
+-Enemy death added, with particle and sound<br>
+</ul>
+
+Update 0.6.0.1-debug
+<ul>
+-Map remodeled
+-Enemies pathfinding updated
+</ul>
+
+Update 0.6.0.2-debug
+<ul>
+-Added more brofiler debugging<br>
+-Changed map rendering to happen in post update instead of the update<br>
+</ul>
+
+Update 0.6.1.0-debug
+<ul>
+-Cleaned up code a litle bit<br>
+-Added new functionality to F7: it now changes the information displayed in the title bar<br>
+</ul>
+
+Update 0.6.2.0-debug
+<ul>-Ground enemies pathfinding position matches the ground<br>
+-Enemy movement code restructured
+</ul>
+
+Update 0.6.4.0-debug
+<ul>-Module UIManager and Console added<br>
+</ul>
+
+Update 0.6.4.1-debug
+<ul>-UI manager skeleton added<br>
+-Button class created, but not modified
+</ul>
+
+Update 0.6.5.0-debug
+<ul>-Module Fonts added<br>
+-UI manager cleanup updated
+</ul>
+
+Update 0.6.5.1-debug
+<ul>-UI modules names changed<br>
+-UI update added<br>
+-Button functionality added
+</ul>
+
+Update 0.6.5.2-debug
+<ul>-UI elements modules added<br>
+-Scrollbar interactivity implemented<br>
+</ul>
+
+Update 0.6.5.3-debug
+<ul>-Static text and fonts updated to print text on screen
+</ul>
+
+Update 0.7.0.0-debug
+<ul>-Added coins to the game/ Added Coin module + items.xml (this last xml is not being currently used)<br>
+-Coins can be saved and loaded from xml as well as from the map<br>
+-Added temporal debug keys: V to spawn a coin, C to spawn a coin particle, X to spawn a picked coin particle<br>
+-Updated Grenade constructor<br>
+-Updated entity manager to work with coins, also changed some variable names to be more intuitive<br>
+-Added a new simplified boolean collision detection in the collision module<br>
+-For debugging purposes the number of coins that the player currently has is displayed in the title, in the map info section<br>
+</ul>
+
+Update 0.7.0.1-debug
+<ul>-Fixed coin error: they don't detect collisions with the player if he is in god mode<br>
+</ul>
+
+Update 0.7.1.0-debug
+<ul>-Added 2 new functions to the coin module: PreUpdate() and DoEnable()<br>
+-Now coins can enable/disable themselves when are not in the camera frame. When disabled they not longer render, also they don't step their animation anymore nor detect collisions with the player<br>
+</ul>
+
+Update 0.7.1.1-debug
+<ul>-Added Sound effect for coin pickup
+</ul>
+
+Update 0.7.2.0-debug
+<ul>-First map coins added<br>
+-Editable text updated (now it has functionality and is visible, but not editable yet)<br>
+-General functionality has been moved to UI_Elements to make all daugther classes interactable when clicked<br>
+</ul>
+
+Update 0.7.2.1-debug
+<ul>-Detected and solved 2 major memory leaks regarding constant texture load in memory and animations: Cleaned up the animations of each coin when its destroyed. Cleaned up a text texture taht got lost in memory each frame<br>
+-Started working on the wireframe for the diferent scenes<br>
+</ul>
+
+Update 0.7.2.2-debug
+<ul>-Second map coins added<br>
+-Focus added to elements as a pointer<br>
+-Editable text reads and shows the text input<br>
+</ul>
+
+Update 0.7.3.0-debug
+<ul>-Focus system based on clicks added<br>
+-Hierarchy between objects added<br>
+-Implemented observer pattern in the UI elements of the game: Now the Ui elements have a new function CallListeners() that can be called when the element wants to inform of an event<br>
+-Now the modules have a new function OnListen() that receives the UI element calls<br>
+-Made some debug code to test this pattern<br>
+-Now the j1GUI function AddUIElement() retuns the element added istead of void<br>
+</ul>
+
+Update 0.7.4.0-debug
+<ul>-Changed Scene intro module for the scene manager module, it now has the wireframe for the menus system implemented<br>
+-Added a new function to the GUI module: CleanAllElements(), it destroys all the Ui elements<br>
+-Taken some code from the scene module and put it in the scene manager module<br>
+-Added new code to the transitions module to support menu/game transitions<br>
+</ul>
+
+Update 0.7.5.0-debug
+<ul>-UI elements deletion updated<br>
+-Focus method functions perfectly<br>
+</ul>
+
+Update 0.7.5.1-debug
+<ul>-Minor cleanup merge problem solved<br>
+</ul>
+
+Update 0.7.5.2-debug
+<ul>-Now the main scene isn't drawn when not needed.<br>
+-Started working on menus loop with button callbacks.
+</ul>
+
+Update 0.7.6.0-debug
+<ul>-Menus are movable through TAB and Enter<br>
+-Editable text crash fixed<br>
+-Hover function implemented
+</ul>
+
+Update 0.7.6.1-debug
+<ul>-Started working on console
+</ul>
+
+Update 0.7.6.2-debug
+<ul>-Now the UI elements work with camera coordinates instead of being in the world
+</ul>
+
+Update 0.7.6.3-debug
+<ul>-Major bug with UI deletion fixed
+</ul>
+
+Update 0.7.6.4-debug
+<ul>-Added new function to the GUI module
+</ul>
+
+Update 0.7.7.0-debug
+<ul>-Various elements added to the intro menu<br>
+-Texture memory leak possibly solved
+</ul>
+
+Update 0.7.8.0-debug
+<ul>-Button animation functional again<br>
+-Game loop from the main menu to game workable and usable
+</ul>
+
+Update 0.7.8.1-debug
+<ul>-Minor enum name change<br>
+</ul>
+
+Update 0.7.8.2-debug:
+<ul>-Minor delete function improvement<br>
+</ul>
+
+Update 0.7.8.3-debug:
+<ul>-Minor delete function improvement (yes, again)<br>
+-Credits section started
+</ul>
+
+Update 0.7.8.4-debug:
+<ul>-Minor delete function improvement (yes, again, this is not a joke)<br>
+-Credits and settings updated
+</ul>
+
+Update 0.8.0.0-debug
+<ul>-Now commands are fully functional, but don't work with editable text imput yet.<br>
+-Major changes on the console module have been made.<br>
+-Added a new function to the App module: NewCap(), changes the capping of the game
+</ul>
+
+Update 0.8.0.1-debug
+<ul>-Functionality and volume images added
+</ul>
+
+Update 0.8.0.2-debug
+<ul>-Functionality of editable text added<br>
+-Console creation updated
+</ul>
+
+Update 0.8.0.3-debug
+<ul>-Simplified some function calls on edit text and imput modules<br>
+-Fixed a critical bug that caused the game loop to stall.
+</ul>
+
+Update 0.8.1.0-debug
+<ul>-Volume adjustable<br>
+-Console deletion adjusted
+</ul>
+
+Update 0.8.1.2-debug
+<ul>-Music functions improvement<br>
+-In-game menu functional
+</ul>
+
+Update 0.8.1.3-debug
+<ul>-Removed some unused LOGs to improve performance during debugging.<br>
+-Adjusted maximum capping due to overperformance when deleted the LOGs.
+</ul>
+
+Update 0.8.2.0-debug
+<ul>-Button to go back to main menu implemented<br>
+-Volume regulation bug fixed
+</ul>
+
+Update 0.8.3.0-debug
+<ul>-Now console output works fine, rerouted Log's to be displayed there.<br>
+-Cleaned some code in the scene manager, spliting it into functions.<br>
+-Cleaned some logs, commented them at least for the moment.<br>
+-Modified some fonts functions to work with diferent lines of text.<br>
+-Changed static text and editable text classes to work with the new fonts functions.<br>
+-Adjusted player spawnpoint in the first level.
+</ul>
+
+Update 0.8.3.1-debug
+<ul>-Button click makes sound<br>
+</ul>
+
+Update 0.8.4.0-debug
+<ul>-Hover has visual clues<br>
+</ul>
+
+Update 0.8.4.1-debug
+<ul>-Fixed DeleteAll() function, it now deletes items properly
+</ul>
+
+Update 0.8.5.0-debug
+<ul>-Modified Static image, it can now also display rectangles instead of textures.<br>
+-Added consloe layout and adjusted texts<br>
+-Detected memory leak on editable text! starting to search for a way to solve it.
+</ul>
+
+Update 0.8.6.0-debug
+<ul>-Added lives to the player. When the player dies 3 times, the game now resets itself to its initial state and goes to the menu<br>
+-Added a new function to the player that helps him reset his variables<br>
+-Added a new transition in the transitions module for when the player loses all his lives.<br>
+-Added new functions to the level manager module for when the game has to reset itself.<br>
+-Added keypad 7 as a new debug key that lets the player lose lives. Added also lives to the tile info in the map category.
+</ul>
+
+Update 0.8.6.1-debug
+<ul>-Added score to the player. Adds +150 when collecting a coin, +300 when killing an enemy and +1000 when finishing the level
+</ul>
+
+Update 0.8.6.2-debug
+<ul>-Now the score, lives, coins and time are saved into saves.xml<br>
+-Now images can make callbacks when clicked.<br>
+-Added a new image in the menu
+</ul>
+
+Update 0.9.0.0-debug
+<ul>-Mask movable with slider to credits implemented<br>
+-Credits rewritten to avoid spelling mistakes<br>
+-Pause menu can't be opened from the console to avoid breaking the game
+</ul>
+
+Update 0.9.1.0-debug
+<ul>-HUD elements added<br>
+</ul>
+
+Update 0.9.1.1-debug
+<ul>-Solved critical memory leak<br>
+-Removed some unused debug keys<br>
+-Now console doesn't lose focus when pressing enter
+</ul>
+
+Update 0.9.2.0-debug
+<ul>-Functional HUD elements added
+</ul>
+
+Update 0.9.3.0-debug
+<ul>-Now the menu detects if there is a saved game and shows the continue button accordingly.<br>
+-Fixed bug that made the lives, score and coins to not reset when acessing the main menu from the pause menu.<br>
+-Added Brofiler support for the GUI.
+</ul>
+
+Update 0.9.4.0-debug
+<ul>-Grenade added to the HUD<br>
+-Mask added to the console
+</ul>
+
+Update 0.9.4.1-debug
+<ul>-Fixed wrong cursor behaviour when enter pressed.<br>
+-Added some visual cues to help understand the user when a new line of code starts in the console.
+</ul>
+
+Update 0.9.4.2-debug
+<ul>-Fixed more errors regarding the cursor.<br>
+-Starting to make the console output display the last command at the bottom of the screen
+</ul>
+
+Update 0.9.4.3-debug
+<ul>-Added sounds when oppening menus<br>
+-Added sound to the grenade icon when the grenade is avaliable again
+</ul>
+
+Update 0.9.5.1-debug
+<ul>-UI debug added<br>
+-Console bug somwhat fixed
+</ul>
+
+Update 0.9.6.0-debug
+<ul>-Now the console remembers imputed comands. The user can cycle between them with arrow up and arrow down
+</ul>
+
+Update 0.9.7.0-debug
+<ul>-Time and Score visually added
+</ul>
 
 ## Credits
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: build code skeleton from class' handouts, worked on the assets and the music selection, created most of the art used in the levels, implemented the parallax effect both on map and code, implemented animations, implemented the load / save file system, implemented map load /save, made systems to access the various xml files needed, did scene transitions, loading scene logistic and implemented the camera </ul><br>
+<ul>Contribution: implemented the brofiler, the entity and enemy system, the grenade renovated system, edited the UML, helped with pathfinding and implemented the dt </ul><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-<ul>Contribution: worked on the assets and music selection,created some of the art used in the levels, designed and crafted the first and second map with its colliders, implemented the collision detection, implemented the state machine, implemented the grenade mechanic, the godmode, the colliders being shown and did the drawing for the loading screen </ul><br>
+<ul>Contribution: implemented pathfinding, edited UML, made the animations XML, worked on enemy movement and did the code to kill the player</ul><br>
 
 Credits to various artists who put their creations at public use:
 <ul>
@@ -476,6 +894,7 @@ rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <b
 Gamemaseter audio for the grenade teleport sound: https://sonniss.com/sound-effects/magic-spell-sounds/ <br>
 Soundrangers for the death sound: https://sonniss.com/sound-effects/hydrology-bubbles-splashes/ <br>
 Elthen for his elemental pixelart sprites: https://elthen.itch.io/ice-elemental <br>
+Thanks to the user KorgMS2000B at freesound.org for providing the button click sound: https://freesound.org/people/KorgMS2000B/sounds/54405/<br>
 <br>
 <br>
 Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 

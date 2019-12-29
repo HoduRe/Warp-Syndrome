@@ -13,6 +13,7 @@ Currently there is no installation required, just open the .exe provided in the 
 ## Usage
 
 Advice: if when throwing the first grenade, the player freezes, execute the .exe with the administrator permission.
+The enemies, in the first level only, are not dangerous. They are intended to be harmless to try out the grenade against them and help with the game narrative.
 
 ## Innovation
 
@@ -24,14 +25,18 @@ Compared to what was asked for the assignment, this project comes with extra con
 -Comes with the first bit of the intended narrative told through visual clues (in the first level, the three imprisoned black eyes, with the fourth missing at the
 left-lower corner. On the second level, the origins of the eye are told at the highest point of the "normal route" (since what is found higher is the black eye itself),
 conveying how it was born, grew uncontrollably, and was sealed by four figures. At the end of the level, it's shown how, eventually, on of the guardians was killed,
-represented by the eyes over the door that brings the player to the next level)
+represented by the eyes over the door that brings the player to the next level)<br>
+-The game console remembers previous sent commands and those can be summoned by the up and down arrows when in the console.<br>
+-The requiered commands have been expanded accepting diferent number of arguments, and we have added some more which you can see by typing “list" in the console.
 </ul>
 
 
 ### General Controls :
-	ESC: Close the game
-	Keypad (-): Decrease the volume
-	Keypad (+): Increase the volume
+	ESC: Opens/Closes the pause menu while in game.
+	Grave (º): Toggles the console.
+	Tab: Iterates between UI elements.
+	Keypad (-): Decrease the volume. Volume can also be decreased in the menus.
+	Keypad (+): Increase the volume. Volume can also be increased in the menus.
 	
 ### Debug Controls:<br>
 	F1: Start from the first level
@@ -41,11 +46,12 @@ represented by the eyes over the door that brings the player to the next level)
 	F5: Saves the current state
 	F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
 	F7: Switches between frame information and map information
+	F8: Enters UI debug mode
 	F9: Show / unshow colliders and pathfinding
 	F10: Activate / deactivate God Mode
 	F11: Enables / disables frame limit at 30 fps
 
-### Player 1 Controls: <br>
+### Player Controls: <br>
     Movement (keyboard / gamepad):
         W/Space: Jump
         A: Move to the left
@@ -878,9 +884,11 @@ Update 0.9.7.0-debug
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: implemented the brofiler, the entity and enemy system, the grenade renovated system, edited the UML, helped with pathfinding and implemented the dt </ul><br>
+<ul>Contribution: Has been in charge of implementing Brofiler, the entity and enemy system, the file system with xml, the new grenade system, saving and loading, creating all the UML's , implementing dt in the game, implementing the logic of the game/menu loop, transitions and also implementing the console and coins.
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
-<ul>Contribution: implemented pathfinding, edited UML, made the animations XML, worked on enemy movement and did the code to kill the player</ul><br>
+<ul>Contribution: Has been in charge of implementing pathfinding, creating all the UML's, making the animation XML, working on enemy movement and code to kill the player. He has also made the UI elements and structured the menus.
+
+Disclamer: These have been the major areas of work for each member, and the ones that each of them understands better but they have been working toghether in all the items listed before during the course of the 4 months that the project has lasted for.
 
 Credits to various artists who put their creations at public use:
 <ul>

@@ -80,10 +80,8 @@ SDL_Texture* j1Fonts::Print(const char* text, Uint32 p_width, SDL_Color color, T
 	SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped((font) ? font : default, text, color, p_width);
 
 
-	if(surface == NULL)
-	{
-		//LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError()); //TODO solve this
-	}
+	if(surface == NULL){}
+
 	else
 	{
 		ret = App->tex->LoadSurface(surface);
@@ -99,8 +97,7 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, Uint32 p_width
 	bool ret = false;
 	SDL_Surface* surface = TTF_RenderUTF8_Blended_Wrapped((font) ? font : default, text, {255,255,255,255},p_width);
 	if ( surface == NULL)
-		//LOG("Unable to calc size of text surface! SDL_ttf Error: %s\n", TTF_GetError()); //TODO solve this
-		ret = false;//TODO delete this placeholder line
+		ret = false;
 	else
 	{
 		width = surface->w;

@@ -64,7 +64,7 @@ bool Enemy_FireSkull::Update(float dt)
 		case E_STATE_CHASING:
 			//pathfinding here, execute pathfinding once every 1/2 a sec or so
 			//Also move the player in this state, when arrived to the destination tile go to default case
-			if (pathfinding_update_rate >= 0.5f)//2 seconds of refresh rate //TODO change the timer accordingly to enemy speed
+			if (pathfinding_update_rate >= 0.5f)//2 seconds of refresh rate
 			{
 				DoPathFinding();
 				pathfinding_update_rate = 0.0f;
@@ -116,8 +116,8 @@ bool Enemy_FireSkull::Save(pugi::xml_node& data) const
 }
 void Enemy_FireSkull::ChangeAnimation(Elemental_Anim_List animations)
 {
-	p2List<Animations*>* pAnimList = &animations_list;//pointer to the character's animation list //TODO this is now loaded directly from the class, no need for a pointer
-	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation//TODO this is now loaded directly from the class, no need for a pointer
+	p2List<Animations*>* pAnimList = &animations_list;//pointer to the character's animation list
+	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
 
@@ -125,7 +125,7 @@ void Enemy_FireSkull::ChangeAnimation(Elemental_Anim_List animations)
 	switch (animations)
 	{
 	case EL_ANIM_IDLE:
-		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);//TODO put valid animations here
+		newanim = currentanim->data->GetAnimFromName("idle", pAnimList);
 		break;
 	case EL_ANIM_MOVING:
 		newanim = currentanim->data->GetAnimFromName("moving", pAnimList);

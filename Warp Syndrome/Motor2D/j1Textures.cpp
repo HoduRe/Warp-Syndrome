@@ -100,14 +100,8 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
-	if(texture == NULL)
-	{
-		//LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError()); //TODO solve this
-	}
-	else
-	{
-		textures.add(texture);
-	}
+	if(texture == NULL) {}
+	else { textures.add(texture); }
 
 	return texture;
 }

@@ -113,8 +113,8 @@ bool Enemy_Elemental::Save(pugi::xml_node& data) const
 }
 void Enemy_Elemental::ChangeAnimation(Elemental_Anim_List animations)
 {
-	p2List<Animations*>* pAnimList = &animations_list;//pointer to the character's animation list //TODO this is now loaded directly from the class, no need for a pointer
-	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation//TODO this is now loaded directly from the class, no need for a pointer
+	p2List<Animations*>* pAnimList = &animations_list;//pointer to the character's animation list
+	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
 

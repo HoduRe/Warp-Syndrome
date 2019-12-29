@@ -313,10 +313,8 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-
 		if (dt > 0.5f)dt = 0.016f;//caps dt to maximum 0.5 sec*frame because when loading a new map during the 1st frame the dt is so big that causes issues
 		ret = m_item->data->Update(dt);
-		//LOG("Delta Time= %f", dt); //TODO deleted LOG
 
 	}
 

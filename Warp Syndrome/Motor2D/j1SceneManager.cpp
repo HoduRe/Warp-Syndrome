@@ -364,18 +364,6 @@ bool j1SceneManager::LoadCredits()
 	App->gui->AddUIElement(new Scrollbar(width / 2 + 15, height / 3, item->data, 138, SCROLLBAR_MASK, element));
 
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back", 800));
-	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
-		"Credit goes to Oscar Perez and Ferran-Roger Basart."));
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
-		"We know this UI is lame. Just note we are trying."));
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 3 * (height / 16), item->data,
-		"Still, it must be nice."));
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 4 * (height / 16), item->data,
-		"It must be nice."));
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 5 * (height / 16), item->data,
-		"To have the president on our side."));
-	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 6 * (height / 16), item->data,
-		"If you got that, you are the real cool.",));*/
 	return true;
 }
 

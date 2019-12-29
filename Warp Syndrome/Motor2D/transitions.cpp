@@ -152,9 +152,9 @@ bool j1Transitions::PostUpdate()
 			break;
 		case TS_BLACK_SCREEN:
 			BlackScreen();
-			//TODO CHANGE TO MENU HERE
+
 			App->paused = true;
-			App->gui->DeleteAll();//TODO just unload all the UI
+			App->gui->DeleteAll();
 			App->scene_manager->LoadMainMenu();
 			App->scene_manager->doingaction = false;
 			App->scene->draw = false;
@@ -190,7 +190,6 @@ bool j1Transitions::PostUpdate()
 		case TS_BLACK_SCREEN:
 			BlackScreen();
 
-			//TODO CHANGE TO GAME HERE
 			App->gui->DeleteAll();
 			App->scene_manager->LoadHUD();
 			App->paused = false;
@@ -233,7 +232,7 @@ bool j1Transitions::PostUpdate()
 			if (App->console->console_opened)
 				App->console->CloseConsole();
 
-			App->gui->DeleteAll();//TODO just unload all the UI
+			App->gui->DeleteAll();
 			App->scene_manager->LoadMainMenu();
 			App->scene_manager->currentloop = GameCycle::G_C_MAIN_MENU;
 			App->scene_manager->doingaction = false;
@@ -273,7 +272,6 @@ bool j1Transitions::PostUpdate()
 		case TS_BLACK_SCREEN:
 			BlackScreen();
 
-			//TODO CHANGE TO GAME HERE
 			App->gui->DeleteAll();
 			App->scene_manager->LoadHUD();
 			App->paused = false;

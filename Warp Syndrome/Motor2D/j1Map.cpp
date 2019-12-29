@@ -114,8 +114,6 @@ void j1Map::Draw()
 			}
 		}
 
-		//LOG("%i %i,%i %i", up_left_cam_corner.x, up_left_cam_corner.y, down_right_cam_corner.x, down_right_cam_corner.y);
-
 		item_layer = item_layer->next;
 	}
 }
@@ -291,38 +289,19 @@ bool j1Map::LoadNew(const char* file_name)
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
-		//LOG("width: %d height: %d", data.width, data.height); //TODO delete LOG
-		//LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height); //TODO delete LOG
 
 		p2List_item<TileSet*>* item = data.tilesets.start;
 		while (item != NULL)
 		{
 			TileSet* s = item->data;
-			//LOG("Tileset ----");//TODO delete LOG
-			//LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);//TODO delete LOG
-			//LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);//TODO delete LOG
-			//LOG("spacing: %d margin: %d", s->spacing, s->margin);//TODO delete LOG
 			item = item->next;
 		}
 
 		// Adapt this code with your own variables
 
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while (item_layer != NULL)
-		{
-			MapLayer* l = item_layer->data;
-			//LOG("Layer ----"); //TODO delete LOG
-			//LOG("name: %s", l->name.GetString()); //TODO delete LOG
-			//LOG("tile width: %d tile height: %d", l->width, l->height); //TODO delete LOG
-			for (int i = 0; i < l->width * l->height; i++)
-			{
-				//LOG("gid(%i): %u", i, l->gid[i]); //TODO deleted LOG
-			}
-			item_layer = item_layer->next;
-		}
 	}
-	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);//todo add more when we implement them
-	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_FIRE_SKULL);//todo add more when we implement them
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_ELEMENTAL);
+	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_FIRE_SKULL);
 	App->entity_m->RespawnEntitiesOfType(EntityType::E_TYPE_COIN_G);
 	map_loaded = ret;
 	// Clean up the pugui tree
@@ -608,24 +587,7 @@ MapLayer::~MapLayer()
 		delete this->gid;
 }
 
-MapData::~MapData()
-{
-	/*p2List_item<TileSet*>* item = tilesets.start;
-	while (item != NULL)
-	{
-		TileSet* s = item->data;
-		s->~TileSet();
-		item = item->next;
-	}
-	p2List_item<MapLayer*>* item_layer = layers.start;
-	while (item_layer != NULL)
-	{
-		MapLayer* l = item_layer->data;
-		l->~MapLayer();
-		item_layer = item_layer->next;
-	}*/
-
-}
+MapData::~MapData() {}
 
 
 bool j1Map::Load(pugi::xml_node& ldata)

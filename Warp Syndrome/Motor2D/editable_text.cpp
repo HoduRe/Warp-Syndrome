@@ -70,8 +70,6 @@ bool Editable_Text::PostUpdate() {
 	cursor.x += position.x;
 
 	// Blits
-	/*if (Hover()) { App->render->Blit(hover_texture, position.x - 5, position.y - 5, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }
-	else { App->render->Blit(texture, position.x - 5, position.y - 5, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }*/
 	App->render->Blit(text_texture, position.x, position.y, &rect, false, 0.0f, 0.0f, 0.0f, 0.0f);
 	App->render->DrawQuad(cursor, 255, 255, 255, 255, true, false);
 

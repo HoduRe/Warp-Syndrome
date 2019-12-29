@@ -12,7 +12,7 @@
 
 j1EntityManager::j1EntityManager()
 {
-	name.create("entity_m");//TODO it now takes the playernode from the entity manager, we won't be doing that in the future
+	name.create("entity_m");
 
 }
 j1EntityManager::~j1EntityManager()
@@ -175,16 +175,14 @@ bool j1EntityManager::Load(pugi::xml_node& ldata)
 			break;
 		case E_TYPE_ELEMENTAL:
 			entity = new Enemy_Elemental(entitypos.x, entitypos.y, enemy_states(entitystartingstate), entityhealth);
-			AddEntity(entity);//TODO: entity
+			AddEntity(entity);
 
 			break;
 		case E_TYPE_FIRE_SKULL:
 			entity = new Enemy_FireSkull(entitypos.x, entitypos.y, enemy_states(entitystartingstate), entityhealth);
-			//entity.last_state = enemy_states(node.child("properties").attribute("last_state").as_int()); //TODO ??
-			AddEntity(entity);//TODO: entity
+			AddEntity(entity);
 			break;
 		case E_TYPE_HELL_HORSE:
-			//TODO load
 			break;
 
 		case E_TYPE_COIN_G:
@@ -248,26 +246,9 @@ Entity* j1EntityManager::CreateEntity(EntityType type)
 		ret = new Player();
 		break;
 
-	case EntityType::E_TYPE_PARTICLE:
-		assert("tried to create a particle from scratch"); //TODO delete this when going to do the release(including the case)
-		break;
-	case EntityType::E_TYPE_ANIMATED_PARTICLE:
-		assert("tried to create a particle from scratch"); //TODO delete this when going to do the release(including the case)
-		break;
 	case EntityType::E_TYPE_GRENADE:
 		ret = new Grenade();
 		break;
-		/*
-		case EntityType::E_TYPE_ELEMENTAL:
-			ret = new Elemental();
-			break;
-		case EntityType::E_TYPE_FIRE_SKULL:
-			ret = new FireSkull();
-			break;
-		case EntityType::E_TYPE_HELL_HORSE:
-			ret = new HellHorse();
-			break;*/
-			//TODO uncomment this once all the entity types are created
 	}
 
 
@@ -339,15 +320,13 @@ bool  j1EntityManager::RespawnEntitiesOfType(EntityType eType)
 				{
 				case 6:
 					entity = new Enemy_Elemental(rect.x + (rect.w * 0.5f), rect.y + (rect.h * 0.5f));
-					AddEntity(entity); //TODO: entity
-					//delete enemy;
+					AddEntity(entity);
 					break;
 				case 7:
-					//App->enemies->AddEnemy(enemy_horse, set->boundingbox.x, set->boundingbox.y);//TODO add enemie horse here
 					break;
 				case 8:
 					entity = new Enemy_FireSkull(rect.x + (rect.w * 0.5f), rect.y + (rect.h * 0.5f));
-					AddEntity(entity); //TODO: entity
+					AddEntity(entity);
 					break;
 				case 9:
 					entity = new Coin_G({ (float)rect.x + (rect.w * 0.5f), (float)rect.y + (rect.h * 0.5f) });

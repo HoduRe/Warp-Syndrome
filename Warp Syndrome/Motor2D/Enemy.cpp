@@ -25,7 +25,7 @@ Enemy::Enemy(int x, int y, enemy_states startingstate, EntityType atype) :Charac
 	chase_distance = -1;
 
 	//Loads the animations and properties
-	filename = "enemies.xml";//TODO load this from config
+	filename = "enemies.xml";
 	pugi::xml_parse_result result = enemiesdoc.load_file(filename.GetString());
 
 	if (result == NULL)
@@ -111,7 +111,7 @@ void Enemy::Move(float dt)
 		}
 		if (App->collision->CheckWalkability(position_aux)) { (pos.y) += (height)* dt; }
 		break;
-	case E_TYPE_FIRE_SKULL:	// CHANGE THIS BOY TO MOVE BOTH AT THE SAME TIME
+	case E_TYPE_FIRE_SKULL:
 		if (path.At(0) != nullptr && path.At(1) != nullptr) {
 			if (path.At(0)->y < path.At(1)->y) {
 				(pos.y) += (height)* dt;

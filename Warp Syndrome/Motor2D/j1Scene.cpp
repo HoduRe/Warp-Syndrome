@@ -94,7 +94,6 @@ bool j1Scene::Update(float dt)
 		App->level_m->ChangeToLevel1();
 	}
 
-
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		App->level_m->RestartLevel();
 	}
@@ -115,23 +114,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_KP_7) == KEY_DOWN)
 		App->entity_m->player->lives--;
 
-	//TODO delete debug coin key
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
-		AnimatedParticle* p = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, { -50.0f,-200.0f }, 1.0f, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });
-		App->entity_m->AddEntity(p);
-		
-	}
-	//TODO delete debug coin key
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) 
-	{
-		AnimatedParticle* q = new AnimatedParticle("Coin_G", false, { App->entity_m->player->pos.x,App->entity_m->player->pos.y }, App->entity_m->player->texture, 2.0f, { 0.0f,0.0f }, { -50.0f,-43.0f });
-		App->entity_m->AddEntity(q);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-	{
-		Coin_G* coin = new Coin_G({ App->entity_m->player->pos.x + 200,App->entity_m->player->pos.y });
-		App->entity_m->AddEntity(coin);
-	}
 	//End of particle debug keys=======================================
 
 	RepositionCamera(dt);
@@ -217,22 +199,17 @@ float j1Scene::CameraGoToTarget(fPoint campos,iPoint cammeasures, fPoint target,
 	if (target.x > -campos.x + (cammeasures.x / 2))
 	{
 		newcamX -= camdisplacementvel * camaccel.x;
-		//LOG("Cam --, positon: %f", newcamX);
 	}
 	else if (target.x < -campos.x + (cammeasures.x / 2))
 	{
 		newcamX += camdisplacementvel * camaccel.x;
-		//LOG("Cam ++, positon: %f", newcamX);
 
 	}
 	camaccel.x += 3.125f*dt;//change this value to change camera accel
 
-	//TODO take the increment of cam vel (cam accel) and put it in the configuration xml
-
 	if (-campos.x + (cammeasures.x / 2) <= target.x + (camdisplacementvel / 2) + 1 && -campos.x + (cammeasures.x / 2) >= target.x - (camdisplacementvel / 2) - 1)
 	{
 		newcamX = -(target.x - (cammeasures.x / 2));
-		//LOG("Cam pinned, positon: %f", newcamX);
 		camaccel = { 0.0f,0.0f };
 	}
 

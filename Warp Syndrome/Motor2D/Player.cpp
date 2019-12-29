@@ -312,8 +312,6 @@ void Player::CheckInputs(float dt) {
 		break;
 	}
 
-	// TODO move the run_counter to player xml
-	// ABOUT THE DOUBLE JUMP: happens when jumped once, doesn't happen when granade has been thrown, refreshes when collision happen WIP
 }
 
 void Player::CheckCollisions() {
@@ -696,8 +694,8 @@ bool Player::FlipCharacter(fPoint currentpos, fPoint lastpos)
 
 void Player::ChangeAnimation(Animation_list animations)
 {
-	p2List<Animations*>* pAnimList = &animations_list;//pointer to the player's animation list //TODO this is now loaded directly from the class, no need for a pointer
-	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation//TODO this is now loaded directly from the class, no need for a pointer
+	p2List<Animations*>* pAnimList = &animations_list;//pointer to the player's animation list
+	p2List_item<Animations*>* currentanim = currentAnim;//pointer to the current animation
 
 	currentanim->data->ResetAnimation();//resets the current animation before changing to another one
 

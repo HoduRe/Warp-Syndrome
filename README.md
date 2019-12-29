@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.9.0.0-debug:
+Up to version 0.9.1.0-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -819,6 +819,10 @@ Update 0.9.0.0-debug
 <ul>-Mask movable with slider to credits implemented<br>
 -Credits rewritten to avoid spelling mistakes<br>
 -Pause menu can't be opened from the console to avoid breaking the game
+</ul>
+
+Update 0.9.1.0-debug
+<ul>-HUD elements added<br>
 </ul>
 
 ## Credits

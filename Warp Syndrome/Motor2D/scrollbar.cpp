@@ -20,7 +20,7 @@ Scrollbar::Scrollbar(float x, float y, UI* node, float length, UI_Purpose second
 	reference_element = element;
 	if (secondary_type == SCROLLBAR_MUSIC) { current_point = (App->audio->GetMusic() * (max_point - initial_point) / 128) + initial_point; }
 	else if (secondary_type == SCROLLBAR_SFX) { current_point = (App->audio->GetFX() * (max_point - initial_point) / 128) + initial_point; }
-	else if (secondary_type == SCROLLBAR_MASK) { texture_section.h = length - 50; }
+	else if (secondary_type == SCROLLBAR_MASK) { texture_section.h = length - length / 2; }
 }
 
 Scrollbar::~Scrollbar() {

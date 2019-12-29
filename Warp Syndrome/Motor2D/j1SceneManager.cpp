@@ -228,6 +228,11 @@ bool j1SceneManager::UnloadPauseMenu()
 //Loads all the UI for the HUD
 bool j1SceneManager::LoadHUD()
 {
+	SDL_Rect rect = { 756, 500, 14, 16 };
+	App->gui->AddUIElement(new Static_Image(width / 20, height / 10, nullptr, App->gui->GetAtlas(), &rect));
+	rect = { 729, 500, 20, 20};
+	App->gui->AddUIElement(new Static_Image(width / 20, height / 20, nullptr, App->gui->GetAtlas(), &rect));
+
 	return true;
 }
 

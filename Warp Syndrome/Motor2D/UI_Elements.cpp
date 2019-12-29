@@ -48,7 +48,7 @@ bool UI::Pressed() {
 		App->input->GetMousePosition(posi.x, posi.y);
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 1 || (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 2 && type == UI_TYPE_SLIDER)) {
 			if (posi.x >= position.x && posi.x <= position.x + texture_section.w && posi.y >= position.y && posi.y <= position.y + texture_section.h) {
-				App->audio->PlayFx(App->gui->button_click);
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == 1) { App->audio->PlayFx(App->gui->button_click); }
 				return true;
 			}
 		}

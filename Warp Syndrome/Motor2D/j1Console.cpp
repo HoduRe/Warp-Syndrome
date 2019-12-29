@@ -135,7 +135,7 @@ bool j1Console::OpenConsole()
 	console_parent = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, nullptr, NULL, &outputrect,true,0,0,0));
 	element = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, console_parent, NULL, &r2, true, 0, 0, 150));
 
-	outputbox = new Static_Text(0, 0, console_parent, output_text.GetString(), w);
+	outputbox = new Static_Text(0, 0, console_parent, output_text.GetString(), w, STATIC_TEXT_MASK, nullptr, outputrect.h);
 	element = App->gui->AddUIElement(outputbox);
 	element->listeners.PushBack(this);
 	focus_element = App->gui->AddUIElement(new Editable_Text(outputrect.x, outputrect.h+5, console_parent, outputrect.w));

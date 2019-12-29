@@ -6,7 +6,7 @@
 class Static_Image :public UI
 {
 public:
-	Static_Image(float x, float y, UI* node, SDL_Texture* texture_pointer, SDL_Rect* rect,bool renderasrect=false, int r=255, int g=255, int b=255, int a=255, bool render = false);
+	Static_Image(float x, float y, UI* node, SDL_Texture* texture_pointer, SDL_Rect* rect, bool renderasrect=false, int r=255, int g=255, int b=255, int a=255, bool render = false, UI_Purpose secondtype = PURPOSE_UNSPECIFIED);
 
 	virtual ~Static_Image();
 

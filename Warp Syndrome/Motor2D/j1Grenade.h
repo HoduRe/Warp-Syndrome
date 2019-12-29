@@ -7,18 +7,6 @@
 #include "Entity.h"
 #include "Particles.h"
 
-enum grenade_states {
-	GST_UNKNOWN,
-	GST_MOVING_UP,
-	GST_MOVING_DOWN,
-	GST_MOVING_RIGHT_UP,
-	GST_MOVING_RIGHT_DOWN,
-	GST_MOVING_LEFT_UP,
-	GST_MOVING_LEFT_DOWN,
-	GST_EXPLODING,
-	GST_UNUSABLE
-};
-
 class Grenade : public AnimatedParticle
 {
 public:

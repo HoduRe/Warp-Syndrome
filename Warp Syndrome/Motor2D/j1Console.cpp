@@ -330,8 +330,9 @@ bool j1Console::AddTextToOutput(const char* text)
 
 		if (outputbox->texture_section.h < outputrect.h)//if its smaller than the box don't move the text
 			outputbox->position.y = outputrect.y;
-		else
-		outputbox->position.y = outputrect.y +outputrect.h - outputbox->texture_section.h;
+		else {
+			outputbox->texture_section.y = (outputbox->texture_section.h - outputrect.h);
+		}
 	}
 	return true;
 }

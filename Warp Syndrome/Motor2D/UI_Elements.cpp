@@ -30,9 +30,7 @@ bool UI::Update(float dt) { return true; }
 bool UI::PostUpdate() { return true; }
 
 bool UI::CleanUp() {
-	if (texture != App->gui->GetAtlas()) {
-		App->tex->UnLoad(texture);
-	}
+	if (texture != App->gui->GetAtlas()) { App->tex->UnLoad(texture); }
 	texture = nullptr;
 	hover_texture = nullptr;
 	if (parent != nullptr) { App->gui->last_parent = parent->parent; }

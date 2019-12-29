@@ -55,6 +55,7 @@ public:
 	int death_sfx;
 	int coin_sfx;
 	bool blit_colliders = false;
+	bool blit_UI = false;
 	bool draw = true;
 
 private:

@@ -55,6 +55,8 @@ bool j1Console::Start()
 	CreateCommand("god_mode", this, 0, 1);//if no arguments are imput, toggles god mode, else sets god mode to argument
 	CreateCommand("fps", this, 0, 1);//if no argument is given, displays the current frame cap, else sets the cap to the fps given, if inside limits
 	CreateCommand("quit", this, 0, 1);//quits the game
+	CreateCommand("save", this, 0, 0);//saves the current state of the game
+	CreateCommand("load", this, 0, 0);//loads the last saved game, if any
 	uint window_w;
 	uint window_h;
 	App->win->GetWindowSize(window_w, window_h);
@@ -229,6 +231,16 @@ bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 	{
 		LOG("QUITTING");
 		quit = true;
+	}
+	else if (command->name == "save")
+	{
+		App->SaveGame();
+	}
+	else if (command->name == "load")
+	{
+		if (App->scene_manager->IsGameSaved())
+			App->LoadGame();
+		else LOG("ERROR! There is no current saved game to load from.");
 	}
 
 	return true;

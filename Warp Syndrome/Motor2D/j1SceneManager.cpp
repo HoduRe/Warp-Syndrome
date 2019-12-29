@@ -42,7 +42,7 @@ bool j1SceneManager::Start()
 	height *= scale;
 	currentloop = G_C_START;//TODO change this to start in the main menu
 	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
-	menu_pop_sound= App->audio->LoadFx("audio/fx/Pop.wav");
+	menu_pop_sound = App->audio->LoadFx("audio/fx/Pop.wav");
 
 	return true;
 }
@@ -87,9 +87,11 @@ bool j1SceneManager::PreUpdate()
 				App->audio->PlayFx(menu_pop_sound);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
-			else if(ui_type==UI_Purpose::PURPOSE_UNSPECIFIED)
-			{ShellExecuteA(NULL, "open", "https://www.youtube.com/watch?v=7QSfebF5dRQ", NULL , NULL , SW_SHOWNORMAL);}
-			else if (ui_type==UI_Purpose::BUTTON_OPEN_SAVES)
+			else if (ui_type == UI_Purpose::PURPOSE_UNSPECIFIED)
+			{
+				ShellExecuteA(NULL, "open", "https://www.youtube.com/watch?v=7QSfebF5dRQ", NULL, NULL, SW_SHOWNORMAL);
+			}
+			else if (ui_type == UI_Purpose::BUTTON_OPEN_SAVES)
 			{
 				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_SAVED, 2.0f);
 				doingaction = true;
@@ -100,19 +102,27 @@ bool j1SceneManager::PreUpdate()
 			break;
 		case G_C_PAUSE_MENU:
 			//when the game unpauses
-			if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN||ui_type == UI_Purpose::BUTTON_CLOSE_MENU) && App->console->console_opened == false) {
+			if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_CLOSE_MENU) && App->console->console_opened == false) {
 				App->paused = false;
 				currentloop = G_C_INGAME;
 				UnloadPauseMenu();
 				LoadHUD();//reloads the hud due to ui cleanup
 			}
 			//when the game goes to the menu
-			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_MAIN_MENU)&& App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_MAIN_MENU) && App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
 			{
 				App->level_m->RestartGame();
 				doingaction = true;
 				currentloop = G_C_MAIN_MENU;
 
+			}
+			else if ((ui_type == UI_Purpose::BUTTON_OPEN_LOADS) && App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			{
+				App->LoadGame();
+			}
+			else if ((ui_type == UI_Purpose::BUTTON_OPEN_SAVES) && App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
+			{
+				App->SaveGame();
 			}
 
 			break;
@@ -173,11 +183,11 @@ bool j1SceneManager::OnListen(UI* element, UICallbackState cstate)
 bool j1SceneManager::LoadMainMenu() {
 
 	SDL_Rect texture_rec = { 0, 0, 640, 62 };
-	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec,false,NULL,NULL,NULL,NULL, true));
+	App->gui->AddUIElement(new Static_Image(0, 0, nullptr, App->tex->Load("textures/Loading_screen_image.png"), &texture_rec, false, NULL, NULL, NULL, NULL, true));
 	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
-	
+
 	element = App->gui->AddUIElement(new Button(width / 3, (height + 2 * height / 3) / 3, nullptr, BUTTON_SETTINGS));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Button(width / 3, (2 * height) / 3, nullptr, BUTTON_CREDITS));
@@ -186,21 +196,21 @@ bool j1SceneManager::LoadMainMenu() {
 	element->listeners.PushBack(this);
 	float t_width = (width / 3) + (width / 12);
 	float t_height = height / 35;
-	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play",800));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings",800));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits",800));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit",800));
-	texture_rec = {0,0,131,128};
+	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play", 800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings", 800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits", 800));
+	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit", 800));
+	texture_rec = { 0,0,131,128 };
 	element = App->gui->AddUIElement(new Static_Image(100, 600, nullptr, App->tex->Load("textures/github_logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
 	element->listeners.PushBack(this);
-	
+
 	if (IsGameSaved())
 	{
 		element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_OPEN_SAVES));
 		element->listeners.PushBack(this);
 		element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue", 800));
 	}
-	
+
 	return true;
 }
 
@@ -217,11 +227,11 @@ bool j1SceneManager::LoadPauseMenu()
 	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, nullptr, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, nullptr, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 10) + height / 30, nullptr, "Go Back",800));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 10) + height / 30, nullptr, "Go Back", 800));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 5, nullptr, BUTTON_MAIN_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 5) + height / 30, nullptr, "Go to Main Menu",800)); measures = { 0, 0, 50, 40 };
-	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures,false, NULL, NULL, NULL,NULL,false));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), (height / 5) + height / 30, nullptr, "Go to Main Menu", 800)); measures = { 0, 0, 50, 40 };
+	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), nullptr, App->tex->Load("textures/volume.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), nullptr, 138, SCROLLBAR_MUSIC));
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), element->position.y + (height / 4), nullptr, App->tex->Load("textures/volume_high.png"), &measures, false, NULL, false));
@@ -230,13 +240,27 @@ bool j1SceneManager::LoadPauseMenu()
 	element->listeners.PushBack(this);
 	App->gui->AddUIElement(new Static_Image(1.25 * (width / 3), element->position.y + (height / 4), nullptr, App->tex->Load("textures/sfx_high.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 
+	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, (height / 5) + 75, nullptr, UI_Purpose::BUTTON_OPEN_SAVES));
+	element->listeners.PushBack(this);
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), ((height / 5) + height / 30) + 75, nullptr, "Save Game", 800)); measures = { 0, 0, 50, 40 };
+
+
+	if (IsGameSaved())
+	{
+		element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, (height / 5) + 150, nullptr, UI_Purpose::BUTTON_OPEN_LOADS));
+		element->listeners.PushBack(this);
+		App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 3), ((height / 5) + height / 30) + 150, nullptr, "Load Game", 800)); measures = { 0, 0, 50, 40 };
+	}
+
+
+
 	return true;
 }
 
 bool j1SceneManager::UnloadPauseMenu()
 {
 	App->gui->DeleteAll();
-	
+
 	return true;
 }
 
@@ -245,7 +269,7 @@ bool j1SceneManager::LoadHUD()
 {
 	SDL_Rect rect = { 756, 500, 14, 16 };	// Coins icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 10, nullptr, App->gui->GetAtlas(), &rect));
-	rect = { 729, 500, 20, 20};				// Player icon
+	rect = { 729, 500, 20, 20 };				// Player icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 20, nullptr, App->gui->GetAtlas(), &rect));
 	rect = { 232, 436, 40, 20 };
 	App->gui->AddUIElement(new Static_Image(width / 10 - 5, height / 10, nullptr, App->gui->GetAtlas(), &rect));	// Coin background
@@ -271,7 +295,7 @@ bool j1SceneManager::LoadSettings()
 	App->gui->AddUIElement(new Static_Image(width / 8, height / 8, item->data, App->gui->GetAtlas(), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back", 800));
 	measures = { 0, 0, 50, 40 };
 	App->gui->AddUIElement(new Static_Image(1.25 * (width / 8), 1.25 * (height / 8), item->data, App->tex->Load("textures/volume.png"), &measures, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Scrollbar(1.35 * (width / 8), 2 * (height / 8), item->data, 138, SCROLLBAR_MUSIC));
@@ -292,7 +316,7 @@ bool j1SceneManager::LoadCredits()
 	element = App->gui->AddUIElement(new Button(3 * width / 5 + width / 10, height / 10, item->data, BUTTON_CLOSE_MENU));
 	element->listeners.PushBack(this);
 
-	element = App->gui->AddUIElement(new Static_Text((width / 8)+15 , height / 8 + (height / 16), item->data,
+	element = App->gui->AddUIElement(new Static_Text((width / 8) + 15, height / 8 + (height / 16), item->data,
 		"Credit go to the team members:\n"
 		"Oscar Perez (oscarpm5 in github) and Ferran-Roger Basart (ferba 93 in github).\n\n"
 		"Also credits to the various artists who put their creations at public use:\n"
@@ -324,17 +348,17 @@ bool j1SceneManager::LoadCredits()
 		"including commercial applications, and to alter it and redistribute it "
 		"freely, subject to the following restrictions: \n\n"
 
-	"1. The origin of this software must not be misrepresented; you must not "
+		"1. The origin of this software must not be misrepresented; you must not "
 		"claim that you wrote the original software.If you use this software "
 		"in a product, an acknowledgment in the product documentation would be "
 		"appreciated but is not required.\n"
 		"2. Altered source versions must be plainly marked as such, and must not be "
 		"misrepresented as being the original software.\n"
 		"3. This notice may not be removed or altered from any source distribution."
-		, measures.w-30, STATIC_TEXT_MASK, nullptr, 380));
+		, measures.w - 30, STATIC_TEXT_MASK, nullptr, 380));
 	App->gui->AddUIElement(new Scrollbar(width / 2 + 15, height / 3, item->data, 138, SCROLLBAR_MASK, element));
 
-	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
+	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back", 800));
 	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,
 		"Credit goes to Oscar Perez and Ferran-Roger Basart."));
 	App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + 2 * (height / 16), item->data,
@@ -376,7 +400,7 @@ bool j1SceneManager::IsGameSaved()
 		data.reset();
 	}
 	else LOG("ERROR! didn't find the saves files when checking saved games.");
-	
+
 
 	return ret;
 }

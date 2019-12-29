@@ -1,4 +1,5 @@
-# Warp Syndrome
+<p align="center"><img src="https://github.com/ferba93/Warp-Syndrome/blob/master/docs/WarpSyndromeBorder.png" alt="Official Official Warp Syndrome Logo" class="center"></p>
+
 ## Our Game: Warp Syndrome
 Warp Syndrome is a platform game ambiented in a medieval-fantasy setting based on the mechanic of a teleportation granade that allows fluid movement, rad tricks and fun exploration of the map.<br>
 It has been made over the course of 4 months as a project for a university subject by a small team of students.
@@ -51,6 +52,10 @@ Compared to what was asked for the assignment, this project comes with extra con
 <a href="https://github.com/ferba93/Warp-Syndrome/releases/tag/v.0.6.2.0-release">__Last Release__</a>
 
 ## Gameplay
+
+<iframe width="510" height="412"
+src="https://www.youtube.com/embed/watch?v=vLnPwxZdW4Y" frameborder="0" allowfullscreen>
+</iframe>
 
 ## How to Play
 ### Installation

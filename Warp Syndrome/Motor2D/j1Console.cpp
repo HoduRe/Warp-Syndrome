@@ -60,7 +60,7 @@ bool j1Console::Start()
 	uint window_w;
 	uint window_h;
 	App->win->GetWindowSize(window_w, window_h);
-	outputrect = { 0,0,(int)window_w,(int)(window_h *0.33f) };
+	outputrect = { 0,0,(int)window_w,(int)(window_h * 0.33f) };
 	return true;
 }
 bool j1Console::PreUpdate()
@@ -114,6 +114,7 @@ bool j1Console::CleanUp()
 	commands.clear();
 	output_text.Clear();
 	console_parent = nullptr;
+	previous_commands.Clear();
 	return true;
 }
 
@@ -128,20 +129,19 @@ bool j1Console::OpenConsole()
 	w *= escale;
 	h *= escale;
 	UI* element;
-	UI* focus_element;
 	SDL_Rect rect = { 0,0,(int)w,(int)h };
 
 	SDL_Rect r2 = { outputrect.x,outputrect.h,outputrect.w,30 };
-	console_parent = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, nullptr, NULL, &outputrect,true,0,0,0));
+	console_parent = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, nullptr, NULL, &outputrect, true, 0, 0, 0));
 	element = App->gui->AddUIElement(new Static_Image(0.0f, 0.0f, console_parent, NULL, &r2, true, 0, 0, 150));
 
 	outputbox = new Static_Text(0, 0, console_parent, output_text.GetString(), w, STATIC_TEXT_MASK, nullptr, outputrect.h);
 	element = App->gui->AddUIElement(outputbox);
 	element->listeners.PushBack(this);
-	focus_element = App->gui->AddUIElement(new Editable_Text(outputrect.x, outputrect.h+5, console_parent, outputrect.w));
+	focus_element = App->gui->AddUIElement(new Editable_Text(outputrect.x, outputrect.h + 5, console_parent, outputrect.w));
 	focus_element->listeners.PushBack(this);
 
-	
+
 
 	App->gui->focus = App->gui->UI_list.At(App->gui->UI_list.find(focus_element));
 	console_opened = true;
@@ -164,13 +164,58 @@ bool j1Console::CreateCommand(const char* command, j1Module* callback, uint min_
 }
 bool j1Console::OnListen(UI* element, UICallbackState state)
 {
-	if (state == UICallbackState::UI_CALLBACK_CLICKED)//TODO change this to be enter to accept command
+	if (state == UICallbackState::UI_CALLBACK_ARROW_UP)
 	{
-		if (element->type == UIType::UI_TYPE_EDITABLE_TEXT)
+		if (previous_commands.Count() > 0)//if there is some command in the list
 		{
+			if (previous_commands.Count() > 1) {
+				previous_commands_iterator--;
+				if (previous_commands_iterator < 0)previous_commands_iterator = previous_commands.Count() - 1;
+			}
+			else previous_commands_iterator = 0;
 
+
+			p2SString* s = previous_commands.At(previous_commands_iterator);
+			char c[60];
+			memset(c, NULL, sizeof(c));
+			strcpy_s(c, s->GetString());
+
+			memset(App->input->text, NULL, sizeof(App->input->text));
+			for (int i = 0; i < CHAR_ARRAY - 1; i++)
+			{
+				App->input->text[i] = c[i];
+			}
+			App->input->SetCursor(s->Length()-1);
+			SDL_StartTextInput();
+			App->input->state = InputReadingState::READING_ONGOING;
 		}
 	}
+	else if (state == UICallbackState::UI_CALLBACK_ARROW_DOWN)
+	{
+		if (previous_commands.Count() > 0)//if there is some command in the list
+		{
+			if (previous_commands.Count() > 1) {
+				previous_commands_iterator++;
+				if (previous_commands_iterator > previous_commands.Count() - 1)previous_commands_iterator = 0;
+			}
+			else previous_commands_iterator = 0;
+
+			p2SString* s = previous_commands.At(previous_commands_iterator);
+			char c[60];
+			memset(c, NULL, sizeof(c));
+			strcpy_s(c, s->GetString());
+
+			memset(App->input->text, NULL, sizeof(App->input->text));
+			for (int i = 0; i < CHAR_ARRAY - 1; i++)
+			{
+				App->input->text[i] = c[i];
+			}
+			App->input->SetCursor(s->Length() - 1);
+			SDL_StartTextInput();
+			App->input->state = InputReadingState::READING_ONGOING;
+		}
+	}
+
 	return true;
 }
 bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
@@ -264,6 +309,7 @@ bool j1Console::ReceiveText(const char* text)
 
 		if (item->data->name == *separated_words->At(0))//command found!
 		{
+			previous_commands.PushBack(c);
 			command_found = true;
 			separated_words->Pop(*separated_words->At(0));//deletes the first word (its the command and we not longer need it)
 
@@ -343,7 +389,7 @@ bool j1Console::AddTextToOutput(const char* text)
 		if (outputbox->texture_section.h < outputrect.h)//if its smaller than the box don't move the text
 			outputbox->position.y = outputrect.y;
 		else
-		outputbox->position.y = outputrect.y +outputrect.h - outputbox->texture_section.h;
+			outputbox->position.y = outputrect.y + outputrect.h - outputbox->texture_section.h;
 	}
 	return true;
 }

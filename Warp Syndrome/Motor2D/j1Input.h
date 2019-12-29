@@ -84,12 +84,12 @@ public:
 	void SetCursor(int i);
 
 	char text[CHAR_ARRAY];
+	InputReadingState state;
 
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
-	InputReadingState state;
 	int			cursor;
 	int			mouse_motion_x;
 	int			mouse_motion_y;

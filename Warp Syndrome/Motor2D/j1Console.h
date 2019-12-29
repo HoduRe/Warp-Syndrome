@@ -67,9 +67,12 @@ private:
 	p2SString output_text;
 	Static_Text* outputbox;
 	UI* console_parent;
+	UI* focus_element;
 	SDL_Texture* texture;
 	SDL_Rect outputrect;
+	p2DynArray<p2SString> previous_commands;
 	bool quit = false;
+	int previous_commands_iterator=0;
 };
 
 #endif // __j1CONSOLE_H__

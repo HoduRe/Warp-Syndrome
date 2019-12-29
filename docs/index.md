@@ -46,6 +46,8 @@ Compared to what was asked for the assignment, this project comes with extra con
 * Comes with the first bit of the intended narrative told through visual clues (in the first level, the three imprisoned black eyes, with the fourth missing at the left-lower corner. On the second level, the origins of the eye are told at the highest point of the "normal route" (since what is found higher is the black eye itself), conveying how it was born, grew uncontrollably, and was sealed by four figures. At the end of the level, it's shown how, eventually, on of the guardians was killed, represented by the eyes over the door that brings the player to the next level).
 * The game console remembers previous sent commands and those can be summoned by the up and down arrows when in the console.
 * The requiered commands have been expanded accepting diferent number of arguments, and we have added some more which you can see by typing “list” in the console.
+* There are also save and load buttons on the pause menu. The load one is only avaliable when there is content saved.
+
 
 </ul>
 
@@ -98,7 +100,20 @@ The enemies, in the first level only, are not dangerous. They are intended to be
   * K/Right Mouse Button: Teleports to the grenade
   * L/Middle Mouse Button: Makes the thrown grenade disappear
   * W/Space (while sliding on a wall): wall-jump
-  
+
+### Console Commands
+	
+* "quit": quits the game
+* "list": displays a list of all the avaliable commands
+* "map" <map_name>: loads the map with the given name
+* "fps": shows the current fps cap
+* "fps" <n_fps>: changes the cap of fps of the game to the given amount with a range between 30-120 fps
+* "god_mode": toggles god mode
+* "god_mode" <"on">: activates god mode
+* "god_mode" <"off">: disables god mode
+* "save": saves the current state of the game
+* "load":loads the current state of the game
+	
 ## Credits
 Credits to various artists who put their creations at public use:
 <ul>

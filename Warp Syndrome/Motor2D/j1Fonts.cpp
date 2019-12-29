@@ -109,6 +109,6 @@ bool j1Fonts::CalcSize(const char* text, int& width, int& height, Uint32 p_width
 	ret = true;
 	}
 		
-
+	SDL_FreeSurface(surface);
 	return ret;
 }

@@ -78,33 +78,6 @@ bool j1Console::PreUpdate()
 
 bool j1Console::Update(float dt)
 {
-	//debug keys //TODO delete this when the imput text works
-	if (App->input->GetKey(SDL_SCANCODE_KP_0) == KEY_DOWN)//list
-	{
-		const char* t = "List";
-		ReceiveText(t);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_1) == KEY_DOWN)//map
-	{
-		const char* t = "map second_levelo.tmx";
-		ReceiveText(t);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)//god_mode
-	{
-		const char* t = "god_mode on";
-		ReceiveText(t);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)//fps
-	{
-		const char* t = "fps 20";
-		ReceiveText(t);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_KP_4) == KEY_DOWN)//fps
-	{
-		const char* t = "quit";
-		ReceiveText(t);
-	}
-	
 	return true;
 }
 
@@ -238,7 +211,7 @@ bool j1Console::OnCommand(Command* command, p2DynArray<p2SString>* arguments)
 			if (*arguments->At(0) == "off")
 			{
 				App->entity_m->player->SetGodmode(false);
-				LOG("God Mode set to True");
+				LOG("God Mode set to False");
 			}
 		}
 	}

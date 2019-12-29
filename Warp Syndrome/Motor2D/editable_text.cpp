@@ -31,7 +31,7 @@ bool Editable_Text::Update(float dt) {
 		App->console->ReceiveText(text);
 		memset(text, NULL, sizeof(text));
 		memset(App->input->text, NULL, sizeof(App->input->text));
-		App->gui->focus = nullptr;
+		//App->gui->focus = nullptr;
 	}
 	// Move cursor
 

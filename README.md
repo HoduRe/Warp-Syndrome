@@ -59,7 +59,7 @@ represented by the eyes over the door that brings the player to the next level)
 
 ## History
 
-Up to version 0.9.1.0-debug:
+Up to version 0.9.1.1-debug:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -823,6 +823,12 @@ Update 0.9.0.0-debug
 
 Update 0.9.1.0-debug
 <ul>-HUD elements added<br>
+</ul>
+
+Update 0.9.1.1-debug
+<ul>-Solved critical memory leak<br>
+-Removed some unused debug keys<br>
+-Now console doesn't lose focus when pressing enter
 </ul>
 
 ## Credits

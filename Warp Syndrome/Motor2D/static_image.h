@@ -21,6 +21,7 @@ private:
 	bool render_print;
 	bool renderasrect;
 	SDL_Color rect_color;
+	int audio;
 };
 
 #endif // !__STATIC_IMAGE_H__

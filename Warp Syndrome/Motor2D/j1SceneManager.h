@@ -61,6 +61,7 @@ public:
 	GameCycle currentloop;
 	UI_Purpose ui_type;
 	bool doingaction = false;//bool active means the loop is already performing an action/transition
+	int menu_pop_sound = -1;
 };
 
 #endif // __j1SCENEMANAGER_H__

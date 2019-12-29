@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "static_image.h"
 #include "j1Textures.h"
+#include "j1Audio.h"
 #include "j1Render.h"
 #include "j1EntityManager.h"
 #include "Player.h"
@@ -13,6 +14,9 @@ Static_Image::Static_Image(float x, float y, UI* node, SDL_Texture* texture_poin
 	render_print = render;
 	SetColor(r, g, b, a);
 	renderasrect = render_as_rect;
+	audio = -1;
+	if (purpose_type == STATIC_IMAGE_GRENADE)
+		audio= App->audio->LoadFx("audio/fx/Pop2.wav");
 }
 
 
@@ -34,8 +38,11 @@ bool Static_Image::PostUpdate() {
 	if (Pressed())
 		CallListeners(UI_CALLBACK_CLICKED);
 	if (purpose_type == STATIC_IMAGE_GRENADE) {
+		int aux = texture_section.w;
 		if (App->entity_m->player->grenadecooldown > 0.0f || App->entity_m->grenade != nullptr) { texture_section.w = 0; }
 		else { texture_section.w = 30; }
+
+		if (texture_section.w == 30 && aux == 0)App->audio->PlayFx(audio);
 	}
 	if (render_print == true) { SDL_RenderCopy(App->render->renderer, texture, NULL, NULL); }
 	else if (!renderasrect) { App->render->Blit(texture, position.x, position.y, &texture_section, false, 0.0f, 0.0f, 0.0f, 0.0f); }

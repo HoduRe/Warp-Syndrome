@@ -42,6 +42,8 @@ bool j1SceneManager::Start()
 	height *= scale;
 	currentloop = G_C_START;//TODO change this to start in the main menu
 	ui_type = UI_Purpose::PURPOSE_UNKNOWN;
+	menu_pop_sound= App->audio->LoadFx("audio/fx/Pop.wav");
+
 	return true;
 }
 
@@ -76,11 +78,13 @@ bool j1SceneManager::PreUpdate()
 			else if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_EXIT/*button quit pressed*/) {
 				ret = false; //this will now quit the game
 			}
-			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings / credit are pressed*/) {
+			else if (ui_type == UI_Purpose::BUTTON_SETTINGS/*button settings is pressed*/) {
 				LoadSettings();
+				App->audio->PlayFx(menu_pop_sound);
 			}
-			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button settings / credit are pressed*/) {
+			else if (ui_type == UI_Purpose::BUTTON_CREDITS/*button credit is pressed*/) {
 				LoadCredits();
+				App->audio->PlayFx(menu_pop_sound);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if(ui_type==UI_Purpose::PURPOSE_UNSPECIFIED)
@@ -118,6 +122,7 @@ bool j1SceneManager::PreUpdate()
 				App->paused = true;
 				currentloop = G_C_PAUSE_MENU;
 				LoadPauseMenu();
+				App->audio->PlayFx(menu_pop_sound);
 			}
 			//when the game goes to the menu ¿Can we go to the menu directly?
 			break;

@@ -56,9 +56,9 @@ Compared to what was asked for the assignment, this project comes with extra con
 
 ## Gameplay
 
-<iframe width="510" height="412"
-src="https://www.youtube.com/embed/watch?v=vLnPwxZdW4Y" frameborder="0" allowfullscreen>
-</iframe>
+<p align="center">
+	<video src="https://github.com/ferba93/Warp-Syndrome/blob/new-master/Warp%20Syndrome/docs/Warp_Syndrome.mp4" width="1280" height="720" controls preload></video>
+</p>
 
 ## How to Play
 ### Installation

@@ -240,13 +240,15 @@ bool j1SceneManager::LoadHUD()
 {
 	SDL_Rect rect = { 756, 500, 14, 16 };	// Coins icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 10, nullptr, App->gui->GetAtlas(), &rect));
-	rect = { 729, 500, 20, 20};				// Life icon
+	rect = { 729, 500, 20, 20};				// Player icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 20, nullptr, App->gui->GetAtlas(), &rect));
 	rect = { 232, 436, 40, 20 };
 	App->gui->AddUIElement(new Static_Image(width / 10 - 5, height / 10, nullptr, App->gui->GetAtlas(), &rect));	// Coin background
 	App->gui->AddUIElement(new Static_Image(width / 10 - 5, height / 20, nullptr, App->gui->GetAtlas(), &rect));	// Player background
 	App->gui->AddUIElement(new Static_Text(width / 10, height / 10, nullptr, "x000", 40, STATIC_TEXT_VARIABLE, &App->entity_m->player->coins));	// Coins text
 	App->gui->AddUIElement(new Static_Text(width / 10, height / 20, nullptr, "x001", 40, STATIC_TEXT_VARIABLE, &App->entity_m->player->lives));	// Life text
+	rect = { 687, 499, 30, 30 };			// Grenade icon
+	App->gui->AddUIElement(new Static_Image(width / 20, height / 7, nullptr, App->gui->GetAtlas(), &rect, false, NULL, NULL, NULL, NULL, false, STATIC_IMAGE_GRENADE));
 
 	return true;
 }
@@ -324,8 +326,8 @@ bool j1SceneManager::LoadCredits()
 		"2. Altered source versions must be plainly marked as such, and must not be "
 		"misrepresented as being the original software.\n"
 		"3. This notice may not be removed or altered from any source distribution."
-		, measures.w-30, STATIC_TEXT_MASK));
-	App->gui->AddUIElement(new Scrollbar(3 * width / 4, height / 3, item->data, 138, SCROLLBAR_MASK, element));
+		, measures.w-30, STATIC_TEXT_MASK, nullptr, 380));
+	App->gui->AddUIElement(new Scrollbar(width / 2 + 15, height / 3, item->data, 138, SCROLLBAR_MASK, element));
 
 	App->gui->AddUIElement(new Static_Text(3 * width / 5 + ((width - 3 * width / 5) / 2), (height / 10) + height / 30, item->data, "Go Back",800));
 	/*App->gui->AddUIElement(new Static_Text(width / 8 + width / 16, height / 8 + (height / 16), item->data,

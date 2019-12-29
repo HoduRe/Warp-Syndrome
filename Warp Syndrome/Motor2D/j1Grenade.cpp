@@ -18,7 +18,7 @@ Grenade::Grenade() :AnimatedParticle(EntityType::E_TYPE_GRENADE)
 	pos = { 0.0f,0.0f };
 	speed = { 0.0f,0.0f };
 	health = 0.0f,
-		fliped = false;
+	fliped = false;
 	texture = nullptr;
 	texture_section = { 0,0,0,0 };
 	destroy = false;

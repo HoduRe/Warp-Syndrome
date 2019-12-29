@@ -19,10 +19,6 @@ UI::UI(float x, float y, UI* node) {
 
 UI::~UI() { this->CleanUp(); }
 
-bool UI::Awake() { return true; }
-
-bool UI::Start() { return true; }
-
 bool UI::PreUpdate() { return true; }
 
 bool UI::Update(float dt) { return true; }

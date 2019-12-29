@@ -253,10 +253,6 @@ void j1App::FinishUpdate()
 			coins,lives,score,ingametime);
 		App->win->SetTitle(title.GetString());
 	}
-	//p2SString previoustitle = SDL_GetWindowTitle(win->window);
-	//static char newtitle[256];
-	//sprintf_s(newtitle, 256,"%s//%s", previoustitle.GetString(), title.GetString());
-	//App->win->SetTitle(newtitle);
 
 	//Use SDL_Delay to make sure you get your capped framerate
 	uint32 delay = (1000 / new_max_framerate) - last_frame_ms;

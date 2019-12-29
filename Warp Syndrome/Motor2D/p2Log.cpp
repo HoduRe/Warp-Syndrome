@@ -16,7 +16,7 @@ void log(const char file[], int line, const char* format, ...)
 	OutputDebugString(tmp_string2);
 	if (App != nullptr)
 	{
-		if(App->console!=nullptr)
+		if(App->console!=nullptr && App->console->console_opened == true)
 			App->console->AddTextToOutput(tmp_string);
 	}
 	

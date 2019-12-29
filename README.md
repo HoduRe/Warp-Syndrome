@@ -65,7 +65,7 @@ represented by the eyes over the door that brings the player to the next level)<
 
 ## History
 
-Up to version 0.9.7.0-debug:
+Up to version 1.0.0.0-Release:
 
 Update 0.0.1.1-debug
 <ul>-Replaced the old framework file for a cleaner one
@@ -878,6 +878,12 @@ Update 0.9.6.0-debug
 
 Update 0.9.7.0-debug
 <ul>-Time and Score visually added
+</ul>
+
+Update 1.0.0.0-Release
+<ul>-Link from the main menu icon changed to the project website<br>
+-Release LOG bug fixed<br>
+-Release done
 </ul>
 
 ## Credits

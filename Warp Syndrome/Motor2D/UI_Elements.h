@@ -55,8 +55,6 @@ public:
 	UI(float x, float y, UI* node);
 	virtual ~UI();
 
-	virtual bool Awake();
-	virtual bool Start();
 	virtual bool PreUpdate();
 	virtual bool Update(float dt);
 	virtual bool PostUpdate();

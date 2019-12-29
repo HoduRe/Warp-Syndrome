@@ -89,7 +89,7 @@ bool j1SceneManager::PreUpdate()
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if (ui_type == UI_Purpose::PURPOSE_UNSPECIFIED)
 			{
-				ShellExecuteA(NULL, "open", "https://www.youtube.com/watch?v=7QSfebF5dRQ", NULL, NULL, SW_SHOWNORMAL);
+				ShellExecuteA(NULL, "open", "https://ferba93.github.io/Warp-Syndrome/", NULL, NULL, SW_SHOWNORMAL);
 			}
 			else if (ui_type == UI_Purpose::BUTTON_OPEN_SAVES)
 			{

@@ -4,7 +4,7 @@
 #include "j1Fonts.h"
 #include "j1Render.h"
 
-Static_Text::Static_Text(float x, float y, UI* node, const char* text_input,Uint32 p_width, UI_Purpose second_type, int r, int g, int b, int a) : UI(x, y, node) {
+Static_Text::Static_Text(float x, float y, UI* node, const char* text_input,Uint32 p_width, UI_Purpose second_type, int* counter, int r, int g, int b, int a) : UI(x, y, node) {
 	font = App->font->fonts.start->data;
 	row_w = p_width;
 	texture = App->font->Print(text_input,row_w, { (Uint8)r, (Uint8)g, (Uint8)b, (Uint8)a }, font);
@@ -12,6 +12,7 @@ Static_Text::Static_Text(float x, float y, UI* node, const char* text_input,Uint
 	purpose_type = second_type;
 	if (second_type == STATIC_TEXT_MASK) { texture_section.h = 380; }
 	type = UI_TYPE_STATIC_TEXT;
+	counter_path = counter;
 }
 
 Static_Text::~Static_Text() {
@@ -25,6 +26,14 @@ bool Static_Text::PreUpdate() {
 
 bool Static_Text::Update(float dt) {
 
+	if (purpose_type == STATIC_TEXT_VARIABLE) {
+		char text[5] = "x000";
+		text[1] = (char)* counter_path / 100 + '0';
+		text[2] = ((char)* counter_path % 100) / 10 + '0';
+		text[3] = ((char)* counter_path % 100) % 10 + '0';
+		NewText(text);
+	}
+
 	return true;
 }
 
@@ -36,6 +45,8 @@ bool Static_Text::PostUpdate() {
 }
 
 bool Static_Text::CleanUp() {
+	counter_path = nullptr;
+
 	return true;
 }
 

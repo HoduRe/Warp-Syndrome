@@ -18,6 +18,8 @@
 #include "j1SceneManager.h"
 #include "level_manager.h"
 #include "j1Console.h"
+#include "j1EntityManager.h"
+#include "Player.h"
 #include "j1Scene.h"
 #include "j1Window.h"
 
@@ -228,10 +230,15 @@ bool j1SceneManager::UnloadPauseMenu()
 //Loads all the UI for the HUD
 bool j1SceneManager::LoadHUD()
 {
-	SDL_Rect rect = { 756, 500, 14, 16 };
+	SDL_Rect rect = { 756, 500, 14, 16 };	// Coins icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 10, nullptr, App->gui->GetAtlas(), &rect));
-	rect = { 729, 500, 20, 20};
+	rect = { 729, 500, 20, 20};				// Life icon
 	App->gui->AddUIElement(new Static_Image(width / 20, height / 20, nullptr, App->gui->GetAtlas(), &rect));
+	rect = { 232, 436, 40, 20 };
+	App->gui->AddUIElement(new Static_Image(width / 10 - 5, height / 10, nullptr, App->gui->GetAtlas(), &rect));	// Coin background
+	App->gui->AddUIElement(new Static_Image(width / 10 - 5, height / 20, nullptr, App->gui->GetAtlas(), &rect));	// Player background
+	App->gui->AddUIElement(new Static_Text(width / 10, height / 10, nullptr, "x000", 40, STATIC_TEXT_VARIABLE, &App->entity_m->player->coins));	// Coins text
+	App->gui->AddUIElement(new Static_Text(width / 10, height / 20, nullptr, "x001", 40, STATIC_TEXT_VARIABLE, &App->entity_m->player->lives));	// Life text
 
 	return true;
 }

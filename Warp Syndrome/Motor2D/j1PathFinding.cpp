@@ -216,7 +216,7 @@ void j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, 
 					enemy->path.PushBack(*last_path.At(i));
 					i++;
 				}
-				LOG("%i", a);
+				//LOG("%i", a);
 				end = true;
 			}
 

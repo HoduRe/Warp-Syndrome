@@ -59,7 +59,7 @@ Compared to what was asked for the assignment, this project comes with extra con
 ## Gameplay
 
 <p align="center">
-	<video src="https://github.com/ferba93/Warp-Syndrome/blob/new-master/Warp%20Syndrome/docs/Warp_Syndrome.mp4" width="1280" height="720" controls preload></video>
+	<video src="https://github.com/ferba93/Warp-Syndrome/blob/master/docs/Warp_Syndrome.mp4?raw=true" width="1280" height="720" controls preload></video>
 </p>
 
 ## How to Play

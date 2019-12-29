@@ -49,7 +49,7 @@ Compared to what was asked for the assignment, this project comes with extra con
 ## Repository and Download
 <a href="https://github.com/ferba93/Warp-Syndrome/tree/new-master/">__Repository Link__</a>
 <br><br>
-<a href="https://github.com/ferba93/Warp-Syndrome/releases/tag/v.0.6.2.0-release">__Last Release__</a>
+<a href="https://github.com/ferba93/Warp-Syndrome/releases/tag/v.1.0.0.0-release">__Last Release__</a>
 
 ## Gameplay
 

@@ -9,9 +9,12 @@ Editable_Text::Editable_Text(float x, float y, UI* node, float width, bool focus
 	texture_section = { 494, 577, (int)width + 10, 45} ;
 	rect = { 0, 0, 0, 0};
 	cursor = { (int)x, (int)y, 1, 5};
+	cursor.x = position.x;
 	font = App->font->fonts.start->data;
 	max_width = width;
 	type = UI_TYPE_EDITABLE_TEXT;
+	App->input->SetCursor(0);
+	memset(App->input->text, NULL, sizeof(App->input->text));
 }
 
 Editable_Text::~Editable_Text() {}
@@ -31,7 +34,7 @@ bool Editable_Text::Update(float dt) {
 		App->console->ReceiveText(text);
 		memset(text, NULL, sizeof(text));
 		memset(App->input->text, NULL, sizeof(App->input->text));
-		cursor.x = 0;
+		cursor.x = position.x;
 		//App->gui->focus = nullptr;
 	}
 	// Move cursor

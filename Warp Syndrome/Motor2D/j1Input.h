@@ -81,6 +81,7 @@ public:
 
 	// Returns the cursor
 	int GetCursor();
+	void SetCursor(int i);
 
 	char text[CHAR_ARRAY];
 

@@ -324,9 +324,14 @@ bool j1Console::AddTextToOutput(const char* text)
 	output_text += ">> ";
 	output_text += text;
 	output_text += "\n";
-	if (outputbox != nullptr)
+
+	if (outputbox != nullptr) {
 		outputbox->NewText(output_text.GetString());
 
-	outputbox->position;
+		if (outputbox->texture_section.h < outputrect.h)//if its smaller than the box don't move the text
+			outputbox->position.y = outputrect.y;
+		else
+		outputbox->position.y = outputrect.y +outputrect.h - outputbox->texture_section.h;
+	}
 	return true;
 }

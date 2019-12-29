@@ -28,8 +28,20 @@ It has been made over the course of 4 months as a project for a university subje
 <ul>Disclamer: These have been the major areas of work for each member, and the ones that each of them understands better but they have been working toghether in all the items listed before during the course of the 4 months that the project has lasted for.
   </ul>
 
-
 ## Core Subsystems and innovation
+
+<ul>The game core mechanic is teleportation. The player uses a throwable granade to surpass obstacles to reach the end of each level while avoiding enemies. The grenade can also kill enemies if thrown directly at them. While exploring the map the player can collect coins, wich will increase his score even more.<br><br>
+  </ul>
+Compared to what was asked for the assignment, this project comes with extra content:
+
+* The project can sustain and manage and indefinite amount of maps, it's not limited to two. With F4 you can cycle along the "x" amount of maps.
+* In the movement section, the game comes with walljump, wallsliding and the already mentioned teleport mechanics.
+* The volume of the game can be adjusted and saved
+* The game features a loading screen in-between maps
+* Comes with the first bit of the intended narrative told through visual clues (in the first level, the three imprisoned black eyes, with the fourth missing at the left-lower corner. On the second level, the origins of the eye are told at the highest point of the "normal route" (since what is found higher is the black eye itself), conveying how it was born, grew uncontrollably, and was sealed by four figures. At the end of the level, it's shown how, eventually, on of the guardians was killed, represented by the eyes over the door that brings the player to the next level).
+* The game console remembers previous sent commands and those can be summoned by the up and down arrows when in the console.
+* The requiered commands have been expanded accepting diferent number of arguments, and we have added some more which you can see by typing “list” in the console.
+
 ## Repository and Download
 ## How to Play
 ## License

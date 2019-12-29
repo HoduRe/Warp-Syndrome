@@ -64,6 +64,7 @@ public:
 	void ToggleCapping();
 	//changes capping
 	bool NewCap(int cap);
+	p2SString GetLoadGameString();
 private:
 
 	// Load config file

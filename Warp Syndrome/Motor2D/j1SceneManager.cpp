@@ -83,8 +83,11 @@ bool j1SceneManager::PreUpdate()
 			else if (ui_type == UI_Purpose::BUTTON_CLOSE_MENU) { App->gui->DeleteOnParent(); }
 			else if(ui_type==UI_Purpose::PURPOSE_UNSPECIFIED)
 			{ShellExecuteA(NULL, "open", "https://www.youtube.com/watch?v=7QSfebF5dRQ", NULL , NULL , SW_SHOWNORMAL);}
-			else if (false/*button continue pressed*/)
+			else if (ui_type==UI_Purpose::BUTTON_OPEN_SAVES)
 			{
+				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_SAVED, 2.0f);
+				doingaction = true;
+				currentloop = G_C_INGAME;
 				//TODO will cause trouble due to the game loop structure
 			}
 			App->scene->blit_colliders = false;
@@ -100,7 +103,7 @@ bool j1SceneManager::PreUpdate()
 			//when the game goes to the menu
 			else if ((App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN || ui_type == UI_Purpose::BUTTON_MAIN_MENU)&& App->transitions->actual_transition == Transition_Mode::TM_UNKNOWN)
 			{
-				App->transitions->ChangeTransition(Transition_Mode::TM_CHANGE_TO_MENU, 2.0f);
+				App->level_m->RestartGame();
 				doingaction = true;
 				currentloop = G_C_MAIN_MENU;
 
@@ -167,8 +170,7 @@ bool j1SceneManager::LoadMainMenu() {
 	App->gui->AddUIElement(new Static_Image(width / 5, height / 8, nullptr, App->tex->Load("textures/Logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
 	element = App->gui->AddUIElement(new Button(width / 3, height / 3, nullptr, BUTTON_GAME_LOOP));
 	element->listeners.PushBack(this);
-	element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_GAME_LOOP));
-	element->listeners.PushBack(this);
+	
 	element = App->gui->AddUIElement(new Button(width / 3, (height + 2 * height / 3) / 3, nullptr, BUTTON_SETTINGS));
 	element->listeners.PushBack(this);
 	element = App->gui->AddUIElement(new Button(width / 3, (2 * height) / 3, nullptr, BUTTON_CREDITS));
@@ -178,13 +180,19 @@ bool j1SceneManager::LoadMainMenu() {
 	float t_width = (width / 3) + (width / 12);
 	float t_height = height / 35;
 	element = App->gui->AddUIElement(new Static_Text(t_width, height / 3 + t_height, nullptr, "   Play",800));
-	element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue",800));
 	element = App->gui->AddUIElement(new Static_Text(t_width, (height + 2 * height / 3) / 3 + t_height, nullptr, "Settings",800));
 	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height) / 3 + t_height, nullptr, "Credits",800));
 	element = App->gui->AddUIElement(new Static_Text(t_width, (2 * height + height / 3) / 3 + t_height, nullptr, "   Exit",800));
 	texture_rec = {0,0,131,128};
 	element = App->gui->AddUIElement(new Static_Image(100, 600, nullptr, App->tex->Load("textures/github_logo.png"), &texture_rec, false, NULL, NULL, NULL, NULL, false));
 	element->listeners.PushBack(this);
+	
+	if (IsGameSaved())
+	{
+		element = App->gui->AddUIElement(new Button(width / 3, (height + height / 3) / 3, nullptr, BUTTON_OPEN_SAVES));
+		element->listeners.PushBack(this);
+		element = App->gui->AddUIElement(new Static_Text(t_width, (height + height / 3) / 3 + t_height, nullptr, "Continue", 800));
+	}
 	
 	return true;
 }
@@ -336,4 +344,25 @@ p2List_item<UI*>* j1SceneManager::GetListElement(UI_Purpose purpose) {
 		if (item != nullptr) { item = item->next; }
 	}
 	return true_item;
+}
+bool j1SceneManager::IsGameSaved()
+{
+	bool ret = false;
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	pugi::xml_parse_result result = data.load_file(App->GetLoadGameString().GetString());
+
+	if (result != NULL)
+	{
+		root = data.child("game_state").first_child();
+		if (!root.empty())
+			ret = true;
+
+		data.reset();
+	}
+	else LOG("ERROR! didn't find the saves files when checking saved games.");
+	
+
+	return ret;
 }

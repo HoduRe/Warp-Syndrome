@@ -29,7 +29,7 @@ bool j1GUI::Start() {
 
 // Called before render is available
 bool j1GUI::PreUpdate() {
-
+	BROFILER_CATEGORY("GUI Preupdate", Profiler::Color::Orchid)
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != NULL) {
 		if (item->data->Pressed() == true && item->data->parent == last_parent) { focus = item; }
@@ -52,7 +52,7 @@ bool j1GUI::PreUpdate() {
 }
 
 bool j1GUI::Update(float dt) {
-
+	BROFILER_CATEGORY("GUI Update", Profiler::Color::BlanchedAlmond)
 	p2List_item<UI*>* item = UI_list.start;
 	while (item != NULL) {
 		item->data->Update(dt);
@@ -63,7 +63,7 @@ bool j1GUI::Update(float dt) {
 }
 
 bool j1GUI::PostUpdate() {
-
+	BROFILER_CATEGORY("GUI PostUpdate", Profiler::Color::Coral)
 	p2List_item<UI*>* item = UI_list.start;
 
 	while (item != NULL) {

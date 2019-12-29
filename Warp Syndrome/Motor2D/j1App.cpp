@@ -522,3 +522,8 @@ bool j1App::NewCap(int cap)
 	}
 	return ret;
 }
+
+p2SString j1App::GetLoadGameString()
+{
+	return load_game;
+}

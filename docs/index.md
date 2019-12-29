@@ -50,6 +50,8 @@ Compared to what was asked for the assignment, this project comes with extra con
 <br><br>
 <a href="https://github.com/ferba93/Warp-Syndrome/releases/tag/v.0.6.2.0-release">__Last Release__</a>
 
+## Gameplay
+
 ## How to Play
 ### Installation
 Currently there is no installation required, just open the .exe provided in the download file
@@ -57,4 +59,80 @@ Currently there is no installation required, just open the .exe provided in the 
 Advice: if when throwing the first grenade, the player freezes, execute the .exe with the administrator permission.<br>
 The enemies, in the first level only, are not dangerous. They are intended to be harmless to try out the grenade against them and help with the game narrative.
 
+#### General Controls 
+* ESC: Opens/Closes the pause menu while in game.
+* Grave (º): Toggles the console.
+* Tab: Iterates between UI elements.
+* Keypad (-): Decrease the volume. Volume can also be decreased in the menus.
+* Keypad (+): Increase the volume. Volume can also be increased in the menus.
+	
+#### Debug Controls<br>
+* F1: Start from the first level
+* F2: Start from the second level
+* F3: Starts from the beginning of the level
+* F4: Changes to the next level
+* F5: Saves the current state
+* F6: Loads the previous state (since the maps are so big, there may be a slight delay if the save was at a different map)
+* F7: Switches between frame information and map information
+* F8: Enters UI debug mode
+* F9: Show / unshow colliders and pathfinding
+* F10: Activate / deactivate God Mode
+* F11: Enables / disables frame limit at 30 fps
+
+#### Player Controls <br>
+* Movement (keyboard / gamepad):
+  * W/Space: Jump
+  * A: Move to the left
+  * D: Move to the right
+  * Special movement:
+* Press Left Mouse Button: Determines the grenade throwing angle, moved by the mouse 
+  * J/ Release Left Mouse Button: Throws the grenade
+  * K/Right Mouse Button: Teleports to the grenade
+  * L/Middle Mouse Button: Makes the thrown grenade disappear
+  * W/Space (while sliding on a wall): wall-jump
+  
+## Credits
+Credits to various artists who put their creations at public use:
+<ul>
+Bart for "The adventure begins": https://www.patreon.com/opengameart <br>
+Phillip Miller for "battle_music_01-loop": https://opengameart.org/users/pmiller <br>
+Matriax for the inca-themed tileset: https://kronbits.itch.io/ <br>
+ansimuz for his background used in parallax and his living tissue tileset: https://ansimuz.itch.io/magic-cliffs-environment <br>
+and also for his gothicvania sprites: https://ansimuz.itch.io/gothicvania-patreon-collection <br>
+Jetrel for his stone tilesets: https://opengameart.org/users/jetrel <br>
+rvros for his character animations: https://rvros.itch.io/animated-pixel-hero <br>
+Gamemaseter audio for the grenade teleport sound: https://sonniss.com/sound-effects/magic-spell-sounds/ <br>
+Soundrangers for the death sound: https://sonniss.com/sound-effects/hydrology-bubbles-splashes/ <br>
+Elthen for his elemental pixelart sprites: https://elthen.itch.io/ice-elemental <br>
+Thanks to the user KorgMS2000B at freesound.org for providing the button click sound: https://freesound.org/people/KorgMS2000B/sounds/54405/<br>
+<br>
+<br>
+Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 
+</ul>
+
 ## License
+
+SDL license:<br>
+Simple DirectMedia Layer<br>
+Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org><br>
+SDL_image:  An example image loading library for use with SDL<br>
+Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org><br>
+SDL_mixer:  An audio mixer library based on the SDL library<br>
+Copyright (C) 1997-2013 Sam Lantinga <slouken@libsdl.org><br>
+
+  
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+  
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required. 
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.

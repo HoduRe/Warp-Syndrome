@@ -31,10 +31,8 @@ It has been made over the course of 4 months as a project for a university subje
 ## Core Subsystems and innovation
 
 <ul>The game core mechanic is teleportation. The player uses a throwable granade to surpass obstacles to reach the end of each level while avoiding enemies. The grenade can also kill enemies if thrown directly at them. While exploring the map the player can collect coins, wich will increase his score even more.<br><br>
-
 </ul>
-
-<ul>
+<ul> 
   
 Compared to what was asked for the assignment, this project comes with extra content:<br>
 * The project can sustain and manage and indefinite amount of maps, it's not limited to two. With F4 you can cycle along the "x" amount of maps.

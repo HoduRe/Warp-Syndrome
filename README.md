@@ -911,10 +911,10 @@ Update 1.0.0.0-Release
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: Has been in charge of implementing Brofiler, the entity and enemy system, the file system with xml, the new grenade system, saving and loading, creating all the UML's , implementing dt in the game, implementing the logic of the game/menu loop, transitions and also implementing the console and coins.
+<ul>Contribution: Has been in charge of implementing Brofiler, the entity and enemy system, the file system with xml, the new grenade system, saving and loading, creating all the UML's , implementing dt in the game, implementing the logic of the game/menu loop, transitions and also implementing the console and coins.<ul/><br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
 <ul>Contribution: Has been in charge of implementing pathfinding, creating all the UML's, making the animation XML, working on enemy movement and code to kill the player. He has also made the UI elements and structured the menus.
-
+<ul/>
 Disclamer: These have been the major areas of work for each member, and the ones that each of them understands better but they have been working toghether in all the items listed before during the course of the 4 months that the project has lasted for.
 
 Credits to various artists who put their creations at public use:

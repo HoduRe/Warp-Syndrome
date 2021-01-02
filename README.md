@@ -911,7 +911,7 @@ Update 1.0.0.0-Release
 
 Credits go to the team members: <br>
 	Oscar Pérez Martín: <https://github.com/oscarpm5><br>
-<ul>Contribution: Has been in charge of implementing Brofiler, the entity and enemy system, the file system with xml, the new grenade system, saving and loading, creating all the UML's , implementing dt in the game, implementing the logic of the game/menu loop, transitions and also implementing the console and coins.</ul><br>
+<ul>Contribution: Has been in charge of implementing Brofiler, the entity and enemy system, the file system with xml, the new grenade system, saving and loading, creating all the UML's , implementing dt in the game, implementing the logic of the game/menu loop, transitions and also implementing the console and coins.</ul></br>
 	Ferran-Roger Basart i Bosch: <https://github.com/ferba93><br>
 <ul>Contribution: Has been in charge of implementing pathfinding, creating all the UML's, making the animation XML, working on enemy movement and code to kill the player. He has also made the UI elements and structured the menus.
 </ul>
@@ -933,6 +933,7 @@ Thanks to the user KorgMS2000B at freesound.org for providing the button click s
 <br>
 <br>
 Special mention to Jalvaviel, who helped with preliminary sketches, mood and color palette of the art created for the levels. 
+</ul>
 </ul>
 
 ## License

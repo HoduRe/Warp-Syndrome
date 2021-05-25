@@ -38,7 +38,7 @@ coursing 2nd year of the Videogame Design and Development university degree.
 </ul>
 <ul> 
   
-Compared to what was asked for the assignment, this project comes with extra content:<br>
+Compared to what was asked for the assignment, this project comes with extra content:
 * The project can sustain and manage and indefinite amount of maps, it's not limited to two. With F4 you can cycle along the "x" amount of maps.
 * In the movement section, the game comes with walljump, wallsliding and the already mentioned teleport mechanics.
 * The volume of the game can be adjusted and saved

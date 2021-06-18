@@ -4,8 +4,8 @@ Game Development platform project
 A platform game ambiented in a medieval-fantasy setting based on the mechanic of a teleportation granade that allows fluid movement,
 rad tricks and fun exploration of the map.
 
-### The project can be found at: https://github.com/ferba93/Warp-Syndrome
-### Link to the Game's Webpage: https://ferba93.github.io/Warp-Syndrome/
+### The project can be found at: https://github.com/hodure/Warp-Syndrome
+### Link to the Game's Webpage: https://hodure.github.io/Warp-Syndrome/
 
 ## Installation
 

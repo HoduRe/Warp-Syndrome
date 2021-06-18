@@ -16,7 +16,7 @@ coursing 2nd year of the Videogame Design and Development university degree.
     <th>Portrait</th>
   </tr>
   <tr>
-    <td> <a href="https://github.com/ferba93">Ferran-Roger Basart i Bosch</a></td>
+    <td> <a href="https://github.com/hodure">Ferran-Roger Basart i Bosch</a></td>
     <td>Has been in charge of implementing pathfinding, creating all the UML's, making the animation XML, working on enemy movement and code to kill the player. He has also made the UI elements and structured the menus.
 </td> 
     <td><img src="https://raw.githubusercontent.com/ferba93/Warp-Syndrome/master/docs/ferranPortrait.png" alt="Ferran" class="inline"></td>
